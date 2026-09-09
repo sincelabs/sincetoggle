@@ -73,12 +73,12 @@ const sharedCss = `
     --display: 'Instrument Serif', ui-serif, Georgia, serif;
     --sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
     --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    --ink: #11182c;
-    --muted: #55627a;
-    --quiet: #77839a;
-    --purple: #685cf6;
-    --cyan: #10b9ce;
-    --paper: #f8f8ff;
+    --ink: #1a1917;
+    --muted: #6b6762;
+    --quiet: #98938c;
+    --purple: #c4602a;
+    --cyan: #3a4a60;
+    --paper: #f7f5f2;
   }
   * { box-sizing: border-box; }
   html, body {
@@ -99,14 +99,14 @@ const sharedCss = `
     z-index: 2;
     inset: 0 0 auto;
     height: var(--rail, 7px);
-    background: linear-gradient(90deg, var(--purple), #8f59f3 44%, var(--cyan));
+    background: linear-gradient(90deg, var(--purple), #e07a38 44%, var(--cyan));
   }
   .paper {
     color: var(--ink);
     background:
-      radial-gradient(circle at 18% 8%, rgba(104, 92, 246, 0.08), transparent 28%),
-      radial-gradient(circle at 92% 82%, rgba(16, 185, 206, 0.07), transparent 30%),
-      linear-gradient(145deg, #fbfbff, #f4f5ff);
+      radial-gradient(circle at 18% 8%, rgba(196, 96, 42, 0.08), transparent 28%),
+      radial-gradient(circle at 92% 82%, rgba(58, 74, 96, 0.07), transparent 30%),
+      linear-gradient(145deg, #fbfaf8, #f2f0ec);
   }
   .paper::after {
     content: '';
@@ -119,25 +119,25 @@ const sharedCss = `
     opacity: 0.45;
     transform: rotate(-8deg);
     background:
-      linear-gradient(90deg, transparent 0 44px, rgba(104, 92, 246, 0.055) 44px 46px, transparent 46px 92px),
-      linear-gradient(0deg, transparent 0 44px, rgba(16, 185, 206, 0.05) 44px 46px, transparent 46px 92px);
+      linear-gradient(90deg, transparent 0 44px, rgba(196, 96, 42, 0.055) 44px 46px, transparent 46px 92px),
+      linear-gradient(0deg, transparent 0 44px, rgba(58, 74, 96, 0.05) 44px 46px, transparent 46px 92px);
   }
   .dark {
-    --ink: #f8f7ff;
-    --muted: #cbc7df;
-    --quiet: #aaa5c2;
+    --ink: #f5f1ea;
+    --muted: #d8cfc4;
+    --quiet: #98938c;
     color: var(--ink);
     background:
-      radial-gradient(circle at 20% 54%, rgba(121, 97, 255, 0.34), transparent 29%),
-      radial-gradient(circle at 88% 105%, rgba(33, 194, 205, 0.12), transparent 34%),
-      linear-gradient(135deg, #17142f, #2c2458);
+      radial-gradient(circle at 20% 54%, rgba(224, 122, 56, 0.34), transparent 29%),
+      radial-gradient(circle at 88% 105%, rgba(58, 74, 96, 0.12), transparent 34%),
+      linear-gradient(135deg, #1a1917, #2e1e0f);
   }
   .logo {
     display: block;
     object-fit: cover;
     border-radius: 24%;
     box-shadow:
-      0 18px 46px rgba(30, 21, 91, 0.22),
+      0 18px 46px rgba(26, 25, 23, 0.22),
       0 0 0 1px rgba(255, 255, 255, 0.12);
   }
   .wordmark {
@@ -405,7 +405,7 @@ function storeMarquee() {
         inset: 0;
         border: 1px solid rgba(178, 165, 255, 0.25);
         border-radius: 50%;
-        box-shadow: inset 0 0 80px rgba(104, 92, 246, 0.08);
+        box-shadow: inset 0 0 80px rgba(196, 96, 42, 0.08);
       }
       .store-orbit::after {
         content: '';
@@ -416,7 +416,7 @@ function storeMarquee() {
         right: 61px;
         border-radius: 50%;
         background: var(--cyan);
-        box-shadow: 0 0 22px rgba(16, 185, 206, 0.8);
+        box-shadow: 0 0 22px rgba(58, 74, 96, 0.8);
       }
       .store-icon-wrap .logo { width: 246px; height: 246px; border-radius: 58px; }
       .store-copy { align-self: center; padding-top: 2px; }
@@ -546,7 +546,7 @@ function banner(locale) {
       .banner-divider {
         width: 1px;
         height: 520px;
-        background: linear-gradient(transparent, rgba(104, 92, 246, 0.2) 12%, rgba(104, 92, 246, 0.2) 88%, transparent);
+        background: linear-gradient(transparent, rgba(196, 96, 42, 0.2) 12%, rgba(196, 96, 42, 0.2) 88%, transparent);
       }
       .banner-message {
         min-width: 0;
@@ -653,7 +653,7 @@ function bannerVertical() {
         grid-template-columns: 50px 1fr;
         align-items: center;
         gap: 17px;
-        border: 1px solid rgba(104, 92, 246, 0.16);
+        border: 1px solid rgba(196, 96, 42, 0.16);
         border-radius: 20px;
         background: rgba(255, 255, 255, 0.55);
         box-shadow: 0 18px 54px rgba(34, 41, 91, 0.055);
@@ -677,7 +677,7 @@ function bannerVertical() {
       .vertical-footer {
         margin-top: auto;
         padding-top: 56px;
-        border-top: 1px solid rgba(104, 92, 246, 0.14);
+        border-top: 1px solid rgba(196, 96, 42, 0.14);
       }
       .vertical-footer .url { font-size: 30px; }
     `,

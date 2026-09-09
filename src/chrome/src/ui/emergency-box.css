@@ -1,12 +1,12 @@
 :root {
-  --bg: #1a1a2e;
-  --panel: #16213e;
-  --panel-strong: #1e2746;
+  --bg: #232120;
+  --panel: #2c2a28;
+  --panel-strong: #38352f;
   --panel-soft: #151a31;
   --text: #e8e8e8;
   --muted: #a0a0b8;
   --border: rgba(255, 255, 255, .08);
-  --accent: #6c63ff;
+  --accent: #e07a38;
   --accent-soft: rgba(108, 99, 255, .13);
   --good: #4caf50;
   --warn: #ffc870;
@@ -50,7 +50,7 @@
   --text: #2c1810;
   --muted: #6b5b47;
   --border: rgba(89, 55, 25, .15);
-  --accent: #5b52e8;
+  --accent: #a34a1f;
   --accent-soft: rgba(91, 82, 232, .10);
   --good: #2d8866;
   --warn: #a85f00;
@@ -61,11 +61,11 @@
   --focus-ring: rgba(91, 82, 232, .28);
   --shadow: rgba(89, 55, 25, .11);
   --subtle-hover: rgba(89, 55, 25, .05);
-  --accent-text: #4a42c4;
-  --accent-icon: #4a42c4;
+  --accent-text: #8b3d18;
+  --accent-icon: #8b3d18;
   --placeholder: #8b7962;
   --meta: #7c6a53;
-  --link: #4a42c4;
+  --link: #8b3d18;
   --read-text: #1f6f4a;
   --empty-bg: rgba(89, 55, 25, .035);
   --hover-border: rgba(89, 55, 25, .32);

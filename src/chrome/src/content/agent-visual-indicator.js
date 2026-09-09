@@ -5,7 +5,7 @@
  * the agent is operating on this tab, a "Stop Since Toggle" floating button,
  * and a large Since Toggle-purple cursor/outline on the element currently
  * being acted on. The base indicator follows Anthropic's Claude-for-Chrome
- * extension pattern, recolored for Since Toggle's accent (#6c63ff).
+ * extension pattern, recolored for Since Toggle's accent (#e07a38).
  *
  * Lifecycle messages from the service worker:
  *
@@ -149,7 +149,7 @@
       transform: translateY(80px);
       padding: 11px 18px;
       background: #ffffff;
-      color: #1a1a2e;
+      color: #232120;
       border: 1px solid rgba(108, 99, 255, 0.30);
       border-radius: 12px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -220,7 +220,7 @@
     el.innerHTML = `
       <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5 4L39 31L24 34L31 50L20 54L14 38L5 48V4Z"
-          fill="#6c63ff" stroke="white" stroke-width="3" stroke-linejoin="round"/>
+          fill="#e07a38" stroke="white" stroke-width="3" stroke-linejoin="round"/>
         <path d="M24 34L31 50" stroke="rgba(20, 18, 48, 0.34)" stroke-width="2" stroke-linecap="round"/>
       </svg>
     `;

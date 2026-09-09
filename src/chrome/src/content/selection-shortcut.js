@@ -190,9 +190,9 @@ host.lang = localization.locale;
     shadow.innerHTML = `
       <style>
         :host {
-          --accent:#6c63ff; --accent-strong:#554cf2; --bg:#fff;
-          --hover:#f4f3ff; --text:#171722; --muted:#666679; --border:#dedee9;
-          --shadow:0 18px 50px rgba(24,20,70,.22),0 3px 12px rgba(24,20,70,.12);
+          --accent:#e07a38; --accent-strong:#8b3d18; --bg:#fff;
+          --hover:#f0eeea; --text:#1a1917; --muted:#6b6762; --border:#e5e2de;
+          --shadow:0 18px 50px rgba(26,25,23,.22),0 3px 12px rgba(26,25,23,.12);
           color-scheme:light dark;
         }
         * { box-sizing:border-box; }
@@ -200,16 +200,16 @@ host.lang = localization.locale;
         [hidden] { display:none !important; }
         .selection-highlight {
           position:fixed; border-radius:3px; pointer-events:none;
-          background:rgba(108,99,255,.3); box-shadow:inset 0 0 0 1px rgba(85,76,242,.18);
+          background:rgba(224,122,56,.3); box-shadow:inset 0 0 0 1px rgba(163,74,31,.18);
         }
         .shortcut {
           position:fixed; width:${BUTTON_SIZE}px; height:${BUTTON_SIZE}px; display:grid;
-          place-items:center; padding:0; border:1px solid rgba(108,99,255,.34);
+          place-items:center; padding:0; border:1px solid rgba(224,122,56,.34);
           border-radius:14px; background:var(--bg); color:var(--accent);
-          box-shadow:0 10px 26px rgba(35,30,95,.22),0 2px 7px rgba(35,30,95,.12);
+          box-shadow:0 10px 26px rgba(26,25,23,.22),0 2px 7px rgba(26,25,23,.12);
           cursor:pointer; pointer-events:auto; transition:transform 130ms ease,box-shadow 130ms ease;
         }
-        .shortcut:hover { transform:translateY(-1px) scale(1.03); box-shadow:0 13px 30px rgba(35,30,95,.27),0 3px 8px rgba(35,30,95,.14); }
+        .shortcut:hover { transform:translateY(-1px) scale(1.03); box-shadow:0 13px 30px rgba(26,25,23,.27),0 3px 8px rgba(26,25,23,.14); }
         .shortcut-icon {
           display:block; font:700 25px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
           transform:translateY(-1px);
@@ -267,7 +267,7 @@ host.lang = localization.locale;
           color:var(--muted); font-size:12px; line-height:1.25;
         }
         .shortcut:focus-visible,.action:focus-visible,.hide:focus-visible,.send:focus-visible,textarea:focus-visible,.context-option input:focus-visible {
-          outline:3px solid rgba(108,99,255,.34); outline-offset:2px;
+          outline:3px solid rgba(224,122,56,.34); outline-offset:2px;
         }
         .toast {
           position:fixed; left:50%; bottom:22px; max-width:min(440px,calc(100vw - 24px));
@@ -278,8 +278,8 @@ host.lang = localization.locale;
         }
         @media (prefers-color-scheme:dark) {
           :host {
-            --bg:#20202a; --hover:#2d2c42; --text:#f5f4ff; --muted:#b5b3c7;
-            --border:#444355; --shadow:0 18px 54px rgba(0,0,0,.46),0 3px 12px rgba(0,0,0,.28);
+            --bg:#232120; --hover:#2c2a28; --text:#f5f1ea; --muted:#98938c;
+            --border:#454138; --shadow:0 18px 54px rgba(0,0,0,.46),0 3px 12px rgba(0,0,0,.28);
           }
         }
         @media (prefers-reduced-motion:reduce) { .shortcut { transition:none; } }
