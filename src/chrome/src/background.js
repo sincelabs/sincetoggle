@@ -1404,7 +1404,7 @@ loadPanelTabs();
 const webBrainGroupByWindow = new Map();
 const WB_GROUPS_KEY = 'webBrainGroupByWindow';
 
-async function loadSince ToggleGroups() {
+async function loadSinceToggleGroups() {
   if (!chrome.tabGroups) return;
   try {
     const stored = await chrome.storage.session.get(WB_GROUPS_KEY);
@@ -1421,12 +1421,12 @@ async function loadSince ToggleGroups() {
     }
   } catch { /* session storage unavailable */ }
 }
-function saveSince ToggleGroups() {
+function saveSinceToggleGroups() {
   chrome.storage.session?.set({
     [WB_GROUPS_KEY]: Array.from(webBrainGroupByWindow.entries()),
   }).catch(() => {});
 }
-loadSince ToggleGroups();
+loadSinceToggleGroups();
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() => {});
 
@@ -1478,7 +1478,7 @@ async function ensureSince ToggleGroup(tab) {
       } catch {
         groupId = null;
         webBrainGroupByWindow.delete(tab.windowId);
-        saveSince ToggleGroups();
+        saveSinceToggleGroups();
       }
     }
 
@@ -1497,7 +1497,7 @@ async function ensureSince ToggleGroup(tab) {
         });
       } catch { /* ignore styling failure */ }
       webBrainGroupByWindow.set(tab.windowId, groupId);
-      saveSince ToggleGroups();
+      saveSinceToggleGroups();
     } else if (tab.groupId !== groupId) {
       // Group exists for this window but source tab isn't in it. Add it.
       try {
@@ -2304,7 +2304,7 @@ chrome.tabGroups?.onRemoved?.addListener?.((group) => {
   for (const [windowId, gid] of webBrainGroupByWindow) {
     if (gid === group.id) {
       webBrainGroupByWindow.delete(windowId);
-      saveSince ToggleGroups();
+      saveSinceToggleGroups();
       break;
     }
   }
@@ -2314,7 +2314,7 @@ chrome.tabGroups?.onRemoved?.addListener?.((group) => {
 chrome.windows?.onRemoved?.addListener?.((windowId) => {
   if (webBrainGroupByWindow.has(windowId)) {
     webBrainGroupByWindow.delete(windowId);
-    saveSince ToggleGroups();
+    saveSinceToggleGroups();
   }
 });
 
