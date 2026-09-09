@@ -15244,7 +15244,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (String(provider?.config?.providerName || '').toLowerCase() === 'sincetoggle-cloud') {
       try {
         const sessionId = this.conversationIds.get(tabId) || null;
-        if (sessionId && provider?.config?.helpImproveSince Toggle !== false) {
+        if (sessionId && provider?.config?.helpImproveSincetoggle !== false) {
           let extensionVersion = '';
           try { extensionVersion = chrome.runtime.getManifest().version || ''; } catch {}
           const item = buildTerminalRuntimeEvent({

@@ -1054,7 +1054,7 @@ browser.storage.onChanged.addListener((changes) => {
     createContextMenus().catch(() => {});
   }
   if (PROFILE_SYNC_DATA_KEYS.some((key) => changes[key])) profileSync.noteChanges(changes).catch(() => {});
-  if (changes.providers || changes.activeProvider || changes.helpImproveSince Toggle) providerManager.load().catch(() => {});
+  if (changes.providers || changes.activeProvider || changes.helpImproveSincetoggle) providerManager.load().catch(() => {});
   if (changes.maxAgentSteps) {
     agent.maxSteps = normalizeMaxAgentSteps(changes.maxAgentSteps.newValue);
   }
@@ -3377,14 +3377,14 @@ async function handleMessage(msg, sender) {
 
     case 'set_help_improve_preference': {
       if (typeof msg.enabled !== 'boolean') throw new Error('enabled must be a boolean');
-      const stored = await browser.storage.local.get('helpImproveSince Toggle');
-      const previousEnabled = stored.helpImproveSince Toggle !== false;
-      await browser.storage.local.set({ helpImproveSince Toggle: msg.enabled });
+      const stored = await browser.storage.local.get('helpImproveSincetoggle');
+      const previousEnabled = stored.helpImproveSincetoggle !== false;
+      await browser.storage.local.set({ helpImproveSincetoggle: msg.enabled });
       try {
         await providerManager.load();
       } catch (error) {
         if (previousEnabled !== msg.enabled) {
-          await browser.storage.local.set({ helpImproveSince Toggle: previousEnabled }).catch(() => {});
+          await browser.storage.local.set({ helpImproveSincetoggle: previousEnabled }).catch(() => {});
         }
         throw error;
       }

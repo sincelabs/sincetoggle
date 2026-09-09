@@ -1186,7 +1186,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     createContextMenus().catch(() => {});
   }
   if (PROFILE_SYNC_DATA_KEYS.some((key) => changes[key])) profileSync.noteChanges(changes).catch(() => {});
-  if (changes.providers || changes.activeProvider || changes.helpImproveSince Toggle) providerManager.load().catch(() => {});
+  if (changes.providers || changes.activeProvider || changes.helpImproveSincetoggle) providerManager.load().catch(() => {});
   if (changes.sincetoggleCloudBridgeEnabled || changes.sincetoggleCloudBridgeUrl) {
     cloudRunController.syncBridge().catch(() => {});
   }
@@ -3915,14 +3915,14 @@ async function handleMessage(msg, sender) {
     // --- Provider Management ---
     case 'set_help_improve_preference': {
       if (typeof msg.enabled !== 'boolean') throw new Error('enabled must be a boolean');
-      const stored = await chrome.storage.local.get('helpImproveSince Toggle');
-      const previousEnabled = stored.helpImproveSince Toggle !== false;
-      await chrome.storage.local.set({ helpImproveSince Toggle: msg.enabled });
+      const stored = await chrome.storage.local.get('helpImproveSincetoggle');
+      const previousEnabled = stored.helpImproveSincetoggle !== false;
+      await chrome.storage.local.set({ helpImproveSincetoggle: msg.enabled });
       try {
         await providerManager.load();
       } catch (error) {
         if (previousEnabled !== msg.enabled) {
-          await chrome.storage.local.set({ helpImproveSince Toggle: previousEnabled }).catch(() => {});
+          await chrome.storage.local.set({ helpImproveSincetoggle: previousEnabled }).catch(() => {});
         }
         throw error;
       }

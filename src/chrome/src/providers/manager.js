@@ -71,7 +71,7 @@ const LOCAL_MODEL_LIST_PROVIDER_IDS = ['llamacpp', 'ollama', 'lmstudio', 'jan', 
 const SINCETOGGLE_CLOUD_CONTEXT_WINDOW = 1000000;
 const SINCETOGGLE_CLOUD_LEGACY_CONTEXT_WINDOW = 256000;
 const SINCETOGGLE_DEVICE_GUID_KEY = 'sincetoggleDeviceGuid';
-const HELP_IMPROVE_SINCETOGGLE_KEY = 'helpImproveSince Toggle';
+const HELP_IMPROVE_SINCETOGGLE_KEY = 'helpImproveSincetoggle';
 const OPENROUTER_DEFAULT_MODEL = 'openrouter/free';
 const OPENROUTER_LEGACY_DEFAULT_MODEL = 'stepfun/step-3.7-flash';
 const OPENAI_DEFAULT_MODEL = 'gpt-5.6-terra';
@@ -394,7 +394,7 @@ export class ProviderManager {
     if (hadLegacyClaudeSubscription) await signOutClaude();
     if (configs[SINCETOGGLE_CLOUD_PROVIDER_ID]) {
       configs[SINCETOGGLE_CLOUD_PROVIDER_ID].deviceGuid = await this._getDeviceGuid(data[SINCETOGGLE_DEVICE_GUID_KEY]);
-      configs[SINCETOGGLE_CLOUD_PROVIDER_ID].helpImproveSince Toggle = data[HELP_IMPROVE_SINCETOGGLE_KEY] !== false;
+      configs[SINCETOGGLE_CLOUD_PROVIDER_ID].helpImproveSincetoggle = data[HELP_IMPROVE_SINCETOGGLE_KEY] !== false;
     }
     this.activeProviderId = legacyActiveProviderId || SINCETOGGLE_CLOUD_PROVIDER_ID;
     if (!configs[this.activeProviderId]) this.activeProviderId = SINCETOGGLE_CLOUD_PROVIDER_ID;

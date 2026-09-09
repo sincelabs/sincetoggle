@@ -172,9 +172,9 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
       }
     }
     if (providerName === 'sincetoggle-cloud') {
-      if (this.config.deviceGuid) headers['X-Since Toggle-Device-Id'] = this.config.deviceGuid;
-      headers['X-Since Toggle-Client'] = 'extension';
-      headers['X-Since Toggle-Help-Improve'] = this.config.helpImproveSince Toggle === false ? '0' : '1';
+      if (this.config.deviceGuid) headers['X-Sincetoggle-Device-Id'] = this.config.deviceGuid;
+      headers['X-Sincetoggle-Client'] = 'extension';
+      headers['X-Sincetoggle-Help-Improve'] = this.config.helpImproveSincetoggle === false ? '0' : '1';
     }
     // OpenRouter-specific headers
     if (providerName === 'openrouter') {
@@ -329,7 +329,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
     return !(this.config.omitToolsWhenImagesPresent && this._messagesContainImage(messages));
   }
 
-  _addSince ToggleCloudContext(body, options) {
+  _addSincetoggleCloudContext(body, options) {
     if (String(this.config.providerName || '').toLowerCase() !== 'sincetoggle-cloud') return;
     const sessionId = String(options.sincetoggleSessionId || '').trim();
     if (sessionId) body.session_id = sessionId.slice(0, 200);
@@ -467,7 +467,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
     }
     body = this._mergeConfiguredRequestBody(body, options);
     body = applyOpenRouterRoutingVariant(body, this.config);
-    this._addSince ToggleCloudContext(body, options);
+    this._addSincetoggleCloudContext(body, options);
     if (stream && body.tools && this.config.supportsToolStreamOption === true) {
       body.tool_stream = true;
     }

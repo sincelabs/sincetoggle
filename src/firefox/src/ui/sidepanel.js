@@ -107,7 +107,7 @@ if (globalThis.browser?.storage?.onChanged) {
 
 // ─── Onboarding (first-launch wizard) ───────────────────────────────
 (async function initOnboarding() {
-  const stored = await browser.storage.local.get(['onboardingComplete', 'helpImproveSince Toggle']);
+  const stored = await browser.storage.local.get(['onboardingComplete', 'helpImproveSincetoggle']);
   if (stored.onboardingComplete) return;
 
   const overlay = document.getElementById('onboarding');
@@ -136,7 +136,7 @@ if (globalThis.browser?.storage?.onChanged) {
   let localModelChoices = [];
   let selectedLocalModelIndex = 0;
   let cloudReady = false;
-  let persistedHelpImprove = stored.helpImproveSince Toggle !== false;
+  let persistedHelpImprove = stored.helpImproveSincetoggle !== false;
   let helpImproveSavePromise = Promise.resolve(true);
 
   if (helpImproveCheckbox) {
