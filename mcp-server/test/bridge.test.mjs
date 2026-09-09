@@ -16,7 +16,7 @@ process.env.SINCETOGGLE_BRIDGE_PORT = process.env.SINCETOGGLE_BRIDGE_PORT || "17
 process.env.SINCETOGGLE_COMMAND_TIMEOUT_MS = "2000";
 process.env.SINCETOGGLE_POLL_INTERVAL_MS = "20";
 
-const { Since ToggleBridge, BridgeError, TERMINAL_STATUSES } = await import("../dist/bridge.js");
+const { SinceToggleBridge, BridgeError, TERMINAL_STATUSES } = await import("../dist/bridge.js");
 const { bridgeUrl } = await import("../dist/config.js");
 const { awaitSettled, describeSnapshot } = await import("../dist/runs.js");
 
@@ -44,7 +44,7 @@ function fakeExtension(url, handler, { client = "sincetoggle-extension" } = {}) 
 }
 
 test("handshake, command correlation, and payload shape", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const seen = [];
@@ -77,7 +77,7 @@ test("handshake, command correlation, and payload shape", async () => {
 });
 
 test("concurrent commands resolve to their own replies", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const ext = fakeExtension(bridgeUrl(), async (msg) => {
@@ -100,7 +100,7 @@ test("concurrent commands resolve to their own replies", async () => {
 });
 
 test("extension errors surface as BridgeError with status", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const ext = fakeExtension(bridgeUrl(), () => ({
@@ -125,7 +125,7 @@ test("extension errors surface as BridgeError with status", async () => {
 });
 
 test("no extension attached produces an actionable message", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   await assert.rejects(
@@ -142,7 +142,7 @@ test("no extension attached produces an actionable message", async () => {
 });
 
 test("a client that is not the extension is rejected", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const rogue = fakeExtension(bridgeUrl(), () => ({ ok: true, result: {} }), {
@@ -156,7 +156,7 @@ test("a client that is not the extension is rejected", async () => {
 });
 
 test("a web-page origin cannot replace the connected extension", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const extension = fakeExtension(bridgeUrl(), (msg) => ({
@@ -188,7 +188,7 @@ test("a web-page origin cannot replace the connected extension", async () => {
 });
 
 test("a new socket cannot inherit an earlier extension handshake", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const extension = fakeExtension(bridgeUrl(), () => ({ ok: true, result: {} }));
@@ -216,7 +216,7 @@ test("a new socket cannot inherit an earlier extension handshake", async () => {
 });
 
 test("disconnect mid-command rejects rather than hanging", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const ext = fakeExtension(bridgeUrl(), async () => {
@@ -240,7 +240,7 @@ test("disconnect mid-command rejects rather than hanging", async () => {
 });
 
 test("awaitSettled polls to a terminal status", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   let polls = 0;
@@ -271,7 +271,7 @@ test("awaitSettled polls to a terminal status", async () => {
 });
 
 test("awaitSettled stops on needs_user_input and surfaces clarify_id", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const ext = fakeExtension(bridgeUrl(), (msg) => {
@@ -363,7 +363,7 @@ test("describeSnapshot lists workflow healing candidates as answerable", () => {
 });
 
 test("awaitSettled reports a timeout without aborting the run", async () => {
-  const bridge = new Since ToggleBridge();
+  const bridge = new SinceToggleBridge();
   await bridge.start();
 
   const actions = [];

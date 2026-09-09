@@ -262,7 +262,7 @@ export function normalizeTraceExport(input) {
   const exported = {
     schema: input.schema,
     exportedAt: finiteNumber(input.exportedAt),
-    exportedBySince ToggleVersion: String(input.exportedBySince ToggleVersion || ''),
+    exportedBySinceToggleVersion: String(input.exportedBySinceToggleVersion || ''),
   };
   if (Array.isArray(input.runs)) {
     if (input.runs.length === 0) throw new Error('Trace export must contain a non-empty runs array.');
@@ -465,7 +465,7 @@ function bundleRunSpan(record, bundle, includeContent) {
     attributes: attributes([
       ['gen_ai.operation.name', 'invoke_agent'],
       ['gen_ai.agent.name', 'Since Toggle'],
-      ['gen_ai.agent.version', record.run.sincetoggleVersion || bundle.exportedBySince ToggleVersion],
+      ['gen_ai.agent.version', record.run.sincetoggleVersion || bundle.exportedBySinceToggleVersion],
       ['gen_ai.provider.name', record.run.providerId],
       ['gen_ai.request.model', record.run.model],
       ['gen_ai.conversation.id', record.sessionId],
@@ -507,15 +507,15 @@ function sessionBundleToOtlp(bundle, includeContent) {
       resource: {
         attributes: attributes([
           ['service.name', 'sincetoggle'],
-          ['service.version', bundle.exportedBySince ToggleVersion],
+          ['service.version', bundle.exportedBySinceToggleVersion],
           ['sincetoggle.session.id', sessionId],
         ]),
       },
       scopeSpans: [{
         scope: {
           name: 'sincetoggle.trace-export',
-          ...(bundle.exportedBySince ToggleVersion
-            ? { version: String(bundle.exportedBySince ToggleVersion) }
+          ...(bundle.exportedBySinceToggleVersion
+            ? { version: String(bundle.exportedBySinceToggleVersion) }
             : {}),
         },
         spans: sessionRecords
@@ -549,7 +549,7 @@ export function traceExportToOtlp(input, { includeContent = false } = {}) {
     attributes: attributes([
       ['gen_ai.operation.name', 'invoke_agent'],
       ['gen_ai.agent.name', 'Since Toggle'],
-      ['gen_ai.agent.version', run.sincetoggleVersion || input.exportedBySince ToggleVersion],
+      ['gen_ai.agent.version', run.sincetoggleVersion || input.exportedBySinceToggleVersion],
       ['gen_ai.provider.name', run.providerId],
       ['gen_ai.request.model', run.model],
       ['gen_ai.conversation.id', run.conversationId],
@@ -573,14 +573,14 @@ export function traceExportToOtlp(input, { includeContent = false } = {}) {
       resource: {
         attributes: attributes([
           ['service.name', 'sincetoggle'],
-          ['service.version', run.sincetoggleVersion || input.exportedBySince ToggleVersion],
+          ['service.version', run.sincetoggleVersion || input.exportedBySinceToggleVersion],
         ]),
       },
       scopeSpans: [{
         scope: {
           name: 'sincetoggle.trace-export',
-          ...(input.exportedBySince ToggleVersion
-            ? { version: String(input.exportedBySince ToggleVersion) }
+          ...(input.exportedBySinceToggleVersion
+            ? { version: String(input.exportedBySinceToggleVersion) }
             : {}),
         },
         spans: [root, ...childSpans],

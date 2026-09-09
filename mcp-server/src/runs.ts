@@ -14,7 +14,7 @@
  * calling it directly would move the trust boundary out of the browser.
  */
 
-import { BridgeError, TERMINAL_STATUSES, Since ToggleBridge, type CloudSnapshot } from "./bridge.js";
+import { BridgeError, TERMINAL_STATUSES, SinceToggleBridge, type CloudSnapshot } from "./bridge.js";
 import { config } from "./config.js";
 
 export interface StartRunOptions {
@@ -33,7 +33,7 @@ export interface AwaitOptions {
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function startRun(
-  bridge: Since ToggleBridge,
+  bridge: SinceToggleBridge,
   options: StartRunOptions,
   timeoutMs?: number,
 ): Promise<CloudSnapshot> {
@@ -54,7 +54,7 @@ export async function startRun(
 }
 
 export async function getStatus(
-  bridge: Since ToggleBridge,
+  bridge: SinceToggleBridge,
   runId?: string,
   timeoutMs?: number,
 ): Promise<CloudSnapshot | { runs: CloudSnapshot[] }> {
@@ -67,7 +67,7 @@ export async function getStatus(
 }
 
 export async function respond(
-  bridge: Since ToggleBridge,
+  bridge: SinceToggleBridge,
   runId: string,
   clarifyId: string,
   answer: string,
@@ -80,7 +80,7 @@ export async function respond(
   );
 }
 
-export async function abort(bridge: Since ToggleBridge, runId: string): Promise<CloudSnapshot> {
+export async function abort(bridge: SinceToggleBridge, runId: string): Promise<CloudSnapshot> {
   return await bridge.request<CloudSnapshot>("cloud_abort", { runId });
 }
 
@@ -93,7 +93,7 @@ export async function abort(bridge: Since ToggleBridge, runId: string): Promise<
  * that it is still going.
  */
 export async function awaitSettled(
-  bridge: Since ToggleBridge,
+  bridge: SinceToggleBridge,
   runId: string,
   { timeoutMs }: AwaitOptions,
 ): Promise<{ snapshot: CloudSnapshot; timedOut: boolean }> {

@@ -4422,7 +4422,7 @@ async function init() {
   restoreLatestChatTurnPosition();
 
   await loadProviders();
-  await testConnection({ skipSince ToggleCloud: true });
+  await testConnection({ skipSinceToggleCloud: true });
   await windowScope.syncActiveTab();
   refreshScheduledJobs({ tabId: currentTabId });
   refreshRecommendedActions();
@@ -7060,7 +7060,7 @@ async function openProvidersSettingsPage() {
   }
 }
 
-function isSince ToggleCloudProviderSelected() {
+function isSinceToggleCloudProviderSelected() {
   return providerSelect?.value === 'sincetoggle_cloud';
 }
 
@@ -7078,7 +7078,7 @@ function markSelectedProviderFailed(error) {
 async function testConnection(options = {}) {
   const providerId = options.providerId || providerSelect.value;
   const requestId = ++providerTestRequestId;
-  if (options.skipSince ToggleCloud && providerId === 'sincetoggle_cloud') {
+  if (options.skipSinceToggleCloud && providerId === 'sincetoggle_cloud') {
     if (requestId === providerTestRequestId && providerSelect.value === providerId) {
       markSelectedProviderUntested();
     }

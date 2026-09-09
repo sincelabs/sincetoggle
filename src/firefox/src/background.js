@@ -1179,7 +1179,7 @@ browser.alarms.onAlarm.addListener((alarm) => {
 // when automatic grouping is enabled and the user clicks the browser
 // action, the source tab joins (or seeds) a colored "Since Toggle" tab group
 // for that window. Internal helper tabs and target=_blank redirects auto-join
-// the same group via agent.js's `_addToSince ToggleGroup`.
+// the same group via agent.js's `_addToSinceToggleGroup`.
 //
 // What we DON'T do on Firefox: scope the sidebar's visibility to group
 // membership. browser.sidebarAction is window-level, not per-tab —
@@ -1220,7 +1220,7 @@ loadSinceToggleGroups();
  * "Since Toggle" group AND that `tab` is in it. Always creates a fresh group
  * rather than rebranding the user's existing group.
  */
-async function ensureSince ToggleGroup(tab) {
+async function ensureSinceToggleGroup(tab) {
   if (!browser.tabGroups || !tab?.id || tab.windowId == null) return -1;
   if (!await shouldAutoGroupTabs(browser.storage.local)) return -1;
   try {
@@ -1282,7 +1282,7 @@ browser.runtime.onMessage.addListener((msg, sender) => {
 
   browser.tabs.get(tabId).then((tab) => {
     if (tab?.url !== installGuideUrl) return;
-    ensureSince ToggleGroup(tab).catch(() => {});
+    ensureSinceToggleGroup(tab).catch(() => {});
   }).catch(() => {});
 });
 
@@ -1313,7 +1313,7 @@ function openSidebarForContextMenu(tab) {
   } else {
     browser.sidebarAction?.toggle?.().catch(() => {});
   }
-  if (tab?.id) ensureSince ToggleGroup(tab).catch(() => {});
+  if (tab?.id) ensureSinceToggleGroup(tab).catch(() => {});
 }
 
 async function handleContextMenuAsk(info, tab) {
@@ -1745,7 +1745,7 @@ browser.tabs.onRemoved.addListener((tabId) => {
 browser.browserAction.onClicked.addListener((tab) => {
   browser.sidebarAction.toggle();
   // Async — sidebar toggle doesn't need to wait on grouping.
-  if (tab?.id) ensureSince ToggleGroup(tab).catch(() => {});
+  if (tab?.id) ensureSinceToggleGroup(tab).catch(() => {});
 });
 
 // ────────────────────────────────────────────────────────────────────────

@@ -24,11 +24,11 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 
-import { BridgeError, Since ToggleBridge, type CloudSnapshot } from "./bridge.js";
+import { BridgeError, SinceToggleBridge, type CloudSnapshot } from "./bridge.js";
 import { bridgeUrl, config } from "./config.js";
 import { abort, awaitSettled, describeSnapshot, getStatus, respond, startRun } from "./runs.js";
 
-const bridge = new Since ToggleBridge();
+const bridge = new SinceToggleBridge();
 
 const server = new McpServer({
   name: "sincetoggle",

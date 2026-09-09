@@ -1463,7 +1463,7 @@ chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() =>
  * Since Toggle group AND that `tab` is in it. Returns the group ID, or -1 when
  * disabled, unsupported, or failed.
  */
-async function ensureSince ToggleGroup(tab) {
+async function ensureSinceToggleGroup(tab) {
   if (!chrome.tabGroups || !tab?.id || tab.windowId == null) return -1;
   if (!await shouldAutoGroupTabs(chrome.storage.local)) return -1;
   try {
@@ -1534,7 +1534,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     if (tab?.url !== installGuideUrl) return;
     panelTabs.add(tab.id);
     savePanelTabs();
-    ensureSince ToggleGroup(tab).catch(() => {});
+    ensureSinceToggleGroup(tab).catch(() => {});
   }).catch(() => {});
 });
 
@@ -1569,7 +1569,7 @@ function openSidePanelForContextMenu(tab) {
     enabled: true,
   });
   chrome.sidePanel.open({ tabId: tab.id });
-  ensureSince ToggleGroup(tab).catch(() => {});
+  ensureSinceToggleGroup(tab).catch(() => {});
 }
 
 async function handleContextMenuAsk(info, tab) {
@@ -2285,9 +2285,9 @@ chrome.action.onClicked.addListener((tab) => {
   chrome.sidePanel.open({ tabId: tab.id });
   // Now group the source tab so the visibility scope is established
   // before the user can switch tabs. Async — we already lost the user-
-  // gesture window for sidePanel.open, but ensureSince ToggleGroup doesn't
+  // gesture window for sidePanel.open, but ensureSinceToggleGroup doesn't
   // need it.
-  ensureSince ToggleGroup(tab).catch(() => {});
+  ensureSinceToggleGroup(tab).catch(() => {});
 });
 
 // (Was: chrome.tabs.onActivated + chrome.tabs.onUpdated listeners that

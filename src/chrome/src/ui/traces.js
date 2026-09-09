@@ -828,7 +828,7 @@ document.getElementById('btn-export').addEventListener('click', async () => {
     const payload = buildTraceExportPayload(entries, {
       sessionId,
       exportedAt: Date.now(),
-      exportedBySince ToggleVersion: chrome.runtime.getManifest().version || '',
+      exportedBySinceToggleVersion: chrome.runtime.getManifest().version || '',
     });
     const blob = new Blob([JSON.stringify(sanitizeTraceExport(payload), null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
