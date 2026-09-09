@@ -199,7 +199,7 @@ body.ap-page .offline-answer-engine .offline-rag-eyebrow { display: none; }
   height: 100%;
   width: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--accent, #6c63ff), var(--good, #55c785));
+  background: linear-gradient(90deg, var(--accent, #E07A38), var(--good, #55c785));
 }
 .rag-component-progress .progress-detail {
   margin-top: 4px;

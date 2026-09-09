@@ -13,9 +13,9 @@
   --text-primary: #e8e8e8;
   --text-secondary: #a0a0b8;
   --text-muted: #6b6b80;
-  --accent: #6c63ff;
-  --accent-hover: #5a52d5;
-  --accent-dim: rgba(108, 99, 255, 0.15);
+  --accent: #E07A38;
+  --accent-hover: #F0965C;
+  --accent-dim: rgba(224, 122, 56, 0.15);
   --promotion-action-accent: #4db5f9;
   --success: #4caf50;
   --warning: #ff9800;
@@ -53,9 +53,9 @@
   --text-primary: #2c1810;     /* espresso */
   --text-secondary: #6b5b47;   /* mocha */
   --text-muted: #9b8c75;       /* lighter mocha */
-  --accent: #5b52e8;           /* slightly deepened purple for contrast on cream */
-  --accent-hover: #4a42c4;
-  --accent-dim: rgba(91, 82, 232, 0.12);
+  --accent: #A34A1F;           /* slightly deepened purple for contrast on cream */
+  --accent-hover: #8B3D18;
+  --accent-dim: rgba(163, 74, 31, 0.12);
   --promotion-action-accent: #116f9f;
   --success: #2d8866;
   --warning: #b97a00;
@@ -676,14 +676,14 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
 
 .ob-local-model-option:hover,
 .ob-local-model-option:focus-visible {
-  border-color: var(--accent, #6c63ff);
+  border-color: var(--accent, #E07A38);
   outline: none;
 }
 
 .ob-local-model-option[aria-selected="true"] {
-  border-color: var(--accent, #6c63ff);
-  background: rgba(108, 99, 255, 0.12);
-  box-shadow: 0 0 0 1px rgba(108, 99, 255, 0.25);
+  border-color: var(--accent, #E07A38);
+  background: rgba(224, 122, 56, 0.12);
+  box-shadow: 0 0 0 1px rgba(224, 122, 56, 0.25);
 }
 
 .ob-local-model-option .provider-icon {
@@ -953,7 +953,7 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
 }
 
 .provider-picker-btn:hover {
-  border-color: var(--accent, #6c63ff);
+  border-color: var(--accent, #E07A38);
 }
 
 .provider-picker-btn:hover .provider-picker-caret {
@@ -962,17 +962,17 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
 }
 
 .provider-picker-btn:focus-visible {
-  outline: 2px solid var(--accent, #6c63ff);
+  outline: 2px solid var(--accent, #E07A38);
   outline-offset: 1px;
 }
 
 .provider-picker-btn[aria-expanded="true"] {
-  border-color: var(--accent, #6c63ff);
+  border-color: var(--accent, #E07A38);
 }
 
 .provider-picker-btn[aria-expanded="true"] .provider-picker-caret {
   transform: rotate(180deg);
-  color: var(--accent, #6c63ff);
+  color: var(--accent, #E07A38);
   opacity: 1;
 }
 
@@ -1067,7 +1067,7 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
   width: 0;
   height: 0;
   border-radius: 4px;
-  background: rgba(108, 99, 255, 0.12);
+  background: rgba(224, 122, 56, 0.12);
   opacity: 0;
   pointer-events: none;
   will-change: transform, width, height;
@@ -1147,12 +1147,12 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
 }
 
 .provider-picker-option:focus-visible {
-  box-shadow: inset 0 0 0 1px var(--accent, #6c63ff);
+  box-shadow: inset 0 0 0 1px var(--accent, #E07A38);
 }
 
 .provider-picker-option[aria-selected="true"] {
   background: transparent;
-  box-shadow: inset 2px 0 0 var(--accent, #6c63ff);
+  box-shadow: inset 2px 0 0 var(--accent, #E07A38);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1192,7 +1192,7 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
 }
 
 .language-picker-btn:focus-visible {
-  outline: 2px solid var(--accent, #6c63ff);
+  outline: 2px solid var(--accent, #E07A38);
   outline-offset: 1px;
 }
 
@@ -1267,7 +1267,7 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
 .language-picker-check {
   width: 14px;
   height: 14px;
-  color: var(--accent, #6c63ff);
+  color: var(--accent, #E07A38);
   opacity: 0;
   flex: 0 0 auto;
 }
@@ -1366,8 +1366,8 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
   align-items: center;
   gap: 8px;
   padding: 7px 14px;
-  background: rgba(108, 99, 255, 0.08);
-  border-bottom: 1px solid rgba(108, 99, 255, 0.15);
+  background: rgba(224, 122, 56, 0.08);
+  border-bottom: 1px solid rgba(224, 122, 56, 0.15);
   font-size: 11px;
   color: var(--accent);
   font-weight: 500;
@@ -1719,7 +1719,7 @@ html[data-ui-scale-ready="false"] body { visibility: hidden; }
 
 .message.system .message-content {
   background: var(--accent-dim);
-  border: 1px solid rgba(108, 99, 255, 0.2);
+  border: 1px solid rgba(224, 122, 56, 0.2);
   font-size: 12px;
 }
 
@@ -3299,7 +3299,7 @@ html[data-ui-scale="175"] .conversation-action-label {
 
 .queued-message-action:hover {
   color: var(--text-primary);
-  background: rgba(91, 82, 232, 0.12);
+  background: rgba(163, 74, 31, 0.12);
   border-color: var(--border);
 }
 
@@ -3331,7 +3331,7 @@ html[data-ui-scale="175"] .conversation-action-label {
 
 .slash-command-option:hover,
 .slash-command-option.selected {
-  background: rgba(91, 82, 232, 0.14);
+  background: rgba(163, 74, 31, 0.14);
   color: var(--text-primary);
 }
 
@@ -3742,8 +3742,8 @@ html[data-ui-scale="175"] .conversation-action-label {
   justify-content: space-between;
   gap: 10px;
   padding: 10px 14px;
-  background: rgba(108, 99, 255, 0.08);
-  border: 1px solid rgba(108, 99, 255, 0.2);
+  background: rgba(224, 122, 56, 0.08);
+  border: 1px solid rgba(224, 122, 56, 0.2);
   border-radius: var(--radius);
   margin-top: 8px;
   animation: fadeIn 0.2s ease;
@@ -4719,8 +4719,8 @@ html[data-ui-scale="175"] .conversation-action-label {
   align-items: center;
   gap: 10px;
   padding: 8px 12px;
-  background: rgba(108, 99, 255, 0.10);
-  border-bottom: 1px solid rgba(108, 99, 255, 0.25);
+  background: rgba(224, 122, 56, 0.10);
+  border-bottom: 1px solid rgba(224, 122, 56, 0.25);
   font-size: 12px;
   color: var(--text-primary, #e8e8e8);
   transition: opacity 0.2s;
@@ -4728,7 +4728,7 @@ html[data-ui-scale="175"] .conversation-action-label {
 .recording-status.hidden { display: none; }
 .recording-status span { flex: 1; }
 .btn-summarize-recording {
-  background: var(--accent, #6c63ff);
+  background: var(--accent, #E07A38);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -4737,7 +4737,7 @@ html[data-ui-scale="175"] .conversation-action-label {
   font-weight: 600;
   cursor: pointer;
 }
-.btn-summarize-recording:hover { background: var(--accent2, #5a52d5); }
+.btn-summarize-recording:hover { background: var(--accent2, #F0965C); }
 
 .completion-confetti {
   position: fixed;

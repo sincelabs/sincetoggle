@@ -6,7 +6,7 @@
   --wb-dl-text: var(--text, #e8e8e8);
   --wb-dl-muted: var(--muted, var(--text2, #a0a0b8));
   --wb-dl-border: var(--border, rgba(255, 255, 255, .10));
-  --wb-dl-accent: var(--accent, #6c63ff);
+  --wb-dl-accent: var(--accent, #E07A38);
   --wb-dl-good: var(--good, var(--success, #4caf50));
   --wb-dl-warn: var(--warn, var(--warning, #ffc870));
   --wb-dl-bad: var(--bad, var(--error, #f44336));

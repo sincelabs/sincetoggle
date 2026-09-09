@@ -49751,7 +49751,7 @@ test('selection shortcut is shipped, enabled by default, and keeps browser-speci
     assert.match(content, /shortcut\.setAttribute\('aria-label', strings\.askHighlightedText\);[\s\S]*?popup\.setAttribute\('aria-label', strings\.askHighlightedText\);/, `${label}: webpage shortcut localization should retain the selected-text prompt`);
     assert.match(content, /class="shortcut-icon" aria-hidden="true">\?<\/span>/, `${label}: shortcut should use the compact question-mark icon`);
     assert.match(content, /<button class="shortcut" type="button" aria-label="Ask Since Toggle about this" title="Ask Since Toggle about this" hidden>/, `${label}: shortcut fallback copy should retain its original selected-text prompt`);
-    assert.match(content, /\.shortcut \{[\s\S]*?border:1px solid rgba\(108,99,255,\.34\);[\s\S]*?background:var\(--bg\); color:var\(--accent\);[\s\S]*?box-shadow:0 10px 26px rgba\(35,30,95,\.22\)/, `${label}: shortcut should retain its purple treatment`);
+    assert.match(content, /\.shortcut \{[\s\S]*?border:1px solid rgba\(224, 122, 56, \.34\);[\s\S]*?background:var\(--bg\); color:var\(--accent\);[\s\S]*?box-shadow:0 10px 26px rgba\(26,25,23,\.22\)/, `${label}: shortcut should retain its accent treatment`);
     assert.match(content, /\.popup \{[\s\S]*?max-height:calc\(100vh - 16px\); overflow-y:auto; overscroll-behavior:contain;/, `${label}: expanded popup should remain scrollable inside short viewports`);
     assert.doesNotMatch(content, /M6\.8 8\.5 9\.2 14l2\.8-3\.4 2\.8 3\.4 2\.4-5\.5/, `${label}: discarded Since Toggle W outline should be removed`);
     assert.doesNotMatch(content, /M12 2\.8c\.65 3\.78/, `${label}: Claude-like sparkle icon should be removed`);

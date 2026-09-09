@@ -2,8 +2,9 @@
 """Regenerate every Since Toggle logo derivative from the canonical brand assets.
 
 The full-background artwork works well for social cards. Toolbar, favicon,
-and store-icon sizes use the matching transparent brain mark so browser chrome
-does not show it as a tiny boxed thumbnail. Requires Pillow.
+and store-icon sizes use the matching transparent app-icon tile (the Since
+Labs mark on its ink rounded square) so browser chrome does not show it as a
+tiny boxed thumbnail. Requires Pillow.
 """
 
 from __future__ import annotations
@@ -37,20 +38,13 @@ def full_logo(source: Image.Image, size: int) -> Image.Image:
 
 
 def icon_logo(mark: Image.Image, size: int) -> Image.Image:
-    """Crop the transparent mark around its alpha bounds with even padding."""
-    bounds = mark.getchannel("A").getbbox()
-    if not bounds:
-        raise SystemExit("Transparent logo mark has no visible pixels")
+    """Resize the transparent app-icon tile to the requested icon size.
 
-    left, top, right, bottom = bounds
-    subject_side = max(right - left, bottom - top)
-    side = round(subject_side * 1.14)
-    center_x = (left + right) / 2
-    center_y = (top + bottom) / 2
-    crop_left = round(center_x - side / 2)
-    crop_top = round(center_y - side / 2)
-    cropped = mark.crop((crop_left, crop_top, crop_left + side, crop_top + side))
-    return cropped.resize((size, size), Image.Resampling.LANCZOS)
+    The tile (mark on its own ink rounded square) is already a fully
+    composed, evenly padded square, unlike the old bare brain mark this
+    replaced — so no alpha-bounds cropping is needed here anymore.
+    """
+    return mark.resize((size, size), Image.Resampling.LANCZOS)
 
 
 def save_png(image: Image.Image, path: Path) -> None:
