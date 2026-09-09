@@ -359,8 +359,8 @@ async function runExtensionClientSmoke(context, fixtureUrl) {
     extensionId = String(loaded.id || '');
     assert.match(extensionId, /^[a-p]{32}$/, 'Chrome did not return a valid unpacked extension ID.');
     const installed = await browserCdp.send('Extensions.getExtensions');
-    const webBrain = installed.extensions.find(extension => extension.id === extensionId);
-    assert.equal(webBrain?.enabled, true, 'Chrome loaded the Since Toggle extension in a disabled state.');
+    const sincetoggle = installed.extensions.find(extension => extension.id === extensionId);
+    assert.equal(sincetoggle?.enabled, true, 'Chrome loaded the Since Toggle extension in a disabled state.');
     assert.equal(path.resolve(sincetoggle.path), EXTENSION_PATH);
 
     harness = await context.newPage();
