@@ -4613,7 +4613,7 @@ if (verboseBtn) {
       try {
         const response = await sendToBackground('get_debug_log');
         if (response?.log?.length) {
-          console.group('%c[Since Toggle Deep Verbose] %d entries', 'color:#7c3aed;font-weight:bold', response.log.length);
+          console.group('%c[Since Toggle Deep Verbose] %d entries', 'color:#e07a38;font-weight:bold', response.log.length);
           for (const entry of response.log) {
             const label = entry.type || 'unknown';
             const ts = entry.timestamp || '';
@@ -4636,7 +4636,7 @@ if (verboseBtn) {
           }
           console.groupEnd();
         } else {
-          console.log('%c[Since Toggle Deep Verbose] No entries yet — run a query first.', 'color:#7c3aed');
+          console.log('%c[Since Toggle Deep Verbose] No entries yet — run a query first.', 'color:#e07a38');
         }
       } catch (err) {
         console.error('[Since Toggle Deep Verbose] Failed to fetch debug log:', err);

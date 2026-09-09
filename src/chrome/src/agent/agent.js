@@ -12817,7 +12817,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       ctx.lineWidth = Math.max(2, Math.round(4 * Math.min(sx, sy)));
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
       ctx.strokeRect(x - 2, y - 2, w + 4, h + 4);
-      ctx.strokeStyle = 'rgba(255, 0, 64, 0.95)';
+      ctx.strokeStyle = 'rgba(224, 122, 56, 0.95)';
       ctx.strokeRect(x, y, w, h);
       const outBlob = await canvas.convertToBlob({ type: 'image/png' });
       const buf = await outBlob.arrayBuffer();

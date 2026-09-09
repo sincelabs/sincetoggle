@@ -143,8 +143,8 @@
     indicator.textContent = `● Since Toggle Teach${sessionName ? ` · ${sessionName}` : ''}`;
     Object.assign(indicator.style, {
       position: 'fixed', left: '12px', bottom: '12px', zIndex: '2147483647',
-      padding: '7px 10px', borderRadius: '999px', background: '#241b3d',
-      color: '#f7f3ff', border: '1px solid #8b5cf6', font: '600 12px system-ui',
+      padding: '7px 10px', borderRadius: '999px', background: '#8b3d18',
+      color: '#f7f3ff', border: '1px solid #e07a38', font: '600 12px system-ui',
       boxShadow: '0 4px 18px rgba(0,0,0,.3)', pointerEvents: 'none',
     });
     document.documentElement.appendChild(indicator);

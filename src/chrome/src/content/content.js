@@ -3639,7 +3639,7 @@
 
     const durationMs = Math.max(250, Math.min(15000, Math.round(Number(params?.durationMs) || 2500)));
     const requestedColor = typeof params?.color === 'string' ? params.color.trim() : '';
-    const color = requestedColor && globalThis.CSS?.supports?.('color', requestedColor) ? requestedColor : '#7c3aed';
+    const color = requestedColor && globalThis.CSS?.supports?.('color', requestedColor) ? requestedColor : '#e07a38';
     const labelText = String(params?.label || '').trim().slice(0, 100);
     const overlay = document.createElement('div');
     overlay.setAttribute('data-sincetoggle-dev-highlight', '');

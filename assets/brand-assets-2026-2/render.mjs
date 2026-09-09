@@ -179,7 +179,7 @@ const sharedCss = `
   .feature-row span + span::before {
     content: '·';
     margin: 0 0.75em;
-    color: #b8bad0;
+    color: #98938c;
   }
   .url {
     color: var(--purple);
@@ -403,7 +403,7 @@ function storeMarquee() {
       .store-orbit {
         position: absolute;
         inset: 0;
-        border: 1px solid rgba(178, 165, 255, 0.25);
+        border: 1px solid rgba(244, 210, 195, 0.25);
         border-radius: 50%;
         box-shadow: inset 0 0 80px rgba(196, 96, 42, 0.08);
       }
@@ -432,9 +432,9 @@ function storeMarquee() {
       .store-pills { display: flex; gap: 11px; margin-top: 40px; }
       .store-pills span {
         padding: 10px 15px 9px;
-        border: 1px solid rgba(180, 169, 255, 0.34);
+        border: 1px solid rgba(244, 210, 195, 0.34);
         border-radius: 999px;
-        background: rgba(111, 91, 230, 0.14);
+        background: rgba(224, 122, 56, 0.14);
         color: #e9e7f5;
         font-family: var(--mono);
         font-size: 13px;
@@ -477,7 +477,7 @@ function storeSmall() {
         height: 120px;
         display: grid;
         place-items: center;
-        border: 1px solid rgba(180, 169, 255, 0.22);
+        border: 1px solid rgba(244, 210, 195, 0.22);
         border-radius: 50%;
       }
       .small-store-icon .logo { width: 91px; height: 91px; border-radius: 22px; }
@@ -495,7 +495,7 @@ function storeSmall() {
         height: 2px;
         margin-top: 23px;
         border-radius: 99px;
-        background: linear-gradient(90deg, #8f79ff, var(--cyan));
+        background: linear-gradient(90deg, #e07a38, var(--cyan));
       }
     `,
   };

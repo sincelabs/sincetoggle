@@ -4,7 +4,7 @@
   --wb-dl-bg: var(--panel, var(--bg2, #2c2a28));
   --wb-dl-bg-strong: var(--panel-strong, var(--bg3, #38352f));
   --wb-dl-text: var(--text, #e8e8e8);
-  --wb-dl-muted: var(--muted, var(--text2, #a0a0b8));
+  --wb-dl-muted: var(--muted, var(--text2, #a49e94));
   --wb-dl-border: var(--border, rgba(255, 255, 255, .10));
   --wb-dl-accent: var(--accent, #e07a38);
   --wb-dl-good: var(--good, var(--success, #4caf50));

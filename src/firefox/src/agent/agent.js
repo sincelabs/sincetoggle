@@ -9554,7 +9554,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       context.lineWidth = Math.max(2, Math.round(4 * Math.min(scaleX, scaleY)));
       context.strokeStyle = 'rgba(255, 255, 255, 0.9)';
       context.strokeRect(x - 2, y - 2, width + 4, height + 4);
-      context.strokeStyle = 'rgba(255, 0, 64, 0.95)';
+      context.strokeStyle = 'rgba(224, 122, 56, 0.95)';
       context.strokeRect(x, y, width, height);
       const output = await canvas.convertToBlob({ type: 'image/png' });
       const bytes = new Uint8Array(await output.arrayBuffer());

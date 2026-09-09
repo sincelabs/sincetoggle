@@ -1,15 +1,15 @@
 :root {
-  --ink: #eef0ff;
-  --muted: #a6abc4;
-  --faint: #747b9c;
-  --canvas: #0c0f1b;
-  --panel: #12172a;
-  --panel-2: #171e35;
-  --panel-3: #1d2642;
-  --line: rgba(183, 191, 255, 0.13);
-  --line-strong: rgba(183, 191, 255, 0.24);
-  --brand: #7b72ff;
-  --brand-2: #a9a3ff;
+  --ink: #f5f1ea;
+  --muted: #98938c;
+  --faint: #6b6762;
+  --canvas: #141312;
+  --panel: #1c1a18;
+  --panel-2: #232120;
+  --panel-3: #2c2a28;
+  --line: rgba(240, 150, 92, 0.13);
+  --line-strong: rgba(240, 150, 92, 0.24);
+  --brand: #e07a38;
+  --brand-2: #f0965c;
   --signal: #72e4cf;
   --signal-soft: rgba(114, 228, 207, 0.12);
   --warn: #ffc96b;
@@ -24,15 +24,15 @@
 }
 
 :root[data-theme="light"] {
-  --ink: #211b34;
-  --muted: #645d78;
-  --faint: #837c94;
-  --canvas: #f3f2fb;
+  --ink: #1a1917;
+  --muted: #5d594f;
+  --faint: #8b867e;
+  --canvas: #f7f5f2;
   --panel: #ffffff;
-  --panel-2: #f8f7ff;
-  --panel-3: #eeecfb;
-  --line: rgba(52, 40, 90, 0.12);
-  --line-strong: rgba(52, 40, 90, 0.22);
+  --panel-2: #faf8f5;
+  --panel-3: #efece7;
+  --line: rgba(26, 25, 23, 0.12);
+  --line-strong: rgba(26, 25, 23, 0.22);
   --brand: #a34a1f;
   --brand-2: #8b3d18;
   --signal: #147b6b;
@@ -41,7 +41,7 @@
   --warn-soft: rgba(156, 98, 0, 0.09);
   --danger: #b83d50;
   --danger-soft: rgba(184, 61, 80, 0.08);
-  --shadow: 0 24px 70px rgba(52, 40, 90, 0.12);
+  --shadow: 0 24px 70px rgba(26, 25, 23, 0.12);
   color-scheme: light;
 }
 
@@ -66,7 +66,7 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: radial-gradient(circle at 78% -10%, rgba(123, 114, 255, 0.18), transparent 34rem);
+  background: radial-gradient(circle at 78% -10%, rgba(224, 122, 56, 0.18), transparent 34rem);
 }
 
 a { color: var(--brand-2); text-decoration-thickness: 1px; text-underline-offset: 3px; }
@@ -554,7 +554,7 @@ tr:last-child td { border-bottom: 0; }
   tab-size: 2;
   white-space: pre;
 }
-:root[data-theme="light"] .code-block { background: #242035; color: #f7f5ff; }
+:root[data-theme="light"] .code-block { background: #232120; color: #f5f1ea; }
 .code-block code { padding: 0; border: 0; background: transparent; color: inherit; font-size: inherit; }
 
 .bridge-map {

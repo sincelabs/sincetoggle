@@ -92,7 +92,7 @@ const baseCss = `
     --accent:#df573f; --accent2:#4d7df5; --border:rgba(31,40,64,0.14);
     --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(68,50,40,0.20); }
   .read { --bg1:#fffaf3; --bg2:#eef5ff; --ink:#1a1917; --muted:#565e70;
-    --accent:#6757ff; --accent2:#ff6f9d; --border:rgba(37,42,66,0.12);
+    --accent:#e07a38; --accent2:#e07a38; --border:rgba(37,42,66,0.12);
     --panel:rgba(255,255,255,0.88); --shadow:0 28px 70px rgba(31,35,62,0.20); }
   .plan { --bg1:#111827; --bg2:#223040; --ink:#f8fafc; --muted:#c7d2de;
     --accent:#45d483; --accent2:#ffc857; --border:rgba(255,255,255,0.18);
@@ -101,14 +101,14 @@ const baseCss = `
     --accent:#3e6ff4; --accent2:#28a96b; --border:rgba(25,38,68,0.13);
     --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(24,52,90,0.19); }
   .hero-light { --bg1:#f7f9ff; --bg2:#fff1f6; --ink:#141828; --muted:#586074;
-    --accent:#d6417f; --accent2:#12a06a; --border:rgba(28,34,64,0.13);
+    --accent:#e07a38; --accent2:#12a06a; --border:rgba(28,34,64,0.13);
     --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(40,44,80,0.18); }
   .plan-light { --bg1:#f5fbf7; --bg2:#eef4ff; --ink:#1a1917; --muted:#586374;
     --accent:#12a25f; --accent2:#dd9414; --border:rgba(24,38,48,0.13);
     --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(28,50,44,0.18); }
   .proof { --bg1:#f7f6ff; --bg2:#eef4ff; --ink:#1a1917; --muted:#5a6274;
-    --accent:#6e56cf; --accent2:#f0a52b; --border:rgba(30,34,64,0.13);
-    --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(38,34,78,0.18); }
+    --accent:#e07a38; --accent2:#f0a52b; --border:rgba(30,34,64,0.13);
+    --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(139, 61, 24,0.18); }
   .apocalypse { --bg1:#11100e; --bg2:#1c1a14; --ink:#f5f0e6; --muted:#a89e8a;
     --accent:#f7bd5f; --accent2:#f0a72f; --border:rgba(247,189,95,0.22);
     --panel:rgba(247,189,95,0.07); --shadow:0 28px 70px rgba(0,0,0,0.5); }
@@ -390,7 +390,7 @@ function offerScene() {
           </span>
           <span class="num" style="font-size:122px; line-height:1;">$5<span style="font-family:var(--ui); font-size:32px; font-weight:600; color:var(--muted); letter-spacing:0; margin-left:4px;">/mo</span></span>
           <span style="padding:13px 19px; border-radius:999px; background:var(--accent); color:#fff; font-family:var(--mono); font-size:18px; font-weight:600; letter-spacing:0.06em;
-            text-transform:uppercase; transform:rotate(3deg); box-shadow:0 14px 34px rgba(245,108,168,0.35);">Save 35%</span>
+            text-transform:uppercase; transform:rotate(3deg); box-shadow:0 14px 34px rgba(224, 122, 56,0.35);">Save 35%</span>
         </div>
         <div class="sub" style="font-size:24px; margin-top:30px;">No setup, no API keys &mdash; just install and go.</div>
         <div class="sub" style="font-size:19px; margin-top:12px; opacity:0.8;">Or free forever with your own keys or local models.</div>

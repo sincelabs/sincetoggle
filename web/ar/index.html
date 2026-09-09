@@ -424,7 +424,7 @@
       font-size: 13px;
       transition: background 0.2s, transform 0.1s;
     }
-    .nav-cta:hover { background: #5a52d5 !important; transform: translateY(-1px); text-decoration: none !important; }
+    .nav-cta:hover { background: #e07a38 !important; transform: translateY(-1px); text-decoration: none !important; }
 
     /* GitHub stars pill — populated via JS on load, cached in localStorage. */
     .gh-stars {
@@ -547,7 +547,7 @@
       color: #fff;
       box-shadow: 0 4px 24px var(--accent-glow);
     }
-    .btn-primary:hover { background: #5a52d5; transform: translateY(-2px); text-decoration: none; color: #fff; }
+    .btn-primary:hover { background: #e07a38; transform: translateY(-2px); text-decoration: none; color: #fff; }
     .btn-secondary {
       background: var(--surface);
       color: var(--text);
@@ -567,7 +567,7 @@
     .hero-proof {
       --marker-featured: linear-gradient(100deg, rgba(196,96,42,0.22), rgba(240,150,92,0.34));
       --marker-hunt: linear-gradient(100deg, rgba(255,159,67,0.22), rgba(255,196,91,0.38));
-      --marker-press: linear-gradient(100deg, rgba(99,102,241,0.18), rgba(56,189,248,0.28));
+      --marker-press: linear-gradient(100deg, rgba(196,96,42,0.22), rgba(240,150,92,0.28));
       --marker-users: linear-gradient(100deg, rgba(196,96,42,0.16), rgba(104,211,178,0.28));
       display: flex;
       flex-wrap: wrap;
@@ -583,7 +583,7 @@
     /* The cream theme washes out low-alpha ink, so the light palette runs a
        touch denser and more saturated to land at the same visual weight. */
     :root[data-theme="light"] .hero-proof {
-      --marker-featured: linear-gradient(100deg, rgba(224,122,56,0.26), rgba(217,112,255,0.34));
+      --marker-featured: linear-gradient(100deg, rgba(224,122,56,0.26), rgba(224, 122, 56,0.34));
       --marker-hunt: linear-gradient(100deg, rgba(255,138,30,0.30), rgba(255,183,60,0.42));
       --marker-press: linear-gradient(100deg, rgba(163,74,31,0.20), rgba(14,165,233,0.25));
       --marker-users: linear-gradient(100deg, rgba(224,122,56,0.20), rgba(45,136,102,0.26));
@@ -781,7 +781,7 @@
       display: grid;
       place-items: center;
       color: #fff;
-      background: rgba(108, 99, 255, 0.92);
+      background: rgba(224, 122, 56, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.42);
       border-radius: 50%;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
@@ -1440,7 +1440,7 @@
       white-space: pre;
       text-align: left;
     }
-    .sp-code-body .del { color: #f38ba8; background: rgba(243,139,168,0.08); }
+    .sp-code-body .del { color: #f4d2c3; background: rgba(244, 210, 195,0.08); }
     .sp-code-body .add { color: #8ce3ad; background: rgba(140,227,173,0.10); }
     .palette-dot {
       width: 11px;
@@ -1469,7 +1469,7 @@
       box-shadow: 0 10px 28px rgba(0,0,0,0.40);
       background:
         linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.72) 100%),
-        linear-gradient(135deg, #2d1b69, #e07a38 65%, #ec4899);
+        linear-gradient(135deg, #8b3d18, #e07a38 65%, #e07a38);
       color: #fff;
     }
     /* Soft frosted play disc — readable as "video" without the loud
@@ -1691,7 +1691,7 @@
     .pp-thumb.t2 { background: linear-gradient(135deg, rgba(224,122,56,0.30), rgba(224,122,56,0.06)); }
     .pp-thumb.t3 { background: linear-gradient(135deg, rgba(52,211,153,0.30), rgba(52,211,153,0.06)); }
     .pp-thumb.t4 { background: linear-gradient(135deg, rgba(245,215,110,0.34), rgba(245,215,110,0.07)); }
-    .pp-thumb.t5 { background: linear-gradient(135deg, rgba(236,72,153,0.26), rgba(236,72,153,0.05)); }
+    .pp-thumb.t5 { background: linear-gradient(135deg, rgba(224, 122, 56,0.26), rgba(224, 122, 56,0.05)); }
     .pp-thumb.t6 { background: linear-gradient(135deg, rgba(96,165,250,0.30), rgba(96,165,250,0.06)); }
     .pp-name {
       font-size: 11px;
@@ -2185,7 +2185,7 @@
       text-transform: uppercase;
       letter-spacing: .08em;
     }
-    .apocalypse-module.is-vision { --module-color: #8f88ff; margin-inline-start: 26px; }
+    .apocalypse-module.is-vision { --module-color: #e07a38; margin-inline-start: 26px; }
     .apocalypse-module.is-knowledge { --module-color: #55b9d5; margin-inline-start: 52px; }
     .apocalypse-module.is-first-aid { --module-color: #ef7769; margin-inline-start: 78px; }
     .apocalypse-module.is-first-aid .apocalypse-module-copy strong { white-space: normal; }
@@ -2267,7 +2267,7 @@
     .cc-core {
       width: 76px; height: 76px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--accent2), var(--accent) 60%, #4f46c4);
+      background: radial-gradient(circle at 30% 30%, var(--accent2), var(--accent) 60%, #c4602a);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2359,7 +2359,7 @@
     .pn-bubble.anthropic { background: rgba(204,149,96,0.12); color: #cc9560; border-color: rgba(204,149,96,0.25); }
     .pn-bubble.openrouter { background: rgba(224,122,56,0.12); color: var(--accent2); border-color: rgba(224,122,56,0.3); }
     .pn-bubble.studiolm { background: rgba(245,158,11,0.12); color: #f59e0b; border-color: rgba(245,158,11,0.25); }
-    .pn-bubble.vllm { background: rgba(99,102,241,0.12); color: #6366f1; border-color: rgba(99,102,241,0.25); }
+    .pn-bubble.vllm { background: rgba(163,74,31,0.12); color: #c4602a; border-color: rgba(163,74,31,0.25); }
     /* Grok is a white-on-black brand. In dark mode the bubble is near-white
        on dark; light mode inverts to dark glyph on cream. */
     .pn-bubble.grok { background: rgba(255,255,255,0.06); color: #e5e5e5; border-color: rgba(255,255,255,0.2); }

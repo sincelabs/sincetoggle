@@ -4,7 +4,7 @@
   --panel-strong:#38352f;
   --paper:#20263a;
   --text:#e8e8e8;
-  --muted:#a0a0b8;
+  --muted:#a49e94;
   --border:rgba(255,255,255,.08);
   --accent:#e07a38;
   --accent-soft:rgba(224,122,56,.13);
@@ -12,7 +12,7 @@
   --warn:#ffc870;
   --bad:#f44336;
   --page-glow:rgba(224,122,56,.12);
-  --topbar-bg:rgba(26,26,46,.97);
+  --topbar-bg:rgba(46, 30, 15,.97);
   --focus-ring:rgba(224,122,56,.42);
   --status-bad-bg:rgba(244,67,54,.08);
   --status-good-bg:rgba(96,211,178,.08);
@@ -24,13 +24,13 @@
   --archive-start:rgba(255,200,112,.2);
   --archive-end:rgba(224,122,56,.12);
   --archive-shadow:rgba(224,122,56,.18);
-  --choice-bg:rgba(26,26,46,.28);
+  --choice-bg:rgba(46, 30, 15,.28);
   --accent-border:rgba(224,122,56,.72);
-  --symbol-text:#d9d6ff;
+  --symbol-text:#dbd3c6;
   --symbol-border:rgba(224,122,56,.35);
   --symbol-bg:rgba(224,122,56,.1);
   --image-bg:rgba(96,211,178,.18);
-  --current-bg:rgba(26,26,46,.3);
+  --current-bg:rgba(46, 30, 15,.3);
   color-scheme:dark;
 }
 :root[data-theme="light"] {
