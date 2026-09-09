@@ -4210,4 +4210,3 @@ chrome.commands.onCommand.addListener(async (command) => {
   });
   await uiScaleCommandQueue;
 });
-# Fix: restored loadWebBrainGroups() at line 1407 (was loadSince ToggleGroups)
