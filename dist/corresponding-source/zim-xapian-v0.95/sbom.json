@@ -166,8 +166,8 @@
   },
   {
    "file": "README.md",
-   "bytes": 1493,
-   "sha256": "99f32e682d001a1056d62cc56f7680a45fc59e3af9ae8222c1b8c09b8b174316",
+   "bytes": 1501,
+   "sha256": "09c5db0d26b0ee9a45b2a2350b0db7bc1c359d68eeaea8c6bc91b95141a6d1d0",
    "note": "standalone prerequisites and rebuild commands"
   }
  ],
