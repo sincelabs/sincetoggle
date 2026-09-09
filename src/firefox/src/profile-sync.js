@@ -1,15 +1,15 @@
 import { USER_MEMORY_STORAGE_KEY, normalizeUserMemoryStore } from './agent/user-memory.js';
 
 export const PROFILE_SYNC_KEYS = {
-  enabled: 'profileSyncEnabled', token: 'profileSyncToken', deviceGuid: 'webbrainDeviceGuid',
+  enabled: 'profileSyncEnabled', token: 'profileSyncToken', deviceGuid: 'sincetoggleDeviceGuid',
   metadata: 'profileSyncMetadataV1', recovery: 'profileSyncRecoveryV1', everEnabled: 'profileSyncEverEnabled',
 };
 export const PROFILE_SYNC_DATA_KEYS = [USER_MEMORY_STORAGE_KEY, 'providers', 'activeProvider', 'visionModel', 'transcriptionModel', 'profileEnabled', 'profileText'];
-const API = 'https://api.webbrain.one/v1/sync';
+const API = 'https://api.sincetoggle.one/v1/sync';
 const ITERATIONS = 600000;
 const NON_PORTABLE_PROVIDER_ID = 'webgpu';
 const PORTABLE_ACTIVE_PROVIDER_KEY = 'profileSyncPortableActiveProvider';
-const DEFAULT_PORTABLE_ACTIVE_PROVIDER = 'webbrain_cloud';
+const DEFAULT_PORTABLE_ACTIVE_PROVIDER = 'sincetoggle_cloud';
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 const b64 = bytes => {
@@ -231,7 +231,7 @@ export class ProfileSyncManager {
     if (required.some(type => !granted.has(type))) { this.lock(); const error = new Error('Cloud Sync data permission was revoked. Unlock to grant it again.'); error.consent = true; throw error; }
   }
   async authStart(email) { const s = await this.storage.get(PROFILE_SYNC_KEYS.deviceGuid); const verifier = randomB64(32); const r = await this.request('/auth/start', { method: 'POST', body: JSON.stringify({ email, device_guid: s[PROFILE_SYNC_KEYS.deviceGuid], verifier }) }); return { ...r.body, verifier }; }
-  async authStatus(challengeId, verifier) { const q = new URLSearchParams({ challenge_id: challengeId }); const r = await this.request(`/auth/status?${q}`, { headers: { 'X-WebBrain-Sync-Verifier': verifier } }); if (r.body.token) await this.storage.set({ [PROFILE_SYNC_KEYS.token]: r.body.token }); return r.body; }
+  async authStatus(challengeId, verifier) { const q = new URLSearchParams({ challenge_id: challengeId }); const r = await this.request(`/auth/status?${q}`, { headers: { 'X-Since Toggle-Sync-Verifier': verifier } }); if (r.body.token) await this.storage.set({ [PROFILE_SYNC_KEYS.token]: r.body.token }); return r.body; }
   async unlock(password, create = false) { this.sessionGeneration++; this.password = password; this.status = 'syncing'; try { await this.sync({ create }); this.status = 'current'; } catch (e) { this.password = null; this.key = null; this.status = e.consent ? 'locked' : e.status === 404 ? 'empty' : [402, 403].includes(e.status) ? 'subscription' : e instanceof TypeError ? 'offline' : 'error'; throw e; } return this.state(); }
   lock() { this.sessionGeneration++; clearTimeout(this.timer); this.timer = null; this.password = null; this.key = null; this.envelope = null; this.status = 'locked'; }
   noteChanges(changes) {

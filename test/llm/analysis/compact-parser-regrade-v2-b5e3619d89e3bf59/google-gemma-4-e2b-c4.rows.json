@@ -2,7 +2,7 @@
   "label": "google-gemma-4-e2b-c4",
   "firstTurn": {
     "kind": "first-turn",
-    "sourceDir": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results\\2026-09-07-google-gemma-4-e2b-compact-full-c4-v1_chrome_google_gemma-4-e2b_compact",
+    "sourceDir": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results\\2026-09-07-google-gemma-4-e2b-compact-full-c4-v1_chrome_google_gemma-4-e2b_compact",
     "sourceSummarySha256": "50912ed8398b070b149f3ca2026a063d533eb6a7a94907c0d72a8ef37ade652c",
     "rows": 100,
     "structured": 74,
@@ -619,7 +619,7 @@
         "firstToolCall": {
           "name": "navigate",
           "args": {
-            "url": "https://github.com/esokullu/webbrain/releases/new"
+            "url": "https://github.com/esokullu/sincetoggle/releases/new"
           }
         },
         "verdict": "exact",
@@ -634,7 +634,7 @@
         "firstToolCall": {
           "name": "navigate",
           "args": {
-            "url": "https://github.com/esokullu/webbrain/pulls"
+            "url": "https://github.com/esokullu/sincetoggle/pulls"
           }
         },
         "verdict": "name_only",
@@ -694,7 +694,7 @@
         "firstToolCall": {
           "name": "navigate",
           "args": {
-            "url": "https://github.com/esokullu/webbrain"
+            "url": "https://github.com/esokullu/sincetoggle"
           }
         },
         "verdict": "other",
@@ -829,7 +829,7 @@
         "firstToolCall": {
           "name": "fetch_url",
           "args": {
-            "url": "https://github.com/esokullu/webbrain/raw/main/README.md"
+            "url": "https://github.com/esokullu/sincetoggle/raw/main/README.md"
           }
         },
         "verdict": "other",
@@ -1374,7 +1374,7 @@
   },
   "scenarios": {
     "kind": "scenarios",
-    "sourceDir": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results-scenarios\\2026-09-07-google-gemma-4-e2b-compact-full-c4-v1_chrome_google_gemma-4-e2b_compact",
+    "sourceDir": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results-scenarios\\2026-09-07-google-gemma-4-e2b-compact-full-c4-v1_chrome_google_gemma-4-e2b_compact",
     "sourceSummarySha256": "4639ef6cc0719ac167a15c3771cbfb3ad1534b6ae5c38138ffd25aafe8eacc6a",
     "rows": 100,
     "structured": 57,

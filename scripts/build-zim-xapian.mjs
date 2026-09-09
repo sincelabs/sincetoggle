@@ -10,7 +10,7 @@
  * cross-compile, and it wants cores and RAM, not a graphics card.
  *
  * It deliberately does NOT use upstream's `libzim_release` target, which
- * downloads a prebuilt libzim tarball. WebBrain cannot provide corresponding
+ * downloads a prebuilt libzim tarball. Since Toggle cannot provide corresponding
  * source for a binary it did not build. See docs/offline-rag-licensing.md.
  *
  *   node scripts/build-zim-xapian.mjs                 # full build
@@ -82,7 +82,7 @@ const SHIPPED_ARTIFACTS = ['libzim-wasm.js', 'libzim-wasm.wasm'];
 const LINK_STACK_BYTES = 536870912;
 const LINK_OPT_LADDER = [3, 2, 1];
 let linkOptimization = '';
-const IMAGE_TAG = 'webbrain-emscripten-libzim:3.1.41';
+const IMAGE_TAG = 'sincetoggle-emscripten-libzim:3.1.41';
 const workTree = workOverride || path.join(root, '.build', 'zim-xapian');
 const vendorDirectories = [
   path.join(root, 'src', 'chrome', 'vendor', 'libzim'),
@@ -493,7 +493,7 @@ function correspondingSourceReadme() {
   return `# Xapian/libzim WebAssembly corresponding source
 
 This directory contains the source archives, license texts, build inputs, and
-the exact WebBrain driver used to produce the bundled runtime. The build pins
+the exact Since Toggle driver used to produce the bundled runtime. The build pins
 javascript-libzim ${PIN.tag} at commit
 \`${PIN.commit}\` and Emscripten ${PIN.emscripten}.
 
@@ -521,7 +521,7 @@ allow the upstream/dependency download fallback:
 node scripts/build-zim-xapian.mjs --work .build/zim-xapian --download-source
 \`\`\`
 
-Inside a full WebBrain checkout, \`npm run build:zim-xapian\` invokes the same
+Inside a full Since Toggle checkout, \`npm run build:zim-xapian\` invokes the same
 driver. The source archives in this directory are the immutable default inputs
 retained with the release; their sizes and SHA-256 hashes are recorded in
 \`sbom.json\`.
@@ -579,7 +579,7 @@ function writeRecords(artifacts, correspondingSource) {
   for (const directory of vendorDirectories) {
     mkdirSync(directory, { recursive: true });
     writeFileSync(path.join(directory, 'sbom.json'), `${JSON.stringify(sbom, null, 2)}\n`);
-    writeFileSync(path.join(directory, 'README.webbrain.md'), vendorReadme(artifacts));
+    writeFileSync(path.join(directory, 'README.sincetoggle.md'), vendorReadme(artifacts));
   }
   writeFileSync(path.join(correspondingSourceDir, 'sbom.json'), `${JSON.stringify(sbom, null, 2)}\n`);
 }
@@ -592,7 +592,7 @@ function vendorReadme(artifacts) {
   return `# Vendored Xapian/libzim WebAssembly runtime
 
 Built from source by \`scripts/build-zim-xapian.mjs\`. Do not hand-copy an
-upstream release asset here: WebBrain cannot provide corresponding source for a
+upstream release asset here: Since Toggle cannot provide corresponding source for a
 binary it did not build. See \`docs/offline-rag-licensing.md\`.
 
 - Upstream: ${PIN.repository} \`${PIN.tag}\` (\`${PIN.commit}\`)
@@ -604,9 +604,9 @@ ${rows}${fallback}
 ## License
 
 This runtime is GPL. Any release artifact that bundles it is conveyed under
-**GPL-3.0-or-later**. WebBrain 33.0.0 and later uses that license because the
+**GPL-3.0-or-later**. Since Toggle 33.0.0 and later uses that license because the
 distributed extension integrates this runtime. Complete corresponding source for these
-binaries is published as a \`webbrain-zim-xapian-*-corresponding-source.zip\`
+binaries is published as a \`sincetoggle-zim-xapian-*-corresponding-source.zip\`
 release asset and must accompany every release.
 
 To rebuild: \`npm run build:zim-xapian\`

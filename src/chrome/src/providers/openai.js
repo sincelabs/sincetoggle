@@ -171,15 +171,15 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
         headers['Authorization'] = `Bearer ${this.config.apiKey}`;
       }
     }
-    if (providerName === 'webbrain-cloud') {
-      if (this.config.deviceGuid) headers['X-WebBrain-Device-Id'] = this.config.deviceGuid;
-      headers['X-WebBrain-Client'] = 'extension';
-      headers['X-WebBrain-Help-Improve'] = this.config.helpImproveWebBrain === false ? '0' : '1';
+    if (providerName === 'sincetoggle-cloud') {
+      if (this.config.deviceGuid) headers['X-Since Toggle-Device-Id'] = this.config.deviceGuid;
+      headers['X-Since Toggle-Client'] = 'extension';
+      headers['X-Since Toggle-Help-Improve'] = this.config.helpImproveSince Toggle === false ? '0' : '1';
     }
     // OpenRouter-specific headers
     if (providerName === 'openrouter') {
-      headers['HTTP-Referer'] = this.config.siteUrl || 'https://github.com/webbrain-one/webbrain';
-      headers['X-Title'] = 'WebBrain';
+      headers['HTTP-Referer'] = this.config.siteUrl || 'https://github.com/sincetoggle-one/sincetoggle';
+      headers['X-Title'] = 'Since Toggle';
     }
     if (providerName === 'cloudflare') {
       const configuredGatewayId = String(this.config.gatewayId || '').trim();
@@ -191,7 +191,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
   }
 
   async sendRuntimeEvents(sessionId, events, { timeoutMs = 2500 } = {}) {
-    if (String(this.config.providerName || '').toLowerCase() !== 'webbrain-cloud') {
+    if (String(this.config.providerName || '').toLowerCase() !== 'sincetoggle-cloud') {
       return { ok: false, retryable: false, status: 0 };
     }
     const controller = typeof AbortController === 'function' ? new AbortController() : null;
@@ -245,8 +245,8 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
     body.temperature = options.temperature ?? 0.7;
   }
 
-  _webbrainSubscribeUrl() {
-    const url = new URL('https://webbrain.one/subscribe');
+  _sincetoggleSubscribeUrl() {
+    const url = new URL('https://sincetoggle.one/subscribe');
     if (this.config.deviceGuid) {
       url.searchParams.set('client_reference_id', this.config.deviceGuid);
     }
@@ -255,18 +255,18 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
 
   _formatHttpError(status, body) {
     const providerName = (this.config.providerName || '').toLowerCase();
-    if (status === 402 && providerName === 'webbrain-cloud') {
-      let actionUrl = this._webbrainSubscribeUrl();
+    if (status === 402 && providerName === 'sincetoggle-cloud') {
+      let actionUrl = this._sincetoggleSubscribeUrl();
       let actionLabel = 'Subscribe for more usage';
-      let message = 'Daily free WebBrain Compass allowance used.';
+      let message = 'Daily free Since Toggle Compass allowance used.';
       try {
         const parsed = JSON.parse(body || '{}');
         if (parsed.upgrade_url) {
           actionUrl = parsed.upgrade_url;
-          actionLabel = 'Upgrade to WebBrain Plus';
+          actionLabel = 'Upgrade to Since Toggle Plus';
         } else if (parsed.subscribe_url) {
           actionUrl = parsed.subscribe_url;
-        } else if (parsed.error?.code === 'webbrain_cloud_plus_tier_exceeded') {
+        } else if (parsed.error?.code === 'sincetoggle_cloud_plus_tier_exceeded') {
           actionUrl = '';
         }
         message = parsed.error?.message || message;
@@ -329,12 +329,12 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
     return !(this.config.omitToolsWhenImagesPresent && this._messagesContainImage(messages));
   }
 
-  _addWebBrainCloudContext(body, options) {
-    if (String(this.config.providerName || '').toLowerCase() !== 'webbrain-cloud') return;
-    const sessionId = String(options.webbrainSessionId || '').trim();
+  _addSince ToggleCloudContext(body, options) {
+    if (String(this.config.providerName || '').toLowerCase() !== 'sincetoggle-cloud') return;
+    const sessionId = String(options.sincetoggleSessionId || '').trim();
     if (sessionId) body.session_id = sessionId.slice(0, 200);
-    const generationName = String(options.webbrainGenerationName || '').trim().toLowerCase();
-    const runtimeConfig = normalizeRuntimeTraceConfig(options.webbrainRuntimeConfig);
+    const generationName = String(options.sincetoggleGenerationName || '').trim().toLowerCase();
+    const runtimeConfig = normalizeRuntimeTraceConfig(options.sincetoggleRuntimeConfig);
     if (generationName || runtimeConfig) {
       const trace = body.trace && typeof body.trace === 'object' && !Array.isArray(body.trace)
         ? body.trace
@@ -467,7 +467,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
     }
     body = this._mergeConfiguredRequestBody(body, options);
     body = applyOpenRouterRoutingVariant(body, this.config);
-    this._addWebBrainCloudContext(body, options);
+    this._addSince ToggleCloudContext(body, options);
     if (stream && body.tools && this.config.supportsToolStreamOption === true) {
       body.tool_stream = true;
     }
@@ -559,7 +559,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
         description: fn.description,
         parameters: fn.parameters || { type: 'object', properties: {} },
         // Chat Completions is non-strict by default. Preserve that behavior
-        // unless a WebBrain tool explicitly opted into strict schemas.
+        // unless a Since Toggle tool explicitly opted into strict schemas.
         strict: fn.strict === true,
       };
     });

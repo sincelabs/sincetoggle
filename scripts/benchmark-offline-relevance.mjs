@@ -78,7 +78,7 @@ try {
       `${doc.id}:0`, doc.id, 'relevance-fixture', doc.title, doc.language,
       doc.collection, 'fixture', 'CC0', doc.locator, doc.text, searchTerms,
       'a'.repeat(64), Math.ceil(doc.text.length / 4), ordinal,
-      `webbrain-reader://emergency-box/${doc.id}?passage=${encodeURIComponent(`${doc.id}:0`)}`,
+      `sincetoggle-reader://emergency-box/${doc.id}?passage=${encodeURIComponent(`${doc.id}:0`)}`,
     ]).stepReset().clearBindings();
   }
   db.exec('COMMIT');

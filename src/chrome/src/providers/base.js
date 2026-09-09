@@ -150,18 +150,18 @@ export class BaseLLMProvider {
   _mapMessages(messages) {
     const sanitized = (Array.isArray(messages) ? messages : []).map((message) => {
       if (!message || typeof message !== 'object' || (
-        !Object.hasOwn(message, 'webbrainPlannerClarification')
-        && !Object.hasOwn(message, 'webbrainAppOwned')
-        && !Object.hasOwn(message, 'webbrainAppOwnedKind')
-        && !Object.hasOwn(message, 'webbrainSelectionScopeRestored')
+        !Object.hasOwn(message, 'sincetogglePlannerClarification')
+        && !Object.hasOwn(message, 'sincetoggleAppOwned')
+        && !Object.hasOwn(message, 'sincetoggleAppOwnedKind')
+        && !Object.hasOwn(message, 'sincetoggleSelectionScopeRestored')
       )) {
         return message;
       }
       const {
-        webbrainPlannerClarification: _plannerClarification,
-        webbrainAppOwned: _appOwned,
-        webbrainAppOwnedKind: _appOwnedKind,
-        webbrainSelectionScopeRestored: _selectionScopeRestored,
+        sincetogglePlannerClarification: _plannerClarification,
+        sincetoggleAppOwned: _appOwned,
+        sincetoggleAppOwnedKind: _appOwnedKind,
+        sincetoggleSelectionScopeRestored: _selectionScopeRestored,
         ...providerMessage
       } = message;
       return providerMessage;

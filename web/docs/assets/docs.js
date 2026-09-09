@@ -6,7 +6,7 @@
 
   function preferredTheme() {
     try {
-      const saved = localStorage.getItem('webbrain-theme');
+      const saved = localStorage.getItem('sincetoggle-theme');
       if (saved === 'light' || saved === 'dark') return saved;
     } catch (_) {}
     return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
@@ -19,7 +19,7 @@
       themeButton.textContent = theme === 'dark' ? '☀' : '☾';
     }
     if (persist) {
-      try { localStorage.setItem('webbrain-theme', theme); } catch (_) {}
+      try { localStorage.setItem('sincetoggle-theme', theme); } catch (_) {}
     }
   }
 

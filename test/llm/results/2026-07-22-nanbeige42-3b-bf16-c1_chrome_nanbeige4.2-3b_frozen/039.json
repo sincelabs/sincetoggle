@@ -3,7 +3,7 @@
   "user": "verify the form is ready before submitting",
   "mode": "act",
   "tab": {
-    "url": "https://github.com/esokullu/webbrain/releases/new",
+    "url": "https://github.com/esokullu/sincetoggle/releases/new",
     "title": "New Release"
   },
   "latencyMs": 1746,

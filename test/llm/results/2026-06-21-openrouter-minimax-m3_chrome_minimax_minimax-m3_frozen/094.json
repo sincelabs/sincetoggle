@@ -10,7 +10,7 @@
   "firstToolCall": {
     "name": "execute_js",
     "args": {
-      "code": "\n(() => {\n  // Remove any previous zoom style we added\n  const existing = document.getElementById('webbrain-zoom-style');\n  if (existing) existing.remove();\n\n  // Determine current zoom level (default 1)\n  let currentZoom = 1;\n  if (existing) {\n    const m = existing.textContent.match(/zoom:\\s*([\\d.]+)/);\n    if (m) currentZoom = parseFloat(m[1]);\n  }\n\n  // Increase by 25% each time, cap at 2x\n  const newZoom = Math.min(currentZoom * 1.25, 2);\n\n  const style = document.createElement('style');\n  style.id = 'webbrain-zoom-style';\n  style.textContent = `html { zoom: ${newZoom} !important; }`;\n  document.head.appendChild(style);\n\n  return { previousZoom: currentZoom, newZoom };\n})();\n"
+      "code": "\n(() => {\n  // Remove any previous zoom style we added\n  const existing = document.getElementById('sincetoggle-zoom-style');\n  if (existing) existing.remove();\n\n  // Determine current zoom level (default 1)\n  let currentZoom = 1;\n  if (existing) {\n    const m = existing.textContent.match(/zoom:\\s*([\\d.]+)/);\n    if (m) currentZoom = parseFloat(m[1]);\n  }\n\n  // Increase by 25% each time, cap at 2x\n  const newZoom = Math.min(currentZoom * 1.25, 2);\n\n  const style = document.createElement('style');\n  style.id = 'sincetoggle-zoom-style';\n  style.textContent = `html { zoom: ${newZoom} !important; }`;\n  document.head.appendChild(style);\n\n  return { previousZoom: currentZoom, newZoom };\n})();\n"
     }
   },
   "toolCallSource": "tool_calls",

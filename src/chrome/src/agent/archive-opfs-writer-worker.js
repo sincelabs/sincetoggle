@@ -6,7 +6,7 @@
  * createWritable({ keepExistingData: true }) does not.
  */
 
-const ARCHIVE_DIRECTORY = 'webbrain-apocalypse';
+const ARCHIVE_DIRECTORY = 'sincetoggle-apocalypse';
 
 let access = null;
 

@@ -3,7 +3,7 @@
   "models": {
     "deepseek_v4_flash_vision": {
       "public_nvfp4": {
-        "url": "https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-Vision-NVFP4",
+        "url": "https://huggingface.co/sincetoggle-one/DeepSeek-V4-Flash-Vision-NVFP4",
         "revision": "12b653e63329ac3c20395f9aeeb1bb8264d2db8b",
         "file_count": 74,
         "total_bytes": 169215268442,
@@ -14,7 +14,7 @@
         }
       },
       "public_bf16": {
-        "url": "https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-Vision-BF16",
+        "url": "https://huggingface.co/sincetoggle-one/DeepSeek-V4-Flash-Vision-BF16",
         "revision": "60c441aa1c7386387c89ddaff703136395ad8d8b",
         "file_count": 25,
         "total_bytes": 915678201,
@@ -26,7 +26,7 @@
         }
       },
       "private_training_archive": {
-        "url": "https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-Vision-Training-Archive",
+        "url": "https://huggingface.co/sincetoggle-one/DeepSeek-V4-Flash-Vision-Training-Archive",
         "private": true,
         "scope": "bringup_calibration_recovery_and_code_archive_predating_final_100k_run",
         "complete_final_100k_history": false
@@ -91,7 +91,7 @@
     },
     "laguna_xs_2_1_vision": {
       "public_nvfp4": {
-        "url": "https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-NVFP4",
+        "url": "https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-NVFP4",
         "revision": "ce108f0f3764a18a1f5f7d14ecefa90485ea6e52",
         "file_count": 22,
         "total_bytes": 22491749196,
@@ -102,7 +102,7 @@
         }
       },
       "public_bf16": {
-        "url": "https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-BF16",
+        "url": "https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-BF16",
         "revision": "b06063d00b73f7713ef1c28f8247eed488c73faf",
         "file_count": 34,
         "total_bytes": 67794842815,
@@ -113,7 +113,7 @@
         }
       },
       "private_training_archive": {
-        "url": "https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-Projector-100K",
+        "url": "https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-Projector-100K",
         "revision": "4f5d6359867fa55315a2bec4b568901bfdeca5e5",
         "private": true,
         "file_count": 170,
@@ -160,7 +160,7 @@
         "bf16_end_to_end_validated": false,
         "nvfp4_equivalence_validated": false,
         "integration_candidate": {
-          "repository": "webbrain-one/Laguna-XS-2.1-Vision-NVFP4",
+          "repository": "sincetoggle-one/Laguna-XS-2.1-Vision-NVFP4",
           "branch": "sglang-integration",
           "revision": "740a6ccc05441a7ea0426c1d2536d5cd031adb86",
           "candidate_only": true,

@@ -3,15 +3,15 @@
   "user": "create a release tagged v2.0.0",
   "mode": "act",
   "tab": {
-    "url": "https://github.com/esokullu/webbrain",
-    "title": "esokullu/webbrain — GitHub"
+    "url": "https://github.com/esokullu/sincetoggle",
+    "title": "esokullu/sincetoggle — GitHub"
   },
   "latencyMs": 3295,
   "error": null,
   "firstToolCall": {
     "name": "navigate",
     "args": {
-      "url": "https://github.com/esokullu/webbrain/releases/new"
+      "url": "https://github.com/esokullu/sincetoggle/releases/new"
     }
   },
   "toolCallSource": "tool_calls",

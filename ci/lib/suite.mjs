@@ -55,7 +55,7 @@ export function unappliedSessionSettings(configResult, requiredSettings = {}) {
   const required = Object.keys(requiredSettings || {});
   if (!required.length) return '';
   if (!isPlainObject(configResult)) {
-    return 'provisioning returned no webbrain_config_result to confirm them';
+    return 'provisioning returned no sincetoggle_config_result to confirm them';
   }
   if (configResult.ok === false || configResult.success === false) {
     return 'provisioning reported the configuration as not applied';
@@ -65,7 +65,7 @@ export function unappliedSessionSettings(configResult, requiredSettings = {}) {
     return `provisioning reported configuration status "${configResult.status}"`;
   }
 
-  // webbrain.cloud keeps security properties platform-managed. It therefore
+  // sincetoggle.cloud keeps security properties platform-managed. It therefore
   // reports the requested field as ignored, but separately attests the value
   // that the managed runtime forces on every launch. An attested value is
   // stronger evidence than an echoed import list; a conflicting value must

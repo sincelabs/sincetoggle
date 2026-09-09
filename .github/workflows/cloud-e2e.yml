@@ -1,4 +1,4 @@
-name: WebBrain Cloud E2E
+name: Since Toggle Cloud E2E
 
 on:
   workflow_dispatch:
@@ -47,8 +47,8 @@ jobs:
 
       - name: Run cloud scenarios
         env:
-          WEBBRAIN_API_KEY: ${{ secrets.WEBBRAIN_API_KEY }}
-          WEBBRAIN_BASE_URL: ${{ vars.WEBBRAIN_BASE_URL }}
+          SINCETOGGLE_API_KEY: ${{ secrets.SINCETOGGLE_API_KEY }}
+          SINCETOGGLE_BASE_URL: ${{ vars.SINCETOGGLE_BASE_URL }}
           GNIPPETS_BASE_URL: ${{ vars.GNIPPETS_BASE_URL }}
           GNIPPETS_E2E_CONTROL_TOKEN: ${{ secrets.GNIPPETS_E2E_CONTROL_TOKEN }}
           CAPSOLVER_API_KEY: ${{ secrets.CAPSOLVER_API_KEY }}
@@ -66,7 +66,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: webbrain-cloud-e2e-${{ github.run_id }}
+          name: sincetoggle-cloud-e2e-${{ github.run_id }}
           path: ci/artifacts/
           if-no-files-found: warn
           retention-days: 14

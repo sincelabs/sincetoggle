@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * WebBrain blog build.
+ * Since Toggle blog build.
  *
  * Reads Markdown files from web/blog/posts/*.md and writes:
  *   web/blog/index.html
@@ -43,7 +43,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
 const DEFAULT_POSTS_DIR = path.join(REPO_ROOT, 'web', 'blog', 'posts');
 const DEFAULT_OUT_DIR = path.join(REPO_ROOT, 'web', 'blog');
-const DEFAULT_SITE_ORIGIN = 'https://webbrain.one';
+const DEFAULT_SITE_ORIGIN = 'https://sincetoggle.one';
 const DEFAULT_AUTHOR = 'Emre Sokullu';
 const DEFAULT_AUTHOR_URL = 'https://emresokullu.com';
 const SOCIAL_IMAGE_PATH = '/og-image.png';
@@ -113,7 +113,7 @@ function printHelp() {
 Options:
   --src <dir>      Markdown source directory (default: web/blog/posts)
   --out <dir>      Blog output directory (default: web/blog)
-  --site <origin>  Site origin for canonical URLs (default: https://webbrain.one)
+  --site <origin>  Site origin for canonical URLs (default: https://sincetoggle.one)
   --drafts         Include posts with draft: true
   --dry-run        Parse and render without writing files
   --help           Show this help
@@ -593,7 +593,7 @@ async function buildPost(filePath, args) {
     ledeHtml,
     bodyHtml,
     urlPath: `/blog/${slug}`,
-    titleTag: String(meta.titleTag || meta.title_tag || `${title} - WebBrain Blog`),
+    titleTag: String(meta.titleTag || meta.title_tag || `${title} - Since Toggle Blog`),
     ogTitle: String(meta.ogTitle || meta.og_title || title),
     ogDescription: String(meta.ogDescription || meta.og_description || description),
     twitterTitle: String(meta.twitterTitle || meta.twitter_title || meta.ogTitle || meta.og_title || title),
@@ -1037,7 +1037,7 @@ function blogStyle() {
     }
     @media (max-width: 420px) {
       .nav-inner { gap: 12px; }
-      .nav-links a[href="https://github.com/webbrain-one/webbrain"] { display: none; }
+      .nav-links a[href="https://github.com/sincetoggle-one/sincetoggle"] { display: none; }
       .theme-toggle { width: 28px; height: 28px; }
     }
   </style>`;
@@ -1241,7 +1241,7 @@ function themeBootstrapScript() {
   return `<script>
     (function () {
       try {
-        var saved = localStorage.getItem('webbrain-theme');
+        var saved = localStorage.getItem('sincetoggle-theme');
         var theme = (saved === 'light' || saved === 'dark')
           ? saved
           : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
@@ -1263,7 +1263,7 @@ function themeToggleScript() {
       function setTheme(theme, persist) {
         root.setAttribute('data-theme', theme);
         if (persist) {
-          try { localStorage.setItem('webbrain-theme', theme); } catch (_) {}
+          try { localStorage.setItem('sincetoggle-theme', theme); } catch (_) {}
         }
       }
 
@@ -1275,7 +1275,7 @@ function themeToggleScript() {
       const mq = window.matchMedia('(prefers-color-scheme: light)');
       function onMQ(e) {
         try {
-          if (localStorage.getItem('webbrain-theme')) return;
+          if (localStorage.getItem('sincetoggle-theme')) return;
         } catch (_) {}
         setTheme(e.matches ? 'light' : 'dark', false);
       }
@@ -1467,7 +1467,7 @@ function navHtml() {
 
   return `<nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> Since Toggle<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -1482,7 +1482,7 @@ function navHtml() {
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
         </button>
-        <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </nav>`;
@@ -1517,12 +1517,12 @@ function sharedHead({ title, description, canonical, ogType = 'website', ogTitle
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="${SOCIAL_IMAGE_WIDTH}">
   <meta property="og:image:height" content="${SOCIAL_IMAGE_HEIGHT}">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="Since Toggle — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escAttr(twitterTitle || ogTitle || title)}">
   <meta name="twitter:description" content="${escAttr(twitterDescription || ogDescription || description)}">
   <meta name="twitter:image" content="${escAttr(twitterImageUrl)}">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="Since Toggle — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="${escAttr(canonical)}">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -1553,7 +1553,7 @@ function renderPostPage(post, args) {
     image: socialImageUrl,
     publisher: {
       '@type': 'Organization',
-      name: 'WebBrain',
+      name: 'Since Toggle',
       logo: {
         '@type': 'ImageObject',
         url: `${args.site}/logo-github.png`,
@@ -1590,7 +1590,7 @@ ${sharedHead({
 ${post.bodyHtml}
 
     <div class="author-box">
-      Written by <a href="${escAttr(post.authorUrl)}" target="_blank" rel="noopener">${escHtml(post.author)}</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="${escAttr(post.authorUrl)}" target="_blank" rel="noopener">${escHtml(post.author)}</a>. Since Toggle 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
@@ -1605,7 +1605,7 @@ ${post.bodyHtml}
 function renderIndexPage(posts, args) {
   const canonical = `${args.site}/blog`;
   const socialImageUrl = `${args.site}${SOCIAL_IMAGE_PATH}`;
-  const description = 'Engineering notes from WebBrain - the open-source AI browser agent.';
+  const description = 'Engineering notes from Since Toggle - the open-source AI browser agent.';
   const cards = posts.map((post) => {
     const searchText = [
       post.title,
@@ -1626,7 +1626,7 @@ function renderIndexPage(posts, args) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'WebBrain Blog',
+    name: 'Since Toggle Blog',
     description,
     url: canonical,
     image: socialImageUrl,
@@ -1643,13 +1643,13 @@ function renderIndexPage(posts, args) {
   return `<!DOCTYPE html>
 <html lang="en">
 ${sharedHead({
-    title: 'WebBrain Blog',
+    title: 'Since Toggle Blog',
     description,
     canonical,
-    ogTitle: 'WebBrain Blog',
+    ogTitle: 'Since Toggle Blog',
     ogDescription: description,
-    twitterTitle: 'WebBrain Blog',
-    twitterDescription: 'Engineering notes from WebBrain.',
+    twitterTitle: 'Since Toggle Blog',
+    twitterDescription: 'Engineering notes from Since Toggle.',
     jsonLd,
     extraHead: blogIndexStyle(),
   }, args.site)}
@@ -1658,7 +1658,7 @@ ${sharedHead({
   ${navHtml()}
 
   <main>
-    <h1 class="sr-only">WebBrain Blog</h1>
+    <h1 class="sr-only">Since Toggle Blog</h1>
 
     <section class="blog-tools" id="blog-tools" aria-label="Search the blog archive">
       <label class="archive-search-label" for="blog-search">Search the archive</label>
@@ -1706,8 +1706,8 @@ ${sharedHead({
 
 function footerHtml() {
   return `<footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
-    <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
+    <div>&copy; 2026 Since Toggle &middot; <a href="/privacy">Privacy</a></div>
+    <div><a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a></div>
   </footer>`;
 }
 

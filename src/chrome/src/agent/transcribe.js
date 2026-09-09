@@ -7,7 +7,7 @@
  * the .webm.
  *
  * Provider selection
- *   The Whisper API isn't a separate first-class provider in webbrain's
+ *   The Whisper API isn't a separate first-class provider in sincetoggle's
  *   provider manager — that would mean another settings tab. Instead we
  *   reuse whichever existing OpenAI-compatible provider the user already
  *   has configured. We try them in this order:
@@ -208,7 +208,7 @@ export async function transcribeAudio(providers, audioBlob, opts = {}) {
             ? `Either load a GGUF Whisper model in that server (LM Studio 0.3+ and recent llama.cpp builds support whisper.cpp models), ` +
               `or add an API key for OpenAI (whisper-1) or Groq (whisper-large-v3) in Settings → Providers — those host Whisper natively ` +
               `and will be auto-picked when configured.`
-            : `Add an API key for OpenAI (whisper-1) or Groq (whisper-large-v3) in Settings → Providers — webbrain auto-picks the first ` +
+            : `Add an API key for OpenAI (whisper-1) or Groq (whisper-large-v3) in Settings → Providers — sincetoggle auto-picks the first ` +
               `Whisper-capable provider, so a configured OpenAI key takes priority.`),
       };
     }

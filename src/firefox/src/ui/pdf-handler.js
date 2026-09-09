@@ -60,11 +60,11 @@ async function loadPdfBytes(streamInfo) {
   });
   if (!result?.ok) throw new Error(result?.error || 'Firefox PDF fetch failed.');
   if (result.bytes instanceof ArrayBuffer) {
-    if (result.bytes.byteLength > MAX_PDF_BYTES) throw new Error('This PDF is larger than the WebBrain viewer limit.');
+    if (result.bytes.byteLength > MAX_PDF_BYTES) throw new Error('This PDF is larger than the Since Toggle viewer limit.');
     return new Uint8Array(result.bytes);
   }
   if (ArrayBuffer.isView(result.bytes)) {
-    if (result.bytes.byteLength > MAX_PDF_BYTES) throw new Error('This PDF is larger than the WebBrain viewer limit.');
+    if (result.bytes.byteLength > MAX_PDF_BYTES) throw new Error('This PDF is larger than the Since Toggle viewer limit.');
     return new Uint8Array(result.bytes.buffer, result.bytes.byteOffset, result.bytes.byteLength);
   }
   throw new Error('Firefox returned no PDF bytes.');
@@ -183,7 +183,7 @@ function applyTextLayerScale(element, viewport) {
 // carries no glyphs, so an element check alone would hide the OCR button on a
 // scanned page. Require a span that actually contains text.
 function hasNativeTextSpans(container) {
-  for (const span of container?.querySelectorAll?.('span:not([data-webbrain-ocr])') || []) {
+  for (const span of container?.querySelectorAll?.('span:not([data-sincetoggle-ocr])') || []) {
     if (span.textContent?.trim()) return true;
   }
   return false;
@@ -507,7 +507,7 @@ async function ocrCurrentPage() {
     const textLayer = pageView.querySelector('.pdf-text-layer');
     const rendered = renderPdfOcrTextLayer(textLayer, result.lines, pageView.clientWidth, pageView.clientHeight);
     if (!wasCached && rendered) state.ocrTextLayerCount += 1;
-    setStatus(`OCR added ${rendered} text lines on page ${pageNumber}. Select the text to use WebBrain actions.`, 'success');
+    setStatus(`OCR added ${rendered} text lines on page ${pageNumber}. Select the text to use Since Toggle actions.`, 'success');
   } catch (error) {
     if (state.ocrRequestId === requestId) {
       setStatus(`OCR failed on page ${pageNumber}: ${error?.message || String(error)}`, 'error');
@@ -572,7 +572,7 @@ function safeFilename() {
     const safe = candidate.replace(/[\\/:*?"<>|]+/g, '-').trim().slice(0, 100);
     if (safe) return `${safe}.pdf`;
   } catch { /* use the generic name below */ }
-  return 'webbrain-document.pdf';
+  return 'sincetoggle-document.pdf';
 }
 
 async function downloadPdf() {
@@ -633,22 +633,22 @@ elements['page-number'].addEventListener('change', event => scrollToPage(event.t
 elements['zoom-out'].addEventListener('click', () => {
   state.fitWidth = false;
   state.scale = clampScale(state.scale - SCALE_STEP);
-  rerender().catch(error => fallbackToNative(`WebBrain could not zoom this PDF: ${error?.message || String(error)}`));
+  rerender().catch(error => fallbackToNative(`Since Toggle could not zoom this PDF: ${error?.message || String(error)}`));
 });
 elements['zoom-in'].addEventListener('click', () => {
   state.fitWidth = false;
   state.scale = clampScale(state.scale + SCALE_STEP);
-  rerender().catch(error => fallbackToNative(`WebBrain could not zoom this PDF: ${error?.message || String(error)}`));
+  rerender().catch(error => fallbackToNative(`Since Toggle could not zoom this PDF: ${error?.message || String(error)}`));
 });
 elements['fit-width'].addEventListener('click', () => {
   state.fitWidth = true;
-  rerender().catch(error => fallbackToNative(`WebBrain could not fit this PDF: ${error?.message || String(error)}`));
+  rerender().catch(error => fallbackToNative(`Since Toggle could not fit this PDF: ${error?.message || String(error)}`));
 });
 elements['rotate-page'].addEventListener('click', () => {
   cancelOcrRequest();
   state.rotation = (state.rotation + 90) % 360;
   state.ocrCache.clear();
-  rerender().catch(error => fallbackToNative(`WebBrain could not rotate this PDF: ${error?.message || String(error)}`));
+  rerender().catch(error => fallbackToNative(`Since Toggle could not rotate this PDF: ${error?.message || String(error)}`));
 });
 elements['search-form'].addEventListener('submit', event => {
   event.preventDefault();
@@ -658,7 +658,7 @@ elements['download-pdf'].addEventListener('click', () => {
   downloadPdf().catch(error => setStatus(`Download failed: ${error?.message || String(error)}`, 'error'));
 });
 elements['print-pdf'].addEventListener('click', () => {
-  printPdf().catch(error => fallbackToNative(`WebBrain could not print this PDF: ${error?.message || String(error)}`));
+  printPdf().catch(error => fallbackToNative(`Since Toggle could not print this PDF: ${error?.message || String(error)}`));
 });
 elements['ocr-page'].addEventListener('click', () => ocrCurrentPage());
 elements['cancel-ocr-page'].addEventListener('click', () => cancelOcrRequest());
@@ -667,7 +667,7 @@ globalThis.addEventListener('resize', () => {
   if (!state.pdf || !state.fitWidth || state.printing) return;
   clearTimeout(state.resizeTimer);
   state.resizeTimer = setTimeout(() => {
-    rerender().catch(error => fallbackToNative(`WebBrain could not resize this PDF: ${error?.message || String(error)}`));
+    rerender().catch(error => fallbackToNative(`Since Toggle could not resize this PDF: ${error?.message || String(error)}`));
   }, 120);
 });
 globalThis.addEventListener('keydown', event => {
@@ -697,12 +697,12 @@ async function initialize() {
       ? await api.mimeHandler.getStreamInfo()
       : null;
   if (!streamInfo?.streamUrl || !Number.isInteger(streamInfo.tabId)) {
-    throw new Error('No readable PDF stream was provided. Open an online PDF or use the explicit WebBrain PDF viewer link.');
+    throw new Error('No readable PDF stream was provided. Open an online PDF or use the explicit Since Toggle PDF viewer link.');
   }
   state.streamInfo = streamInfo;
   if (streamInfo.embedded === true) document.body.dataset.embedded = 'true';
-  elements['pdf-title'].textContent = String(streamInfo.originalUrl || 'WebBrain PDF');
-  globalThis.__webbrainSelectionShortcutConfig = {
+  elements['pdf-title'].textContent = String(streamInfo.originalUrl || 'Since Toggle PDF');
+  globalThis.__sincetoggleSelectionShortcutConfig = {
     submitMessage: 'WB_PDF_SELECTION_SHORTCUT_SUBMIT',
     submitFields: {
       tabId: streamInfo.tabId,
@@ -726,5 +726,5 @@ async function initialize() {
 }
 
 initialize().catch(error => {
-  fallbackToNative(`WebBrain could not render this PDF: ${error?.message || String(error)}`);
+  fallbackToNative(`Since Toggle could not render this PDF: ${error?.message || String(error)}`);
 });

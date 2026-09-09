@@ -2,7 +2,7 @@
   "label": "qwen3.5-2b-c4",
   "firstTurn": {
     "kind": "first-turn",
-    "sourceDir": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results\\2026-09-07-qwen3.5-2b-compact-full-c4-v1_chrome_qwen3.5-2b_compact",
+    "sourceDir": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results\\2026-09-07-qwen3.5-2b-compact-full-c4-v1_chrome_qwen3.5-2b_compact",
     "sourceSummarySha256": "85dbad9693947b895a32c02f645c305994020e6b737832a6217181d097a53780",
     "rows": 100,
     "structured": 92,
@@ -1477,7 +1477,7 @@
   },
   "scenarios": {
     "kind": "scenarios",
-    "sourceDir": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results-scenarios\\2026-09-07-qwen3.5-2b-compact-full-c4-v1_chrome_qwen3.5-2b_compact",
+    "sourceDir": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results-scenarios\\2026-09-07-qwen3.5-2b-compact-full-c4-v1_chrome_qwen3.5-2b_compact",
     "sourceSummarySha256": "e8a7b3b34f4029c7599db3f89b0f011b25ac4ae3f1f5b09c3426c5db773d25a2",
     "rows": 100,
     "structured": 76,

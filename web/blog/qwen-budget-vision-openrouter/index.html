@@ -3,43 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Six Budget Qwen Vision Models Compared on OpenRouter - WebBrain Blog</title>
-  <meta name="description" content="We ran every current sub-dollar Qwen vision model on OpenRouter through WebBrain&#39;s 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.">
-  <meta name="keywords" content="Qwen3-VL, OpenRouter, vision model benchmark, browser agent, qwen3.5-35b-a3b, Qwen3-VL-32B Instruct, Qwen3-VL-30B-A3B, reasoning models, vision language model, WebBrain">
+  <title>Six Budget Qwen Vision Models Compared on OpenRouter - Since Toggle Blog</title>
+  <meta name="description" content="We ran every current sub-dollar Qwen vision model on OpenRouter through Since Toggle&#39;s 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.">
+  <meta name="keywords" content="Qwen3-VL, OpenRouter, vision model benchmark, browser agent, qwen3.5-35b-a3b, Qwen3-VL-32B Instruct, Qwen3-VL-30B-A3B, reasoning models, vision language model, Since Toggle">
   <meta property="og:title" content="Six budget Qwen vision models compared on OpenRouter">
   <meta property="og:description" content="600 image requests, zero errors, 54 cents total. Where Qwen&#39;s cheap vision models actually differ: latency, output-token burn, and a hard cliff below 30B.">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://webbrain.one/blog/qwen-budget-vision-openrouter">
-  <meta property="og:image" content="https://webbrain.one/og-image.png">
-  <meta property="og:image:secure_url" content="https://webbrain.one/og-image.png">
+  <meta property="og:url" content="https://sincetoggle.one/blog/qwen-budget-vision-openrouter">
+  <meta property="og:image" content="https://sincetoggle.one/og-image.png">
+  <meta property="og:image:secure_url" content="https://sincetoggle.one/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="Since Toggle — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Six budget Qwen vision models compared on OpenRouter">
   <meta name="twitter:description" content="Qwen3-VL-32B Instruct wins our 100-case browser benchmark at $0.02 per full run. Thinking variants bill 4-5x the tokens. Full tables inside.">
-  <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image" content="https://sincetoggle.one/twitter-image.png">
+  <meta name="twitter:image:alt" content="Since Toggle — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="canonical" href="https://webbrain.one/blog/qwen-budget-vision-openrouter">
+  <link rel="canonical" href="https://sincetoggle.one/blog/qwen-budget-vision-openrouter">
   <!-- Blog is English-only; alternates point to locale homepages. -->
-  <link rel="alternate" hreflang="en" href="https://webbrain.one/">
-  <link rel="alternate" hreflang="es" href="https://webbrain.one/es/">
-  <link rel="alternate" hreflang="fr" href="https://webbrain.one/fr/">
-  <link rel="alternate" hreflang="tr" href="https://webbrain.one/tr/">
-  <link rel="alternate" hreflang="zh" href="https://webbrain.one/zh/">
-  <link rel="alternate" hreflang="ru" href="https://webbrain.one/ru/">
-  <link rel="alternate" hreflang="uk" href="https://webbrain.one/uk/">
-  <link rel="alternate" hreflang="ar" href="https://webbrain.one/ar/">
-  <link rel="alternate" hreflang="ja" href="https://webbrain.one/ja/">
-  <link rel="alternate" hreflang="ko" href="https://webbrain.one/ko/">
-  <link rel="alternate" hreflang="id" href="https://webbrain.one/id/">
-  <link rel="alternate" hreflang="th" href="https://webbrain.one/th/">
-  <link rel="alternate" hreflang="ms" href="https://webbrain.one/ms/">
-  <link rel="alternate" hreflang="tl" href="https://webbrain.one/tl/">
-  <link rel="alternate" hreflang="he" href="https://webbrain.one/he/">
-  <link rel="alternate" hreflang="x-default" href="https://webbrain.one/">
+  <link rel="alternate" hreflang="en" href="https://sincetoggle.one/">
+  <link rel="alternate" hreflang="es" href="https://sincetoggle.one/es/">
+  <link rel="alternate" hreflang="fr" href="https://sincetoggle.one/fr/">
+  <link rel="alternate" hreflang="tr" href="https://sincetoggle.one/tr/">
+  <link rel="alternate" hreflang="zh" href="https://sincetoggle.one/zh/">
+  <link rel="alternate" hreflang="ru" href="https://sincetoggle.one/ru/">
+  <link rel="alternate" hreflang="uk" href="https://sincetoggle.one/uk/">
+  <link rel="alternate" hreflang="ar" href="https://sincetoggle.one/ar/">
+  <link rel="alternate" hreflang="ja" href="https://sincetoggle.one/ja/">
+  <link rel="alternate" hreflang="ko" href="https://sincetoggle.one/ko/">
+  <link rel="alternate" hreflang="id" href="https://sincetoggle.one/id/">
+  <link rel="alternate" hreflang="th" href="https://sincetoggle.one/th/">
+  <link rel="alternate" hreflang="ms" href="https://sincetoggle.one/ms/">
+  <link rel="alternate" hreflang="tl" href="https://sincetoggle.one/tl/">
+  <link rel="alternate" hreflang="he" href="https://sincetoggle.one/he/">
+  <link rel="alternate" hreflang="x-default" href="https://sincetoggle.one/">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -445,14 +445,14 @@
     }
     @media (max-width: 420px) {
       .nav-inner { gap: 12px; }
-      .nav-links a[href="https://github.com/webbrain-one/webbrain"] { display: none; }
+      .nav-links a[href="https://github.com/sincetoggle-one/sincetoggle"] { display: none; }
       .theme-toggle { width: 28px; height: 28px; }
     }
   </style>
   <script>
     (function () {
       try {
-        var saved = localStorage.getItem('webbrain-theme');
+        var saved = localStorage.getItem('sincetoggle-theme');
         var theme = (saved === 'light' || saved === 'dark')
           ? saved
           : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
@@ -475,25 +475,25 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Six budget Qwen vision models, compared: 600 requests, 54 cents on OpenRouter",
-  "description": "We ran every current sub-dollar Qwen vision model on OpenRouter through WebBrain's 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.",
+  "description": "We ran every current sub-dollar Qwen vision model on OpenRouter through Since Toggle's 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
     "url": "https://emresokullu.com"
   },
   "datePublished": "2026-08-22",
-  "image": "https://webbrain.one/og-image.png",
+  "image": "https://sincetoggle.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "Since Toggle",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://webbrain.one/logo-github.png"
+      "url": "https://sincetoggle.one/logo-github.png"
     }
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://webbrain.one/blog/qwen-budget-vision-openrouter"
+    "@id": "https://sincetoggle.one/blog/qwen-budget-vision-openrouter"
   }
 }
   </script>
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> Since Toggle<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -517,7 +517,7 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
         </button>
-        <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </nav>
@@ -525,13 +525,13 @@
   <article>
     <div class="meta">August 22, 2026 &middot; 7 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>Six budget Qwen vision models, compared: 600 requests, 54 cents on OpenRouter</h1>
-    <p class="lede"><strong>You don&#39;t need an expensive API to give a browser agent eyes.</strong> We pushed all six of Qwen&#39;s current sub-dollar vision-capable models on OpenRouter through our <a href="https://github.com/esokullu/webbrain/tree/main/test/vision" target="_blank" rel="noopener">100-case browser-vision benchmark</a> — same screenshots, same production six-section prompt, same strict rubric we use to evaluate WebBrain&#39;s own vision subsystem. All 600 requests completed without a single error, and the entire sweep cost <strong>$0.53</strong>. The dense Qwen3-VL-32B Instruct won on quality. Its MoE sibling matched it at twice the speed. And the two &quot;thinking&quot; variants billed four to five times the output tokens for a gain you can count on one hand.</p>
+    <p class="lede"><strong>You don&#39;t need an expensive API to give a browser agent eyes.</strong> We pushed all six of Qwen&#39;s current sub-dollar vision-capable models on OpenRouter through our <a href="https://github.com/esokullu/sincetoggle/tree/main/test/vision" target="_blank" rel="noopener">100-case browser-vision benchmark</a> — same screenshots, same production six-section prompt, same strict rubric we use to evaluate Since Toggle&#39;s own vision subsystem. All 600 requests completed without a single error, and the entire sweep cost <strong>$0.53</strong>. The dense Qwen3-VL-32B Instruct won on quality. Its MoE sibling matched it at twice the speed. And the two &quot;thinking&quot; variants billed four to five times the output tokens for a gain you can count on one hand.</p>
 <h2 id="the-lineup">The lineup</h2>
 <p>Six model IDs, all served through the same OpenRouter account on August 22, 2026. Prices are OpenRouter list price per million tokens:</p>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Architecture</th><th>In / 1M tok</th><th>Out / 1M tok</th></tr></thead><tbody><tr><td><code>qwen/qwen3-vl-8b-instruct</code></td><td>dense VL, 8B</td><td>$0.117</td><td>$0.455</td></tr><tr><td><code>qwen/qwen3-vl-8b-thinking</code></td><td>dense VL, 8B + reasoning</td><td>$0.18</td><td>$2.10</td></tr><tr><td><code>qwen/qwen3-vl-30b-a3b-instruct</code></td><td>MoE VL, ~3B active</td><td>$0.13</td><td>$0.52</td></tr><tr><td><code>qwen/qwen3-vl-30b-a3b-thinking</code></td><td>MoE VL, ~3B active + reasoning</td><td>$0.20</td><td>$2.40</td></tr><tr><td><code>qwen/qwen3-vl-32b-instruct</code></td><td>dense VL, 32B</td><td>$0.104</td><td>$0.416</td></tr><tr><td><code>qwen/qwen3.5-35b-a3b</code></td><td>MoE generalist (text+image+video)</td><td>$0.25</td><td>$1.25</td></tr></tbody></table></div>
 <p>Note what&#39;s missing from that table: any expensive model. The priciest row costs a quarter of a cent per 1K input tokens. This is the budget tier, and the question is how much capability survives down here.</p>
 <h2 id="results">Results</h2>
-<p>Every model saw all 100 cases with WebBrain&#39;s production screenshot contract: temperature 0, max 800 tokens, six required sections, strict rubric scoring against expected facts. A strict pass means the complete contract plus the case&#39;s weighted facts recovered without critical contradiction.</p>
+<p>Every model saw all 100 cases with Since Toggle&#39;s production screenshot contract: temperature 0, max 800 tokens, six required sections, strict rubric scoring against expected facts. A strict pass means the complete contract plus the case&#39;s weighted facts recovered without critical contradiction.</p>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Strict passes</th><th>Mean rubric</th><th>Mean latency</th><th>Output tokens</th><th>Cost / 100-case run</th></tr></thead><tbody><tr><td><strong>Qwen3-VL-32B Instruct</strong></td><td><strong>69</strong></td><td><strong>91.9%</strong></td><td>4.6 s</td><td>22.2K</td><td><strong>$0.022</strong></td></tr><tr><td>Qwen3-VL-30B-A3B Instruct</td><td>68</td><td>91.3%</td><td><strong>2.2 s</strong></td><td>17.1K</td><td>$0.024</td></tr><tr><td>Qwen3.5-35B-A3B</td><td>67</td><td>90.8%</td><td>5.2 s</td><td>55.4K</td><td>$0.099</td></tr><tr><td>Qwen3-VL-30B-A3B Thinking</td><td>62</td><td>88.9%</td><td>6.3 s</td><td>68.5K</td><td>$0.188</td></tr><tr><td>Qwen3-VL-8B Thinking</td><td>61</td><td>86.7%</td><td>6.4 s</td><td>75.5K</td><td>$0.180</td></tr><tr><td>Qwen3-VL-8B Instruct</td><td>48</td><td>84.0%</td><td>2.1 s</td><td>14.9K</td><td>$0.021</td></tr></tbody></table></div>
 <p>Three things jump out.</p>
 <p><strong>First place is a tie in disguise.</strong> The dense 32B scores one strict pass and half a point of rubric above the MoE 30B-A3B. But the MoE answers in 2.2 seconds where the dense model needs 4.6. For an interactive browser agent watching its own screenshots, latency compounds across every step of a task; we&#39;d pick the MoE for production loops and the dense model when you want maximum accuracy per request.</p>
@@ -554,16 +554,16 @@
 <p>One for the road: on case 001 — an ordinary login screen — the <em>only</em> model to earn a perfect score was the 8B instruct, the worst performer overall. Every larger sibling dropped details. Small models are unreliable; so are rankings.</p>
 <h2 id="which-one-should-you-call">Which one should you call</h2>
 <ul><li><strong>Production browser agent:</strong> Qwen3-VL-30B-A3B Instruct — 90th-percentile accuracy at 2.2 s median and ~$0.24 per thousand screenshots.</li><li><strong>Maximum accuracy per request:</strong> Qwen3-VL-32B Instruct, one pass better, twice as slow.</li><li><strong>Stuck under 10B:</strong> take the thinking variant without guilt — it&#39;s the only small model here that doesn&#39;t collapse on hard pages.</li><li><strong>Skip for vision workloads:</strong> Qwen3.5-35B-A3B (good model, wrong tool) and both thinking variants at 30B-plus (paying more to score less).</li></ul>
-<p>The complete harness — screenshots, expected facts, scoring code, and all six committed result directories — lives in <a href="https://github.com/esokullu/webbrain/tree/main/test/vision" target="_blank" rel="noopener"><code>test/vision</code></a> on GitHub.</p>
+<p>The complete harness — screenshots, expected facts, scoring code, and all six committed result directories — lives in <a href="https://github.com/esokullu/sincetoggle/tree/main/test/vision" target="_blank" rel="noopener"><code>test/vision</code></a> on GitHub.</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. Since Toggle 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
-    <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
+    <div>&copy; 2026 Since Toggle &middot; <a href="/privacy">Privacy</a></div>
+    <div><a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>
     (function () {
@@ -574,7 +574,7 @@
       function setTheme(theme, persist) {
         root.setAttribute('data-theme', theme);
         if (persist) {
-          try { localStorage.setItem('webbrain-theme', theme); } catch (_) {}
+          try { localStorage.setItem('sincetoggle-theme', theme); } catch (_) {}
         }
       }
 
@@ -586,7 +586,7 @@
       const mq = window.matchMedia('(prefers-color-scheme: light)');
       function onMQ(e) {
         try {
-          if (localStorage.getItem('webbrain-theme')) return;
+          if (localStorage.getItem('sincetoggle-theme')) return;
         } catch (_) {}
         setTheme(e.matches ? 'light' : 'dark', false);
       }

@@ -1,17 +1,17 @@
-# WebBrain MCP Server
+# Since Toggle MCP Server
 
 Give any MCP client — Claude Code, Codex, Cursor, OpenClaw — the ability to run tasks in **your real browser session**: already signed in, cookies present, MFA already passed.
 
-That session is the whole point. A headless automation framework starts logged out of everything and hits a login wall on the first useful page. WebBrain is already inside the browser you use.
+That session is the whole point. A headless automation framework starts logged out of everything and hits a login wall on the first useful page. Since Toggle is already inside the browser you use.
 
 ```
-Claude Code ──stdio──▶ webbrain-mcp ──ws://127.0.0.1:17374──▶ WebBrain extension ──▶ your tabs
+Claude Code ──stdio──▶ sincetoggle-mcp ──ws://127.0.0.1:17374──▶ Since Toggle extension ──▶ your tabs
 ```
 
 ## Install
 
 ```bash
-npm install -g @webbrain/mcp-server
+npm install -g @sincetoggle/mcp-server
 ```
 
 Or run from a checkout:
@@ -26,18 +26,18 @@ cd mcp-server && npm install && npm run build
 
 The MCP server hosts the listener; the extension dials out to it. A Manifest V3 extension cannot listen on a socket, so the direction is fixed.
 
-1. Install the [WebBrain extension](https://webbrain.one) and open your browser.
-2. In **WebBrain → Settings → General → Advanced → MCP**, set the URL to `ws://127.0.0.1:17374/extension` and enable it.
-3. Ask your MCP client to call `webbrain_connection` to confirm.
+1. Install the [Since Toggle extension](https://sincetoggle.one) and open your browser.
+2. In **Since Toggle → Settings → General → Advanced → MCP**, set the URL to `ws://127.0.0.1:17374/extension` and enable it.
+3. Ask your MCP client to call `sincetoggle_connection` to confirm.
 
-> **One bridge at a time.** The extension holds exactly one outbound bridge socket. Pointing it here means it is *not* pointed at WebBrain Cloud (`17373`) or the LM Studio plugin (`17375`). Switch it under **Settings → General → Advanced → MCP**.
+> **One bridge at a time.** The extension holds exactly one outbound bridge socket. Pointing it here means it is *not* pointed at Since Toggle Cloud (`17373`) or the LM Studio plugin (`17375`). Switch it under **Settings → General → Advanced → MCP**.
 
 ## Register with a client
 
 **Claude Code**
 
 ```bash
-claude mcp add --transport stdio webbrain -- npx -y @webbrain/mcp-server
+claude mcp add --transport stdio sincetoggle -- npx -y @sincetoggle/mcp-server
 ```
 
 **Codex / Cursor / anything reading `mcp.json`**
@@ -45,9 +45,9 @@ claude mcp add --transport stdio webbrain -- npx -y @webbrain/mcp-server
 ```json
 {
   "mcpServers": {
-    "webbrain": {
+    "sincetoggle": {
       "command": "npx",
-      "args": ["-y", "@webbrain/mcp-server"]
+      "args": ["-y", "@sincetoggle/mcp-server"]
     }
   }
 }
@@ -55,7 +55,7 @@ claude mcp add --transport stdio webbrain -- npx -y @webbrain/mcp-server
 
 The MCP client launches this command as a child process when it starts the
 configured server; you do not need to keep a second copy running in a terminal.
-After adding the configuration, restart or reconnect the MCP client if WebBrain
+After adding the configuration, restart or reconnect the MCP client if Since Toggle
 does not appear in its tool list.
 
 ## Launch manually
@@ -63,7 +63,7 @@ does not appear in its tool list.
 For a direct launch or connection test, run:
 
 ```bash
-npx -y @webbrain/mcp-server
+npx -y @sincetoggle/mcp-server
 ```
 
 Leave that terminal open while using the bridge. The server owns the local
@@ -79,14 +79,14 @@ npm run build
 npm start
 ```
 
-After it is running, enable `ws://127.0.0.1:17374/extension` under **WebBrain →
+After it is running, enable `ws://127.0.0.1:17374/extension` under **Since Toggle →
 Settings → General → Advanced → MCP**. Ask the MCP client to call
-`webbrain_connection` to verify the complete connection.
+`sincetoggle_connection` to verify the complete connection.
 
 ## Troubleshooting
 
 **Connection error: WebSocket error** normally means that no process is
-listening at the URL selected in WebBrain. Confirm the MCP server is still
+listening at the URL selected in Since Toggle. Confirm the MCP server is still
 running and that Settings uses port `17374`, then check the listener:
 
 ```bash
@@ -95,7 +95,7 @@ lsof -nP -iTCP:17374 -sTCP:LISTEN
 
 No output means the MCP server is not listening. If it is listening but the
 extension does not connect, make sure another bridge destination is not selected:
-WebBrain Cloud uses `17373`, this MCP server uses `17374`, and the LM Studio
+Since Toggle Cloud uses `17373`, this MCP server uses `17374`, and the LM Studio
 plugin uses `17375`. Only one can be selected at a time. The bridge is available
 in Chromium browsers only, not Firefox.
 
@@ -103,15 +103,15 @@ in Chromium browsers only, not Firefox.
 
 | Tool | Purpose |
 |---|---|
-| `webbrain_run` | Delegate a task. `mode='ask'` is read-only; `mode='act'` can click and type, gated by in-browser approval. |
-| `webbrain_extract` | Read authenticated page data into a caller-supplied JSON Schema. Always runs in read-only Ask mode. |
-| `webbrain_status` | Poll a run, or list every run. |
-| `webbrain_respond` | Answer a run sitting at `needs_user_input`. |
-| `webbrain_abort` | Stop a run. Actions already taken are not undone. |
-| `webbrain_connection` | Report whether the extension is attached, and how to fix it if not. |
+| `sincetoggle_run` | Delegate a task. `mode='ask'` is read-only; `mode='act'` can click and type, gated by in-browser approval. |
+| `sincetoggle_extract` | Read authenticated page data into a caller-supplied JSON Schema. Always runs in read-only Ask mode. |
+| `sincetoggle_status` | Poll a run, or list every run. |
+| `sincetoggle_respond` | Answer a run sitting at `needs_user_input`. |
+| `sincetoggle_abort` | Stop a run. Actions already taken are not undone. |
+| `sincetoggle_connection` | Report whether the extension is attached, and how to fix it if not. |
 
 When a run pauses for an ordinary clarification, relay the question and pass the
-user's answer verbatim to `webbrain_respond`. Permission prompts are structured:
+user's answer verbatim to `sincetoggle_respond`. Permission prompts are structured:
 after the user explicitly decides, send the exact stable value `once`, `always`,
 or `deny`. A normal approval maps to `once`; use `always` only when the user
 explicitly requests a persistent grant. Localized labels such as "allow" must
@@ -127,17 +127,17 @@ a `decisions:` line in the status text — send one of those exactly.
 > "Open my Stripe dashboard and list last week's failed payments."
 
 ```
-webbrain_run(task: "open the Stripe dashboard and list last week's failed
+sincetoggle_run(task: "open the Stripe dashboard and list last week's failed
              payments with amounts and customer emails", mode: "ask")
 ```
 
 Read-only, in the tab you are already authenticated in. No API key, no headless login dance.
 
-For predictable JSON instead of prose, give `webbrain_extract` an explicit
+For predictable JSON instead of prose, give `sincetoggle_extract` an explicit
 JSON Schema:
 
 ```
-webbrain_extract(
+sincetoggle_extract(
   task: "list the overdue invoices visible in this account",
   output_schema: {
     type: "object",
@@ -165,9 +165,9 @@ permission boundary; it is not a direct page-scraping primitive.
 
 ## Why six task-level tools and not 50 browser primitives
 
-WebBrain exposes roughly fifty primitives internally — `click_ax`, `type_ax`, `extract_data`, `iframe_read` and so on. This server deliberately does **not** surface them.
+Since Toggle exposes roughly fifty primitives internally — `click_ax`, `type_ax`, `extract_data`, `iframe_read` and so on. This server deliberately does **not** surface them.
 
-**Safety.** WebBrain's capability × origin permission gate runs in the agent loop (`_executeToolBatch`), not inside `executeTool()`. An MCP layer calling primitives directly would sit *below* the gate and bypass every approval prompt the product is built on. Delegating a goal keeps the trust boundary in the browser, where the human is.
+**Safety.** Since Toggle's capability × origin permission gate runs in the agent loop (`_executeToolBatch`), not inside `executeTool()`. An MCP layer calling primitives directly would sit *below* the gate and bypass every approval prompt the product is built on. Delegating a goal keeps the trust boundary in the browser, where the human is.
 
 **Cost.** Driving a UI one primitive at a time over a socket costs a round trip and a slab of tokens per click. Handing over a goal costs one call.
 
@@ -175,18 +175,18 @@ WebBrain exposes roughly fifty primitives internally — `click_ax`, `type_ax`, 
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `WEBBRAIN_BRIDGE_PORT` | `17374` | Port the extension connects to. |
-| `WEBBRAIN_BRIDGE_PATH` | `/extension` | Path segment; must match the URL in Settings. |
-| `WEBBRAIN_COMMAND_TIMEOUT_MS` | `30000` | Per-command reply timeout. |
-| `WEBBRAIN_RUN_TIMEOUT_MS` | `300000` | Default ceiling for `webbrain_run` polling. |
-| `WEBBRAIN_POLL_INTERVAL_MS` | `1000` | Status poll interval. |
+| `SINCETOGGLE_BRIDGE_PORT` | `17374` | Port the extension connects to. |
+| `SINCETOGGLE_BRIDGE_PATH` | `/extension` | Path segment; must match the URL in Settings. |
+| `SINCETOGGLE_COMMAND_TIMEOUT_MS` | `30000` | Per-command reply timeout. |
+| `SINCETOGGLE_RUN_TIMEOUT_MS` | `300000` | Default ceiling for `sincetoggle_run` polling. |
+| `SINCETOGGLE_POLL_INTERVAL_MS` | `1000` | Status poll interval. |
 
 ## Security notes
 
 - The listener binds `127.0.0.1` only. Anything that can reach this port can drive your signed-in browser — never expose it to a network or a container bridge.
-- Connections from HTTP(S) pages and other non-extension browser origins are rejected before they can replace the extension socket. Accepted connections must also present the extension's `hello` frame with `client: "webbrain-extension"`; anything else is closed. This is **not** authentication. The shipping extension sends no shared secret, so a local process could impersonate it. Treat the port as trusted-local, and see [`docs/security-model.md`](../docs/security-model.md).
-- A `webbrain_run` timeout does **not** abort the run. A task that already submitted a form should not be silently killed — the browser keeps going and `webbrain_status` picks it back up.
-- `allow_api_mutations` lifts WebBrain's UI-first rule and is off by default. It is accepted only with `mode: "act"`; Ask runs remain read-only. The UI path is visible and stoppable; direct API mutations are neither.
+- Connections from HTTP(S) pages and other non-extension browser origins are rejected before they can replace the extension socket. Accepted connections must also present the extension's `hello` frame with `client: "sincetoggle-extension"`; anything else is closed. This is **not** authentication. The shipping extension sends no shared secret, so a local process could impersonate it. Treat the port as trusted-local, and see [`docs/security-model.md`](../docs/security-model.md).
+- A `sincetoggle_run` timeout does **not** abort the run. A task that already submitted a form should not be silently killed — the browser keeps going and `sincetoggle_status` picks it back up.
+- `allow_api_mutations` lifts Since Toggle's UI-first rule and is off by default. It is accepted only with `mode: "act"`; Ask runs remain read-only. The UI path is visible and stoppable; direct API mutations are neither.
 
 ## Tests
 

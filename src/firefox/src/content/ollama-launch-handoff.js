@@ -1,10 +1,10 @@
 (() => {
-  if (window.__webbrain_ollama_launch_handoff) return;
-  window.__webbrain_ollama_launch_handoff = true;
+  if (window.__sincetoggle_ollama_launch_handoff) return;
+  window.__sincetoggle_ollama_launch_handoff = true;
 
   function isLaunchPage() {
     return window.location.protocol === 'https:' &&
-      (window.location.hostname === 'webbrain.one' || window.location.hostname === 'www.webbrain.one') &&
+      (window.location.hostname === 'sincetoggle.one' || window.location.hostname === 'www.sincetoggle.one') &&
       window.location.pathname.replace(/\/+$/, '') === '/launch/ollama';
   }
 
@@ -17,10 +17,10 @@
   function setStatus(text, kind = 'info') {
     const root = document.body || document.documentElement;
     if (!root) return;
-    let el = document.getElementById('webbrain-ollama-launch-status');
+    let el = document.getElementById('sincetoggle-ollama-launch-status');
     if (!el) {
       el = document.createElement('div');
-      el.id = 'webbrain-ollama-launch-status';
+      el.id = 'sincetoggle-ollama-launch-status';
       el.style.cssText = [
         'position:fixed',
         'z-index:2147483647',
@@ -50,18 +50,18 @@
     };
     const modelLabel = String(handoff.model || '').replace(/[\r\n]+/g, ' ').slice(0, 120);
     if (!modelLabel) {
-      setStatus('WebBrain could not configure Ollama because the launch URL is missing a model.', 'error');
+      setStatus('Since Toggle could not configure Ollama because the launch URL is missing a model.', 'error');
       return;
     }
 
     const ok = window.confirm(
-      `Configure WebBrain to use Ollama model "${modelLabel}"?\n\n` +
+      `Configure Since Toggle to use Ollama model "${modelLabel}"?\n\n` +
       `Provider: ${handoff.baseUrl || 'http://127.0.0.1:11434/v1'}\n` +
       `Context window: ${handoff.contextWindow || '65536'} tokens\n\n` +
       'This updates the Ollama provider and makes it active.'
     );
     if (!ok) {
-      setStatus('WebBrain Ollama setup was cancelled.');
+      setStatus('Since Toggle Ollama setup was cancelled.');
       return;
     }
 
@@ -72,11 +72,11 @@
         handoff,
       });
       setStatus(
-        `WebBrain is configured for Ollama model "${response.model}". Open the WebBrain panel to start.`,
+        `Since Toggle is configured for Ollama model "${response.model}". Open the Since Toggle panel to start.`,
         'success'
       );
     } catch (e) {
-      setStatus(`WebBrain could not configure Ollama: ${e.message}`, 'error');
+      setStatus(`Since Toggle could not configure Ollama: ${e.message}`, 'error');
     }
   }
 

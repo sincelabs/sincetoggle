@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * WebBrain marketing-site build.
+ * Since Toggle marketing-site build.
  *
  * Reads web/build/template.html, web/build/faq-template.html, and
  * web/build/locales/*.json and writes:
@@ -15,7 +15,7 @@
  * placeholders the script fills per locale:
  *   {{locale_code}}      e.g. "en", "es"
  *   {{locale_bcp47}}     e.g. "en-US", "es-ES" (used in og:locale)
- *   {{locale_home_url}}  e.g. "https://webbrain.one/" or ".../es/"
+ *   {{locale_home_url}}  e.g. "https://sincetoggle.com/" or ".../es/"
  *   {{docs_url}}         English docs, or the secondary Chinese docs for zh
  *   {{hreflang_links}}   <link rel="alternate" ...> block for this page
  *   {{faq_url}}          localized FAQ path under /docs/
@@ -43,7 +43,7 @@ const BUILD_DIR = __dirname;                          // web/build/
 const LOCALES_DIR = path.join(BUILD_DIR, 'locales');
 const TEMPLATE_PATH = path.join(BUILD_DIR, 'template.html');
 const FAQ_TEMPLATE_PATH = path.join(BUILD_DIR, 'faq-template.html');
-const SITE_ORIGIN = 'https://webbrain.one';
+const SITE_ORIGIN = 'https://sincetoggle.com';
 const SOCIAL_IMAGE_URL = `${SITE_ORIGIN}/og-image.png`;
 const LOGO_IMAGE_URL = `${SITE_ORIGIN}/logo-github.png`;
 
@@ -232,10 +232,10 @@ const FAQ_PAGE_KEYS = [
 ];
 
 const STRIPE_SUBSCRIBE_URL = 'https://buy.stripe.com/bJebJ13at2kc5XP7eY8g00a';
-const MASTODON_PROFILE_URL = 'https://mastoturk.org/@webbrain';
-const BLUESKY_PROFILE_URL = 'https://bsky.app/profile/webbrain-one.bsky.social';
+const MASTODON_PROFILE_URL = 'https://mastoturk.org/@sincetoggle';
+const BLUESKY_PROFILE_URL = 'https://bsky.app/profile/sincetoggle.bsky.social';
 const DISCORD_INVITE_URL = 'https://discord.gg/cgC325ssfw';
-const HUGGINGFACE_PROFILE_URL = 'https://huggingface.co/webbrain-one';
+const HUGGINGFACE_PROFILE_URL = 'https://huggingface.co/sincelabs';
 
 function escHtml(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
@@ -390,14 +390,14 @@ function buildSoftwareJsonLd(dict, locale) {
   const payload = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'WebBrain',
+    name: 'Since Toggle',
     applicationCategory: 'BrowserApplication',
     operatingSystem: 'Chrome, Edge, Firefox',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     description: dict['meta.description'],
     url: homeUrlFor(locale),
     inLanguage: locale.bcp47,
-    downloadUrl: 'https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb',
+    downloadUrl: 'https://chromewebstore.google.com/detail/sincetoggle/ljhijonmfahplgbbacgcfnaihbjljhhb',
     softwareVersion: dict['meta.software_version'],
     author: { '@type': 'Person', name: 'Emre Sokullu', url: 'https://emresokullu.com' },
     license: 'https://www.gnu.org/licenses/gpl-3.0.html',
@@ -414,7 +414,7 @@ function buildSubscribeHtml() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebBrain Compass Subscribe</title>
+  <title>Since Toggle Subscribe</title>
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="${SITE_ORIGIN}/subscribe/">
   <style>
@@ -467,7 +467,7 @@ function buildSubscribeHtml() {
 </head>
 <body>
   <main>
-    <div class="brand">WebBrain Compass</div>
+    <div class="brand">Since Toggle</div>
     <h1 id="subscribe-title">Redirecting to Stripe</h1>
     <p id="subscribe-copy">The payment page will open in a few seconds.</p>
     <p id="checkout-row">If redirect does not work, <a id="checkout-link" href="${STRIPE_SUBSCRIBE_URL}">open Stripe checkout</a>.</p>
@@ -484,7 +484,7 @@ function buildSubscribeHtml() {
       }, 3500);
     } else {
       document.getElementById('subscribe-title').textContent = 'Open this link from WebBrain';
-      document.getElementById('subscribe-copy').textContent = 'You may be using an outdated version of the WebBrain plugin on your browser, please update.';
+      document.getElementById('subscribe-copy').textContent = 'You may be using an outdated version of the Since Toggle plugin on your browser, please update.';
       document.getElementById('checkout-row').style.display = 'none';
     }
   </script>

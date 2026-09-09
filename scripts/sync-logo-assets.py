@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate every WebBrain logo derivative from the canonical brand assets.
+"""Regenerate every Since Toggle logo derivative from the canonical brand assets.
 
 The full-background artwork works well for social cards. Toolbar, favicon,
 and store-icon sizes use the matching transparent brain mark so browser chrome
@@ -23,12 +23,12 @@ WEB = ROOT / "web"
 # Static branded graphics that embed the logo directly. Their surrounding
 # layout stays untouched; only the existing logo tile is replaced.
 COMPOSITE_LOGOS = (
-    (ASSETS / "banners" / "webbrain-banner-en.png", (140, 228, 396, 484), 48),
-    (ASSETS / "banners" / "webbrain-banner-tr.png", (140, 228, 396, 484), 48),
-    (ASSETS / "banners" / "webbrain-banner-vertical-en.png", (472, 456, 808, 792), 64),
-    (ASSETS / "webbrain-social-card-300x188.png", (91, 25, 126, 60), 8),
-    (ASSETS / "webbrain-social-card.png", (436, 84, 556, 204), 26),
-    (WEB / "assets" / "webbrain-ollama-heart.png", (202, 175, 460, 433), 30),
+    (ASSETS / "banners" / "sincetoggle-banner-en.png", (140, 228, 396, 484), 48),
+    (ASSETS / "banners" / "sincetoggle-banner-tr.png", (140, 228, 396, 484), 48),
+    (ASSETS / "banners" / "sincetoggle-banner-vertical-en.png", (472, 456, 808, 792), 64),
+    (ASSETS / "sincetoggle-social-card-300x188.png", (91, 25, 126, 60), 8),
+    (ASSETS / "sincetoggle-social-card.png", (436, 84, 556, 204), 26),
+    (WEB / "assets" / "sincetoggle-ollama-heart.png", (202, 175, 460, 433), 30),
 )
 
 
@@ -112,7 +112,7 @@ def main() -> None:
     for path, box, radius in COMPOSITE_LOGOS:
         replace_composite_logo(path, source, box, radius)
 
-    print("Synchronized WebBrain logo assets from assets/logo-github.png")
+    print("Synchronized Since Toggle logo assets from assets/logo-github.png")
 
 
 if __name__ == "__main__":

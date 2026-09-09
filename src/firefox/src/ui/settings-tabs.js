@@ -4,7 +4,7 @@
 // the page so the tab/panel elements already exist when this runs.
 
 (function () {
-  const STORAGE_KEY = 'webbrainSettingsTab';
+  const STORAGE_KEY = 'sincetoggleSettingsTab';
   const buttons = document.querySelectorAll('.tab-btn');
   const panels = document.querySelectorAll('.tab-panel');
 

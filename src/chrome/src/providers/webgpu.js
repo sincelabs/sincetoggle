@@ -3,7 +3,7 @@
 import { BaseLLMProvider } from './base.js';
 import { ensureOffscreen } from '../offscreen/ensure.js';
 
-export const WEBGPU_VISION_MODEL_ID = 'webbrain-one/webbrain-vl-2-450M-onnx';
+export const WEBGPU_VISION_MODEL_ID = 'sincetoggle-one/sincetoggle-vl-2-450M-onnx';
 export const WEBGPU_MODEL_ID = 'LiquidAI/LFM2.5-2.6B-ONNX';
 export const WEBGPU_LFM25_MODEL_ID = WEBGPU_MODEL_ID;
 export const WEBGPU_BONSAI27_MODEL_ID = 'prism-ml/Bonsai-27B-gguf';
@@ -53,7 +53,7 @@ export const WEBGPU_VISION_DTYPE = Object.freeze({
 });
 
 export function webgpuVisionReadyMarkerUrl(modelId = WEBGPU_VISION_MODEL_ID) {
-  return `https://webbrain.one/.well-known/webgpu-vision-ready/v${WEBGPU_VISION_READY_MARKER_VERSION}/${encodeURIComponent(String(modelId || '').trim())}`;
+  return `https://sincetoggle.one/.well-known/webgpu-vision-ready/v${WEBGPU_VISION_READY_MARKER_VERSION}/${encodeURIComponent(String(modelId || '').trim())}`;
 }
 
 /**
@@ -417,7 +417,7 @@ export class WebGPUVisionProvider extends WebGPUOffscreenProvider {
       messages,
       options: {
         maxTokens: options.maxTokens,
-        ...(options.webbrainVisionProbe === true ? { visionProbe: true } : {}),
+        ...(options.sincetoggleVisionProbe === true ? { visionProbe: true } : {}),
       },
     }, { timeoutMs: WEBGPU_VISION_INFERENCE_TIMEOUT_MS });
     if (!response || response.error) {

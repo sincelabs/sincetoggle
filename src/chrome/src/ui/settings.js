@@ -1,5 +1,5 @@
 /**
- * WebBrain Settings Page — provider configuration + display settings.
+ * Since Toggle Settings Page — provider configuration + display settings.
  */
 
 import { t, getLocale, setLocale, LANGUAGES } from './i18n.js';
@@ -72,7 +72,7 @@ import {
 import { AUTO_GROUP_TABS_KEY } from '../tab-group-preference.js';
 
 const VISION_UI_PROVIDER_IDS = new Set(['ollama', ...AUTO_VISION_PROVIDER_IDS]);
-const EASY_CLI_PROXY_GUIDE_URL = 'https://webbrain.one/docs/easy-cli-proxy/';
+const EASY_CLI_PROXY_GUIDE_URL = 'https://sincetoggle.one/docs/easy-cli-proxy/';
 const SUBSCRIPTION_GUIDE_PRODUCTS = Object.freeze({
   openai: 'ChatGPT/Codex',
   anthropic: 'Claude',
@@ -443,16 +443,16 @@ if (globalThis.chrome?.storage?.onChanged) {
   });
 }
 
-const WEBBRAIN_SUBSCRIBE_URL = 'https://webbrain.one/subscribe';
-const WEBBRAIN_ACCOUNT_URL = 'https://api.webbrain.one/account';
+const SINCETOGGLE_SUBSCRIBE_URL = 'https://sincetoggle.one/subscribe';
+const SINCETOGGLE_ACCOUNT_URL = 'https://api.sincetoggle.one/account';
 
 const DEFAULT_COST_ALLOWANCE_USD = 10;
 const MAX_AGENT_STEPS_DEFAULT = 130;
 const MAX_AGENT_STEPS_UNLIMITED_SENTINEL = 200;
 const PLAN_BEFORE_ACT_MODES = new Set(['try', 'strict', 'off']);
 const PLAN_REVIEW_MODES = new Set(['confidence', 'always', 'never']);
-const CLOUD_BRIDGE_ENABLED_KEY = 'webbrainCloudBridgeEnabled';
-const CLOUD_BRIDGE_URL_KEY = 'webbrainCloudBridgeUrl';
+const CLOUD_BRIDGE_ENABLED_KEY = 'sincetoggleCloudBridgeEnabled';
+const CLOUD_BRIDGE_URL_KEY = 'sincetoggleCloudBridgeUrl';
 const DEFAULT_CLOUD_BRIDGE_URL = 'ws://127.0.0.1:17374/extension';
 let cloudBridgeStatusPollTimer = null;
 let cloudBridgeStatusRequestPending = false;
@@ -700,16 +700,16 @@ function renderCostAllowanceSpent(spent, limit) {
   costSpentValueLabel.textContent = `${formatUsd(spent)} / ${formatUsd(limit)}`;
 }
 
-function webbrainSubscribeUrl(deviceGuid) {
-  const url = new URL(WEBBRAIN_SUBSCRIBE_URL);
+function sincetoggleSubscribeUrl(deviceGuid) {
+  const url = new URL(SINCETOGGLE_SUBSCRIBE_URL);
   if (deviceGuid) {
     url.searchParams.set('client_reference_id', deviceGuid);
   }
   return url.toString();
 }
 
-function webbrainAccountUrl(deviceGuid) {
-  const url = new URL(WEBBRAIN_ACCOUNT_URL);
+function sincetoggleAccountUrl(deviceGuid) {
+  const url = new URL(SINCETOGGLE_ACCOUNT_URL);
   if (deviceGuid) {
     url.searchParams.set('client_reference_id', deviceGuid);
   }
@@ -779,13 +779,13 @@ async function refreshApocalypseModeStatus() {
 // --- Init ---
 
 async function init() {
-  // Migration: the old auth.webbrain.one sign-in stored a bearer token and
+  // Migration: the old auth.sincetoggle.one sign-in stored a bearer token and
   // account info here. Billing is now device-GUID based and there is no sign-in
   // UI, so purge any stale credentials left over from that flow.
   chrome.storage.local.remove(['authToken', 'authEmail', 'authDefaultModel']).catch(() => {});
 
   // Load display settings
-  const stored = await chrome.storage.local.get(['verboseMode', 'selectionShortcutEnabled', 'pdfViewerEnabled', AUTO_GROUP_TABS_KEY, 'helpImproveWebBrain', 'screenshotFallback', 'maxAgentSteps', 'autoScreenshot', 'useSiteAdapters', 'researchEscalationEnabled', 'researchEscalationEngine', 'voiceInputEnabled', 'alwaysAllowApiMutations', 'apiMutationObserverEnabled', 'webMcpEnabled', 'openaiAskStreamingEnabled', 'planBeforeActMode', 'planBeforeAct', 'planReviewMode', 'planReviewConfidenceThreshold', DOWNLOAD_DIRECTORY_STORAGE_KEY, 'notifySound', 'completionConfetti', 'completionFlashTab', 'tracingEnabled', 'losslessTrace', 'strictSecretMode', 'agentAllowLocalNetwork', CLOUD_BRIDGE_ENABLED_KEY, CLOUD_BRIDGE_URL_KEY, 'scheduledTasksEnabled', 'scheduledRequireConsequentialConfirmation', 'providerFilter', 'requestTimeoutMs', 'clarifyTimeoutSec', 'clarifyTimeoutSemanticsV2', 'costAllowanceSessionUsd', 'costAllowanceTotalUsd', 'meteredProviderCostSpentUsd', 'screenshotRedaction', 'imageDetail', 'maxScreenshotsPerTurn', 'maxImageDimension']);
+  const stored = await chrome.storage.local.get(['verboseMode', 'selectionShortcutEnabled', 'pdfViewerEnabled', AUTO_GROUP_TABS_KEY, 'helpImproveSince Toggle', 'screenshotFallback', 'maxAgentSteps', 'autoScreenshot', 'useSiteAdapters', 'researchEscalationEnabled', 'researchEscalationEngine', 'voiceInputEnabled', 'alwaysAllowApiMutations', 'apiMutationObserverEnabled', 'webMcpEnabled', 'openaiAskStreamingEnabled', 'planBeforeActMode', 'planBeforeAct', 'planReviewMode', 'planReviewConfidenceThreshold', DOWNLOAD_DIRECTORY_STORAGE_KEY, 'notifySound', 'completionConfetti', 'completionFlashTab', 'tracingEnabled', 'losslessTrace', 'strictSecretMode', 'agentAllowLocalNetwork', CLOUD_BRIDGE_ENABLED_KEY, CLOUD_BRIDGE_URL_KEY, 'scheduledTasksEnabled', 'scheduledRequireConsequentialConfirmation', 'providerFilter', 'requestTimeoutMs', 'clarifyTimeoutSec', 'clarifyTimeoutSemanticsV2', 'costAllowanceSessionUsd', 'costAllowanceTotalUsd', 'meteredProviderCostSpentUsd', 'screenshotRedaction', 'imageDetail', 'maxScreenshotsPerTurn', 'maxImageDimension']);
   if (typeof stored.providerFilter === 'string' && ['all','active','local','cloud','router'].includes(stored.providerFilter)) {
     providerFilter = stored.providerFilter;
   }
@@ -793,7 +793,7 @@ async function init() {
   if (selectionShortcutToggle) selectionShortcutToggle.checked = stored.selectionShortcutEnabled !== false;
   if (pdfViewerToggle) pdfViewerToggle.checked = stored.pdfViewerEnabled === true;
   if (autoGroupTabsToggle) autoGroupTabsToggle.checked = stored[AUTO_GROUP_TABS_KEY] !== false;
-  if (helpImproveToggle) helpImproveToggle.checked = stored.helpImproveWebBrain !== false; // on by default
+  if (helpImproveToggle) helpImproveToggle.checked = stored.helpImproveSince Toggle !== false; // on by default
   screenshotToggle.checked = stored.screenshotFallback ?? true; // on by default
   if (isUnlimitedMaxAgentSteps(stored.maxAgentSteps)) {
     maxStepsRange.value = MAX_AGENT_STEPS_UNLIMITED_SENTINEL;
@@ -1398,7 +1398,7 @@ autoGroupTabsToggle?.addEventListener('change', async () => {
 });
 
 helpImproveToggle?.addEventListener('change', async () => {
-  await chrome.storage.local.set({ helpImproveWebBrain: helpImproveToggle.checked }).catch(() => {});
+  await chrome.storage.local.set({ helpImproveSince Toggle: helpImproveToggle.checked }).catch(() => {});
 });
 
 screenshotToggle.addEventListener('change', async () => {
@@ -2175,7 +2175,7 @@ if (btnExportUserMemory) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `webbrain-user-memory-${Date.now()}.json`;
+    a.download = `sincetoggle-user-memory-${Date.now()}.json`;
     document.body.appendChild(a);
     try { a.click(); } finally {
       a.remove();
@@ -2458,7 +2458,7 @@ function restoreProviderApiKeyWarnings() {
 }
 
 function supportsProviderCompatibilityControls(id, config = {}) {
-  return id !== 'webbrain_cloud' && ['openai', 'llamacpp', 'azure_openai'].includes(config.type);
+  return id !== 'sincetoggle_cloud' && ['openai', 'llamacpp', 'azure_openai'].includes(config.type);
 }
 
 function supportsProviderCompatibilitySettings(id, config = {}) {
@@ -2705,7 +2705,7 @@ function renderProviders() {
   // they're example URLs or API key shapes and reading them in English is
   // universal enough.
   const providerConfigs = {
-    webbrain_cloud: {
+    sincetoggle_cloud: {
       fields: [],
     },
     llamacpp: {
@@ -3064,7 +3064,7 @@ function renderProviders() {
   // Model limits are portable provider settings, not local-runtime-only
   // details. Keep them optional and expose them on every configurable card.
   for (const [id, definition] of Object.entries(providerConfigs)) {
-    if (id === 'webbrain_cloud' || !Array.isArray(definition.fields)) continue;
+    if (id === 'sincetoggle_cloud' || !Array.isArray(definition.fields)) continue;
     const keys = new Set(definition.fields.map(field => field.key));
     if (!keys.has('contextWindow')) definition.fields.push(CONTEXT_WINDOW_FIELD);
     if (!keys.has('maxOutputTokens')) definition.fields.push(MAX_OUTPUT_TOKENS_FIELD);
@@ -3087,7 +3087,7 @@ function renderProviders() {
   let visibleCount = 0;
   for (const [id, config] of entries) {
     const isSelected = id === activeProviderId;
-    const isConfigured = id !== 'webbrain_cloud' && config.configured === true;
+    const isConfigured = id !== 'sincetoggle_cloud' && config.configured === true;
     const definitionId = providerDefinitionId(id, config);
     const fieldDefs = providerConfigs[definitionId]?.fields || [];
 
@@ -3208,24 +3208,24 @@ function renderProviders() {
       `;
     }
 
-    const subscribeHref = id === 'webbrain_cloud' ? webbrainSubscribeUrl(config.deviceGuid) : '';
-    const accountHref = id === 'webbrain_cloud' ? webbrainAccountUrl(config.deviceGuid) : '';
-    const billingButton = id === 'webbrain_cloud'
+    const subscribeHref = id === 'sincetoggle_cloud' ? sincetoggleSubscribeUrl(config.deviceGuid) : '';
+    const accountHref = id === 'sincetoggle_cloud' ? sincetoggleAccountUrl(config.deviceGuid) : '';
+    const billingButton = id === 'sincetoggle_cloud'
       ? `<button class="btn-secondary btn-manage-billing" data-href="${escapeHtml(accountHref)}"${config.deviceGuid ? '' : ' disabled'}>${escapeHtml(t('st.account.manage_billing'))}</button>`
       : '';
     let providerNote = '';
-    if (id === 'webbrain_cloud') {
+    if (id === 'sincetoggle_cloud') {
       const linkStyle = 'color:var(--accent,#4A90D9);text-decoration:none;';
-      const privacyLink = `<a href="https://webbrain.one/privacy" target="_blank" rel="noopener noreferrer"
-              style="${linkStyle}">${escapeHtml(t('st.providers.webbrain_note.privacy_link'))}</a>`;
+      const privacyLink = `<a href="https://sincetoggle.one/privacy" target="_blank" rel="noopener noreferrer"
+              style="${linkStyle}">${escapeHtml(t('st.providers.sincetoggle_note.privacy_link'))}</a>`;
       const subscribeLink = `<a href="${escapeHtml(subscribeHref)}" target="_blank" rel="noopener noreferrer"
-              style="${linkStyle}">webbrain.one/subscribe</a>`;
+              style="${linkStyle}">sincetoggle.one/subscribe</a>`;
       const accountLink = `<a href="${escapeHtml(accountHref)}" target="_blank" rel="noopener noreferrer"
-              style="${linkStyle}">api.webbrain.one/account</a>`;
+              style="${linkStyle}">api.sincetoggle.one/account</a>`;
       providerNote = `<div style="margin-top:10px;padding:10px 12px;border-radius:6px;
                   background:rgba(74,144,217,0.08);border:1px solid rgba(74,144,217,0.22);
                   font-size:12px;color:var(--text2);line-height:1.5;">
-           ${t('st.providers.webbrain_data_use.body', { privacyLink, subscribeLink, accountLink })}
+           ${t('st.providers.sincetoggle_data_use.body', { privacyLink, subscribeLink, accountLink })}
          </div>`;
     }
     const extensionOrigin = chrome.runtime.getURL('').replace(/\/$/, '');
@@ -3239,7 +3239,7 @@ function renderProviders() {
            <p>${escapeHtml(t('st.providers.ollama_warning.restart'))}</p>
            <pre><code>OLLAMA_ORIGINS="${escapeHtml(extensionOrigin)}" ollama serve</code></pre>
            <p>${escapeHtml(t('st.providers.ollama_warning.base_url'))}</p>
-           <a href="https://www.webbrain.one/blog/ollama-launch-handoff"
+           <a href="https://www.sincetoggle.one/blog/ollama-launch-handoff"
               target="_blank" rel="noopener noreferrer">${escapeHtml(t('st.providers.ollama_warning.link'))} ↗</a>
          </aside>`
       : '';
@@ -3554,7 +3554,7 @@ function wrapCollapsibleCard(id, config, isSelected, isConfigured, bodyHtml) {
 }
 
 function providerIsActive(id, config) {
-  return id !== 'webbrain_cloud' && config?.configured === true;
+  return id !== 'sincetoggle_cloud' && config?.configured === true;
 }
 
 function markProviderDirty(id) {
@@ -3747,7 +3747,7 @@ async function saveProvider(id, { showFlash = true, markConfigured = true } = {}
     )) {
       providersData[id].visionDetection = null;
     }
-    if (markConfigured) providersData[id].configured = id !== 'webbrain_cloud';
+    if (markConfigured) providersData[id].configured = id !== 'sincetoggle_cloud';
   }
   if (markConfigured) dirtyProviderIds.delete(id);
   refreshProviderCardStatus(id);

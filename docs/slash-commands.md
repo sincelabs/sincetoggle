@@ -1,6 +1,6 @@
 # Slash Commands
 
-WebBrain accepts slash commands as the first thing on a line in the input box.
+Since Toggle accepts slash commands as the first thing on a line in the input box.
 Type `/help` in the panel to see complete usage signatures and flag
 descriptions. Typing a canonical command followed by a space opens autocomplete
 for its available flags.
@@ -28,14 +28,14 @@ for its available flags.
 | `/workflow --save <name>` | Compile the latest successful traced run into a reusable, value-free workflow |
 | `/workflow --run <id>` | Run a saved workflow in Act mode, collecting any runtime parameters locally |
 | `/workflow --delete <id>` | Delete a saved workflow |
-| `/workflow --export <id>` | Download a sanitized portable `webbrain-workflow/1` JSON file |
+| `/workflow --export <id>` | Download a sanitized portable `sincetoggle-workflow/1` JSON file |
 | `/workflow --import --file` | Import a portable workflow file as a new local saved workflow |
 | `/teach` | Show the current tab's Teacher mode status and captured action count |
 | `/teach --start <name>` | Start learning a saved workflow from your demonstrated clicks and field edits |
 | `/teach --end` | Stop teaching and compile the captured actions into a value-free saved workflow |
 | `/allow-api` | **Per-conversation API mutation override.** See [below](#allow-api). |
 | `/foreground [prompt]` | Run one local task in the foreground for visual compatibility |
-| `/dangerously-skip-permissions` | **Global permission-prompt bypass.** Turns off `Ask before consequential actions` without opening Settings. WebBrain will act without per-site prompts until you re-enable the setting. |
+| `/dangerously-skip-permissions` | **Global permission-prompt bypass.** Turns off `Ask before consequential actions` without opening Settings. Since Toggle will act without per-site prompts until you re-enable the setting. |
 | `/compact` | Force context compaction for the current conversation |
 | `/verbose` | Toggle verbose/compact tool display |
 | `/reset` | Clear the conversation and all per-conversation flags |
@@ -74,7 +74,7 @@ Regular local runs stay pinned to their original tab and operate without
 activating that tab or focusing its window. Chrome captures through CDP with
 focus emulation scoped to the run; Firefox captures the target tab directly
 with `tabs.captureTab`. If Chrome repeatedly returns a blank background frame,
-WebBrain discards it and continues from DOM and accessibility data.
+Since Toggle discards it and continues from DOM and accessibility data.
 
 Use `/foreground <prompt>` as a one-run compatibility escape hatch for a site
 whose visual state does not render correctly in the background. It restores tab
@@ -111,10 +111,10 @@ WebM when that run settles (Chrome only).
 Append `/screenshot [--save-as <filename>]` to save viewport screenshots
 immediately before and after the run (Chrome and Firefox). For example,
 `Test the checkout /screenshot --save-as checkout.png` saves
-`checkout-before.png` and `checkout-after.png`; without `--save-as`, WebBrain
+`checkout-before.png` and `checkout-after.png`; without `--save-as`, Since Toggle
 uses timestamped filenames.
 
-For the Chrome diagnostic suffix, WebBrain may reactivate the originating run
+For the Chrome diagnostic suffix, Since Toggle may reactivate the originating run
 tab before saving the after screenshot. Firefox captures that tab directly
 without activating it. If the recording or initial screenshot cannot be
 started and saved, the run is not sent. Standalone `/record` and `/screenshot`
@@ -126,17 +126,17 @@ Full schemas and privacy properties for every export live in
 [export and workflow formats](export-and-workflow-formats.md). The short
 version:
 
-- **Settings snapshots** use `webbrain-config/1` and include all portable
+- **Settings snapshots** use `sincetoggle-config/1` and include all portable
   Settings values, including provider, vision, transcription, and CapSolver API
   keys, profile data, user memory, custom skills, and permission choices. **The
   JSON is plaintext and should be stored securely.** Device-bound Cloud Sync
   sessions/device IDs, conversations, traces, scheduled jobs, usage counters,
   and accumulated spend are not exported.
-- **Saved workflows** use a separate `webbrain-workflow/1` schema; they are not
+- **Saved workflows** use a separate `sincetoggle-workflow/1` schema; they are not
   raw trace replays. Historical `ref_id` values, action CSS selectors,
   coordinates, query strings, fragments, and typed field values are excluded.
   Typed values become runtime parameters, and each action is bound to the
-  recorded origin and URL family. At run time WebBrain resolves a fresh
+  recorded origin and URL family. At run time Since Toggle resolves a fresh
   accessibility-tree target and executes through the normal Act permission,
   submit-confirmation, and verification gates. Ambiguous targets fail closed. If
   an action may already have happened but its result is unknown, replay stops
@@ -149,8 +149,8 @@ version:
   hands control to the Agent with the sanitized start scope so normal
   navigation, permission, and verification rules can recover the workflow
   instead of ending it immediately.
-- **Portable workflow files** contain the raw sanitized `webbrain-workflow/1`
+- **Portable workflow files** contain the raw sanitized `sincetoggle-workflow/1`
   definition and are limited to 1 MiB. Export re-normalizes the definition
   before download. Import normalizes it again, assigns a fresh local ID and
   timestamps, and never overwrites an existing workflow, so the same file can
-  safely move between Chrome, Firefox, and WebBrain Cloud.
+  safely move between Chrome, Firefox, and Since Toggle Cloud.

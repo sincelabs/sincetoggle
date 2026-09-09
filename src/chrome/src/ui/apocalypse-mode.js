@@ -102,7 +102,7 @@ const apocalypseStore = createApocalypseStore();
 const CORPUS_DOWNLOAD_ID = 'rag-emergency-corpus';
 const SEMANTIC_DOWNLOAD_ID = 'rag-semantic-model';
 const EMERGENCY_COMPONENT_STATE_EVENT = 'wb-emergency-component-download-state';
-const EMERGENCY_COMPONENT_STATE_CHANNEL = 'webbrain-emergency-download-state';
+const EMERGENCY_COMPONENT_STATE_CHANNEL = 'sincetoggle-emergency-download-state';
 const downloadStateChannel = typeof BroadcastChannel === 'function'
   ? new BroadcastChannel(EMERGENCY_COMPONENT_STATE_CHANNEL)
   : null;

@@ -511,7 +511,7 @@ export function createEmergencyReaderUrl(documentId, passageId) {
   if (!/^[a-z0-9._:-]{1,220}$/.test(passage)) {
     fail('invalid-reader-target', 'Invalid passage id for reader target.');
   }
-  return 'webbrain-reader://emergency-box/' + encodeURIComponent(document)
+  return 'sincetoggle-reader://emergency-box/' + encodeURIComponent(document)
     + '?passage=' + encodeURIComponent(passage);
 }
 
@@ -526,7 +526,7 @@ export function createWikipediaReaderUrl(archiveId, articlePath) {
   if (!path || path.includes('\0') || path.split('/').some(part => part === '..')) {
     fail('invalid-reader-target', 'Invalid Wikipedia article path for reader target.');
   }
-  return 'webbrain-reader://wikipedia/' + encodeURIComponent(archive)
+  return 'sincetoggle-reader://wikipedia/' + encodeURIComponent(archive)
     + '?article=' + encodeURIComponent(path);
 }
 
@@ -537,7 +537,7 @@ export function validateRagReaderUrl(value) {
   } catch {
     fail('invalid-reader-target', 'Citation reader target is not a valid URL.');
   }
-  if (url.protocol !== 'webbrain-reader:') {
+  if (url.protocol !== 'sincetoggle-reader:') {
     fail('invalid-reader-target', 'Citation reader target uses an unsupported scheme.');
   }
   if (!['emergency-box', 'wikipedia'].includes(url.hostname)) {

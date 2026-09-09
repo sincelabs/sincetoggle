@@ -65,7 +65,7 @@ try {
         `${documentId}:0`, documentId, 'benchmark-v1', title, language,
         'health', 'https://example.invalid/emergency-source', 'CC BY-SA 4.0',
         locator, text, searchTerms, 'a'.repeat(64), 24, 0,
-        `webbrain-reader://emergency-box/${documentId}?passage=${documentId}%3A0`,
+        `sincetoggle-reader://emergency-box/${documentId}?passage=${documentId}%3A0`,
       ]).stepReset().clearBindings();
     }
     db.exec('COMMIT');

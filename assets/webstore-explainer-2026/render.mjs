@@ -138,7 +138,7 @@ function hero(light = false) {
     body: `
       <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
         <div style="font-family:var(--mono); font-size:16px; font-weight:650; letter-spacing:0.2em;
-          text-transform:uppercase; color:var(--muted);">WebBrain</div>
+          text-transform:uppercase; color:var(--muted);">Since Toggle</div>
         <h1 style="margin-top:26px; font-size:78px; line-height:1.03; max-width:960px;">Your open-source<br>AI browser agent</h1>
         <div class="sub" style="font-size:29px; font-weight:600; color:var(--ink); margin-top:24px;">
           <span style="color:var(--accent);">Ask.</span>
@@ -236,7 +236,7 @@ function actScene(onboarding = false) {
         <div style="background:#171827; border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:20px;
           color:#fff; box-shadow:0 24px 60px rgba(0,0,0,0.28);">
           <div style="font-family:var(--mono); font-size:13px; font-weight:650; color:#aeb4c9;
-            text-transform:uppercase; letter-spacing:0.07em; margin-bottom:16px;">WebBrain is acting</div>
+            text-transform:uppercase; letter-spacing:0.07em; margin-bottom:16px;">Since Toggle is acting</div>
           <div style="display:grid; gap:11px;">
             ${steps.map(([state, label]) => `
               <div style="display:grid; grid-template-columns:26px 1fr; gap:10px; align-items:center; font-size:15.5px; font-weight:640; color:${state === 'live' ? '#ffffff' : '#c9d0e0'};">
@@ -381,7 +381,7 @@ function offerScene() {
     theme: 'dark',
     body: `
       <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-        <h1 style="font-size:60px;">WebBrain Compass launch pricing</h1>
+        <h1 style="font-size:60px;">Since Toggle Compass launch pricing</h1>
         <div style="display:flex; align-items:baseline; gap:28px; margin-top:30px;">
           <!-- Bricolage sets line-through low on heavy figures, so the strike is drawn manually. -->
           <span class="num" style="position:relative; font-size:60px; line-height:1; color:var(--muted);">$8
@@ -452,7 +452,7 @@ function proofScene() {
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
           </svg>
           <div style="min-width:0;">
-            <div style="font-family:var(--mono); font-size:19px; font-weight:600;">github.com/webbrain-one/webbrain</div>
+            <div style="font-family:var(--mono); font-size:19px; font-weight:600;">github.com/sincetoggle-one/sincetoggle</div>
             <div style="font-size:15px; font-weight:640; color:#9ba3b8; margin-top:4px;">Star it, fork it, ship a PR.</div>
           </div>
         </div>
@@ -500,7 +500,7 @@ function apocalypseScene({ nuke = false, onboarding = false } = {}) {
             <span style="font-family:var(--mono); font-size:15px; font-weight:650; color:var(--accent);
               text-transform:uppercase; letter-spacing:0.14em;">${nuke ? '<span style="font-size:52px; font-family:\'Apple Color Emoji\',\'Segoe UI Emoji\',sans-serif; vertical-align:-6px;">\u2622</span> ' : ''}Apocalypse Mode</span>
           </div>
-          <h1 style="font-size:62px; line-height:1.05; max-width:440px;">WebBrain, ready when the internet isn't.</h1>
+          <h1 style="font-size:62px; line-height:1.05; max-width:440px;">Since Toggle, ready when the internet isn't.</h1>
           <div class="sub" style="font-size:25px; margin-top:24px; color:var(--muted); max-width:420px;">
             Offline knowledge, under your control. Download the essentials while you still can.
           </div>

@@ -1,10 +1,10 @@
-# WebBrain Architecture
+# Since Toggle Architecture
 
 > Version 25.8.5
 
 ## Overview
 
-WebBrain is a browser extension that gives an LLM control over the user's active browser tab. The user types a natural-language instruction in a side panel, and an autonomous agent loop calls the LLM, executes tool calls (click, type, navigate, read page state, etc.), feeds results back to the LLM, and repeats until the task is done.
+Since Toggle is a browser extension that gives an LLM control over the user's active browser tab. The user types a natural-language instruction in a side panel, and an autonomous agent loop calls the LLM, executes tool calls (click, type, navigate, read page state, etc.), feeds results back to the LLM, and repeats until the task is done.
 
 There are two builds that share almost all code:
 - **Chrome** — Manifest V3, service worker, CDP-backed trusted events
@@ -97,7 +97,7 @@ captures in both browsers. The panel strips the suffix before agent dispatch,
 starts capture before `chat`, and finalizes it from the run's `finally` path.
 
 Settings transfer is also slash-driven. `/export --config` asks the background
-for an allowlisted, default-resolved `webbrain-config/1` snapshot, and
+for an allowlisted, default-resolved `sincetoggle-config/1` snapshot, and
 `/import <json>` or `/import --file` validates that schema before replacing the
 portable Settings state and rehydrating providers and live agent settings.
 Provider and auxiliary-model API keys are intentionally included in plaintext;
@@ -113,7 +113,7 @@ The central message router. On Chrome it's a service worker (MV3); on Firefox it
 1. **Route messages** between the side panel, content scripts, and the agent
 2. **Manage the agent lifecycle**: `chat` / `chat_stream` / `continue` / `abort` / `clear_conversation`
 3. **Manage provider config**: load, save, test, switch active provider
-4. **Manage side panel visibility**: per-window "WebBrain" tab group controls where the panel is enabled
+4. **Manage side panel visibility**: per-window "Since Toggle" tab group controls where the panel is enabled
 5. **Observe same-tab XHR/fetch requests** with `webRequest` so loop detection can suggest an exact `fetch_url` shortcut when repeated UI clicks trigger the same background request
 6. **Expose Claude OAuth**, tab recording, CAPTCHA, and other sub-features as message handlers
 
@@ -174,7 +174,7 @@ _enrichUserMessageWithCurrentPage(tabId, messages, userMessage)
 
 #### Page context reduction
 
-WebBrain does not send raw HTML or a raw DOM dump to the model by default. The
+Since Toggle does not send raw HTML or a raw DOM dump to the model by default. The
 initial page context is the sanitized URL and title, matching site-adapter
 guidance, and an optional viewport screenshot when vision is available. When a
 task needs page content, the agent requests it on demand as a reduced semantic
@@ -190,7 +190,7 @@ Raw page-source access through `read_page_source` is available only in Dev mode.
 
 Manual action-mode runs (Act or Dev) call the active provider once before the tool loop with `planner.js`'s structured JSON prompt. Off uses the compact intent schema; Try and Strict use the full plan schema. Unset storage defaults to Try, while explicit Off remains Off. The planner sees the user task, sanitized URL/title, and a short recent-history digest; page context is wrapped as untrusted data and image blocks are dropped.
 
-When the active site adapter has a validated `webbrain-adapter-workflow/2`
+When the active site adapter has a validated `sincetoggle-adapter-workflow/2`
 profile, both planner variants also receive its bounded app-owned job IDs and
 descriptions. The planner returns a nullable `site_job`; the runtime resolves
 that ID again against the exact active adapter instead of trusting page text or
@@ -242,10 +242,10 @@ while (steps < maxSteps) {
 ```
 
 When an interactive, tool-capable run exhausts its configured agent steps
-without a terminal answer, the browser loop stays closed and WebBrain performs
+without a terminal answer, the browser loop stays closed and Since Toggle performs
 one context-only handoff with only `done` available. That terminal schema permits
 `partial` or `failed`, never `success`; invalid output falls back to the
-deterministic step-limit summary. This also applies to the selected WebBrain
+deterministic step-limit summary. This also applies to the selected Since Toggle
 Compass provider without changing its advisory in-loop observation checkpoints.
 Structured Cloud API runs keep their separate `done_json` output contract and do
 not enter this handoff.
@@ -268,7 +268,7 @@ Official OpenAI GPT-5.6 and streaming-capable Responses-only GPT-5 Pro variants
 use Responses streaming. Other supported official OpenAI models use Chat
 Completions streaming. Anthropic uses its native Messages event parser, Azure
 OpenAI uses its deployment-based parser, and Gemini, DeepSeek, xAI, Mistral,
-Nvidia NIM, Groq, Together AI, Fireworks, z.ai, OpenRouter, WebBrain Compass,
+Nvidia NIM, Groq, Together AI, Fireworks, z.ai, OpenRouter, Since Toggle Compass,
 Ollama, LM Studio, Jan, vLLM, SGLang, LocalAI, and Unsloth Studio use the OpenAI-compatible
 Chat Completions parser. z.ai streaming tool calls add its documented
 `tool_stream` request flag. llama.cpp uses its dedicated OpenAI-compatible
@@ -361,7 +361,7 @@ trace and diagnostic exports as privacy-sensitive data.
 
 Browser-tab creation, enumeration, activation, and run retargeting are not general model-callable capabilities. To inspect another URL, the agent uses an available URL reader; to interact with it, it navigates the current run tab. Explicit separate-tab requests are surfaced as a limitation rather than silently converted into current-tab navigation. The only private-tab exception is the single OTP-skill-gated reader above: the runtime chooses an already-open supported mailbox without exposing the tab catalog, and any message-opening helper is inactive and disposable. Internal research/helper tabs and normal page-authored `target=_blank` behavior remain separate infrastructure.
 
-Chrome CSS patch records include the top-level `documentId` and a patch-specific CSS marker. Full navigation clears persisted records, and `remove_injected_css` checks the live document before calling `removeCSS`, preventing an old patch ID from removing equivalent CSS on a replacement page. If navigation races either identity check during injection, WebBrain removes that patch's exact uniquely marked CSS from the replacement document before discarding its record. Chrome `execute_js` passes a 15-second timeout to CDP. Dev diagnostic event handlers are registered before either agent-loop variant starts and own their debugger session across turns, so ordinary run cleanup preserves their bounded buffers. Leaving the panel-wide Dev mode drains every tab in the CDP client's active-diagnostics registry, removes the handlers and buffers, and sends `Runtime.disable`, `Log.disable`, and `Network.disable` so Chrome also stops domain-level diagnostic work; conversation and tab cleanup additionally detach the debugger.
+Chrome CSS patch records include the top-level `documentId` and a patch-specific CSS marker. Full navigation clears persisted records, and `remove_injected_css` checks the live document before calling `removeCSS`, preventing an old patch ID from removing equivalent CSS on a replacement page. If navigation races either identity check during injection, Since Toggle removes that patch's exact uniquely marked CSS from the replacement document before discarding its record. Chrome `execute_js` passes a 15-second timeout to CDP. Dev diagnostic event handlers are registered before either agent-loop variant starts and own their debugger session across turns, so ordinary run cleanup preserves their bounded buffers. Leaving the panel-wide Dev mode drains every tab in the CDP client's active-diagnostics registry, removes the handlers and buffers, and sends `Runtime.disable`, `Log.disable`, and `Network.disable` so Chrome also stops domain-level diagnostic work; conversation and tab cleanup additionally detach the debugger.
 
 ### Step 6a: Skills and Dynamic Tool Exposure
 
@@ -376,19 +376,19 @@ new default IDs can still be migrated into existing installations.
 
 `agent/skills.js` normalizes each skill and handles three separate surfaces:
 
-- Routing catalog: optional fenced `webbrain-skill` JSON supplies a summary
+- Routing catalog: optional fenced `sincetoggle-skill` JSON supplies a summary
   (capped at 200 characters), eligible modes, and up to six canonical semantic
   intents (40 characters each). Intents are cross-language meaning hints for
   the LLM, not literal keywords. Without metadata, the first prose paragraph
   becomes the summary, intents stay empty, and the skill defaults to Act/Dev.
   An imported Agent Skills `SKILL.md` can instead supply its standard `name`
   and `description` frontmatter for the name and summary; an explicit Settings
-  name and `webbrain-skill` metadata retain precedence.
+  name and `sincetoggle-skill` metadata retain precedence.
   `getEligibleSkillCatalog()` produces the shared `{id,name,summary,intents}`
   records used by both the planner and `load_skill({skill_id})`. Ask sees only
   explicitly Ask-compatible skills, while Compact has no skill surface.
 - Prompt instructions: `buildCustomSkillsPrompt()` strips both metadata and
-  `webbrain-tools` fences, strips valid Agent Skills frontmatter, then appends
+  `sincetoggle-tools` fences, strips valid Agent Skills frontmatter, then appends
   full prose only for skills activated on the current run. Active IDs reset
   before the next user turn. Trusted
   recommended actions can preactivate the skill that owns their first tool;
@@ -482,7 +482,7 @@ The runtime enforces catalog membership, mode/tier eligibility, active-skill
 tool ownership, and tool filters. It cannot independently determine *why* the
 model requested a valid skill ID. The rule against activation from page, email,
 document, or tool-result instructions is therefore a model-policy boundary,
-reinforced by WebBrain's untrusted-content wrappers and the loader description,
+reinforced by Since Toggle's untrusted-content wrappers and the loader description,
 not a deterministic intent classifier. Routing quality also depends on concise,
 distinct summaries; a broad skill such as FreeSkillz deliberately loads one
 instruction bundle for several related capabilities.
@@ -500,7 +500,7 @@ See [Apocalypse Mode](apocalypse-mode.md) for storage and browser limits.
 The optional metadata format is a separate prompt-stripped fence:
 
 ````markdown
-```webbrain-skill
+```sincetoggle-skill
 {
   "summary": "Find, read, copy, or enter verification codes from visible browser email.",
   "modes": ["ask", "act"]
@@ -511,7 +511,7 @@ The optional metadata format is a separate prompt-stripped fence:
 The manifest format is a fenced JSON block inside the skill markdown:
 
 ````markdown
-```webbrain-tools
+```sincetoggle-tools
 {
   "tools": [
     {
@@ -616,7 +616,7 @@ copied nor fingerprinted in request events. Policy revisions are bumped when
 controlled prompt templates or tool-exposure rules change; private request
 content does not affect them.
 
-WebBrain Compass runs also have a separate consent-gated terminal-runtime path.
+Since Toggle Compass runs also have a separate consent-gated terminal-runtime path.
 After an executed tool result is made durable in `chrome.storage.local`, a
 bounded `terminal_runtime` envelope is sent to the Compass improvement endpoint.
 Transient failures remain in the outbox for the next Compass run; acknowledged or
@@ -628,8 +628,8 @@ same event and outbox schema.
 Each new trace run records the manifest version that created it. `/export`
 Markdown records the exporting version, `/export --traces` records both the
 exporting version and every turn's recording version, and Traces-page JSON adds
-`exportedByWebBrainVersion` while retaining the backward-compatible
-`webbrain-trace/1` schema. Legacy runs are labeled with an unavailable recording
+`exportedBySince ToggleVersion` while retaining the backward-compatible
+`sincetoggle-trace/1` schema. Legacy runs are labeled with an unavailable recording
 version rather than being attributed to the currently installed build.
 
 ### User Memory (`user-memory.js`)
@@ -666,7 +666,7 @@ other failures retry once.
 
 Saved workflows are compiled artifacts, not serialized trace events. The
 background reads the newest successful trace in the active conversation and
-normalizes its replayable actions into `webbrain-workflow/1`, stored under
+normalizes its replayable actions into `sincetoggle-workflow/1`, stored under
 `wb_saved_workflows_v1`. Compilation removes historical element references,
 action CSS selectors, coordinates, query strings, fragments, and typed values. Every typed field
 value becomes a declared runtime parameter; unsupported or failed actions are
@@ -811,7 +811,7 @@ Wraps `chrome.debugger` API for:
 - **Screenshots** — `Page.captureScreenshot` with clip/scale control
 - **DOM queries** — `Runtime.evaluate` for shadow DOM piercing, `DOM.getDocument` for closed roots
 - **WebMCP** — `WebMCP.enable` maintains a bounded live catalog and
-  `WebMCP.invokeTool` executes a page-registered structured capability. WebBrain
+  `WebMCP.invokeTool` executes a page-registered structured capability. Since Toggle
   exposes opaque `wmcp_*` IDs rather than page-controlled names as call handles.
 
 WebMCP is an experimental Chrome-only fast path that is off by default. The
@@ -928,7 +928,7 @@ Firefox uses `browser.storage.session`.
 | API shortcut observer | `chrome.webRequest` URL/method buffer | `browser.webRequest` URL/method buffer |
 | Slash-driven tab/screen recording | `chrome.tabCapture` / `getDisplayMedia()` + offscreen | Not available |
 | Side panel | `sidePanel` API (MV3) | `sidebar_action` (MV2) |
-| File upload | CDP path or `downloadId` | `downloadId` re-fetch or WebBrain file picker; no arbitrary local path |
+| File upload | CDP path or `downloadId` | `downloadId` re-fetch or Since Toggle file picker; no arbitrary local path |
 
 Apart from the Chromium-only endpoint-free WebGPU provider and vision sidecar,
 the agent loop, tools, adapters, providers, loop detection, context management,

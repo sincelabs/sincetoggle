@@ -360,8 +360,8 @@ async function runExtensionClientSmoke(context, fixtureUrl) {
     assert.match(extensionId, /^[a-p]{32}$/, 'Chrome did not return a valid unpacked extension ID.');
     const installed = await browserCdp.send('Extensions.getExtensions');
     const webBrain = installed.extensions.find(extension => extension.id === extensionId);
-    assert.equal(webBrain?.enabled, true, 'Chrome loaded the WebBrain extension in a disabled state.');
-    assert.equal(path.resolve(webBrain.path), EXTENSION_PATH);
+    assert.equal(webBrain?.enabled, true, 'Chrome loaded the Since Toggle extension in a disabled state.');
+    assert.equal(path.resolve(sincetoggle.path), EXTENSION_PATH);
 
     harness = await context.newPage();
     await harness.goto(`chrome-extension://${extensionId}/src/ui/settings.html`);
@@ -505,7 +505,7 @@ async function runExtensionClientSmoke(context, fixtureUrl) {
     assert.equal(stalePreparation.error?.noDispatch, true);
 
     console.log(
-      `PASS: WebBrain extension ${webBrain.version} enforced feature/mode gates and exercised `
+      `PASS: Since Toggle extension ${sincetoggle.version} enforced feature/mode gates and exercised `
       + 'paginated, cross-frame WebMCP discovery, invocation, failure, and stale IDs '
       + 'through Agent + CDPClient.',
     );
@@ -557,7 +557,7 @@ async function main() {
     );
     await withPhaseTimeout(
       () => runExtensionClientSmoke(context, fixtureServer.url),
-      'WebBrain extension WebMCP smoke test',
+      'Since Toggle extension WebMCP smoke test',
     );
   } finally {
     if (context) await context.close();

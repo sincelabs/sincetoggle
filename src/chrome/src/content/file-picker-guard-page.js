@@ -7,15 +7,15 @@
  * and attributes to coordinate with content.js.
  */
 (() => {
-  const PROBE_EVENT = 'webbrain:file-picker-guard-probe';
-  const PROBE_ATTR = 'data-webbrain-file-picker-probe';
-  const PROBE_ACK_ATTR = 'data-webbrain-file-picker-probe-ack';
-  const ARM_EVENT = 'webbrain:file-picker-guard-arm';
-  const DISARM_EVENT = 'webbrain:file-picker-guard-disarm';
-  const RESET_EVENT = 'webbrain:file-picker-guard-reset';
-  const BLOCKED_EVENT = 'webbrain:file-picker-guard-blocked';
-  const GUARD_ATTR = 'data-webbrain-file-picker-guard';
-  const BLOCKED_ATTR = 'data-webbrain-file-picker-blocked';
+  const PROBE_EVENT = 'sincetoggle:file-picker-guard-probe';
+  const PROBE_ATTR = 'data-sincetoggle-file-picker-probe';
+  const PROBE_ACK_ATTR = 'data-sincetoggle-file-picker-probe-ack';
+  const ARM_EVENT = 'sincetoggle:file-picker-guard-arm';
+  const DISARM_EVENT = 'sincetoggle:file-picker-guard-disarm';
+  const RESET_EVENT = 'sincetoggle:file-picker-guard-reset';
+  const BLOCKED_EVENT = 'sincetoggle:file-picker-guard-blocked';
+  const GUARD_ATTR = 'data-sincetoggle-file-picker-guard';
+  const BLOCKED_ATTR = 'data-sincetoggle-file-picker-blocked';
   const MAX_GUARD_MS = 5000;
 
   const probeRoot = document.documentElement;

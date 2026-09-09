@@ -14,7 +14,7 @@
  * calling it directly would move the trust boundary out of the browser.
  */
 
-import { BridgeError, TERMINAL_STATUSES, WebBrainBridge, type CloudSnapshot } from "./bridge.js";
+import { BridgeError, TERMINAL_STATUSES, Since ToggleBridge, type CloudSnapshot } from "./bridge.js";
 import { config } from "./config.js";
 
 export interface StartRunOptions {
@@ -33,7 +33,7 @@ export interface AwaitOptions {
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function startRun(
-  bridge: WebBrainBridge,
+  bridge: Since ToggleBridge,
   options: StartRunOptions,
   timeoutMs?: number,
 ): Promise<CloudSnapshot> {
@@ -54,7 +54,7 @@ export async function startRun(
 }
 
 export async function getStatus(
-  bridge: WebBrainBridge,
+  bridge: Since ToggleBridge,
   runId?: string,
   timeoutMs?: number,
 ): Promise<CloudSnapshot | { runs: CloudSnapshot[] }> {
@@ -67,7 +67,7 @@ export async function getStatus(
 }
 
 export async function respond(
-  bridge: WebBrainBridge,
+  bridge: Since ToggleBridge,
   runId: string,
   clarifyId: string,
   answer: string,
@@ -80,7 +80,7 @@ export async function respond(
   );
 }
 
-export async function abort(bridge: WebBrainBridge, runId: string): Promise<CloudSnapshot> {
+export async function abort(bridge: Since ToggleBridge, runId: string): Promise<CloudSnapshot> {
   return await bridge.request<CloudSnapshot>("cloud_abort", { runId });
 }
 
@@ -88,12 +88,12 @@ export async function abort(bridge: WebBrainBridge, runId: string): Promise<Clou
  * Poll until the run finishes, needs the user, or we run out of patience.
  *
  * A timeout here does NOT abort the run — the browser keeps working and the
- * caller can resume with `webbrain_status`. Silently killing a half-finished
+ * caller can resume with `sincetoggle_status`. Silently killing a half-finished
  * task that may have already submitted a form would be worse than reporting
  * that it is still going.
  */
 export async function awaitSettled(
-  bridge: WebBrainBridge,
+  bridge: Since ToggleBridge,
   runId: string,
   { timeoutMs }: AwaitOptions,
 ): Promise<{ snapshot: CloudSnapshot; timedOut: boolean }> {
@@ -182,7 +182,7 @@ function allowedAnswers(kind: string, pending: PendingInput): string[] {
 export function describeSnapshot(snapshot: CloudSnapshot, timedOut = false): string {
   const lines: string[] = [];
   lines.push(`run_id: ${snapshot.runId}`);
-  lines.push(`status: ${snapshot.status}${timedOut ? " (still running — poll webbrain_status)" : ""}`);
+  lines.push(`status: ${snapshot.status}${timedOut ? " (still running — poll sincetoggle_status)" : ""}`);
   if (snapshot.mode) lines.push(`mode: ${snapshot.mode}`);
   if (snapshot.finalUrl) lines.push(`final_url: ${snapshot.finalUrl}`);
 
@@ -192,7 +192,7 @@ export function describeSnapshot(snapshot: CloudSnapshot, timedOut = false): str
     const clarifyId = pending.clarifyId || pending.clarify_id || "";
     const question = pending.question || "(no question text supplied)";
     lines.push("");
-    lines.push("WebBrain is waiting on a human decision before it continues.");
+    lines.push("Since Toggle is waiting on a human decision before it continues.");
     lines.push(`prompt_kind: ${promptKind}`);
     lines.push(`clarify_id: ${clarifyId}`);
     let supported = true;
@@ -220,13 +220,13 @@ export function describeSnapshot(snapshot: CloudSnapshot, timedOut = false): str
         // which is exactly what the discriminator exists to prevent.
         lines.push(
           "This prompt kind is unsupported by this client. Do not send a free-form answer; " +
-            "update the client before calling webbrain_respond.",
+            "update the client before calling sincetoggle_respond.",
         );
     }
     if (supported) {
       lines.push(`question: ${question}`);
       lines.push(
-        "Relay this to the user and send their answer with webbrain_respond. " +
+        "Relay this to the user and send their answer with sincetoggle_respond. " +
           "Do not invent an answer on their behalf.",
       );
     }

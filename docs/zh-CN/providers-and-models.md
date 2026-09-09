@@ -36,7 +36,7 @@ class BaseLLMProvider {
 
 | 提供商 ID | 类型 | 类别 | 默认模型 | 视觉能力 |
 |---|---|---|---|---|
-| `webbrain_cloud` | `openai` | 云端 | `webbrain-cloud 1.0` | 是 |
+| `sincetoggle_cloud` | `openai` | 云端 | `sincetoggle-cloud 1.0` | 是 |
 | `llamacpp` | `llamacpp` | 本地 | （已加载模型） | 自动元数据 / 覆盖 |
 | `ollama` | `openai` | 本地 | （已加载模型） | 通过 `/api/show` 自动检测 / 覆盖 |
 | `lmstudio` | `openai` | 本地 | （已加载模型） | 自动元数据 / 覆盖 |
@@ -69,7 +69,7 @@ class BaseLLMProvider {
 
 ### 扩展提供商目录
 
-WebBrain 从 OpenCode 提供商目录提交
+Since Toggle 从 OpenCode 提供商目录提交
 `62e4641235d7847dadc60da37cca8a023dd54fc1` 的快照中新增了 76 张默认禁用的
 提供商卡片。设置中在 **Chromium 上共有 106 个内置提供商**，在 **Firefox
 上共有 105 个**；两者的差异是仅 Chromium 提供的本地 WebGPU 运行时。完整 ID
@@ -102,7 +102,7 @@ ID；对于 `@cf/` 模型，留空时会自动使用 `default` 网关。
 当 `supportsAskStreaming` 启用时，交互式 Ask 回合会流式显示回复。中断的流会
 清除部分文本、仅以非流式方式重试一次，并在本次运行剩余阶段关闭流式传输。
 Act、Dev、计划任务、云端运行和 Continue 仍使用非流式请求。服务返回令牌用量时，
-WebBrain 会直接记录；若服务省略用量，则记录基于字符数的保守估算，避免流式请求绕过
+Since Toggle 会直接记录；若服务省略用量，则记录基于字符数的保守估算，避免流式请求绕过
 已配置的成本限额。
 
 明确不支持的条目：`github-models`（GitHub Models 于 2026 年 7 月 30 日退役）、
@@ -117,7 +117,7 @@ WebBrain 会直接记录；若服务省略用量，则记录基于字符数的�
 通用代理卡片必须填写客户端密钥：
 
 - **llama.cpp**：`http://localhost:8080` — 运行 `llama-server -m model.gguf`
-- **Ollama**：`http://localhost:11434/v1` — `ollama serve`，或 `ollama launch webbrain --model <model>`
+- **Ollama**：`http://localhost:11434/v1` — `ollama serve`，或 `ollama launch sincetoggle --model <model>`
 - **LM Studio**：`http://localhost:1234/v1` — LM Studio 的本地推理服务器
 - **Jan**：`http://localhost:1337/v1` — Jan 的本地 OpenAI 兼容 API 服务器
 - **vLLM**：`http://localhost:8000/v1` — vLLM 的 OpenAI 兼容服务器
@@ -140,7 +140,7 @@ ChatGPT/Codex，或用 `--claude-login` 登录 Claude；Gemini CLI 需先安装
 CLIProxyAPI 官方插件商店安装 `gemini-cli`，重启代理，再使用 `--geminicli-login`
 （参见[插件管理说明](https://help.router-for.me/cn/management/api#插件)）。最后运行
 `./cli-proxy-api --config ./config.yaml` 启动服务。
-在 WebBrain 中保留 `http://127.0.0.1:8317/v1`，填写同一密钥，加载并选择模型，
+在 Since Toggle 中保留 `http://127.0.0.1:8317/v1`，填写同一密钥，加载并选择模型，
 最后测试连接。
 
 不要把代理暴露到局域网或公网：CLIProxyAPI 的空 host 默认监听所有网络接口，TLS
@@ -148,7 +148,7 @@ CLIProxyAPI 官方插件商店安装 `gemini-cli`，重启代理，再使用 `--
 路径。代理进程在本机运行，但可能把请求上下文转发给上游账户；上游 OAuth 凭据始终
 保留在 CLIProxyAPI 中。
 
-Ollama、llama.cpp、LM Studio 和 LocalAI 默认使用 `visionMode: auto`。WebBrain 在
+Ollama、llama.cpp、LM Studio 和 LocalAI 默认使用 `visionMode: auto`。Since Toggle 在
 页面上下文增强前读取所选模型的原生服务器元数据，只有服务器明确报告支持图像输入时才
 发送截图。元数据请求失败或格式错误时，本回合按纯文本处理，之后会重试。设置中
 可选择自动、强制开启或关闭。模型字段为空时，每个用户回合都会重新检测当前加载
@@ -157,24 +157,24 @@ Ollama、llama.cpp、LM Studio 和 LocalAI 默认使用 `visionMode: auto`。Web
 #### Ollama 启动交接（预览）
 
 <p align="center">
-  <img src="../../web/assets/webbrain-ollama-heart.png" alt="WebBrain 喜爱 Ollama 启动交接" width="720">
+  <img src="../../web/assets/sincetoggle-ollama-heart.png" alt="Since Toggle 喜爱 Ollama 启动交接" width="720">
 </p>
 
-WebBrain 目前通过本地 OpenAI 兼容提供商支持 Ollama。新的
-`ollama launch webbrain --model <model>` 交接还可以自动配置 WebBrain，但它尚未
+Since Toggle 目前通过本地 OpenAI 兼容提供商支持 Ollama。新的
+`ollama launch sincetoggle --model <model>` 交接还可以自动配置 Since Toggle，但它尚未
 集成到上游 Ollama。目前可以从
-[`esokullu/ollama` 的 `codex/ollama-webbrain-launch-handoff` 分支](https://github.com/esokullu/ollama/tree/codex/ollama-webbrain-launch-handoff)
+[`esokullu/ollama` 的 `codex/ollama-sincetoggle-launch-handoff` 分支](https://github.com/esokullu/ollama/tree/codex/ollama-sincetoggle-launch-handoff)
 试用；我们希望 Ollama 能将其上游集成。
 
 ```bash
 git clone https://github.com/esokullu/ollama.git
 cd ollama
-git switch codex/ollama-webbrain-launch-handoff
+git switch codex/ollama-sincetoggle-launch-handoff
 cmake -S . -B build -G Ninja -DOLLAMA_MLX_BACKENDS=
 cmake --build build --parallel 8
 
 OLLAMA_ORIGINS="chrome-extension://*,moz-extension://*" ./ollama serve
-./ollama launch webbrain --model <model>
+./ollama launch sincetoggle --model <model>
 ```
 
 **上下文窗口。** 为获得可靠的智能体运行，请使用**至少 16k 令牌上下文窗口**加载本地模型 — 这是可用的最低要求。8k 在选择了 Compact 层级时可以工作；4k 太小，无法容纳系统提示 + 工具模式。智能体从 `provider.contextWindow`（`providers/base.js`）读取窗口以驱动自动压缩；当提供商配置未设置 `contextWindow` 时，本地提供商默认保守的 **16k**（云端/路由器默认 128k）。**测试连接** / **加载模型** 会为 **llama.cpp**、**Ollama** 和 **LM Studio** 在报告时自动检测（llama.cpp `GET /props` 的 `n_ctx`、Ollama `GET /api/ps` 实时上下文然后 `/api/show` 的 `num_ctx`、LM Studio `/api/v0/models` 的 `loaded_context_length`）。检测会刷新默认 16k；仅在来自实时/运行时上下文时才会缩小更大的手动覆盖（不会仅凭 Ollama `/api/show`）。Jan / vLLM / SGLang / LocalAI 尚不自动检测。仍可显式设置 `config.contextWindow`，并确保模型服务器实际以那么大的上下文启动（例如 `llama-server -c 16384`）。
@@ -248,11 +248,11 @@ await pm.testProvider('openai');    // 测试连接
 
 配置存储在 `chrome.storage.local` 中的 `providers` 键下，与默认值合并。默认值提供结构（存在哪些提供商键）；存储的配置覆盖每个键的值。这使得引入新提供商条目的升级可以在用户不清空存储的情况下工作。
 
-已弃用的提供商条目（`webbrain`、`openai_subscription`、`claude_subscription`）会被过滤掉。
+已弃用的提供商条目（`sincetoggle`、`openai_subscription`、`claude_subscription`）会被过滤掉。
 
 ### 费用限额
 
-设置界面暴露会话和总云端费用限额。智能体优先使用提供商报告的 `usage.cost`/`usage.cost_usd` 值（OpenRouter 直接报告此值）。对于仅返回令牌计数的直接云端提供商，WebBrain 根据提供商配置字段估算费用：
+设置界面暴露会话和总云端费用限额。智能体优先使用提供商报告的 `usage.cost`/`usage.cost_usd` 值（OpenRouter 直接报告此值）。对于仅返回令牌计数的直接云端提供商，Since Toggle 根据提供商配置字段估算费用：
 
 - `inputCostPerMillionUsd`
 - `cacheReadCostPerMillionUsd`
@@ -260,7 +260,7 @@ await pm.testProvider('openai');    // 测试连接
 - `cacheWrite1hCostPerMillionUsd`
 - `outputCostPerMillionUsd`
 
-OpenAI 将缓存读取与写入令牌都包含在输入令牌总数中（`prompt_tokens_details.cached_tokens` / `cache_write_tokens`，或 Responses API 的 `input_tokens_details` 等价字段），因此 WebBrain 会先减去这两部分，再对剩余令牌应用常规输入费率，并用 `cacheWriteCostPerMillionUsd` 为写入计价。Anthropic 和 Bedrock 分别报告常规输入、缓存读取和缓存写入，因此这些计数会作为独立的计费类别相加；它们还可以区分 5 分钟和 1 小时缓存写入。
+OpenAI 将缓存读取与写入令牌都包含在输入令牌总数中（`prompt_tokens_details.cached_tokens` / `cache_write_tokens`，或 Responses API 的 `input_tokens_details` 等价字段），因此 Since Toggle 会先减去这两部分，再对剩余令牌应用常规输入费率，并用 `cacheWriteCostPerMillionUsd` 为写入计价。Anthropic 和 Bedrock 分别报告常规输入、缓存读取和缓存写入，因此这些计数会作为独立的计费类别相加；它们还可以区分 5 分钟和 1 小时缓存写入。
 
 这些费率在提供商卡片中可编辑，因此无需修改代码即可调整自定义模型定价。未配置缓存专用费率时，它会回退到常规输入费率；未配置 1 小时写入费率时，会回退到通用缓存写入费率。如果计费的远程提供商有令牌使用量但未配置输入/输出费率，智能体会使用保守默认值（每百万令牌输入 `$3` / 输出 `$15`）。流式提供商每次请求只计入最终累计使用量快照。本地提供商不计费。
 

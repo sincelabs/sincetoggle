@@ -7,8 +7,8 @@ import { createOfflineSemanticReranker } from '../agent/offline-reranker.js';
 import { ZIM_XAPIAN_RUNTIME_BUNDLED } from '../agent/zim-xapian.js';
 import { t } from './i18n.js';
 
-export const OFFLINE_RAG_FILTERS_KEY = 'webbrainOfflineRagFilters';
-export const OFFLINE_RAG_FILTERS_EVENT = 'webbrain-offline-rag-filters-changed';
+export const OFFLINE_RAG_FILTERS_KEY = 'sincetoggleOfflineRagFilters';
+export const OFFLINE_RAG_FILTERS_EVENT = 'sincetoggle-offline-rag-filters-changed';
 const SOURCE_KINDS = Object.freeze(['wikipedia', 'emergency-box']);
 
 export function normalizeOfflineRagFilters(value = {}) {

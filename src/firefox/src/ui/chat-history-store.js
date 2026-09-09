@@ -1,4 +1,4 @@
-const DB_NAME = 'webbrain_chat_history';
+const DB_NAME = 'sincetoggle_chat_history';
 const DB_VERSION = 1;
 const STORE_NAME = 'records';
 

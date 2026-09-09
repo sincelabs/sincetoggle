@@ -35,7 +35,7 @@ export const SENSITIVE_NAME_RE = /pwd|password|passwd|secret|token|api[-_\s]?key
 export const SENSITIVE_AUTOCOMPLETE_RE = /^(current-password|new-password|one-time-code)$/i;
 
 // Loose note — defined but agent.js does NOT currently emit it. Rationale:
-// webbrain's primary audience runs small local models (qwen / phi / similar,
+// sincetoggle's primary audience runs small local models (qwen / phi / similar,
 // 3-30B class) which handle conditional instructions ("do X unless Y")
 // poorly. The loose note collapsed into a hard rule on some models and got
 // ignored on others — net negative. We kept the constant exported because

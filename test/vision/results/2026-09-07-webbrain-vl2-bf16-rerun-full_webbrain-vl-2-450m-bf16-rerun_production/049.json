@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "createdAt": "2026-09-07T13:09:23.311Z",
   "id": "049",
-  "model": "webbrain-vl-2-450m-bf16-rerun",
+  "model": "sincetoggle-vl-2-450m-bf16-rerun",
   "endpoint": "http://127.0.0.1:8335/v1/chat/completions",
   "promptMode": "production",
   "question": {

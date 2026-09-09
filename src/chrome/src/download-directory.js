@@ -51,7 +51,7 @@ export function createDownloadDirectoryListener(api) {
     directory = normalizeDownloadDirectory(changes[DOWNLOAD_DIRECTORY_STORAGE_KEY].newValue);
   });
 
-  return function routeWebBrainDownload(downloadItem, suggest) {
+  return function routeSince ToggleDownload(downloadItem, suggest) {
     if (downloadItem?.byExtensionId !== api.runtime.id) {
       suggest();
       return undefined;

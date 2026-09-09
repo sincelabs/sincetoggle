@@ -1,8 +1,8 @@
 {
-  "runTag": "2026-06-21-webbrain-cloud-final",
-  "model": "webbrain-cloud 1.0",
+  "runTag": "2026-06-21-sincetoggle-cloud-final",
+  "model": "sincetoggle-cloud 1.0",
   "browser": "chrome",
-  "base": "https://api.webbrain.one/v1",
+  "base": "https://api.sincetoggle.one/v1",
   "saveRequest": false,
   "tier": null,
   "chatTemplateCompat": "off",

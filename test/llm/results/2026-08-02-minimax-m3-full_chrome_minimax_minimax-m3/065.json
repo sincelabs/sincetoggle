@@ -12,12 +12,12 @@
     "name": "done",
     "args": {
       "outcome": "success",
-      "summary": "To take a screenshot of the current page, please type `/screenshot` in the chat for the current viewport, or `/screenshot --full-page` for the full page. These are WebBrain side-panel slash commands that will capture the current page (https://www.cnn.com/2026/05/world/example-story/index.html) and attach the image to our conversation."
+      "summary": "To take a screenshot of the current page, please type `/screenshot` in the chat for the current viewport, or `/screenshot --full-page` for the full page. These are Since Toggle side-panel slash commands that will capture the current page (https://www.cnn.com/2026/05/world/example-story/index.html) and attach the image to our conversation."
     }
   },
   "toolCallSource": "tool_calls",
   "finishReason": "tool_calls",
-  "content": "\n\nI'll take a screenshot of the current page for you. Please note that as the AI agent, I don't have direct access to a screenshot tool — but I can help you capture one using WebBrain's built-in feature.",
+  "content": "\n\nI'll take a screenshot of the current page for you. Please note that as the AI agent, I don't have direct access to a screenshot tool — but I can help you capture one using Since Toggle's built-in feature.",
   "usage": {
     "prompt_tokens": 23070,
     "completion_tokens": 188,

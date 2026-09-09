@@ -8,7 +8,7 @@
   "chatTemplateCompat": "alternating",
   "structuredToolsSent": false,
   "freeze": {
-    "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\freeze\\baseline-2026-05-23.json",
+    "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\freeze\\baseline-2026-05-23.json",
     "sourceRun": "anthropic/claude-sonnet-4.6",
     "sourceRunTag": "2026-05-23T18-47-31-246Z",
     "systemHash": "5c4fac1387025050d002fb87fb6ae02af2fba0e232cd40737f844a3a5c4e7abf",

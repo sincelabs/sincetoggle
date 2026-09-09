@@ -11,7 +11,7 @@
 import { secureRandomBase36Token } from './random-token.js';
 
 export const SAVED_WORKFLOWS_STORAGE_KEY = 'wb_saved_workflows_v1';
-export const SAVED_WORKFLOW_SCHEMA = 'webbrain-workflow/1';
+export const SAVED_WORKFLOW_SCHEMA = 'sincetoggle-workflow/1';
 export const WORKFLOW_PARAM_REF_KEY = '$workflowParam';
 
 const STORE_VERSION = 1;
@@ -379,7 +379,7 @@ export function compileWorkflowFromTrace(run, events, options = {}) {
     updatedAt: ts,
     source: {
       runId: cleanId(run.runId),
-      webbrainVersion: cleanText(run.webbrainVersion, 40),
+      sincetoggleVersion: cleanText(run.sincetoggleVersion, 40),
     },
     start: urlScope,
     parameters,
@@ -505,7 +505,7 @@ export function compileWorkflowFromDemonstration(input, options = {}) {
     name,
     createdAt: ts,
     updatedAt: ts,
-    source: { runId: '', webbrainVersion: cleanText(input?.webbrainVersion, 40) },
+    source: { runId: '', sincetoggleVersion: cleanText(input?.sincetoggleVersion, 40) },
     start,
     parameters,
     steps,
@@ -682,7 +682,7 @@ export function normalizeSavedWorkflow(input, options = {}) {
     updatedAt: timestamp(input?.updatedAt, createdAt),
     source: {
       runId: cleanId(input?.source?.runId),
-      webbrainVersion: cleanText(input?.source?.webbrainVersion, 40),
+      sincetoggleVersion: cleanText(input?.source?.sincetoggleVersion, 40),
     },
     start,
     parameters,

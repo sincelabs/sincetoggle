@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
-import { GnippetsE2EClient, WebBrainCloudClient } from './lib/webbrain-client.mjs';
+import { GnippetsE2EClient, Since ToggleCloudClient } from './lib/sincetoggle-client.mjs';
 import { gradeScenario, renderSummary } from './lib/grader.mjs';
 import { sanitizeGnippetsState, sanitizeRun, sanitizeTrace } from './lib/sanitize.mjs';
 import {
@@ -212,7 +212,7 @@ async function executeScenario({ scenario, suiteDir, cloud, gnippets, video }) {
     // with redaction silently off. The `finally` below still tears the session
     // down, so aborting here does not leak it.
     const unapplied = unappliedSessionSettings(
-      browser.webbrain_config_result,
+      browser.sincetoggle_config_result,
       scenario.session_settings || {},
     );
     if (unapplied) {
@@ -228,7 +228,7 @@ async function executeScenario({ scenario, suiteDir, cloud, gnippets, video }) {
         capture: 'none',
       });
       const preloadId = resolveCloudRunId(preload);
-      if (!preloadId) throw new Error('WebBrain Cloud did not return a preload run id.');
+      if (!preloadId) throw new Error('Since Toggle Cloud did not return a preload run id.');
       const preloaded = await cloud.waitForRun(browser.id, preloadId, { timeoutMs: scenario.timeout_ms + 120_000 });
       if (preloaded.status !== 'completed') throw new Error(`Page preload ended with ${preloaded.status}.`);
       tabId = preloaded.tab_id ?? preloaded.tabId;
@@ -243,7 +243,7 @@ async function executeScenario({ scenario, suiteDir, cloud, gnippets, video }) {
       apiMutationsAllowed: scenario.api_mutations_allowed === true,
     });
     const runId = resolveCloudRunId(started);
-    if (!runId) throw new Error('WebBrain Cloud did not return a run id.');
+    if (!runId) throw new Error('Since Toggle Cloud did not return a run id.');
     reachedRunStart = true;
     run = await waitForRunWithClarifications({ cloud, sessionId: browser.id, runId, scenario });
     await writeJson(path.join(scenarioDir, 'run.json'), sensitive ? sanitizeRun(run) : run);
@@ -342,7 +342,7 @@ async function executeScenario({ scenario, suiteDir, cloud, gnippets, video }) {
     captureRequired: captureRequested,
   });
   const manifest = {
-    format: 'webbrain.ci-scenario',
+    format: 'sincetoggle.ci-scenario',
     version: 1,
     scenario_id: scenario.id,
     started_at: startedAt,
@@ -370,11 +370,11 @@ async function main() {
     return;
   }
 
-  const apiKey = process.env.WEBBRAIN_API_KEY;
-  if (!apiKey) throw new Error('WEBBRAIN_API_KEY is required. Use --dry-run to validate the catalog offline.');
-  const cloud = new WebBrainCloudClient({
+  const apiKey = process.env.SINCETOGGLE_API_KEY;
+  if (!apiKey) throw new Error('SINCETOGGLE_API_KEY is required. Use --dry-run to validate the catalog offline.');
+  const cloud = new Since ToggleCloudClient({
     apiKey,
-    baseUrl: process.env.WEBBRAIN_BASE_URL || 'https://webbrain.cloud',
+    baseUrl: process.env.SINCETOGGLE_BASE_URL || 'https://sincetoggle.cloud',
   });
   const gnippets = new GnippetsE2EClient({
     baseUrl: process.env.GNIPPETS_BASE_URL || 'https://gnippets.com',
@@ -394,7 +394,7 @@ async function main() {
   });
   const finishedAt = new Date().toISOString();
   const summary = {
-    format: 'webbrain.ci-suite',
+    format: 'sincetoggle.ci-suite',
     version: 1,
     suite_id: suiteId,
     started_at: startedAt,

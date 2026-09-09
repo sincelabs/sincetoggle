@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "createdAt": "2026-09-07T12:45:49.532Z",
   "id": "004",
-  "model": "webbrain-vl-3-450m-winner-3750",
+  "model": "sincetoggle-vl-3-450m-winner-3750",
   "endpoint": "http://127.0.0.1:8335/v1/chat/completions",
   "promptMode": "production",
   "question": {

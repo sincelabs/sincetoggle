@@ -56,7 +56,7 @@ const SOURCE_DEFINITIONS = Object.freeze({
     maxChurnRatio: 0.30,
   }),
   vetted: Object.freeze({
-    url: 'https://github.com/webbrain-one/webbrain/blob/main/scripts/update-coupon-domains.mjs',
+    url: 'https://github.com/sincetoggle-one/sincetoggle/blob/main/scripts/update-coupon-domains.mjs',
     evidenceTier: 'maintainer-vetted',
     minDomains: VETTED_DOMAINS.length,
     maxDomains: VETTED_DOMAINS.length,
@@ -218,7 +218,7 @@ async function fetchText(url, { fetchImpl = fetch, sourceId } = {}) {
         headers: {
           accept: 'text/html,application/xhtml+xml',
           'accept-language': 'en-US,en;q=0.8',
-          'user-agent': 'WebBrainCouponDomainUpdater/2.0 (+https://github.com/webbrain-one/webbrain)',
+          'user-agent': 'Since ToggleCouponDomainUpdater/2.0 (+https://github.com/sincetoggle-one/sincetoggle)',
         },
         redirect: 'follow',
         signal: AbortSignal.timeout(30_000),

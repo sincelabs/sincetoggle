@@ -467,7 +467,7 @@ function requestAbortError(signal) {
 export function createOfflineRagIndexClient(options = {}) {
   const worker = options.worker || new Worker(new URL('./offline-rag-worker.js', import.meta.url), {
     type: 'module',
-    name: 'webbrain-offline-rag',
+    name: 'sincetoggle-offline-rag',
   });
   const pending = new Map();
   let nextId = 1;

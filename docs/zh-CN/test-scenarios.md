@@ -1,6 +1,6 @@
-# WebBrain 测试场景
+# Since Toggle 测试场景
 
-一组端到端任务，用于评估 WebBrain 浏览器代理在不同难度和 UI 模式覆盖范围下的表现。每个场景列出了站点、要粘贴到侧面板的提示以及可观察的通过标准。
+一组端到端任务，用于评估 Since Toggle 浏览器代理在不同难度和 UI 模式覆盖范围下的表现。每个场景列出了站点、要粘贴到侧面板的提示以及可观察的通过标准。
 
 ## 场景
 
@@ -21,7 +21,7 @@
 
 ### 4. GitHub 问题提交 —— 中等
 - **站点：** github.com（你自己的测试仓库）
-- **任务：** "在 github.com/<你>/<仓库> 上打开一个新 issue，标题为 'Test from WebBrain'，内容为 'ignore this'。"
+- **任务：** "在 github.com/<你>/<仓库> 上打开一个新 issue，标题为 'Test from Since Toggle'，内容为 'ignore this'。"
 - **预期：** 代理导航到 `/issues/new`，填写标题 + 内容，点击提交。测试 contenteditable 内容编辑器和带有重复标签的"Submit new issue"按钮。
 
 ### 5. Gmail 撰写草稿 —— 中等
@@ -87,7 +87,7 @@
 你已经拥有所需的一切：代理循环、消息总线、截图、追踪。大约 1 天的工作量。
 
 ### 3. 通过 Puppeteer / Playwright 进行无头运行
-启动 Chromium 并预装扩展（`--load-extension=path/to/webbrain`），通过其 DOM 驱动侧面板，并非交互式地运行测试套件——可以过夜运行、在 CI 中运行、跨 N 个提供商运行。你可以跨 Chrome 配置文件进行并行化以提高吞吐量。缺点：需要登录的场景（Gmail、Reddit、LinkedIn）需要每个配置文件预置 cookie，而 Stripe 的仪表板对新浏览器很敏感（验证码）。
+启动 Chromium 并预装扩展（`--load-extension=path/to/sincetoggle`），通过其 DOM 驱动侧面板，并非交互式地运行测试套件——可以过夜运行、在 CI 中运行、跨 N 个提供商运行。你可以跨 Chrome 配置文件进行并行化以提高吞吐量。缺点：需要登录的场景（Gmail、Reddit、LinkedIn）需要每个配置文件预置 cookie，而 Stripe 的仪表板对新浏览器很敏感（验证码）。
 
 最佳方案是混合模式：匿名站点（Wikipedia、HN、Amazon、arxiv）使用无头模式，需要登录的站点使用侧面板运行器。
 

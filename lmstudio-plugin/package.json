@@ -1,15 +1,15 @@
 {
-  "name": "@webbrain/lmstudio-web-tools",
-  "displayName": "WebBrain Web Tools",
-  "description": "Web tools for LM Studio. fetch_url (raw HTTP, content-type aware) and research_url (readable article body) work with pure Node and no dependencies. With the WebBrain extension installed on a Chromium browser (Chrome, Edge, Brave), browser_task additionally delegates goals to your real, already-signed-in browser session — pages behind a login or rendered client-side that plain HTTP cannot reach. Firefox is not supported for browser_task: that build has no offscreen document, so it cannot host the bridge.",
+  "name": "@sincetoggle/lmstudio-web-tools",
+  "displayName": "Since Toggle Web Tools",
+  "description": "Web tools for LM Studio. fetch_url (raw HTTP, content-type aware) and research_url (readable article body) work with pure Node and no dependencies. With the Since Toggle extension installed on a Chromium browser (Chrome, Edge, Brave), browser_task additionally delegates goals to your real, already-signed-in browser session — pages behind a login or rendered client-side that plain HTTP cannot reach. Firefox is not supported for browser_task: that build has no offscreen document, so it cannot host the bridge.",
   "version": "0.2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
-  "homepage": "https://webbrain.one",
+  "homepage": "https://sincetoggle.one",
   "repository": {
     "type": "git",
-    "url": "https://github.com/webbrain-one/webbrain.git",
+    "url": "https://github.com/sincetoggle-one/sincetoggle.git",
     "directory": "lmstudio-plugin"
   },
   "scripts": {
@@ -28,7 +28,7 @@
     "browser-tools",
     "browser-agent",
     "browser-automation",
-    "webbrain"
+    "sincetoggle"
   ],
   "dependencies": {
     "@lmstudio/sdk": "^1.0.0",

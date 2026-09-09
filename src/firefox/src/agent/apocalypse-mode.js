@@ -673,7 +673,7 @@ export async function openKiwixZim(source, metadata = {}) {
   const imagesIncluded = wikipediaArchiveIncludesImages(metadata, embedded);
 
   // Kiwix bakes a Xapian full-text index into most ZIMs as an ordinary entry, so
-  // WebBrain's own reader can tell whether one is present without loading any
+  // Since Toggle's own reader can tell whether one is present without loading any
   // search runtime. libzim 0.95 exposes no equivalent check and its search()
   // swallows the error, which makes "this archive has no index" indistinguishable
   // from "nothing matched". Probing here keeps that distinction honest and lets
@@ -793,12 +793,12 @@ export async function openKiwixZim(source, metadata = {}) {
   return { articleCount, clusterCount, metadata: provenance, embeddedMetadata: embedded, imagesIncluded, hasFullTextIndex, search, readArticle, readImage };
 }
 
-const APOCALYPSE_DB_NAME = 'webbrain_apocalypse_mode';
+const APOCALYPSE_DB_NAME = 'sincetoggle_apocalypse_mode';
 const APOCALYPSE_DB_VERSION = 1;
 const CONFIG_STORE = 'config';
 const ARCHIVE_STORE = 'archives';
 const CONFIG_KEY = 'settings';
-const ARCHIVE_DIRECTORY = 'webbrain-apocalypse';
+const ARCHIVE_DIRECTORY = 'sincetoggle-apocalypse';
 
 function idbRequest(request) {
   return new Promise((resolve, reject) => {
@@ -1017,9 +1017,9 @@ export const OPFS_SWAP_SUFFIX = '.crswap';
 /** Every OPFS bucket this extension writes large files into. */
 export const OPFS_ARCHIVE_DIRECTORIES = Object.freeze([
   ARCHIVE_DIRECTORY,
-  'webbrain-emergency-box',
-  'webbrain-offline-rag',
-  'webbrain-webgpu-models',
+  'sincetoggle-emergency-box',
+  'sincetoggle-offline-rag',
+  'sincetoggle-webgpu-models',
 ]);
 
 /**

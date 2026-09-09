@@ -33,8 +33,8 @@ function reply(message, result) {
 }
 
 before(async () => {
-  process.env.WEBBRAIN_BRIDGE_PORT = String(await freePort());
-  process.env.WEBBRAIN_COMMAND_TIMEOUT_MS = "50";
+  process.env.SINCETOGGLE_BRIDGE_PORT = String(await freePort());
+  process.env.SINCETOGGLE_COMMAND_TIMEOUT_MS = "50";
   const context = {
     withToolsProvider(provider) {
       toolsProvider = provider;
@@ -110,7 +110,7 @@ before(async () => {
     }
   });
   await once(socket, "open");
-  socket.send(JSON.stringify({ type: "hello", client: "webbrain-extension" }));
+  socket.send(JSON.stringify({ type: "hello", client: "sincetoggle-extension" }));
   await new Promise((resolve) => setTimeout(resolve, 10));
 });
 
@@ -310,7 +310,7 @@ test("a replacement socket receives nothing until it sends a valid hello", async
 
   await assert.rejects(
     () => sharedBridge().request("cloud_run", { task: "private task", mode: "ask" }),
-    /No WebBrain browser extension is connected/,
+    /No Since Toggle browser extension is connected/,
   );
   assert.equal(receivedCommands, 0);
 

@@ -35,7 +35,7 @@ import {
 
 let recordingState = { active: false };
 const RECORDING_STATE_KEY = 'recordingState';
-const RECORDING_SAFETY_ALARM_NAME = 'webbrain-recording-safety-cap';
+const RECORDING_SAFETY_ALARM_NAME = 'sincetoggle-recording-safety-cap';
 export const MAX_RECORDING_MS = 2 * 60 * 60 * 1000; // 2 hours
 let recordingSafetyTimeout = null;
 let recordingStateReady = null;
@@ -49,7 +49,7 @@ function normalizeRecordingFilename(value) {
     .replace(/[<>:"|?*]/g, '-')
     .replace(/[. ]+$/g, '');
   if (!filename || filename === '.' || filename === '..') return null;
-  const stem = filename.replace(/\.webm$/i, '').replace(/[. ]+$/g, '') || 'webbrain-recording';
+  const stem = filename.replace(/\.webm$/i, '').replace(/[. ]+$/g, '') || 'sincetoggle-recording';
   return `${stem.slice(0, 175)}.webm`;
 }
 
@@ -95,7 +95,7 @@ function scheduleRecordingSafetyWatchdog(state = recordingState) {
   const delay = Math.max(0, dueAt - Date.now());
   recordingSafetyTimeout = setTimeout(() => {
     stopRecordingForSafetyCap().catch((e) => {
-      console.warn('[WebBrain] recording safety cap failed:', e);
+      console.warn('[Since Toggle] recording safety cap failed:', e);
     });
   }, delay);
   try { chrome.alarms?.create?.(RECORDING_SAFETY_ALARM_NAME, { when: dueAt }); } catch {}
@@ -123,7 +123,7 @@ try {
   chrome.alarms?.onAlarm?.addListener?.((alarm) => {
     if (alarm?.name !== RECORDING_SAFETY_ALARM_NAME) return;
     stopRecordingForSafetyCap().catch((e) => {
-      console.warn('[WebBrain] recording safety alarm failed:', e);
+      console.warn('[Since Toggle] recording safety alarm failed:', e);
     });
   });
 } catch {}
@@ -223,7 +223,7 @@ async function beforeRecordingFinalize(beforeFinalizeRecording) {
   try {
     await beforeFinalizeRecording();
   } catch (e) {
-    console.warn('[WebBrain] recording finalize provider preload failed:', e);
+    console.warn('[Since Toggle] recording finalize provider preload failed:', e);
   }
 }
 
@@ -487,7 +487,7 @@ export async function stopTabRecording(opts = {}) {
     .replace(/[:.]/g, '-')
     .replace(/T/, '_')
     .slice(0, 19);
-  const filename = recordingState.filename || `webbrain-recording-${stamp}.webm`;
+  const filename = recordingState.filename || `sincetoggle-recording-${stamp}.webm`;
   const wantTranscribeAfter = !!recordingState.transcribeAfter;
   const savingRecordingId = recordingState.recordingId;
   clearRecordingSafetyWatchdog();
@@ -576,7 +576,7 @@ export async function stopTabRecording(opts = {}) {
       mimeType: res.mimeType,
       baseFilename: filename.replace(/\.webm$/, ''),
     }).catch((e) => {
-      console.error('[WebBrain] runTranscription crashed:', e);
+      console.error('[Since Toggle] runTranscription crashed:', e);
     });
   }
 

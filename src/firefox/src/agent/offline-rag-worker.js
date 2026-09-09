@@ -17,15 +17,15 @@ import {
   validateOfflineRagIndexPath,
 } from './offline-rag-index.js';
 
-const SQLITE_POOL_DIRECTORY = '.webbrain-offline-rag-sahpool-v1';
-const SQLITE_POOL_NAME = 'webbrain-offline-rag-sahpool-v1';
+const SQLITE_POOL_DIRECTORY = '.sincetoggle-offline-rag-sahpool-v1';
+const SQLITE_POOL_NAME = 'sincetoggle-offline-rag-sahpool-v1';
 const canceledRequests = new Set();
 let sqlitePromise;
 let operationQueue = Promise.resolve();
 let vectorCache = null;
 
 function databaseFilename(indexPath) {
-  return `/webbrain-${validateOfflineRagIndexPath(indexPath).slice('sqlite/'.length)}`;
+  return `/sincetoggle-${validateOfflineRagIndexPath(indexPath).slice('sqlite/'.length)}`;
 }
 
 function abortError() {

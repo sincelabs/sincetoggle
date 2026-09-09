@@ -11,7 +11,7 @@
   "firstToolCall": null,
   "toolCallSource": null,
   "finishReason": "stop",
-  "content": "I can't take a screenshot myself, but you can do it right from the WebBrain side panel:\n\n- Type **`/screenshot`** to capture the visible viewport\n- Type **`/full-page-screenshot`** to capture the entire page\n\nThe image will be inserted directly into our chat so I can see it and work with it.",
+  "content": "I can't take a screenshot myself, but you can do it right from the Since Toggle side panel:\n\n- Type **`/screenshot`** to capture the visible viewport\n- Type **`/full-page-screenshot`** to capture the entire page\n\nThe image will be inserted directly into our chat so I can see it and work with it.",
   "usage": {
     "prompt_tokens": 12867,
     "completion_tokens": 73,

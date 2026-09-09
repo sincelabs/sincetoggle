@@ -1,6 +1,6 @@
 import { makeEvent } from './event-model.js';
 
-const STORAGE_KEY = 'webbrainCloudRuntimeOutboxV1';
+const STORAGE_KEY = 'sincetoggleCloudRuntimeOutboxV1';
 const MAX_OUTBOX_EVENTS = 200;
 const MAX_FIELD_CHARS = 24_000;
 let storageQueue = Promise.resolve();
@@ -149,7 +149,7 @@ export async function enqueueCloudRuntimeEvent(sessionId, item) {
 }
 
 export async function flushCloudRuntimeOutbox(provider) {
-  if (String(provider?.config?.providerName || '').toLowerCase() !== 'webbrain-cloud') return 0;
+  if (String(provider?.config?.providerName || '').toLowerCase() !== 'sincetoggle-cloud') return 0;
   if (typeof provider.sendRuntimeEvents !== 'function') return 0;
   await storageQueue.catch(() => {});
   let snapshot;

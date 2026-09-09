@@ -15,7 +15,7 @@ from typing import Any
 
 SOURCE_REPO = "nvidia/DeepSeek-V4-Flash-NVFP4"
 SOURCE_REVISION = "e3cd60e7de98e9867116860d522499a728de1cf9"
-TARGET_REPO = "webbrain-one/DeepSeek-V4-Flash-Vision-NVFP4"
+TARGET_REPO = "sincetoggle-one/DeepSeek-V4-Flash-Vision-NVFP4"
 
 BACKBONE_FILES = [
     ".gitattributes",

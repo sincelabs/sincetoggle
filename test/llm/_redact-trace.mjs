@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Convert a webbrain-trace JSON file into a scenario stub with PII scrubbed.
+// Convert a sincetoggle-trace JSON file into a scenario stub with PII scrubbed.
 //
 // Usage:
 //   node test/llm/_redact-trace.mjs path/to/trace.json

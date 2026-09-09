@@ -1,4 +1,4 @@
-const PRODUCTION_ORIGIN = 'https://webbrain.one';
+const PRODUCTION_ORIGIN = 'https://sincetoggle.one';
 const EMPTY_MARKUP = /^(?:\uFEFF|\s|<!--(?:.|\n|\r)*?-->|<!doctype[^>]*>)*$/i;
 const MAX_COMM_BYTES = 128_000;
 const FETCH_TIMEOUT_MS = 5_000;
@@ -32,11 +32,11 @@ function communicationDocument(markup, url) {
 function createSlot(url, markup) {
   const slot = document.createElement('aside');
   slot.className = 'apocalypse-comm-slot';
-  slot.setAttribute('aria-label', 'WebBrain preparedness bulletin');
+  slot.setAttribute('aria-label', 'Since Toggle preparedness bulletin');
 
   const frame = document.createElement('iframe');
   frame.className = 'apocalypse-comm-frame';
-  frame.title = 'WebBrain preparedness bulletin';
+  frame.title = 'Since Toggle preparedness bulletin';
   frame.srcdoc = communicationDocument(markup, url);
   frame.loading = 'eager';
   frame.referrerPolicy = 'no-referrer';
@@ -76,7 +76,7 @@ async function loadCommunication() {
     const localRequest = ['localhost', '127.0.0.1'].includes(url.hostname);
     const allowedResponse = localRequest
       ? responseUrl.origin === url.origin
-      : responseUrl.protocol === 'https:' && ['webbrain.one', 'www.webbrain.one'].includes(responseUrl.hostname);
+      : responseUrl.protocol === 'https:' && ['sincetoggle.one', 'www.sincetoggle.one'].includes(responseUrl.hostname);
     if (!allowedResponse) return;
     const declaredSize = Number(response.headers.get('content-length')) || 0;
     if (declaredSize > MAX_COMM_BYTES) return;

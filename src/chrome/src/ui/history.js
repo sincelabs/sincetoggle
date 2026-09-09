@@ -322,7 +322,7 @@ function exportSelected() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `webbrain-chat-${safeFilename(title || record.id)}.md`;
+  a.download = `sincetoggle-chat-${safeFilename(title || record.id)}.md`;
   document.body.appendChild(a);
   try {
     a.click();

@@ -11,7 +11,7 @@
   "firstToolCall": null,
   "toolCallSource": null,
   "finishReason": "stop",
-  "content": "I can't take screenshots directly as a tool — but you can grab one instantly from the WebBrain side panel:\n\n- Type `/screenshot` to capture the **visible viewport**\n- Type `/screenshot --full-page` to capture the **entire page**\n\nJust type one of those in the chat and the image will be inserted into our conversation.",
+  "content": "I can't take screenshots directly as a tool — but you can grab one instantly from the Since Toggle side panel:\n\n- Type `/screenshot` to capture the **visible viewport**\n- Type `/screenshot --full-page` to capture the **entire page**\n\nJust type one of those in the chat and the image will be inserted into our conversation.",
   "usage": {
     "prompt_tokens": 22670,
     "completion_tokens": 119,

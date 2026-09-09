@@ -2,7 +2,7 @@
   "label": "qwen3.5-4b",
   "firstTurn": {
     "kind": "first-turn",
-    "sourceDir": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results\\2026-09-07-qwen3.5-4b-compact-full-v2_chrome_qwen3.5-4b_compact",
+    "sourceDir": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results\\2026-09-07-qwen3.5-4b-compact-full-v2_chrome_qwen3.5-4b_compact",
     "sourceSummarySha256": "99bd91d2a56795c35bbd18e138c71b8c7ad55ccdae5e04b85a1a215ca7416931",
     "rows": 100,
     "structured": 89,
@@ -641,7 +641,7 @@
         "firstToolCall": {
           "name": "navigate",
           "args": {
-            "url": "https://github.com/esokullu/webbrain/releases/new"
+            "url": "https://github.com/esokullu/sincetoggle/releases/new"
           }
         },
         "verdict": "exact",
@@ -656,7 +656,7 @@
         "firstToolCall": {
           "name": "navigate",
           "args": {
-            "url": "https://github.com/esokullu/webbrain/pulls"
+            "url": "https://github.com/esokullu/sincetoggle/pulls"
           }
         },
         "verdict": "name_only",
@@ -701,7 +701,7 @@
         "firstToolCall": {
           "name": "navigate",
           "args": {
-            "url": "https://github.com/esokullu/webbrain/fork"
+            "url": "https://github.com/esokullu/sincetoggle/fork"
           }
         },
         "verdict": "other",
@@ -1502,7 +1502,7 @@
   },
   "scenarios": {
     "kind": "scenarios",
-    "sourceDir": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results-scenarios\\2026-09-07-qwen3.5-4b-compact-full-v2_chrome_qwen3.5-4b_compact",
+    "sourceDir": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results-scenarios\\2026-09-07-qwen3.5-4b-compact-full-v2_chrome_qwen3.5-4b_compact",
     "sourceSummarySha256": "27ce33c4c1273a3b70e596b00cbed2178b826e096c8db5b601bb8b03b033c980",
     "rows": 100,
     "structured": 81,

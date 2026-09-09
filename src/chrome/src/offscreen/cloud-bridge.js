@@ -81,7 +81,7 @@
         lastError = '';
         sendJson({
           type: 'hello',
-          client: 'webbrain-extension',
+          client: 'sincetoggle-extension',
           protocolVersion: BRIDGE_PROTOCOL_VERSION,
           capabilities: BRIDGE_CAPABILITIES,
           status: status(),

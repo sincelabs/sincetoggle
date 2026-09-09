@@ -1,6 +1,6 @@
 # Open-Meteo weather
 
-```webbrain-skill
+```sincetoggle-skill
 {
   "summary": "Look up current weather and short forecasts for cities or place names with Open-Meteo.",
   "modes": ["ask", "act"],
@@ -27,7 +27,7 @@ Safety:
 
 Finish with visible attribution: Powered by [Open-Meteo](https://open-meteo.com).
 
-```webbrain-tools
+```sincetoggle-tools
 {
   "tools": [
     {

@@ -42,7 +42,7 @@ function responseHasReasoningItem(result) {
     : (Array.isArray(result?.raw?.output) ? result.raw.output : []);
   return items.some((item) => {
     if (item?.type === 'reasoning') return true;
-    if (item?.type !== 'webbrain_provider_replay' || !Array.isArray(item.content)) return false;
+    if (item?.type !== 'sincetoggle_provider_replay' || !Array.isArray(item.content)) return false;
     return item.content.some(block => block?.type === 'thinking' || block?.type === 'redacted_thinking');
   });
 }

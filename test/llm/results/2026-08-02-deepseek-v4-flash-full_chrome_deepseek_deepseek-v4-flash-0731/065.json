@@ -11,7 +11,7 @@
   "firstToolCall": null,
   "toolCallSource": null,
   "finishReason": "stop",
-  "content": "I can't take screenshots directly — that's a side-panel command you run yourself. To capture the current page:\n\n- **Visible viewport:** type `/screenshot`\n- **Full page:** type `/screenshot --full-page`\n\nJust type one of those into the WebBrain side panel and it'll grab the image for you.",
+  "content": "I can't take screenshots directly — that's a side-panel command you run yourself. To capture the current page:\n\n- **Visible viewport:** type `/screenshot`\n- **Full page:** type `/screenshot --full-page`\n\nJust type one of those into the Since Toggle side panel and it'll grab the image for you.",
   "usage": {
     "prompt_tokens": 23518,
     "completion_tokens": 153,

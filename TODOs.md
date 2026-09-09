@@ -1,4 +1,4 @@
-# WebBrain — Engineering TODOs
+# Since Toggle — Engineering TODOs
 
 Living list of things we know we want to do but haven't done yet. Each item
 should explain *why* it matters, not just *what* to change, so that future
@@ -39,7 +39,7 @@ The "drop examples to save tokens" choice is exactly backwards: examples are how
 
 **The 27B trace evidence:**
 
-`webbrain-trace-qwen3.6-27b-run_1777441198379_v1rqkk.json` — qwen3.6-27b on llama.cpp. Asked to upload `dist/*.zip` to a v5.1.0 GitHub release. Re-downloaded the same files **three times** because each auto-screenshot pushed the original `download_files` result out of recent attention, and the model re-derived "I need to fetch the files" from current visual state. Pattern-matched on intent, not on prior tool history. This is the failure mode small-model compactness was meant to address — and yet the compact prompt would have made it worse by stripping the SCRATCHPAD section that says explicitly to pin download paths.
+`sincetoggle-trace-qwen3.6-27b-run_1777441198379_v1rqkk.json` — qwen3.6-27b on llama.cpp. Asked to upload `dist/*.zip` to a v5.1.0 GitHub release. Re-downloaded the same files **three times** because each auto-screenshot pushed the original `download_files` result out of recent attention, and the model re-derived "I need to fetch the files" from current visual state. Pattern-matched on intent, not on prior tool history. This is the failure mode small-model compactness was meant to address — and yet the compact prompt would have made it worse by stripping the SCRATCHPAD section that says explicitly to pin download paths.
 
 Per-step input tokens for that run: 21K -> 21K -> 28K -> 30K -> 40K (auto-screenshot growth, not summarization growth). The model paid the tax of the full prompt (~7.4K) AND lost track of state. The previous "everyone gets full prompt" decision was the right local fix.
 
@@ -95,7 +95,7 @@ agent loops. Tool rows in the Traces Compare view now carry their step number.
 
 ## 4. Notes from the qwen3.6-27b sahibinden run (separate from the upload run)
 
-That trace (`webbrain-trace-gpt-4o-run_1777328860857_tb4voc.json` — model labeled `gpt-4o` but provider was `lmstudio`, so a local model in disguise) showed two re-occurring patterns the LISTINGS & PAGINATION prompt addition (commit landed already) directly targets:
+That trace (`sincetoggle-trace-gpt-4o-run_1777328860857_tb4voc.json` — model labeled `gpt-4o` but provider was `lmstudio`, so a local model in disguise) showed two re-occurring patterns the LISTINGS & PAGINATION prompt addition (commit landed already) directly targets:
 
 - Re-fetched `?sd=2` three times in a row via three different tools (research_url ×2, fetch_url ×1) without ever extracting an item from any of them.
 - Hit `get_accessibility_tree({filter:"all"})` overflow twice with different `maxChars` values, never switching to a different tool.
@@ -156,15 +156,15 @@ work is staging/optionality and in-product explanations.
 
 ---
 
-## 7. Lock down the WebBrain Compass auth handoff
+## 7. Lock down the Since Toggle Compass auth handoff
 
 `src/chrome/src/ui/settings.js` accepts `WB_AUTH_TOKEN` from `window.message`
-and writes the token into extension storage, then auto-configures the WebBrain
+and writes the token into extension storage, then auto-configures the Since Toggle
 Cloud provider. The handler should validate the sender before trusting the
 payload.
 
 **Concrete next steps:**
-1. Require `event.origin === 'https://auth.webbrain.one'`.
+1. Require `event.origin === 'https://auth.sincetoggle.one'`.
 2. Track the auth popup/tab/window that was opened and require
    `event.source` to match when the platform makes that reliable.
 3. Validate payload shape before storing: token non-empty string, email string,

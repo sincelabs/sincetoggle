@@ -1,7 +1,7 @@
-# WebBrain Community
+# Since Toggle Community
 
-WebBrain runs a Discord server as the informal home for users, contributors, and
-maintainers to discuss everything WebBrain: how to use it, which models and
+Since Toggle runs a Discord server as the informal home for users, contributors, and
+maintainers to discuss everything Since Toggle: how to use it, which models and
 providers work well, site adapters, feature ideas, show-and-tell, and
 coordination between contributors.
 
@@ -11,7 +11,7 @@ coordination between contributors.
 
 Discord is a _support and discussion_ channel. Bug reports, feature requests,
 and contributions still belong on
-[GitHub](https://github.com/webbrain-one/webbrain) so they stay tracked and
+[GitHub](https://github.com/sincetoggle-one/sincetoggle) so they stay tracked and
 searchable. If a Discord discussion turns into an actionable bug, feature, or
 PR, move it to a GitHub issue so it does not get lost in chat.
 
@@ -22,8 +22,8 @@ PR, move it to a GitHub issue so it does not get lost in chat.
 | `#welcome`         | One-time welcome message with the rules and a "getting started" pointer |
 | `#rules`           | Server rules (read-only)                                                |
 | `#announcements`   | Releases and project news (read-only)                                   |
-| `#general`         | Anything WebBrain: questions, ideas, conversation                       |
-| `#introductions`   | Say hi, tell us what you use WebBrain for                               |
+| `#general`         | Anything Since Toggle: questions, ideas, conversation                       |
+| `#introductions`   | Say hi, tell us what you use Since Toggle for                               |
 | `#show-and-tell`   | Traces, workflows, adapters, and runs you are proud of                  |
 | `#help`            | Getting started, side panel, modes, slash commands                      |
 | `#local-models`    | llama.cpp, Ollama, LM Studio, Jan, vLLM, and local provider setups      |
@@ -33,7 +33,7 @@ PR, move it to a GitHub issue so it does not get lost in chat.
 | `#site-adapters`   | The highest-leverage contribution — see `CONTRIBUTING.md`               |
 | `#roadmap`         | Proposed features and design discussion, mirroring GitHub Discussions   |
 | `#github-feed`     | GitHub bot stream of issues, PRs, and releases                          |
-| `#off-topic`       | Non-WebBrain conversation, clearly marked safe space for casual chat    |
+| `#off-topic`       | Non-Since Toggle conversation, clearly marked safe space for casual chat    |
 
 ## Roles
 
@@ -53,7 +53,7 @@ decision.
 
 1. Be civil. Disagree with the code, not with the person.
 2. No spam, self-promotion, or unsolicited DMs. The only exception is show-and-tell
-   of your own WebBrain workflows in `#show-and-tell`.
+   of your own Since Toggle workflows in `#show-and-tell`.
 3. Do not post credentials, API keys, or traces containing personal data. Traces
    should be scrubbed before sharing — see `CONTRIBUTING.md`.
 4. Keep security-sensitive discussions in DMs with a maintainer, or file a
@@ -76,11 +76,11 @@ decision.
 
 | You want to...                | Where                                                             |
 | ----------------------------- | ----------------------------------------------------------------- |
-| Get quick help using WebBrain | Discord `#help`, `#local-models`, `#providers`                    |
+| Get quick help using Since Toggle | Discord `#help`, `#local-models`, `#providers`                    |
 | Report a bug with a trace     | GitHub issue (see `CONTRIBUTING.md`)                              |
 | Ask for a feature             | GitHub Discussion, or Discord `#roadmap` for discussion first     |
 | Contribute an adapter / PR    | GitHub, coordinated in Discord `#site-adapters` / `#contributing` |
-| Chat about WebBrain casually  | Discord `#general`                                                |
+| Chat about Since Toggle casually  | Discord `#general`                                                |
 
 ## Setup and Maintenance
 

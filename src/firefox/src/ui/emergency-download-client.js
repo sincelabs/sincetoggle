@@ -1,6 +1,6 @@
 export const EMERGENCY_DOWNLOAD_ACTION = 'emergency_download';
 export const EMERGENCY_DOWNLOAD_STATE_MESSAGE = 'emergency-download-state';
-export const EMERGENCY_SEMANTIC_STATE_KEY = 'webbrainEmergencySemanticDownloadState';
+export const EMERGENCY_SEMANTIC_STATE_KEY = 'sincetoggleEmergencySemanticDownloadState';
 export const CORPUS_DOWNLOAD_ID = 'rag-emergency-corpus';
 export const SEMANTIC_DOWNLOAD_ID = 'rag-semantic-model';
 

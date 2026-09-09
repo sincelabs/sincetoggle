@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * WebBrain MCP server.
+ * Since Toggle MCP server.
  *
  * Gives any MCP client — Claude Code, Codex, Cursor, OpenClaw — the ability to
  * delegate a browser task to the user's REAL browser session: already logged
@@ -12,7 +12,7 @@
  * low-level browser primitives, because:
  *   1. the permission gate lives in the extension's agent loop, not in
  *      `executeTool()`, so per-primitive access would bypass every safety
- *      property WebBrain advertises; and
+ *      property Since Toggle advertises; and
  *   2. driving 50 primitives over a socket costs a round trip and a pile of
  *      tokens per click. Delegation is both safer and cheaper.
  *
@@ -24,14 +24,14 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 
-import { BridgeError, WebBrainBridge, type CloudSnapshot } from "./bridge.js";
+import { BridgeError, Since ToggleBridge, type CloudSnapshot } from "./bridge.js";
 import { bridgeUrl, config } from "./config.js";
 import { abort, awaitSettled, describeSnapshot, getStatus, respond, startRun } from "./runs.js";
 
-const bridge = new WebBrainBridge();
+const bridge = new Since ToggleBridge();
 
 const server = new McpServer({
-  name: "webbrain",
+  name: "sincetoggle",
   version: "0.1.0",
 });
 
@@ -49,11 +49,11 @@ function toolError(error: unknown): TextResult {
 }
 
 server.registerTool(
-  "webbrain_run",
+  "sincetoggle_run",
   {
     title: "Run a browser task in the user's real session",
     description:
-      "Delegate a web task to WebBrain running in the user's actual browser — already " +
+      "Delegate a web task to Since Toggle running in the user's actual browser — already " +
       "signed in, with existing cookies and sessions. Use this when a task needs a page " +
       "the caller cannot reach: an authenticated dashboard, a webmail account, an admin " +
       "panel, a SaaS report behind SSO. Describe the goal in plain language, the way you " +
@@ -62,7 +62,7 @@ server.registerTool(
       "or submit. mode='act' allows interaction, and the user is prompted in-browser to " +
       "approve consequential actions. Prefer 'ask' whenever you only need to read.\n\n" +
       "If the run stops with status 'needs_user_input', relay the question to the user and " +
-      "answer with webbrain_respond — never guess on their behalf.",
+      "answer with sincetoggle_respond — never guess on their behalf.",
     inputSchema: {
       task: z
         .string()
@@ -90,7 +90,7 @@ server.registerTool(
         .boolean()
         .default(false)
         .describe(
-          "Lift WebBrain's UI-first rule so the agent may issue mutating HTTP requests " +
+          "Lift Since Toggle's UI-first rule so the agent may issue mutating HTTP requests " +
             "directly instead of clicking through the interface. Off by default and rarely " +
             "correct — the UI path is visible and stoppable. Only valid when mode is 'act'.",
         ),
@@ -102,7 +102,7 @@ server.registerTool(
         .optional()
         .describe(
           "How long to wait before returning control. The run keeps going in the browser " +
-            "past this point; poll webbrain_status to pick it back up.",
+            "past this point; poll sincetoggle_status to pick it back up.",
         ),
       wait: z
         .boolean()
@@ -144,7 +144,7 @@ server.registerTool(
       if (!wait) {
         return ok(
           `Started in the background.\n${describeSnapshot(started)}\n\n` +
-            "Poll webbrain_status with this run_id for progress.",
+            "Poll sincetoggle_status with this run_id for progress.",
         );
       }
 
@@ -159,17 +159,17 @@ server.registerTool(
 );
 
 server.registerTool(
-  "webbrain_extract",
+  "sincetoggle_extract",
   {
     title: "Extract structured data from the user's real browser",
     description:
       "Read a page in the user's actual signed-in browser and return data that matches a " +
-      "caller-supplied JSON Schema. This tool always uses WebBrain Ask mode, so it cannot " +
+      "caller-supplied JSON Schema. This tool always uses Since Toggle Ask mode, so it cannot " +
       "click, type, navigate or submit. Use it for authenticated reports, tables, account " +
       "details and other page data that should come back as predictable JSON rather than a " +
-      "prose summary. Use webbrain_run instead when the task needs interaction.\n\n" +
+      "prose summary. Use sincetoggle_run instead when the task needs interaction.\n\n" +
       "If the run stops with status 'needs_user_input', relay the question to the user and " +
-      "answer with webbrain_respond — never guess on their behalf.",
+      "answer with sincetoggle_respond — never guess on their behalf.",
     inputSchema: {
       task: z
         .string()
@@ -197,7 +197,7 @@ server.registerTool(
         .optional()
         .describe(
           "How long to wait before returning control. The extraction keeps running past " +
-            "this point; poll webbrain_status with its run_id.",
+            "this point; poll sincetoggle_status with its run_id.",
         ),
       wait: z
         .boolean()
@@ -239,7 +239,7 @@ server.registerTool(
       if (!wait) {
         return ok(
           `Structured extraction started in the background.\n${describeSnapshot(started)}\n\n` +
-            "Poll webbrain_status with this run_id for progress.",
+            "Poll sincetoggle_status with this run_id for progress.",
         );
       }
 
@@ -254,11 +254,11 @@ server.registerTool(
 );
 
 server.registerTool(
-  "webbrain_status",
+  "sincetoggle_status",
   {
     title: "Check a browser run",
     description:
-      "Fetch the current state of a WebBrain run, including its result once finished. " +
+      "Fetch the current state of a Since Toggle run, including its result once finished. " +
       "Omit run_id to list every run this browser knows about.",
     inputSchema: {
       run_id: z
@@ -272,7 +272,7 @@ server.registerTool(
       const result = await getStatus(bridge, run_id);
       const runs = (result as { runs?: CloudSnapshot[] }).runs;
       if (runs) {
-        if (!runs.length) return ok("No WebBrain runs on record.");
+        if (!runs.length) return ok("No Since Toggle runs on record.");
         return ok(
           runs
             .map((run) => `${run.runId}  ${run.status.padEnd(16)}  ${run.task ?? ""}`)
@@ -287,15 +287,15 @@ server.registerTool(
 );
 
 server.registerTool(
-  "webbrain_respond",
+  "sincetoggle_respond",
   {
     title: "Answer a question from a browser run",
     description:
       "Supply the user's answer to a run sitting at status 'needs_user_input', then keep " +
-      "waiting for it to settle. The answer must come from the user — WebBrain pauses " +
+      "waiting for it to settle. The answer must come from the user — Since Toggle pauses " +
       "precisely because a human decision is required. For an ordinary clarification, pass " +
       "the user's answer verbatim. For a structured permission prompt, map the user's explicit " +
-      "decision to the exact stable value shown by WebBrain: 'once', 'always', or 'deny'. Never " +
+      "decision to the exact stable value shown by Since Toggle: 'once', 'always', or 'deny'. Never " +
       "infer permission, and use 'always' only when the user explicitly requests a persistent grant. " +
       "Any other structured gate (form-submission confirmation, saved-workflow repair) lists its own " +
       "stable values on a 'decisions:' line — send one of those exactly, never a localized label.",
@@ -352,7 +352,7 @@ server.registerTool(
 );
 
 server.registerTool(
-  "webbrain_abort",
+  "sincetoggle_abort",
   {
     title: "Stop a browser run",
     description:
@@ -373,11 +373,11 @@ server.registerTool(
 );
 
 server.registerTool(
-  "webbrain_connection",
+  "sincetoggle_connection",
   {
-    title: "Check the WebBrain browser connection",
+    title: "Check the Since Toggle browser connection",
     description:
-      "Report whether a WebBrain extension is currently attached. Call this first when a " +
+      "Report whether a Since Toggle extension is currently attached. Call this first when a " +
       "browser tool fails, so you can tell the user what to fix instead of retrying blindly.",
     inputSchema: {},
   },
@@ -392,10 +392,10 @@ server.registerTool(
     return ok(
       `Not connected. Listening on ${bridgeUrl()}, but no extension has dialled in.\n\n` +
         "To connect: open a Chromium browser (Chrome, Edge, Brave), then in " +
-        "WebBrain → Settings → General → Advanced → MCP set the URL to\n" +
+        "Since Toggle → Settings → General → Advanced → MCP set the URL to\n" +
         `  ${bridgeUrl()}\n` +
         "and enable it. The extension holds one bridge socket at a time, so this cannot " +
-        "run at the same time as WebBrain Cloud on port 17373.\n\n" +
+        "run at the same time as Since Toggle Cloud on port 17373.\n\n" +
         "Firefox cannot host the bridge — that build has no offscreen document. If the " +
         "user is on Firefox, say so rather than suggesting settings changes.",
     );
@@ -412,7 +412,7 @@ async function main(): Promise<void> {
 
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("[webbrain-mcp] ready on stdio");
+  console.error("[sincetoggle-mcp] ready on stdio");
 }
 
 let shuttingDown = false;
@@ -420,7 +420,7 @@ async function shutdown(): Promise<void> {
   if (shuttingDown) return;
   shuttingDown = true;
   await bridge.stop().catch((error) => {
-    console.error("[webbrain-mcp] shutdown error:", error);
+    console.error("[sincetoggle-mcp] shutdown error:", error);
   });
   process.exit(0);
 }
@@ -434,6 +434,6 @@ process.stdin.once("end", () => void shutdown());
 process.stdin.once("close", () => void shutdown());
 
 main().catch((error) => {
-  console.error("[webbrain-mcp] fatal:", error);
+  console.error("[sincetoggle-mcp] fatal:", error);
   process.exit(1);
 });

@@ -43,7 +43,7 @@ async function main() {
   const checksum = createHash('sha256').update(archive).digest('hex');
   if (checksum !== SOURCE_SHA256) throw new Error(`PanLex corpus checksum mismatch (${checksum}).`);
 
-  const temporaryDirectory = await mkdtemp(path.join(tmpdir(), 'webbrain-panlex-'));
+  const temporaryDirectory = await mkdtemp(path.join(tmpdir(), 'sincetoggle-panlex-'));
   try {
     const archivePath = path.join(temporaryDirectory, 'panlex-swadesh.zip');
     const extractPath = path.join(temporaryDirectory, 'corpus');

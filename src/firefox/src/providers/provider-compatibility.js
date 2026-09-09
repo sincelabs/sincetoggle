@@ -209,7 +209,7 @@ export function shouldUseOpenAIResponsesApi(config = {}) {
   if (config.apiFormat === 'responses') return true;
   if (config.apiFormat === 'chat') return false;
   // OpenCode Zen: https://opencode.ai/zen/v1/responses for muse-spark, gpt-5.x, claude, gemini, grok
-  // WebBrain's OpenCode Zen provider previously forced Chat Completions for all Zen models (404 for Responses models).
+  // Since Toggle's OpenCode Zen provider previously forced Chat Completions for all Zen models (404 for Responses models).
   const rawModel = String(config.model || '');
   const model = rawModel.replace(/^opencode\//i, '').trim().toLowerCase();
   if (isOpenCodeZenConfig(config)) {
@@ -421,7 +421,7 @@ export function compatibilityRequestBody(config = {}) {
  */
 export function plannerRequestBody(config = {}, {
   schema = null,
-  schemaName = 'webbrain_planner',
+  schemaName = 'sincetoggle_planner',
   includeResponseFormat = true,
   disableThinking = true,
 } = {}) {
@@ -456,7 +456,7 @@ export function plannerRequestBody(config = {}, {
     body.response_format = {
       type: 'json_schema',
       json_schema: {
-        name: String(schemaName || 'webbrain_planner').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 64),
+        name: String(schemaName || 'sincetoggle_planner').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 64),
         strict: true,
         schema,
       },

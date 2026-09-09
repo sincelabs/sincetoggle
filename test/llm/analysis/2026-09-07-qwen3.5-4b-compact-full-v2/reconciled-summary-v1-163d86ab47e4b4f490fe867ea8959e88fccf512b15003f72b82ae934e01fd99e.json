@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "webbrain.text-benchmark.reconciled-summary.v1",
+  "schemaVersion": "sincetoggle.text-benchmark.reconciled-summary.v1",
   "createdAt": "2026-09-07T19:25:47.3140995+03:00",
   "model": {
     "requested": "qwen3.5-4b",
@@ -99,14 +99,14 @@
   },
   "recoveryEvidence": {
     "authoritativeRun": "2026-09-07-qwen3.5-4b-compact-full-v2",
-    "preservedAbortedRun": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results\\2026-09-07-qwen3.5-4b-compact-full-v1_chrome_qwen3.5-4b_compact",
-    "preservedProbe": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results\\2026-09-07-qwen3.5-4b-compact-recovery-probe-009-v1_chrome_qwen3.5-4b_compact",
+    "preservedAbortedRun": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results\\2026-09-07-qwen3.5-4b-compact-full-v1_chrome_qwen3.5-4b_compact",
+    "preservedProbe": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results\\2026-09-07-qwen3.5-4b-compact-recovery-probe-009-v1_chrome_qwen3.5-4b_compact",
     "incident": "The first full attempt was stopped after cases 009-015 returned transient LM Studio Engine protocol predict request failed: fetch failed errors. A separate no-overwrite case-009 probe then succeeded in 913 ms, after which the clean authoritative v2 run completed 100/100 without transport errors."
   },
   "artifacts": [
     {
       "role": "first-turn-original",
-      "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results\\2026-09-07-qwen3.5-4b-compact-full-v2_chrome_qwen3.5-4b_compact",
+      "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results\\2026-09-07-qwen3.5-4b-compact-full-v2_chrome_qwen3.5-4b_compact",
       "files": 101,
       "bytes": 5469891,
       "treeSha256": "55f0f66985501a8725626e1b64bc661ad020c0330cde0a0eded7b4474ed866aa",
@@ -114,7 +114,7 @@
     },
     {
       "role": "scenarios-original",
-      "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results-scenarios\\2026-09-07-qwen3.5-4b-compact-full-v2_chrome_qwen3.5-4b_compact",
+      "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results-scenarios\\2026-09-07-qwen3.5-4b-compact-full-v2_chrome_qwen3.5-4b_compact",
       "files": 101,
       "bytes": 1108271,
       "treeSha256": "aef849b472f146bbd90ddd114a91b7b28e23ee6c3c79a1124bda6f5d94ad80a8",
@@ -122,7 +122,7 @@
     },
     {
       "role": "scenario-retry",
-      "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results-scenarios\\2026-09-07-qwen3.5-4b-compact-error-retry-fold-system-v1_chrome_qwen3.5-4b_compact",
+      "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results-scenarios\\2026-09-07-qwen3.5-4b-compact-error-retry-fold-system-v1_chrome_qwen3.5-4b_compact",
       "files": 2,
       "bytes": 11834,
       "treeSha256": "8a0bb3bbba1c71f276193303bc1ce7f773a388f5c07ec24d87fe993ba31e71f7",
@@ -134,6 +134,6 @@
     "runLlamacppSha256": "b1bd3de7d6dad90a55dee52f3df7bdae175a95af9c6812716440f4a2f8911495",
     "runScenariosSha256": "e3a54dbcdfd8370015175f0a3bfe2b1119c92f366d3496bd6e0dee0184031c88",
     "scoreSha256": "35297349d3cbdec9ebe290aa8e8941a07b0cde51dd2077f0281266b7180f5cc6",
-    "inferenceFreeRegradeReport": "G:\\esoku\\Documents\\webbrain\\test\\llm\\analysis\\compact-parser-regrade-v2-0130c8e57a5d64df\\summary-f8cf2787cbf58e79dac23819c7f3b083d124c152d61d08642903a035141ea81a.json"
+    "inferenceFreeRegradeReport": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\analysis\\compact-parser-regrade-v2-0130c8e57a5d64df\\summary-f8cf2787cbf58e79dac23819c7f3b083d124c152d61d08642903a035141ea81a.json"
   }
 }

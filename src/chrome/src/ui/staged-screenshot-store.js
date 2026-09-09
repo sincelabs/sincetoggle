@@ -31,7 +31,7 @@ function normalizeRecord(attachment) {
     source: 'slash_screenshot',
     stagedAttachmentId,
     dataUrl,
-    name: String(attachment?.name || 'webbrain-screenshot.png').slice(0, 240),
+    name: String(attachment?.name || 'sincetoggle-screenshot.png').slice(0, 240),
     mimeType: String(attachment?.mimeType || '').startsWith('image/jpeg') ? 'image/jpeg' : 'image/png',
     size,
     capturedAt: Number(attachment?.capturedAt) || Date.now(),

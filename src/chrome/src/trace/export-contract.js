@@ -7,7 +7,7 @@
  * single record was exported.
  */
 
-export const TRACE_EXPORT_SCHEMA = 'webbrain-trace/1';
+export const TRACE_EXPORT_SCHEMA = 'sincetoggle-trace/1';
 
 function normalizeEntries(entries) {
   if (!Array.isArray(entries)) return [];
@@ -19,13 +19,13 @@ function normalizeEntries(entries) {
 
 export function buildTraceExportPayload(
   entries,
-  { sessionId = '', exportedAt = Date.now(), exportedByWebBrainVersion = '' } = {},
+  { sessionId = '', exportedAt = Date.now(), exportedBySince ToggleVersion = '' } = {},
 ) {
   const normalized = normalizeEntries(entries);
   const common = {
     schema: TRACE_EXPORT_SCHEMA,
     exportedAt,
-    exportedByWebBrainVersion,
+    exportedBySince ToggleVersion,
   };
 
   if (sessionId) {

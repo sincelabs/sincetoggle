@@ -1,6 +1,6 @@
 # Wikipedia
 
-```webbrain-skill
+```sincetoggle-skill
 {
   "summary": "Search Wikipedia and read page summaries for definitions, people, places, and topics.",
   "modes": ["ask", "act"],
@@ -30,7 +30,7 @@ Safety:
 
 Finish with visible attribution: Powered by [Wikipedia](https://www.wikipedia.org).
 
-```webbrain-tools
+```sincetoggle-tools
 {
   "tools": [
     {

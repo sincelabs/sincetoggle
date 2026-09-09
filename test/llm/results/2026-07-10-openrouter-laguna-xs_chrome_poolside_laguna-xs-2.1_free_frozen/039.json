@@ -3,7 +3,7 @@
   "user": "verify the form is ready before submitting",
   "mode": "act",
   "tab": {
-    "url": "https://github.com/esokullu/webbrain/releases/new",
+    "url": "https://github.com/esokullu/sincetoggle/releases/new",
     "title": "New Release"
   },
   "latencyMs": 2056,
@@ -16,7 +16,7 @@
   },
   "toolCallSource": "tool_calls",
   "finishReason": "tool_calls",
-  "content": "I'm on the GitHub \"New Release\" page for the webbrain repository. Let me first read the current page to understand the form structure and see what's already there.",
+  "content": "I'm on the GitHub \"New Release\" page for the sincetoggle repository. Let me first read the current page to understand the form structure and see what's already there.",
   "usage": {
     "prompt_tokens": 17493,
     "completion_tokens": 212,

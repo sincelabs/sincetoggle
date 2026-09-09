@@ -1,6 +1,6 @@
-# WebBrain Test Scenarios
+# Since Toggle Test Scenarios
 
-A dozen end-to-end tasks for evaluating the WebBrain browser agent across a spread of difficulty and UI-pattern coverage. Each scenario lists the site, the prompt to paste into the side panel, and the observable pass criterion.
+A dozen end-to-end tasks for evaluating the Since Toggle browser agent across a spread of difficulty and UI-pattern coverage. Each scenario lists the site, the prompt to paste into the side panel, and the observable pass criterion.
 
 ## Scenarios
 
@@ -21,7 +21,7 @@ A dozen end-to-end tasks for evaluating the WebBrain browser agent across a spre
 
 ### 4. GitHub issue filing — Medium
 - **Site:** github.com (your own test repo)
-- **Task:** "Open a new issue titled 'Test from WebBrain' with body 'ignore this' on github.com/&lt;you&gt;/&lt;repo&gt;."
+- **Task:** "Open a new issue titled 'Test from Since Toggle' with body 'ignore this' on github.com/&lt;you&gt;/&lt;repo&gt;."
 - **Expected:** Agent navigates to `/issues/new`, fills title + body, clicks Submit. Tests contenteditable body editor and duplicate-label "Submit new issue" button.
 
 ### 5. Gmail compose draft — Medium
@@ -87,7 +87,7 @@ Add a `tests.json` containing `{ url, prompt, check }` rows. Build a small Test 
 You already have everything you need: the agent loop, the message bus, screenshots, traces. It's ~1 day of work.
 
 ### 3. Headless run via Puppeteer / Playwright
-Launch Chromium with the extension pre-installed (`--load-extension=path/to/webbrain`), drive the side panel via its DOM, and run the suite non-interactively — overnight, in CI, across N providers. You can parallelize across Chrome profiles for throughput. Downsides: signed-in scenarios (Gmail, Reddit, LinkedIn) need baked cookie jars per profile, and Stripe's dashboard is fussy about new browsers (captcha).
+Launch Chromium with the extension pre-installed (`--load-extension=path/to/sincetoggle`), drive the side panel via its DOM, and run the suite non-interactively — overnight, in CI, across N providers. You can parallelize across Chrome profiles for throughput. Downsides: signed-in scenarios (Gmail, Reddit, LinkedIn) need baked cookie jars per profile, and Stripe's dashboard is fussy about new browsers (captcha).
 
 The sweet spot is a hybrid: headless for anonymous sites (Wikipedia, HN, Amazon, arxiv), side-panel runner for logged-in ones.
 

@@ -137,7 +137,7 @@ async function setupIsolatedContentHtml(page, html, browserKind) {
   const frameTree = await session.send('Page.getFrameTree');
   const isolatedWorld = await session.send('Page.createIsolatedWorld', {
     frameId: frameTree.frameTree.frame.id,
-    worldName: `webbrain-${browserKind}-fixture`,
+    worldName: `sincetoggle-${browserKind}-fixture`,
   });
   const contextId = isolatedWorld.executionContextId;
   const contentSrc = await readFile(firefox ? firefoxContentJsPath : contentJsPath, 'utf-8');
@@ -325,7 +325,7 @@ async function setupSelectionShortcut(page, sourcePath, { enabled = true, requir
   await page.setViewportSize({ width: 360, height: 280 });
   await page.setContent(`<!doctype html>
     <style>body{margin:0;font:18px/1.5 sans-serif} #copy{position:absolute;right:2px;bottom:2px;width:210px}</style>
-    <p id="copy">Selected words near the viewport edge for WebBrain.</p>
+    <p id="copy">Selected words near the viewport edge for Since Toggle.</p>
     <div id="editor" contenteditable="true">Editable selection text.</div>`);
   await page.addScriptTag({ content: `
     window.__selectionMessages = [];
@@ -372,7 +372,7 @@ async function setupSelectionShortcut(page, sourcePath, { enabled = true, requir
   ` });
   const src = await readFile(sourcePath, 'utf-8');
   await page.addScriptTag({ content: src });
-  await page.waitForFunction(() => typeof window.__webbrainSelectionShortcut?.getState === 'function');
+  await page.waitForFunction(() => typeof window.__sincetoggleSelectionShortcut?.getState === 'function');
 }
 
 async function selectFixtureText(page, selector = '#copy') {
@@ -386,9 +386,9 @@ async function selectFixtureText(page, selector = '#copy') {
     await new Promise((resolve) => requestAnimationFrame(() => resolve()));
     document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
   }, selector);
-  await page.waitForFunction(() => window.__webbrainSelectionShortcut.getState().shortcutVisible);
+  await page.waitForFunction(() => window.__sincetoggleSelectionShortcut.getState().shortcutVisible);
   await page.waitForTimeout(20);
-  return page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+  return page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
 }
 
 const tests = [];
@@ -1134,7 +1134,7 @@ for (const [label, sourcePath, manualOpen] of [
       throw new Error(`Chinese shortcut localization mismatch: ${JSON.stringify(localized)}`);
     }
 
-    await page.evaluate(() => window.__webbrainSelectionShortcut.submitPreset('explain'));
+    await page.evaluate(() => window.__sincetoggleSelectionShortcut.submitPreset('explain'));
     await page.waitForFunction(() => window.__selectionMessages.length === 1);
     const submitted = await page.evaluate(() => window.__selectionMessages[0]);
     if (submitted.action !== 'explain'
@@ -1144,8 +1144,8 @@ for (const [label, sourcePath, manualOpen] of [
     }
 
     await page.evaluate(() => window.__setSelectionShortcutLocale('ar'));
-    await page.waitForFunction(() => window.__webbrainSelectionShortcut.getState().direction === 'rtl');
-    const rtl = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    await page.waitForFunction(() => window.__sincetoggleSelectionShortcut.getState().direction === 'rtl');
+    const rtl = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     if (rtl.summarizeLabel !== 'تلخيص' || rtl.actionIconCount !== 6) {
       throw new Error(`live Arabic localization mismatch: ${JSON.stringify(rtl)}`);
     }
@@ -1160,8 +1160,8 @@ for (const [label, sourcePath, manualOpen] of [
       throw new Error(`full-context choice should be localized and on by default: ${JSON.stringify(initial)}`);
     }
     await page.evaluate(() => {
-      window.__webbrainSelectionShortcut.setIncludePageContext(false);
-      return window.__webbrainSelectionShortcut.submitCustom('仅根据选中内容回答。');
+      window.__sincetoggleSelectionShortcut.setIncludePageContext(false);
+      return window.__sincetoggleSelectionShortcut.submitCustom('仅根据选中内容回答。');
     });
     await page.waitForFunction(() => window.__selectionMessages.length === 1);
     const submitted = await page.evaluate(() => window.__selectionMessages[0]);
@@ -1171,12 +1171,12 @@ for (const [label, sourcePath, manualOpen] of [
       throw new Error(`custom question lost its explicit scoped-context choice: ${JSON.stringify(submitted)}`);
     }
 
-    await page.waitForFunction(() => !window.__webbrainSelectionShortcut.getState().submitting);
+    await page.waitForFunction(() => !window.__sincetoggleSelectionShortcut.getState().submitting);
     const nextSelection = await selectFixtureText(page);
     if (!nextSelection.includePageContextChecked) {
       throw new Error(`a new selection should restore the default-on page-context choice: ${JSON.stringify(nextSelection)}`);
     }
-    await page.evaluate(() => window.__webbrainSelectionShortcut.submitCustom('现在有哪些跨平台框架？'));
+    await page.evaluate(() => window.__sincetoggleSelectionShortcut.submitCustom('现在有哪些跨平台框架？'));
     await page.waitForFunction(() => window.__selectionMessages.length === 2);
     const submittedAgain = await page.evaluate(() => window.__selectionMessages[1]);
     if (submittedAgain.action !== 'custom'
@@ -1196,17 +1196,17 @@ for (const [label, sourcePath, manualOpen] of [
     if (!state.selectionRect || rect.bottom > state.selectionRect.top) {
       throw new Error(`shortcut should prefer the top of the selected text: ${JSON.stringify(state)}`);
     }
-    if (state.shortcutLabel !== 'Ask WebBrain about this'
+    if (state.shortcutLabel !== 'Ask Since Toggle about this'
         || state.shortcutBackground !== 'rgb(255, 255, 255)'
         || state.shortcutColor !== 'rgb(108, 99, 255)'
         || state.shortcutBoxShadow === 'none') {
       throw new Error(`shortcut should retain its purple selected-text treatment: ${JSON.stringify(state)}`);
     }
     await page.mouse.click(rect.left + rect.width / 2, rect.top + rect.height / 2);
-    let popupState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    let popupState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     if (!popupState.popupVisible) throw new Error('popup did not open for the selected text');
     await page.keyboard.press('Escape');
-    popupState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    popupState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     if (popupState.popupVisible || !popupState.shortcutVisible) {
       throw new Error(`Escape should close the popup and retain the shortcut: ${JSON.stringify(popupState)}`);
     }
@@ -1242,7 +1242,7 @@ for (const [label, sourcePath, manualOpen] of [
       selectedState.shortcutRect.left + selectedState.shortcutRect.width / 2,
       selectedState.shortcutRect.top + selectedState.shortcutRect.height / 2,
     );
-    const openState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    const openState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     if (!openState.questionRect || openState.highlightRectCount < 1) {
       throw new Error(`popup should preserve a visual marker for the selected text: ${JSON.stringify(openState)}`);
     }
@@ -1258,7 +1258,7 @@ for (const [label, sourcePath, manualOpen] of [
     );
     await page.keyboard.type('j');
     const typedState = await page.evaluate(() => ({
-      surface: window.__webbrainSelectionShortcut.getState(),
+      surface: window.__sincetoggleSelectionShortcut.getState(),
       pageKeys: window.__selectionPageKeys,
     }));
     if (typedState.surface.questionValue !== 'j' || typedState.surface.highlightRectCount < 1) {
@@ -1268,13 +1268,13 @@ for (const [label, sourcePath, manualOpen] of [
       throw new Error(`dialog keystrokes leaked to the page: ${JSON.stringify(typedState.pageKeys)}`);
     }
     await page.keyboard.press('Escape');
-    const closedState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    const closedState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     if (closedState.popupVisible || closedState.highlightRectCount !== 0) {
       throw new Error(`closing the popup should remove the sticky highlight: ${JSON.stringify(closedState)}`);
     }
     await page.keyboard.press('Enter');
-    await page.waitForFunction(() => window.__webbrainSelectionShortcut.getState().popupVisible);
-    const reopenedState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    await page.waitForFunction(() => window.__sincetoggleSelectionShortcut.getState().popupVisible);
+    const reopenedState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     await page.mouse.click(
       reopenedState.questionRect.left + reopenedState.questionRect.width / 2,
       reopenedState.questionRect.top + reopenedState.questionRect.height / 2,
@@ -1284,7 +1284,7 @@ for (const [label, sourcePath, manualOpen] of [
     await page.waitForFunction(() => window.__selectionMessages.length === 1);
     const submittedState = await page.evaluate(() => ({
       message: window.__selectionMessages[0],
-      surface: window.__webbrainSelectionShortcut.getState(),
+      surface: window.__sincetoggleSelectionShortcut.getState(),
       pageKeys: window.__selectionPageKeys,
     }));
     if (submittedState.message.action !== 'custom' || submittedState.message.question !== 'What is the point?') {
@@ -1320,7 +1320,7 @@ for (const [label, sourcePath, manualOpen] of [
       selectedState.shortcutRect.left + selectedState.shortcutRect.width / 2,
       selectedState.shortcutRect.top + selectedState.shortcutRect.height / 2,
     );
-    const openState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    const openState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     if (openState.highlightRectCount < 1 || openState.highlightRectCount > 200) {
       throw new Error(`long selections should render 1-200 highlight rectangles: ${JSON.stringify(openState)}`);
     }
@@ -1334,15 +1334,15 @@ for (const [label, sourcePath, manualOpen] of [
     const selectedState = await selectFixtureText(page, '#editor');
     const shortcutRect = selectedState.shortcutRect;
     await page.mouse.click(shortcutRect.left + shortcutRect.width / 2, shortcutRect.top + shortcutRect.height / 2);
-    const openState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    const openState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     const summarizeRect = openState.summarizeRect;
     if (!summarizeRect) throw new Error('Summarize action was not visible after opening the popup');
     await page.mouse.click(summarizeRect.left + summarizeRect.width / 2, summarizeRect.top + summarizeRect.height / 2);
     await page.waitForFunction(() => window.__selectionMessages.length === 1);
-    await page.evaluate(() => window.__webbrainSelectionShortcut.submitPreset('summarize'));
+    await page.evaluate(() => window.__sincetoggleSelectionShortcut.submitPreset('summarize'));
     const result = await page.evaluate(() => ({
       messages: window.__selectionMessages,
-      state: window.__webbrainSelectionShortcut.getState(),
+      state: window.__sincetoggleSelectionShortcut.getState(),
     }));
     if (result.messages.length !== 1) throw new Error(`expected exactly one submission, got ${result.messages.length}`);
     if (result.messages[0].action !== 'summarize' || !/Editable selection text/.test(result.messages[0].selectionText)) {
@@ -1356,10 +1356,10 @@ for (const [label, sourcePath, manualOpen] of [
     }
 
     await selectFixtureText(page);
-    await page.evaluate(() => window.__webbrainSelectionShortcut.submitCustom('   '));
+    await page.evaluate(() => window.__sincetoggleSelectionShortcut.submitCustom('   '));
     let messages = await page.evaluate(() => window.__selectionMessages.length);
     if (messages !== 1) throw new Error('blank custom questions should not submit');
-    await page.evaluate(() => window.__webbrainSelectionShortcut.submitCustom('What is the point?'));
+    await page.evaluate(() => window.__sincetoggleSelectionShortcut.submitCustom('What is the point?'));
     messages = await page.evaluate(() => window.__selectionMessages);
     if (messages.length !== 2 || messages[1].action !== 'custom' || messages[1].question !== 'What is the point?') {
       throw new Error(`custom question was not submitted correctly: ${JSON.stringify(messages)}`);
@@ -1372,14 +1372,14 @@ for (const [label, sourcePath, manualOpen] of [
       translationShortcutRect.left + translationShortcutRect.width / 2,
       translationShortcutRect.top + translationShortcutRect.height / 2,
     );
-    const translateState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    const translateState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     const translateRect = translateState.translateRect;
     if (!translateRect) throw new Error('Translate action was not visible in the popup');
     await page.mouse.click(translateRect.left + translateRect.width / 2, translateRect.top + translateRect.height / 2);
     await page.waitForFunction(() => window.__selectionMessages.length === 3);
     const translated = await page.evaluate(() => ({
       message: window.__selectionMessages[2],
-      state: window.__webbrainSelectionShortcut.getState(),
+      state: window.__sincetoggleSelectionShortcut.getState(),
     }));
     if (translated.message.action !== 'translate' || translated.message.language !== 'tr') {
       throw new Error(`translation request was not submitted correctly: ${JSON.stringify(translated.message)}`);
@@ -1395,7 +1395,7 @@ for (const [label, sourcePath, manualOpen] of [
       updatedLocaleShortcutRect.left + updatedLocaleShortcutRect.width / 2,
       updatedLocaleShortcutRect.top + updatedLocaleShortcutRect.height / 2,
     );
-    const updatedLocaleState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    const updatedLocaleState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     await page.mouse.click(
       updatedLocaleState.translateRect.left + updatedLocaleState.translateRect.width / 2,
       updatedLocaleState.translateRect.top + updatedLocaleState.translateRect.height / 2,
@@ -1411,18 +1411,18 @@ for (const [label, sourcePath, manualOpen] of [
     await setupSelectionShortcut(page, sourcePath, { requiresManualOpen: manualOpen });
     await selectFixtureText(page);
     if (manualOpen) {
-      await page.evaluate(() => window.__webbrainSelectionShortcut.submitPreset('summarize'));
-      const toastState = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+      await page.evaluate(() => window.__sincetoggleSelectionShortcut.submitPreset('summarize'));
+      const toastState = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
       if (!toastState.toastVisible) throw new Error(`manual-open guidance toast was not visible: ${JSON.stringify(toastState)}`);
     }
     await page.evaluate(() => window.__sendSelectionRuntimeMessage({ type: 'WB_HIDE_FOR_TOOL_USE' }));
-    let state = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    let state = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     if (!state.suppressed || state.shortcutVisible || state.toastVisible) {
       throw new Error(`tool-use hide should suppress the complete surface: ${JSON.stringify(state)}`);
     }
     await page.evaluate(() => window.__sendSelectionRuntimeMessage({ type: 'WB_SHOW_AFTER_TOOL_USE' }));
     await selectFixtureText(page);
-    await page.evaluate(() => window.__webbrainSelectionShortcut.hideShortcut());
+    await page.evaluate(() => window.__sincetoggleSelectionShortcut.hideShortcut());
     let stored = await page.evaluate(() => window.__selectionStorage.selectionShortcutEnabled);
     if (stored !== false) throw new Error('Hide selection shortcut did not persist false');
 
@@ -1430,7 +1430,7 @@ for (const [label, sourcePath, manualOpen] of [
       document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     });
     await page.waitForTimeout(20);
-    state = await page.evaluate(() => window.__webbrainSelectionShortcut.getState());
+    state = await page.evaluate(() => window.__sincetoggleSelectionShortcut.getState());
     if (state.shortcutVisible) throw new Error('disabled shortcut reappeared after selection');
 
     await page.evaluate(() => window.__setSelectionShortcutEnabled(true));
@@ -1585,8 +1585,8 @@ const gmailThreadScopeFixture = `<!doctype html>
     <button aria-label="Expand all">Unrelated background control</button>
     <div role="listitem">Unrelated inbox conversation that must never enter trusted thread coverage</div>
   </main>
-  <main id="active-thread" aria-label="A chat about WebBrain and your work">
-    <h1>A chat about WebBrain and your work</h1>
+  <main id="active-thread" aria-label="A chat about Since Toggle and your work">
+    <h1>A chat about Since Toggle and your work</h1>
     <button id="real-collapse" aria-label="Collapse all">Collapse all</button>
     ${Array.from({ length: 72 }, (_, index) => {
       const number = String(index + 1).padStart(3, '0');
@@ -2162,7 +2162,7 @@ test('Chrome Agent: modal auto-select ignores background/hidden clickables and k
     dialog: document.getElementById('dialog-select').value,
     backgroundButtonClicked: window.__backgroundYearlyClicked === true,
     escapeActiveId: window.__escapeActiveId || '',
-    leakedTargetSlots: Object.keys(globalThis).filter((key) => key.startsWith('__webbrainAutoSelectTarget_')),
+    leakedTargetSlots: Object.keys(globalThis).filter((key) => key.startsWith('__sincetoggleAutoSelectTarget_')),
   }));
 
   if (!result?.success || result.method !== 'auto-select-keyboard') {
@@ -2493,7 +2493,7 @@ test('CDP type_text binds dispatch to the selector node approved by toolbar pref
   const cloneProbe = await client.probeRichTextToolbarSelector(42, '.shared-target');
   await page.evaluate(() => {
     const observer = new MutationObserver(records => {
-      if (!records.some(record => record.attributeName === 'data-webbrain-dispatch-binding')) return;
+      if (!records.some(record => record.attributeName === 'data-sincetoggle-dispatch-binding')) return;
       observer.disconnect();
       const previous = document.querySelector('.shared-target');
       const replacement = previous.cloneNode();
@@ -2502,7 +2502,7 @@ test('CDP type_text binds dispatch to the selector node approved by toolbar pref
     });
     observer.observe(document.querySelector('.shared-target'), {
       attributes: true,
-      attributeFilter: ['data-webbrain-dispatch-binding'],
+      attributeFilter: ['data-sincetoggle-dispatch-binding'],
     });
   });
   const cloneRejected = await client.typeText(
@@ -2526,7 +2526,7 @@ test('CDP type_text binds dispatch to the selector node approved by toolbar pref
     stableProbe.selectorBackendNodeId,
   );
   const acceptedValue = await page.locator('.shared-target').inputValue();
-  const leakedMarkers = await page.locator('[data-webbrain-dispatch-binding]').count();
+  const leakedMarkers = await page.locator('[data-sincetoggle-dispatch-binding]').count();
   if (!accepted?.success || accepted?.verified !== true || acceptedValue !== '1214' || leakedMarkers !== 0) {
     throw new Error(`stable CDP selector target did not type and clean up exactly: ${JSON.stringify({ accepted, acceptedValue, leakedMarkers })}`);
   }
@@ -2703,10 +2703,10 @@ for (const browserKind of ['chrome', 'firefox']) {
         throw new Error(`expected blocked showPicker with #${inputId}, got ${JSON.stringify(result)}`);
       }
       const footprint = await page.evaluate(() => ({
-        stableGlobal: Object.hasOwn(window, '__webbrainFilePickerGuardBridge'),
+        stableGlobal: Object.hasOwn(window, '__sincetoggleFilePickerGuardBridge'),
         attributes: Array.from(document.documentElement.attributes)
           .map(attribute => attribute.name)
-          .filter(name => name.startsWith('data-webbrain-file-picker-')),
+          .filter(name => name.startsWith('data-sincetoggle-file-picker-')),
       }));
       if (footprint.stableGlobal || footprint.attributes.length) {
         throw new Error(`page-world guard left a detectable marker: ${JSON.stringify(footprint)}`);
@@ -2848,9 +2848,9 @@ test('Chrome CDP file picker guard blocks trusted showPicker activation and rest
 
   await page.evaluate(() => {
     const root = document.documentElement;
-    root.setAttribute('data-webbrain-file-picker-guard', 'residual-content-guard');
-    document.dispatchEvent(new Event('webbrain:file-picker-guard-arm'));
-    root.removeAttribute('data-webbrain-file-picker-guard');
+    root.setAttribute('data-sincetoggle-file-picker-guard', 'residual-content-guard');
+    document.dispatchEvent(new Event('sincetoggle:file-picker-guard-arm'));
+    root.removeAttribute('data-sincetoggle-file-picker-guard');
   });
   const residualInstalled = await page.evaluate(
     () => HTMLInputElement.prototype.click !== window.__originalInputClick,
@@ -3449,7 +3449,7 @@ test('set_checked (chrome): markers are one-shot, unique, and self-cleaning', as
     window.setTimeout = window.__wbOriginalSetTimeout;
     delete window.__wbOriginalSetTimeout;
     delete window.__wbMarkerCleanup;
-    return document.querySelectorAll(`[data-webbrain-set-checked-target="${marker}"]`).length;
+    return document.querySelectorAll(`[data-sincetoggle-set-checked-target="${marker}"]`).length;
   }, expiring.marker);
   if (expiredCount !== 0) throw new Error(`trusted marker did not self-clean: ${expiring.marker}`);
 
@@ -3463,7 +3463,7 @@ test('set_checked (chrome): markers are one-shot, unique, and self-cleaning', as
   });
   await page.evaluate((marker) => {
     document.getElementById('trusted-firefox-checkbox')
-      .setAttribute('data-webbrain-set-checked-target', marker);
+      .setAttribute('data-sincetoggle-set-checked-target', marker);
   }, ambiguous.marker);
   const uniqueClient = new CDPClient();
   uniqueClient.sendCommand = async (_tabId, method) => {
@@ -3475,7 +3475,7 @@ test('set_checked (chrome): markers are one-shot, unique, and self-cleaning', as
   });
   const duplicateResolution = await uniqueClient.resolveSelector(
     42,
-    `[data-webbrain-set-checked-target="${ambiguous.marker}"]`,
+    `[data-sincetoggle-set-checked-target="${ambiguous.marker}"]`,
     { requireUnique: true, retries: 0 },
   );
   if (!duplicateResolution?.error || duplicateResolution?.matchCount !== 2) {
@@ -3489,7 +3489,7 @@ test('set_checked (chrome): markers are one-shot, unique, and self-cleaning', as
     markForTrustedClick: false,
     cleanupMarker: ambiguous.marker,
   });
-  const remaining = await page.locator(`[data-webbrain-set-checked-target="${ambiguous.marker}"]`).count();
+  const remaining = await page.locator(`[data-sincetoggle-set-checked-target="${ambiguous.marker}"]`).count();
   if (
     verified?.success !== false
     || verified.markerConflict !== true

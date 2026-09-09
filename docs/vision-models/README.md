@@ -1,6 +1,6 @@
 # DeepSeek V4 Flash Vision and Laguna XS 2.1 Vision
 
-This directory is the reproducibility record for two WebBrain experiments that add a
+This directory is the reproducibility record for two Since Toggle experiments that add a
 frozen MoonViT image tower and a trained patch-merger projector to frozen mixture-of-experts
 language models.
 
@@ -23,12 +23,12 @@ upstream multimodal model.
 
 | Model package | Role | Inspected revision |
 |---|---|---|
-| [DeepSeek V4 Flash Vision NVFP4](https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-Vision-NVFP4) | Complete pinned NVFP4 text package plus MoonViT tower, projector, and custom SGLang source | [`12b653e63329ac3c20395f9aeeb1bb8264d2db8b`](https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-Vision-NVFP4/commit/12b653e63329ac3c20395f9aeeb1bb8264d2db8b) |
-| [DeepSeek V4 Flash Vision BF16](https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-Vision-BF16) | BF16 vision source overlay; deliberately not a full 291B BF16 text checkpoint | [`60c441aa1c7386387c89ddaff703136395ad8d8b`](https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-Vision-BF16/commit/60c441aa1c7386387c89ddaff703136395ad8d8b) |
-| [DeepSeek V4 Flash Vision Training Archive](https://huggingface.co/webbrain-one/DeepSeek-V4-Flash-Vision-Training-Archive) | Private bring-up, calibration, recovery, and code archive; it predates the completed 100K run | Private, mutable access-controlled repository |
-| [Laguna XS 2.1 Vision NVFP4](https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-NVFP4) | Complete pinned NVFP4 text package plus MoonViT tower and projector | [`ce108f0f3764a18a1f5f7d14ecefa90485ea6e52`](https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-NVFP4/commit/ce108f0f3764a18a1f5f7d14ecefa90485ea6e52) |
-| [Laguna XS 2.1 Vision BF16](https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-BF16) | Complete pinned BF16 text package plus MoonViT tower and projector | [`b06063d00b73f7713ef1c28f8247eed488c73faf`](https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-BF16/commit/b06063d00b73f7713ef1c28f8247eed488c73faf) |
-| [Laguna XS 2.1 Vision Projector 100K](https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-Projector-100K) | Private full projector/optimizer checkpoint history and run evidence | [`4f5d6359867fa55315a2bec4b568901bfdeca5e5`](https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-Projector-100K/commit/4f5d6359867fa55315a2bec4b568901bfdeca5e5) |
+| [DeepSeek V4 Flash Vision NVFP4](https://huggingface.co/sincetoggle-one/DeepSeek-V4-Flash-Vision-NVFP4) | Complete pinned NVFP4 text package plus MoonViT tower, projector, and custom SGLang source | [`12b653e63329ac3c20395f9aeeb1bb8264d2db8b`](https://huggingface.co/sincetoggle-one/DeepSeek-V4-Flash-Vision-NVFP4/commit/12b653e63329ac3c20395f9aeeb1bb8264d2db8b) |
+| [DeepSeek V4 Flash Vision BF16](https://huggingface.co/sincetoggle-one/DeepSeek-V4-Flash-Vision-BF16) | BF16 vision source overlay; deliberately not a full 291B BF16 text checkpoint | [`60c441aa1c7386387c89ddaff703136395ad8d8b`](https://huggingface.co/sincetoggle-one/DeepSeek-V4-Flash-Vision-BF16/commit/60c441aa1c7386387c89ddaff703136395ad8d8b) |
+| [DeepSeek V4 Flash Vision Training Archive](https://huggingface.co/sincetoggle-one/DeepSeek-V4-Flash-Vision-Training-Archive) | Private bring-up, calibration, recovery, and code archive; it predates the completed 100K run | Private, mutable access-controlled repository |
+| [Laguna XS 2.1 Vision NVFP4](https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-NVFP4) | Complete pinned NVFP4 text package plus MoonViT tower and projector | [`ce108f0f3764a18a1f5f7d14ecefa90485ea6e52`](https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-NVFP4/commit/ce108f0f3764a18a1f5f7d14ecefa90485ea6e52) |
+| [Laguna XS 2.1 Vision BF16](https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-BF16) | Complete pinned BF16 text package plus MoonViT tower and projector | [`b06063d00b73f7713ef1c28f8247eed488c73faf`](https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-BF16/commit/b06063d00b73f7713ef1c28f8247eed488c73faf) |
+| [Laguna XS 2.1 Vision Projector 100K](https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-Projector-100K) | Private full projector/optimizer checkpoint history and run evidence | [`4f5d6359867fa55315a2bec4b568901bfdeca5e5`](https://huggingface.co/sincetoggle-one/Laguna-XS-2.1-Vision-Projector-100K/commit/4f5d6359867fa55315a2bec4b568901bfdeca5e5) |
 
 ## What is complete
 

@@ -1,7 +1,7 @@
 /**
  * Runtime configuration, all environment-driven.
  *
- * The bridge port intentionally defaults to 17374, NOT 17373. WebBrain Cloud's
+ * The bridge port intentionally defaults to 17374, NOT 17373. Since Toggle Cloud's
  * sidecar owns 17373, and `cloud-bridge.js` holds exactly one outbound socket —
  * so the extension can be pointed at Cloud or at this server, never both. Using
  * a distinct port keeps the failure mode obvious ("nothing connected") instead
@@ -44,22 +44,22 @@ function durationFromEnv(name: string, fallback: number): number {
 
 export const config = {
   /** Port this process listens on for the extension's outbound bridge socket. */
-  bridgePort: portFromEnv("WEBBRAIN_BRIDGE_PORT", 17374),
+  bridgePort: portFromEnv("SINCETOGGLE_BRIDGE_PORT", 17374),
 
-  /** Path segment the extension connects to. Must match the URL set in WebBrain settings. */
-  bridgePath: process.env.WEBBRAIN_BRIDGE_PATH || "/extension",
+  /** Path segment the extension connects to. Must match the URL set in Since Toggle settings. */
+  bridgePath: process.env.SINCETOGGLE_BRIDGE_PATH || "/extension",
 
   /**
    * How long to wait for the extension to answer a single bridge command.
    * Starting a run returns immediately; this is not the task timeout.
    */
-  commandTimeoutMs: durationFromEnv("WEBBRAIN_COMMAND_TIMEOUT_MS", 30_000),
+  commandTimeoutMs: durationFromEnv("SINCETOGGLE_COMMAND_TIMEOUT_MS", 30_000),
 
-  /** Default ceiling for how long `webbrain_run` will poll before giving up. */
-  defaultRunTimeoutMs: durationFromEnv("WEBBRAIN_RUN_TIMEOUT_MS", 300_000),
+  /** Default ceiling for how long `sincetoggle_run` will poll before giving up. */
+  defaultRunTimeoutMs: durationFromEnv("SINCETOGGLE_RUN_TIMEOUT_MS", 300_000),
 
   /** Interval between `cloud_status` polls while a run is in flight. */
-  pollIntervalMs: durationFromEnv("WEBBRAIN_POLL_INTERVAL_MS", 1_000),
+  pollIntervalMs: durationFromEnv("SINCETOGGLE_POLL_INTERVAL_MS", 1_000),
 } as const;
 
 /** The URL the user must paste into Settings → General → Advanced → MCP. */

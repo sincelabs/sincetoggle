@@ -10,7 +10,7 @@
 (() => {
   if (typeof window.__wb_observe_chat_dom === 'function') return;
 
-  const SCHEMA = 'webbrain-chat-observation/1';
+  const SCHEMA = 'sincetoggle-chat-observation/1';
   const MAX_TEXT = 4000;
   const MAX_ITEMS = 200;
   const MESSAGE_SELECTORS = [
@@ -317,17 +317,17 @@
 
   const userInputFor = (root) => {
     const selectors = [
-      '[data-webbrain-user-input-required]',
+      '[data-sincetoggle-user-input-required]',
       '[data-requires-user-input]',
       '[data-new-user-decision-required]',
       'input[autocomplete]',
       'input[type="password"]',
-      'select[data-webbrain-user-input-required]',
+      'select[data-sincetoggle-user-input-required]',
     ];
     for (const node of queryMany(root, selectors)) {
       if (!visible(node)) continue;
       const explicit = [
-        attribute(node, 'data-webbrain-user-input-reason'),
+        attribute(node, 'data-sincetoggle-user-input-reason'),
         attribute(node, 'data-user-input-reason'),
       ].join(' ').toLowerCase();
       const autocomplete = attribute(node, 'autocomplete').toLowerCase();

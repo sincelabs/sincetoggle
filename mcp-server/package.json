@@ -1,19 +1,19 @@
 {
-  "name": "@webbrain/mcp-server",
-  "displayName": "WebBrain MCP Server",
-  "description": "Model Context Protocol server that lets any MCP client (Claude Code, Codex, Cursor, OpenClaw) delegate browser tasks to a running WebBrain extension — in the user's real, already-authenticated browser session.",
+  "name": "@sincetoggle/mcp-server",
+  "displayName": "Since Toggle MCP Server",
+  "description": "Model Context Protocol server that lets any MCP client (Claude Code, Codex, Cursor, OpenClaw) delegate browser tasks to a running Since Toggle extension — in the user's real, already-authenticated browser session.",
   "version": "0.1.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "webbrain-mcp": "dist/index.js"
+    "sincetoggle-mcp": "dist/index.js"
   },
   "license": "MIT",
-  "homepage": "https://webbrain.one",
+  "homepage": "https://sincetoggle.one",
   "repository": {
     "type": "git",
-    "url": "https://github.com/webbrain-one/webbrain.git",
+    "url": "https://github.com/sincetoggle-one/sincetoggle.git",
     "directory": "mcp-server"
   },
   "scripts": {
@@ -28,7 +28,7 @@
   "keywords": [
     "mcp",
     "model-context-protocol",
-    "webbrain",
+    "sincetoggle",
     "browser-agent",
     "browser-automation",
     "claude-code",

@@ -26,7 +26,7 @@ import {
 } from './offline-semantic-runtime.js';
 
 export const EMERGENCY_DOWNLOAD_STATE_MESSAGE = 'emergency-download-state';
-export const EMERGENCY_SEMANTIC_STATE_KEY = 'webbrainEmergencySemanticDownloadState';
+export const EMERGENCY_SEMANTIC_STATE_KEY = 'sincetoggleEmergencySemanticDownloadState';
 
 function defaultBroadcast(payload) {
   const api = globalThis.browser || globalThis.chrome;

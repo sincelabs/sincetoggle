@@ -64,14 +64,14 @@ import {
   loadVisionConnectionTestImage,
 } from './connection-test-assets.js';
 
-const WEBBRAIN_CLOUD_PROVIDER_ID = 'webbrain_cloud';
-const WEBBRAIN_CLOUD_PROVIDER_LABEL = 'WebBrain Compass';
+const SINCETOGGLE_CLOUD_PROVIDER_ID = 'sincetoggle_cloud';
+const SINCETOGGLE_CLOUD_PROVIDER_LABEL = 'Since Toggle Compass';
 const DUPLICATE_PROVIDER_SUFFIX = '__duplicate';
 const LOCAL_MODEL_LIST_PROVIDER_IDS = ['llamacpp', 'ollama', 'lmstudio', 'jan', 'vllm', 'sglang', 'localai', 'gpt4all', 'local_openai_proxy', 'unsloth'];
-const WEBBRAIN_CLOUD_CONTEXT_WINDOW = 1000000;
-const WEBBRAIN_CLOUD_LEGACY_CONTEXT_WINDOW = 256000;
-const WEBBRAIN_DEVICE_GUID_KEY = 'webbrainDeviceGuid';
-const HELP_IMPROVE_WEBBRAIN_KEY = 'helpImproveWebBrain';
+const SINCETOGGLE_CLOUD_CONTEXT_WINDOW = 1000000;
+const SINCETOGGLE_CLOUD_LEGACY_CONTEXT_WINDOW = 256000;
+const SINCETOGGLE_DEVICE_GUID_KEY = 'sincetoggleDeviceGuid';
+const HELP_IMPROVE_SINCETOGGLE_KEY = 'helpImproveSince Toggle';
 const OPENROUTER_DEFAULT_MODEL = 'openrouter/free';
 const OPENROUTER_LEGACY_DEFAULT_MODEL = 'stepfun/step-3.7-flash';
 const OPENAI_DEFAULT_MODEL = 'gpt-5.6-terra';
@@ -313,8 +313,8 @@ export class ProviderManager {
       'providers',
       'activeProvider',
       'visionModel',
-      WEBBRAIN_DEVICE_GUID_KEY,
-      HELP_IMPROVE_WEBBRAIN_KEY,
+      SINCETOGGLE_DEVICE_GUID_KEY,
+      HELP_IMPROVE_SINCETOGGLE_KEY,
       WEBGPU_VISION_ENABLED_KEY,
       WEBGPU_VISION_AUTO_SELECTED_KEY,
       WEBGPU_VISION_CONSENT_VERSION_KEY,
@@ -335,8 +335,8 @@ export class ProviderManager {
     const hadLegacyClaudeSubscription = Object.hasOwn(data.providers || {}, 'claude_subscription');
     const rawStoredProviders = data.providers || {};
     const stored = this._migrateStoredProviderConfigs(rawStoredProviders);
-    const legacyActiveProviderId = ['webbrain', 'openai_subscription'].includes(data.activeProvider)
-      ? WEBBRAIN_CLOUD_PROVIDER_ID
+    const legacyActiveProviderId = ['sincetoggle', 'openai_subscription'].includes(data.activeProvider)
+      ? SINCETOGGLE_CLOUD_PROVIDER_ID
       : data.activeProvider;
     // Field-level merge: defaults provide the full shape (including new
     // fields like apiKeyUrl), stored values override individual fields
@@ -349,7 +349,7 @@ export class ProviderManager {
     for (const [id, config] of Object.entries(defaults)) {
       const storedConfig = stored[id];
       const hasConfiguredMarker = !!storedConfig && Object.hasOwn(storedConfig, 'configured');
-      const configured = id !== WEBBRAIN_CLOUD_PROVIDER_ID && (
+      const configured = id !== SINCETOGGLE_CLOUD_PROVIDER_ID && (
         storedConfig?.configured === true ||
         (!hasConfiguredMarker && !!storedConfig && (
           id === legacyActiveProviderId ||
@@ -373,7 +373,7 @@ export class ProviderManager {
         const hasConfiguredMarker = Object.hasOwn(config, 'configured');
         configs[id] = {
           ...config,
-          configured: id !== WEBBRAIN_CLOUD_PROVIDER_ID && (config.configured === true || !hasConfiguredMarker),
+          configured: id !== SINCETOGGLE_CLOUD_PROVIDER_ID && (config.configured === true || !hasConfiguredMarker),
         };
         if (!hasConfiguredMarker) providerStateMigrated = true;
       }
@@ -384,7 +384,7 @@ export class ProviderManager {
         providerStateMigrated = true;
       }
     }
-    delete configs.webbrain;
+    delete configs.sincetoggle;
     delete configs.openai_subscription;
     delete configs.claude_subscription;
     // The claude_subscription provider entry above is gone and its
@@ -392,18 +392,18 @@ export class ProviderManager {
     // token bundle here — otherwise a previously-signed-in user's raw
     // access/refresh tokens would sit in storage with no UI path to clear them.
     if (hadLegacyClaudeSubscription) await signOutClaude();
-    if (configs[WEBBRAIN_CLOUD_PROVIDER_ID]) {
-      configs[WEBBRAIN_CLOUD_PROVIDER_ID].deviceGuid = await this._getDeviceGuid(data[WEBBRAIN_DEVICE_GUID_KEY]);
-      configs[WEBBRAIN_CLOUD_PROVIDER_ID].helpImproveWebBrain = data[HELP_IMPROVE_WEBBRAIN_KEY] !== false;
+    if (configs[SINCETOGGLE_CLOUD_PROVIDER_ID]) {
+      configs[SINCETOGGLE_CLOUD_PROVIDER_ID].deviceGuid = await this._getDeviceGuid(data[SINCETOGGLE_DEVICE_GUID_KEY]);
+      configs[SINCETOGGLE_CLOUD_PROVIDER_ID].helpImproveSince Toggle = data[HELP_IMPROVE_SINCETOGGLE_KEY] !== false;
     }
-    this.activeProviderId = legacyActiveProviderId || WEBBRAIN_CLOUD_PROVIDER_ID;
-    if (!configs[this.activeProviderId]) this.activeProviderId = WEBBRAIN_CLOUD_PROVIDER_ID;
+    this.activeProviderId = legacyActiveProviderId || SINCETOGGLE_CLOUD_PROVIDER_ID;
+    if (!configs[this.activeProviderId]) this.activeProviderId = SINCETOGGLE_CLOUD_PROVIDER_ID;
     if (this.activeProviderId === 'webgpu') {
-      this.activeProviderId = WEBBRAIN_CLOUD_PROVIDER_ID;
+      this.activeProviderId = SINCETOGGLE_CLOUD_PROVIDER_ID;
       providerStateMigrated = true;
     }
-    if (this.activeProviderId !== WEBBRAIN_CLOUD_PROVIDER_ID && configs[this.activeProviderId]?.configured !== true) {
-      this.activeProviderId = WEBBRAIN_CLOUD_PROVIDER_ID;
+    if (this.activeProviderId !== SINCETOGGLE_CLOUD_PROVIDER_ID && configs[this.activeProviderId]?.configured !== true) {
+      this.activeProviderId = SINCETOGGLE_CLOUD_PROVIDER_ID;
       providerStateMigrated = true;
     }
 
@@ -462,20 +462,20 @@ export class ProviderManager {
 
   _defaultConfigs() {
     return {
-      webbrain_cloud: {
+      sincetoggle_cloud: {
         type: 'openai',
         category: 'cloud',
-        label: WEBBRAIN_CLOUD_PROVIDER_LABEL,
-        providerName: 'webbrain-cloud',
-        baseUrl: 'https://api.webbrain.one/v1',
-        model: 'webbrain-cloud 1.0',
-        contextWindow: WEBBRAIN_CLOUD_CONTEXT_WINDOW,
+        label: SINCETOGGLE_CLOUD_PROVIDER_LABEL,
+        providerName: 'sincetoggle-cloud',
+        baseUrl: 'https://api.sincetoggle.one/v1',
+        model: 'sincetoggle-cloud 1.0',
+        contextWindow: SINCETOGGLE_CLOUD_CONTEXT_WINDOW,
         inputCostPerMillionUsd: 0.20,
         outputCostPerMillionUsd: 1.15,
         supportsStreamUsageOptions: true,
         supportsAskStreaming: true,
         supportsVision: true,
-        // WebBrain Compass proxies to OpenRouter, whose upstream models
+        // Since Toggle Compass proxies to OpenRouter, whose upstream models
         // (minimax, stepfun, …) handle tools + images together fine. Dropping
         // tools on image turns forced the model into prompt-based tool calling,
         // which leaks raw tool-call template tokens (e.g. `]<]minimax[>[`) into
@@ -1029,27 +1029,27 @@ export class ProviderManager {
     // The managed provider name is shipped UI, not a user customization. Older
     // releases persisted the complete config, so migrate their stored label.
     if (
-      migrated[WEBBRAIN_CLOUD_PROVIDER_ID]
-      && migrated[WEBBRAIN_CLOUD_PROVIDER_ID].label !== WEBBRAIN_CLOUD_PROVIDER_LABEL
+      migrated[SINCETOGGLE_CLOUD_PROVIDER_ID]
+      && migrated[SINCETOGGLE_CLOUD_PROVIDER_ID].label !== SINCETOGGLE_CLOUD_PROVIDER_LABEL
     ) {
-      migrated[WEBBRAIN_CLOUD_PROVIDER_ID] = {
-        ...migrated[WEBBRAIN_CLOUD_PROVIDER_ID],
-        label: WEBBRAIN_CLOUD_PROVIDER_LABEL,
+      migrated[SINCETOGGLE_CLOUD_PROVIDER_ID] = {
+        ...migrated[SINCETOGGLE_CLOUD_PROVIDER_ID],
+        label: SINCETOGGLE_CLOUD_PROVIDER_LABEL,
       };
     }
-    // Existing installs stored omitToolsWhenImagesPresent:true for WebBrain
+    // Existing installs stored omitToolsWhenImagesPresent:true for Since Toggle
     // Compass, which suppressed native tools on every screenshot turn and broke
     // tool calling. Force it off so the saved config picks up the new default.
-    if (migrated.webbrain_cloud?.omitToolsWhenImagesPresent) {
-      migrated.webbrain_cloud = {
-        ...migrated.webbrain_cloud,
+    if (migrated.sincetoggle_cloud?.omitToolsWhenImagesPresent) {
+      migrated.sincetoggle_cloud = {
+        ...migrated.sincetoggle_cloud,
         omitToolsWhenImagesPresent: false,
       };
     }
-    if (Number(migrated.webbrain_cloud?.contextWindow) === WEBBRAIN_CLOUD_LEGACY_CONTEXT_WINDOW) {
-      migrated.webbrain_cloud = {
-        ...migrated.webbrain_cloud,
-        contextWindow: WEBBRAIN_CLOUD_CONTEXT_WINDOW,
+    if (Number(migrated.sincetoggle_cloud?.contextWindow) === SINCETOGGLE_CLOUD_LEGACY_CONTEXT_WINDOW) {
+      migrated.sincetoggle_cloud = {
+        ...migrated.sincetoggle_cloud,
+        contextWindow: SINCETOGGLE_CLOUD_CONTEXT_WINDOW,
       };
     }
     for (const id of ROUTER_PROVIDER_IDS) {
@@ -1171,7 +1171,7 @@ export class ProviderManager {
   }
 
   _canDuplicateProvider(id, config = this.providers.get(id)?.config) {
-    return !!config && !config.duplicateOf && id !== WEBBRAIN_CLOUD_PROVIDER_ID && config.type !== 'webgpu';
+    return !!config && !config.duplicateOf && id !== SINCETOGGLE_CLOUD_PROVIDER_ID && config.type !== 'webgpu';
   }
 
   _isValidDuplicateConfig(id, config, configs) {
@@ -1529,7 +1529,7 @@ export class ProviderManager {
     }
   }
 
-  /** Return the Chrome-only WebBrain VL fallback, but only when explicitly enabled and ready. */
+  /** Return the Chrome-only Since Toggle VL fallback, but only when explicitly enabled and ready. */
   async getLocalVisionFallbackProvider() {
     try {
       const readiness = await this.getWebgpuVisionReadiness();
@@ -1824,7 +1824,7 @@ export class ProviderManager {
     const merged = {
       ...current,
       ...updates,
-      configured: id !== WEBBRAIN_CLOUD_PROVIDER_ID && (markConfigured || current.configured === true),
+      configured: id !== SINCETOGGLE_CLOUD_PROVIDER_ID && (markConfigured || current.configured === true),
     };
     if (this._providerDefinitionId(id, current) === 'ollama') {
       merged.visionMode = OLLAMA_VISION_MODES.has(merged.visionMode) ? merged.visionMode : 'auto';
@@ -1910,9 +1910,9 @@ export class ProviderManager {
     this.providers.delete(id);
     if (previousActiveProviderId === id) {
       const source = this.providers.get(sourceId);
-      this.activeProviderId = source && (sourceId === WEBBRAIN_CLOUD_PROVIDER_ID || source.config?.configured === true)
+      this.activeProviderId = source && (sourceId === SINCETOGGLE_CLOUD_PROVIDER_ID || source.config?.configured === true)
         ? sourceId
-        : WEBBRAIN_CLOUD_PROVIDER_ID;
+        : SINCETOGGLE_CLOUD_PROVIDER_ID;
     }
     try {
       await this.save();
@@ -2037,7 +2037,7 @@ export class ProviderManager {
           reasoningControl,
           providerConfig: provider?.config,
         }),
-        webbrainVisionProbe: true,
+        sincetoggleVisionProbe: true,
       });
     } catch (error) {
       if (!unsupportedVisionGenerationControl(error)) return { ok: false, error: error.message };
@@ -2049,7 +2049,7 @@ export class ProviderManager {
             reasoningControl,
             providerConfig: provider?.config,
           }),
-          webbrainVisionProbe: true,
+          sincetoggleVisionProbe: true,
         });
       } catch (fallbackError) {
         return { ok: false, error: fallbackError.message };
@@ -2063,7 +2063,7 @@ export class ProviderManager {
             reasoningControl,
             providerConfig: provider?.config,
           }),
-          webbrainVisionProbe: true,
+          sincetoggleVisionProbe: true,
         });
       } catch (error) {
         return { ok: false, error: error.message };
@@ -2122,7 +2122,7 @@ export class ProviderManager {
     } catch (error) {
       return { ok: false, error: error.message };
     }
-    form.append('file', audioBlob, 'webbrain-connection-test.wav');
+    form.append('file', audioBlob, 'sincetoggle-connection-test.wav');
     form.append('model', cfg.model);
     form.append('response_format', 'json');
     try {
@@ -2539,7 +2539,7 @@ export class ProviderManager {
     const material = await this._deviceFingerprintMaterial();
     const guid = await this._guidFromMaterial(material);
     try {
-      await chrome.storage.local.set({ [WEBBRAIN_DEVICE_GUID_KEY]: guid });
+      await chrome.storage.local.set({ [SINCETOGGLE_DEVICE_GUID_KEY]: guid });
     } catch (e) {
       console.warn('[providers] failed to persist device guid:', e);
     }
@@ -2581,7 +2581,7 @@ export class ProviderManager {
   }
 
   async _guidFromMaterial(material) {
-    const bytes = new TextEncoder().encode(`webbrain-device-v1:${material}`);
+    const bytes = new TextEncoder().encode(`sincetoggle-device-v1:${material}`);
     const digest = await crypto.subtle.digest('SHA-256', bytes);
     const hex = Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
     return [
