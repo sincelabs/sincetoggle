@@ -1191,7 +1191,7 @@ browser.alarms.onAlarm.addListener((alarm) => {
 const webBrainGroupByWindow = new Map(); // windowId -> tabGroups groupId
 const WB_GROUPS_KEY = 'webBrainGroupByWindow';
 
-async function loadSince ToggleGroups() {
+async function loadSinceToggleGroups() {
   if (!browser.tabGroups) return; // Firefox <142 — graceful skip
   try {
     const stored = await browser.storage.session?.get(WB_GROUPS_KEY);
@@ -1208,12 +1208,12 @@ async function loadSince ToggleGroups() {
     }
   } catch { /* session storage unavailable on this profile */ }
 }
-function saveSince ToggleGroups() {
+function saveSinceToggleGroups() {
   browser.storage.session?.set({
     [WB_GROUPS_KEY]: Array.from(webBrainGroupByWindow.entries()),
   }).catch(() => {});
 }
-loadSince ToggleGroups();
+loadSinceToggleGroups();
 
 /**
  * When automatic grouping is enabled, make sure `tab.windowId` has a
@@ -1233,7 +1233,7 @@ async function ensureSince ToggleGroup(tab) {
       } catch {
         groupId = null;
         webBrainGroupByWindow.delete(tab.windowId);
-        saveSince ToggleGroups();
+        saveSinceToggleGroups();
       }
     }
 
@@ -1248,7 +1248,7 @@ async function ensureSince ToggleGroup(tab) {
         });
       } catch { /* style update can fail on locked groups; skip */ }
       webBrainGroupByWindow.set(tab.windowId, groupId);
-      saveSince ToggleGroups();
+      saveSinceToggleGroups();
     } else if (tab.groupId !== groupId) {
       // Group exists but source tab not in it. Add it.
       try {
@@ -1480,7 +1480,7 @@ browser.tabGroups?.onRemoved?.addListener?.((group) => {
   for (const [windowId, gid] of webBrainGroupByWindow) {
     if (gid === group.id) {
       webBrainGroupByWindow.delete(windowId);
-      saveSince ToggleGroups();
+      saveSinceToggleGroups();
       break;
     }
   }
@@ -1490,7 +1490,7 @@ browser.tabGroups?.onRemoved?.addListener?.((group) => {
 browser.windows?.onRemoved?.addListener?.((windowId) => {
   if (webBrainGroupByWindow.has(windowId)) {
     webBrainGroupByWindow.delete(windowId);
-    saveSince ToggleGroups();
+    saveSinceToggleGroups();
   }
 });
 

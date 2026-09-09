@@ -99,3 +99,7 @@ packaging.
 For behavior changes in the extension, test at least the touched browser path
 manually. If the change affects shared agent behavior, test both Chrome and
 Firefox or clearly document the untested side.
+
+## Pull Request / Build Reminders
+
+Always build the actual package at the time you make the pull request, so we always get the up-to-date package with the code.
