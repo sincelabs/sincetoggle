@@ -483,7 +483,7 @@ function buildSubscribeHtml() {
         window.location.href = checkoutUrl.toString();
       }, 3500);
     } else {
-      document.getElementById('subscribe-title').textContent = 'Open this link from WebBrain';
+      document.getElementById('subscribe-title').textContent = 'Open this link from Since Toggle';
       document.getElementById('subscribe-copy').textContent = 'You may be using an outdated version of the Since Toggle plugin on your browser, please update.';
       document.getElementById('checkout-row').style.display = 'none';
     }

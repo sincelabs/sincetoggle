@@ -92,7 +92,7 @@ function isAllowedBridgeOrigin(origin: string | string[] | undefined): boolean {
   }
 }
 
-export class Since ToggleBridge {
+export class SincetoggleBridge {
   private wss: WebSocketServer | null = null;
   private socket: WebSocket | null = null;
   private pending = new Map<number, Pending>();

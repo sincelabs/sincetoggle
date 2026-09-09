@@ -1179,7 +1179,7 @@ browser.alarms.onAlarm.addListener((alarm) => {
 // when automatic grouping is enabled and the user clicks the browser
 // action, the source tab joins (or seeds) a colored "Since Toggle" tab group
 // for that window. Internal helper tabs and target=_blank redirects auto-join
-// the same group via agent.js's `_addToSince ToggleGroup`.
+// the same group via agent.js's `_addToSincetoggleGroup`.
 //
 // What we DON'T do on Firefox: scope the sidebar's visibility to group
 // membership. browser.sidebarAction is window-level, not per-tab —
@@ -1188,21 +1188,21 @@ browser.alarms.onAlarm.addListener((alarm) => {
 // toggle), which is fine because Firefox already has user-driven control.
 // ────────────────────────────────────────────────────────────────────────
 
-const webBrainGroupByWindow = new Map(); // windowId -> tabGroups groupId
-const WB_GROUPS_KEY = 'webBrainGroupByWindow';
+const sincetoggleGroupByWindow = new Map(); // windowId -> tabGroups groupId
+const SINCETOGGLE_GROUPS_KEY = 'sincetoggleGroupByWindow';
 
 async function loadSinceToggleGroups() {
   if (!browser.tabGroups) return; // Firefox <142 — graceful skip
   try {
-    const stored = await browser.storage.session?.get(WB_GROUPS_KEY);
-    const arr = stored?.[WB_GROUPS_KEY];
+    const stored = await browser.storage.session?.get(SINCETOGGLE_GROUPS_KEY);
+    const arr = stored?.[SINCETOGGLE_GROUPS_KEY];
     if (Array.isArray(arr)) {
       for (const [windowId, groupId] of arr) {
         // Validate each cached group still exists; user may have
         // ungrouped or browser may have been closed between sessions.
         try {
           await browser.tabGroups.get(groupId);
-          webBrainGroupByWindow.set(windowId, groupId);
+          sincetoggleGroupByWindow.set(windowId, groupId);
         } catch { /* group gone, drop */ }
       }
     }
@@ -1210,7 +1210,7 @@ async function loadSinceToggleGroups() {
 }
 function saveSinceToggleGroups() {
   browser.storage.session?.set({
-    [WB_GROUPS_KEY]: Array.from(webBrainGroupByWindow.entries()),
+    [SINCETOGGLE_GROUPS_KEY]: Array.from(sincetoggleGroupByWindow.entries()),
   }).catch(() => {});
 }
 loadSinceToggleGroups();
@@ -1220,11 +1220,11 @@ loadSinceToggleGroups();
  * "Since Toggle" group AND that `tab` is in it. Always creates a fresh group
  * rather than rebranding the user's existing group.
  */
-async function ensureSince ToggleGroup(tab) {
+async function ensureSincetoggleGroup(tab) {
   if (!browser.tabGroups || !tab?.id || tab.windowId == null) return -1;
   if (!await shouldAutoGroupTabs(browser.storage.local)) return -1;
   try {
-    let groupId = webBrainGroupByWindow.get(tab.windowId);
+    let groupId = sincetoggleGroupByWindow.get(tab.windowId);
 
     // Validate cached group is still alive in the browser.
     if (groupId != null) {
@@ -1232,7 +1232,7 @@ async function ensureSince ToggleGroup(tab) {
         await browser.tabGroups.get(groupId);
       } catch {
         groupId = null;
-        webBrainGroupByWindow.delete(tab.windowId);
+        sincetoggleGroupByWindow.delete(tab.windowId);
         saveSinceToggleGroups();
       }
     }
@@ -1247,7 +1247,7 @@ async function ensureSince ToggleGroup(tab) {
           title: 'Since Toggle', color: 'blue', collapsed: false,
         });
       } catch { /* style update can fail on locked groups; skip */ }
-      webBrainGroupByWindow.set(tab.windowId, groupId);
+      sincetoggleGroupByWindow.set(tab.windowId, groupId);
       saveSinceToggleGroups();
     } else if (tab.groupId !== groupId) {
       // Group exists but source tab not in it. Add it.
@@ -1282,7 +1282,7 @@ browser.runtime.onMessage.addListener((msg, sender) => {
 
   browser.tabs.get(tabId).then((tab) => {
     if (tab?.url !== installGuideUrl) return;
-    ensureSince ToggleGroup(tab).catch(() => {});
+    ensureSincetoggleGroup(tab).catch(() => {});
   }).catch(() => {});
 });
 
@@ -1313,7 +1313,7 @@ function openSidebarForContextMenu(tab) {
   } else {
     browser.sidebarAction?.toggle?.().catch(() => {});
   }
-  if (tab?.id) ensureSince ToggleGroup(tab).catch(() => {});
+  if (tab?.id) ensureSincetoggleGroup(tab).catch(() => {});
 }
 
 async function handleContextMenuAsk(info, tab) {
@@ -1477,9 +1477,9 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 // Forget the per-window mapping when the user manually ungroups.
 browser.tabGroups?.onRemoved?.addListener?.((group) => {
-  for (const [windowId, gid] of webBrainGroupByWindow) {
+  for (const [windowId, gid] of sincetoggleGroupByWindow) {
     if (gid === group.id) {
-      webBrainGroupByWindow.delete(windowId);
+      sincetoggleGroupByWindow.delete(windowId);
       saveSinceToggleGroups();
       break;
     }
@@ -1488,8 +1488,8 @@ browser.tabGroups?.onRemoved?.addListener?.((group) => {
 
 // Window closed — drop the mapping.
 browser.windows?.onRemoved?.addListener?.((windowId) => {
-  if (webBrainGroupByWindow.has(windowId)) {
-    webBrainGroupByWindow.delete(windowId);
+  if (sincetoggleGroupByWindow.has(windowId)) {
+    sincetoggleGroupByWindow.delete(windowId);
     saveSinceToggleGroups();
   }
 });
@@ -1745,7 +1745,7 @@ browser.tabs.onRemoved.addListener((tabId) => {
 browser.browserAction.onClicked.addListener((tab) => {
   browser.sidebarAction.toggle();
   // Async — sidebar toggle doesn't need to wait on grouping.
-  if (tab?.id) ensureSince ToggleGroup(tab).catch(() => {});
+  if (tab?.id) ensureSincetoggleGroup(tab).catch(() => {});
 });
 
 // ────────────────────────────────────────────────────────────────────────

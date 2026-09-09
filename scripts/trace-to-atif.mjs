@@ -119,7 +119,7 @@ export function sincetoggleTraceToAtif(input) {
   const run = input.run;
   const runId = String(run.runId).trim();
   const version = String(
-    run.sincetoggleVersion || input.exportedBySince ToggleVersion || 'unknown',
+    run.sincetoggleVersion || input.exportedBySincetoggleVersion || 'unknown',
   );
   const steps = [];
   const omittedEventCounts = {};
@@ -294,8 +294,8 @@ export function sincetoggleTraceToAtif(input) {
   const rootExtra = compactObject({
     source_schema: SOURCE_SCHEMA,
     source_exported_at: timestamp(input.exportedAt),
-    source_exported_by_sincetoggle_version: input.exportedBySince ToggleVersion
-      ? String(input.exportedBySince ToggleVersion)
+    source_exported_by_sincetoggle_version: input.exportedBySincetoggleVersion
+      ? String(input.exportedBySincetoggleVersion)
       : undefined,
     status: run.status ? String(run.status) : undefined,
     tab_url: run.tabUrl ? String(run.tabUrl) : undefined,
@@ -411,7 +411,7 @@ function sincetoggleTraceBundleToAtif(input) {
     trajectory: sincetoggleTraceToAtif({
       schema: input.schema,
       exportedAt: input.exportedAt,
-      exportedBySince ToggleVersion: input.exportedBySince ToggleVersion,
+      exportedBySincetoggleVersion: input.exportedBySincetoggleVersion,
       run: entry.run,
       events: entry.events,
     }),
@@ -433,7 +433,7 @@ function sincetoggleTraceBundleToAtif(input) {
     mode: modes.length === 1 ? modes[0] : undefined,
   });
   const version = String(
-    input.exportedBySince ToggleVersion || trajectories[0].trajectory.agent.version || 'unknown',
+    input.exportedBySincetoggleVersion || trajectories[0].trajectory.agent.version || 'unknown',
   );
 
   return {
@@ -455,8 +455,8 @@ function sincetoggleTraceBundleToAtif(input) {
     extra: compactObject({
       source_schema: SOURCE_SCHEMA,
       source_exported_at: timestamp(input.exportedAt),
-      source_exported_by_sincetoggle_version: input.exportedBySince ToggleVersion
-        ? String(input.exportedBySince ToggleVersion)
+      source_exported_by_sincetoggle_version: input.exportedBySincetoggleVersion
+        ? String(input.exportedBySincetoggleVersion)
         : undefined,
       source_session_id: sessionId,
       source_run_count: trajectories.length,

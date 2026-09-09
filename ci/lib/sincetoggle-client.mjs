@@ -6,7 +6,7 @@ const TERMINAL_SCHEDULED = new Set(['completed', 'failed', 'cancelled', 'cancele
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export class Since ToggleCloudClient {
+export class SincetoggleCloudClient {
   constructor({ apiKey, baseUrl = 'https://sincetoggle.cloud', fetchImpl = globalThis.fetch }) {
     if (!apiKey) throw new Error('SINCETOGGLE_API_KEY is required.');
     this.apiKey = apiKey;
@@ -206,7 +206,7 @@ export class GnippetsE2EClient {
       headers: {
         authorization: `Bearer ${this.controlToken}`,
         accept: 'application/json',
-        'user-agent': 'Mozilla/5.0 (compatible; Since ToggleCloudE2E/1.0; +https://sincetoggle.cloud)',
+        'user-agent': 'Mozilla/5.0 (compatible; SincetoggleCloudE2E/1.0; +https://sincetoggle.cloud)',
         ...(body === undefined ? {} : { 'content-type': 'application/json' }),
       },
       body: body === undefined ? undefined : JSON.stringify(body),

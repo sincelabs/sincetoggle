@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
-import { GnippetsE2EClient, Since ToggleCloudClient } from './lib/sincetoggle-client.mjs';
+import { GnippetsE2EClient, SincetoggleCloudClient } from './lib/sincetoggle-client.mjs';
 import { gradeScenario, renderSummary } from './lib/grader.mjs';
 import { sanitizeGnippetsState, sanitizeRun, sanitizeTrace } from './lib/sanitize.mjs';
 import {
@@ -372,7 +372,7 @@ async function main() {
 
   const apiKey = process.env.SINCETOGGLE_API_KEY;
   if (!apiKey) throw new Error('SINCETOGGLE_API_KEY is required. Use --dry-run to validate the catalog offline.');
-  const cloud = new Since ToggleCloudClient({
+  const cloud = new SincetoggleCloudClient({
     apiKey,
     baseUrl: process.env.SINCETOGGLE_BASE_URL || 'https://sincetoggle.cloud',
   });

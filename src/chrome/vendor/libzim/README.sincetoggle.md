@@ -1,7 +1,7 @@
 # Vendored Xapian/libzim WebAssembly runtime
 
 Built from source by `scripts/build-zim-xapian.mjs`. Do not hand-copy an
-upstream release asset here: WebBrain cannot provide corresponding source for a
+upstream release asset here: Since Toggle cannot provide corresponding source for a
 binary it did not build. See `docs/offline-rag-licensing.md`.
 
 - Upstream: https://github.com/openzim/javascript-libzim.git `v0.95` (`470b36920fba421a4c1a83b326e66d8aa0533870`)
@@ -20,7 +20,7 @@ somewhat larger.
 This runtime is GPL. Any release artifact that bundles it is conveyed under
 **GPL-3.0-or-later**, which is why the store packages carry that license even
 though the repository itself stays MIT. Complete corresponding source for these
-binaries is published as a `webbrain-zim-xapian-*-corresponding-source.zip`
+binaries is published as a `sincetoggle-zim-xapian-*-corresponding-source.zip`
 release asset and must accompany every release.
 
 To rebuild: `npm run build:zim-xapian`

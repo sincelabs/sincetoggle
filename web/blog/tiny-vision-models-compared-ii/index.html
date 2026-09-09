@@ -548,7 +548,7 @@
 <h2 id="qwen-4b-still-leads-this-table">Qwen 4B still leads this table</h2>
 <p>Qwen 3.5 4B is the strongest row among the models collected here: 55 strict passes and an 83.4% mean rubric score. Its advantage persists into harder cases, and it is more reliable on multilingual OCR than the smaller rows.</p>
 <p>If your deployment can comfortably host it, Qwen 4B is the higher-quality general-purpose choice in this group. The Since Toggle result addresses a different constraint: how much browser-specific vision can fit into an extension-friendly local sidecar that runs through WebGPU.</p>
-<h2 id="why-sincetoggle-v2-becomes-the-default">Why Since Toggle V2 becomes the default</h2>
+<h2 id="why-since-toggle-v2-becomes-the-default">Why Since Toggle V2 becomes the default</h2>
 <p>Since Toggle normally reads the browser through structured sources first: page text, DOM state, accessibility information, URLs, and tool results. Vision is called when pixels contain information those sources missed—charts, canvas content, selected states, overlays, low-contrast labels, or a screenshot after a meaningful state change.</p>
 <p>That architecture rewards a compact specialist. The model does not need to replace the planner or solve every multimodal problem. It needs to turn a browser viewport into reliable evidence often enough to unblock the main agent, while keeping screenshots local and the download reasonable.</p>
 <p>For that role, V2 is a material upgrade over the raw 450M fallback:</p>

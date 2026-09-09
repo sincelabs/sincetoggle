@@ -139,7 +139,7 @@ async function inspectPdfRouting(context, url, extensionId, waitMs = 2000) {
     await page.waitForTimeout(waitMs);
     const urls = [...navigations, ...page.frames().map(frame => frame.url())];
     return {
-      sawSince ToggleHandler: urls.some(value => value.startsWith(handlerUrl)),
+      sawSincetoggleHandler: urls.some(value => value.startsWith(handlerUrl)),
       sawNativeHandler: urls.some(value => value.startsWith('chrome-extension://') && !value.startsWith(`chrome-extension://${extensionId}/`)),
       urls,
     };
@@ -319,7 +319,7 @@ async function main() {
     assert.equal(initialState.checked, false, 'The PDF viewer toggle must render off by default.');
 
     const disabledRouting = await inspectPdfRouting(context, `${fixture.url}?mode=disabled`, extensionId);
-    assert.equal(disabledRouting.sawSince ToggleHandler, false, `Disabled PDF handling still entered Since Toggle: ${disabledRouting.urls.join(', ')}`);
+    assert.equal(disabledRouting.sawSincetoggleHandler, false, `Disabled PDF handling still entered Since Toggle: ${disabledRouting.urls.join(', ')}`);
     assert.equal(disabledRouting.sawNativeHandler, true, `Disabled PDF handling did not reach Chrome's native viewer: ${disabledRouting.urls.join(', ')}`);
 
     await setPdfViewerToggle(settings, true);
@@ -328,12 +328,12 @@ async function main() {
     assert.equal(enabledStored.pdfViewerEnabled, true, 'The enabled toggle was not stored.');
 
     const enabledRouting = await inspectPdfRouting(context, `${fixture.url}?mode=enabled`, extensionId);
-    assert.equal(enabledRouting.sawSince ToggleHandler, true, `Enabled PDF handling did not enter Since Toggle: ${enabledRouting.urls.join(', ')}`);
+    assert.equal(enabledRouting.sawSincetoggleHandler, true, `Enabled PDF handling did not enter Since Toggle: ${enabledRouting.urls.join(', ')}`);
 
     await setPdfViewerToggle(settings, false);
     await waitForNativeHandlerOption(settings, false);
     const disabledAgainRouting = await inspectPdfRouting(context, `${fixture.url}?mode=disabled-again`, extensionId);
-    assert.equal(disabledAgainRouting.sawSince ToggleHandler, false, `Turning PDF handling off still entered Since Toggle: ${disabledAgainRouting.urls.join(', ')}`);
+    assert.equal(disabledAgainRouting.sawSincetoggleHandler, false, `Turning PDF handling off still entered Since Toggle: ${disabledAgainRouting.urls.join(', ')}`);
     assert.equal(disabledAgainRouting.sawNativeHandler, true, `Turning PDF handling off did not restore Chrome's native viewer: ${disabledAgainRouting.urls.join(', ')}`);
     console.log(`  ✓ Chrome ${browser.version()} keeps native PDF routing aligned with the Since Toggle toggle`);
 

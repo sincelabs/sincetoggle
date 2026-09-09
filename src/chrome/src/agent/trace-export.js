@@ -271,11 +271,11 @@ function renderPromptProvenance(value) {
 export function tracesToMarkdown(runsWithEvents, {
   title = 'Since Toggle Conversation — tool chain',
   notes = [],
-  exportedBySince ToggleVersion = '',
+  exportedBySincetoggleVersion = '',
 } = {}) {
   const runs = Array.isArray(runsWithEvents) ? runsWithEvents : [];
   let md = `# ${title}\n\n`;
-  const exportVersion = oneLine(exportedBySince ToggleVersion);
+  const exportVersion = oneLine(exportedBySincetoggleVersion);
   if (exportVersion) md += `_Exported with Since Toggle v${exportVersion}_\n\n`;
   let turnCount = 0;
   let toolCount = 0;

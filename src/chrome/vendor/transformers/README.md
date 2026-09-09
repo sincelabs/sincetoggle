@@ -6,7 +6,7 @@ WebGPU paths in Chrome and by offline RAG's CPU/WASM semantic reranker:
 - **Apocalypse Mode -> LFM2.5 2.6B local chat** downloads the default text
   model used by the standalone-chat nuclear override. An opt-in Bonsai 27B
   preset uses a separate vendored bitgpu worker, not this Transformers.js
-  runtime; see `src/chrome/vendor/bitgpu/README.webbrain.md`.
+  runtime; see `src/chrome/vendor/bitgpu/README.sincetoggle.md`.
 - **Settings -> Multimodal -> Vision -> LFM2.5-VL local fallback** runs
   `LiquidAI/LFM2.5-VL-450M-ONNX` as the dedicated screenshot sidecar.
 - **Apocalypse Mode -> Offline RAG** runs the explicitly downloaded, pinned
@@ -80,7 +80,7 @@ grep -E '(import|export)[^"]*from\s+"[a-zA-Z@]' \
 
 ## Updating
 
-Use a temporary dependency install; WebBrain does not need a runtime npm
+Use a temporary dependency install; Since Toggle does not need a runtime npm
 dependency because the reviewed browser assets are committed directly:
 
 ```bash

@@ -619,7 +619,7 @@
 <h2 id="configuration-variables">Configuration variables</h2>
 <p>All environment-driven, set these before launching the MCP server if you need non-default behavior:</p>
 <div class="table-wrap"><table><thead><tr><th>Variable</th><th>Default</th><th>Meaning</th></tr></thead><tbody><tr><td><code>SINCETOGGLE_BRIDGE_PORT</code></td><td><code>17374</code></td><td>Port the extension connects to.</td></tr><tr><td><code>SINCETOGGLE_BRIDGE_PATH</code></td><td><code>/extension</code></td><td>Path segment; must match the URL in Settings.</td></tr><tr><td><code>SINCETOGGLE_COMMAND_TIMEOUT_MS</code></td><td><code>30000</code></td><td>Per-command reply timeout.</td></tr><tr><td><code>SINCETOGGLE_RUN_TIMEOUT_MS</code></td><td><code>300000</code></td><td>Default ceiling for <code>sincetoggle_run</code> polling.</td></tr><tr><td><code>SINCETOGGLE_POLL_INTERVAL_MS</code></td><td><code>1000</code></td><td>Status poll interval.</td></tr></tbody></table></div>
-<h2 id="when-to-use-sincetoggle-mcp">When to use Since Toggle MCP</h2>
+<h2 id="when-to-use-since-toggle-mcp">When to use Since Toggle MCP</h2>
 <p>Choose Since Toggle MCP when:</p>
 <ul><li>You need to interact with <strong>sites you're already authenticated to</strong> (banking, SaaS dashboards, admin panels, email)</li><li><strong>MFA</strong> is involved and you can't programmatically log in</li><li>You want <strong>explicit safety modes</strong> (read-only first, then gated interactive mode)</li><li>You want <strong>local-first execution</strong> with your own LLMs — no API calls leave your machine</li><li>You need the extension to handle <strong>cross-origin iframes</strong> (Stripe checkout widgets, embedded forms)</li></ul>
 <h2 id="security-model">Security model</h2>
