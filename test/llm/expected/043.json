@@ -3,7 +3,7 @@
   "idealFirstToolCall": {
     "name": "navigate",
     "args": {
-      "url": "https://github.com/esokullu/webbrain/compare"
+      "url": "https://github.com/esokullu/sincetoggle/compare"
     }
   },
   "successRubric": "Navigates to the repo's /compare page (PR creation entry point). Acceptable: click({text:\"Pull requests\"}) then click({text:\"New pull request\"})."

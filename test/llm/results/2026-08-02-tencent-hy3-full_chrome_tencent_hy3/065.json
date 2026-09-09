@@ -11,7 +11,7 @@
   "firstToolCall": null,
   "toolCallSource": null,
   "finishReason": "stop",
-  "content": "I don't have a direct screenshot tool I can call — screenshots are captured via the side-panel slash commands. To get the image you want, type one of these in the WebBrain side panel:\n\n- **`/screenshot`** — captures the currently visible viewport (what's on screen right now on this CNN example story)\n- **`/screenshot --full-page`** — captures the entire page from top to bottom\n\nJust run whichever fits, and the image will be inserted into the chat. Want me to do anything else with this page in the meantime?",
+  "content": "I don't have a direct screenshot tool I can call — screenshots are captured via the side-panel slash commands. To get the image you want, type one of these in the Since Toggle side panel:\n\n- **`/screenshot`** — captures the currently visible viewport (what's on screen right now on this CNN example story)\n- **`/screenshot --full-page`** — captures the entire page from top to bottom\n\nJust run whichever fits, and the image will be inserted into the chat. Want me to do anything else with this page in the meantime?",
   "usage": {
     "prompt_tokens": 23551,
     "completion_tokens": 333,

@@ -1,6 +1,6 @@
-# Scénarios de test WebBrain
+# Scénarios de test Since Toggle
 
-Une douzaine de tâches de bout en bout pour évaluer l'agent navigateur WebBrain sur un éventail de difficultés et de couverture de motifs d'interface. Chaque scénario liste le site, l'invite à coller dans le panneau latéral et le critère de réussite observable.
+Une douzaine de tâches de bout en bout pour évaluer l'agent navigateur Since Toggle sur un éventail de difficultés et de couverture de motifs d'interface. Chaque scénario liste le site, l'invite à coller dans le panneau latéral et le critère de réussite observable.
 
 ## Scénarios
 
@@ -21,7 +21,7 @@ Une douzaine de tâches de bout en bout pour évaluer l'agent navigateur WebBrai
 
 ### 4. Création d'issue GitHub — Moyen
 - **Site :** github.com (votre propre dépôt de test)
-- **Tâche :** "Ouvre une nouvelle issue intitulée 'Test depuis WebBrain' avec le corps 'ignorez ceci' sur github.com/&lt;vous&gt;/&lt;dépôt&gt;."
+- **Tâche :** "Ouvre une nouvelle issue intitulée 'Test depuis Since Toggle' avec le corps 'ignorez ceci' sur github.com/&lt;vous&gt;/&lt;dépôt&gt;."
 - **Attendu :** L'agent navigue vers `/issues/new`, remplit le titre + le corps, clique sur Soumettre. Teste l'éditeur de corps contenteditable et le bouton "Submit new issue" en double.
 
 ### 5. Rédaction de brouillon Gmail — Moyen
@@ -87,7 +87,7 @@ Ajoutez un `tests.json` contenant des lignes `{ url, prompt, check }`. Construis
 Vous avez déjà tout ce dont vous avez besoin : la boucle d'agent, le bus de messages, les captures d'écran, les traces. C'est environ 1 jour de travail.
 
 ### 3. Exécution sans tête via Puppeteer / Playwright
-Lancez Chromium avec l'extension préinstallée (`--load-extension=chemin/vers/webbrain`), pilotez le panneau latéral via son DOM et exécutez la suite de manière non interactive — pendant la nuit, en CI, sur N fournisseurs. Vous pouvez paralléliser sur plusieurs profils Chrome pour le débit. Inconvénients : les scénarios nécessitant une connexion (Gmail, Reddit, LinkedIn) ont besoin de cookies préenregistrés par profil, et le tableau de bord Stripe est difficile avec les nouveaux navigateurs (captcha).
+Lancez Chromium avec l'extension préinstallée (`--load-extension=chemin/vers/sincetoggle`), pilotez le panneau latéral via son DOM et exécutez la suite de manière non interactive — pendant la nuit, en CI, sur N fournisseurs. Vous pouvez paralléliser sur plusieurs profils Chrome pour le débit. Inconvénients : les scénarios nécessitant une connexion (Gmail, Reddit, LinkedIn) ont besoin de cookies préenregistrés par profil, et le tableau de bord Stripe est difficile avec les nouveaux navigateurs (captcha).
 
 Le point idéal est un hybride : sans tête pour les sites anonymes (Wikipedia, HN, Amazon, arxiv), exécuteur depuis le panneau latéral pour les sites nécessitant une connexion.
 

@@ -1,12 +1,12 @@
 /**
- * WebBrain Content Script
+ * Since Toggle Content Script
  * Injected into every page — handles page reading and DOM actions.
  */
 
 (() => {
   // Prevent double-injection
-  if (window.__webbrain_injected) return;
-  window.__webbrain_injected = true;
+  if (window.__sincetoggle_injected) return;
+  window.__sincetoggle_injected = true;
 
   const PAGE_GATE_SELECTORS = [
     '[role="dialog"]', '[role="alertdialog"]', 'dialog[open]', '[aria-modal="true"]',
@@ -583,7 +583,7 @@
 
   function showAgentWorkingTarget(el, source = 'interaction') {
     try {
-      window.__webbrainAgentIndicator?.showTarget?.(el, source);
+      window.__sincetoggleAgentIndicator?.showTarget?.(el, source);
     } catch {}
   }
 
@@ -1356,7 +1356,7 @@
   /**
    * Run one synthetic agent click while suppressing any immediate or deferred
    * <input type=file>.click() it triggers. upload_file attaches a downloaded
-   * file directly (or presents WebBrain's own picker when no downloadId is
+   * file directly (or presents Since Toggle's own picker when no downloadId is
    * available); clicking the page control first only opens a stale OS dialog.
    */
   function uniqueFileInputSelector(input) {
@@ -1439,12 +1439,12 @@
     const installPageShowPickerGuard = () => {
       const root = document.documentElement;
       if (!root) return () => {};
-      const guardAttr = 'data-webbrain-file-picker-guard';
-      const blockedAttr = 'data-webbrain-file-picker-blocked';
-      const blockedEvent = 'webbrain:file-picker-guard-blocked';
+      const guardAttr = 'data-sincetoggle-file-picker-guard';
+      const blockedAttr = 'data-sincetoggle-file-picker-blocked';
+      const blockedEvent = 'sincetoggle:file-picker-guard-blocked';
       const armPageGuard = () => {
         root.setAttribute(guardAttr, guardId);
-        document.dispatchEvent(new Event('webbrain:file-picker-guard-arm'));
+        document.dispatchEvent(new Event('sincetoggle:file-picker-guard-arm'));
       };
       const onBlocked = () => {
         try {
@@ -1461,7 +1461,7 @@
       armPageGuard();
       return (disarmPageGuard = true) => {
         if (disarmPageGuard) {
-          document.dispatchEvent(new Event('webbrain:file-picker-guard-disarm'));
+          document.dispatchEvent(new Event('sincetoggle:file-picker-guard-disarm'));
         }
         if (root.getAttribute(guardAttr) === guardId) root.removeAttribute(guardAttr);
         document.removeEventListener(blockedEvent, onBlocked, true);
@@ -1529,7 +1529,7 @@
       ? blocked.selector
       : null;
     const guidance = selector
-      ? `Call upload_file({selector: ${JSON.stringify(selector)}, downloadId: N}) directly; it attaches the downloaded file without opening an OS dialog. If there is no downloadId, call upload_file({selector: ${JSON.stringify(selector)}}) to use WebBrain's own picker.`
+      ? `Call upload_file({selector: ${JSON.stringify(selector)}, downloadId: N}) directly; it attaches the downloaded file without opening an OS dialog. If there is no downloadId, call upload_file({selector: ${JSON.stringify(selector)}}) to use Since Toggle's own picker.`
       : 'Re-inspect the page to find an exact, unique <input type=file> selector, then call upload_file directly. Do not use a generic input[type="file"] selector when the page has multiple file inputs.';
     return {
       success: false,
@@ -2427,7 +2427,7 @@
         ...(rect ? { rect } : {}),
         warning: verified
           ? 'Only this match is selected. This call replaced any previous page selection, and it did not open the browser Find UI. Do not claim earlier find_text matches remain highlighted.'
-          : 'window.find reported a match, but WebBrain could not verify a visible current selection in the top document (for example, the active match may be inside a frame while an older top-document selection remains). Do not claim it is visibly highlighted. The browser Find UI was not opened.',
+          : 'window.find reported a match, but Since Toggle could not verify a visible current selection in the top document (for example, the active match may be inside a frame while an older top-document selection remains). Do not claim it is visibly highlighted. The browser Find UI was not opened.',
       };
     } catch (error) {
       return { success: false, found: false, dispatched: false, noDispatch: true, error: `find_text failed: ${error.message || error}` };
@@ -3834,7 +3834,7 @@
         resolve(value);
       };
       const onMessage = event => {
-        if (event?.data?.__webbrainFocusedFrameToken !== token) return;
+        if (event?.data?.__sincetoggleFocusedFrameToken !== token) return;
         // Only the focused frame's own announcement resolves this. Another
         // frame posting the token could never make the walk select it, but
         // answering `matched: false` on its behalf would end the wait before
@@ -3851,7 +3851,7 @@
     const token = String(params.token || '');
     if (!token || window.parent === window) return { announced: false };
     try {
-      window.parent.postMessage({ __webbrainFocusedFrameToken: token }, '*');
+      window.parent.postMessage({ __sincetoggleFocusedFrameToken: token }, '*');
       return { announced: true };
     } catch {
       return { announced: false };
@@ -6239,7 +6239,7 @@
       if (!attentionFlashIconLinks.length && !attentionFlashFallbackEl) {
         attentionFlashFallbackEl = document.createElement('link');
         attentionFlashFallbackEl.setAttribute('rel', 'icon');
-        attentionFlashFallbackEl.setAttribute('data-webbrain-attention', '1');
+        attentionFlashFallbackEl.setAttribute('data-sincetoggle-attention', '1');
         (document.head || document.documentElement).appendChild(attentionFlashFallbackEl);
       }
     } catch {

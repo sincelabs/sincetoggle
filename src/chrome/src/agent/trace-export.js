@@ -269,14 +269,14 @@ function renderPromptProvenance(value) {
 }
 
 export function tracesToMarkdown(runsWithEvents, {
-  title = 'WebBrain Conversation — tool chain',
+  title = 'Since Toggle Conversation — tool chain',
   notes = [],
-  exportedByWebBrainVersion = '',
+  exportedBySince ToggleVersion = '',
 } = {}) {
   const runs = Array.isArray(runsWithEvents) ? runsWithEvents : [];
   let md = `# ${title}\n\n`;
-  const exportVersion = oneLine(exportedByWebBrainVersion);
-  if (exportVersion) md += `_Exported with WebBrain v${exportVersion}_\n\n`;
+  const exportVersion = oneLine(exportedBySince ToggleVersion);
+  if (exportVersion) md += `_Exported with Since Toggle v${exportVersion}_\n\n`;
   let turnCount = 0;
   let toolCount = 0;
   let unknownEventCount = 0;
@@ -286,10 +286,10 @@ export function tracesToMarkdown(runsWithEvents, {
     turnCount += 1;
     const run = entry.run;
     const user = oneLine(run.userMessage || '');
-    const recordedVersion = oneLine(run.webbrainVersion || '');
+    const recordedVersion = oneLine(run.sincetoggleVersion || '');
     const events = Array.isArray(entry.events) ? [...entry.events].sort((a, b) => (a?.seq || 0) - (b?.seq || 0)) : [];
     const meta = [
-      recordedVersion ? `recorded with WebBrain v${recordedVersion}` : 'recorded WebBrain version unavailable',
+      recordedVersion ? `recorded with Since Toggle v${recordedVersion}` : 'recorded Since Toggle version unavailable',
       run.model,
       exportedRunStatus(run, events),
     ].filter(Boolean).join(' · ');
@@ -330,7 +330,7 @@ export function tracesToMarkdown(runsWithEvents, {
         } else if (d.phase === 'read_scope') {
           md += `**Read scope:**\n${fencedBlock(content)}\n`;
         } else {
-          md += `**WebBrain:** ${oneLine(content)}\n`;
+          md += `**Since Toggle:** ${oneLine(content)}\n`;
           lastAssistantContent = content;
         }
       } else if (ev.kind === 'tool') {

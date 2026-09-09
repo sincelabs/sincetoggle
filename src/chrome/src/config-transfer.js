@@ -13,11 +13,11 @@ import {
 import { AUTO_GROUP_TABS_KEY } from './tab-group-preference.js';
 import { normalizeUiScale, UI_SCALE_STORAGE_KEY } from './ui/ui-scale.js';
 
-export const CONFIG_SCHEMA = 'webbrain-config/1';
+export const CONFIG_SCHEMA = 'sincetoggle-config/1';
 export const MAX_CONFIG_IMPORT_CHARS = 10_000_000;
 
 // This is intentionally an allowlist of user-controlled Settings state. It
-// excludes conversations, traces, schedules, usage counters, the WebBrain
+// excludes conversations, traces, schedules, usage counters, the Since Toggle
 // Cloud device ID, and Cloud Sync session/token metadata.
 export const DEFAULT_CONFIG_SETTINGS = Object.freeze({
   wbLocale: 'en',
@@ -26,7 +26,7 @@ export const DEFAULT_CONFIG_SETTINGS = Object.freeze({
   verboseMode: false,
   selectionShortcutEnabled: true,
   [AUTO_GROUP_TABS_KEY]: true,
-  helpImproveWebBrain: true,
+  helpImproveSince Toggle: true,
   screenshotFallback: true,
   maxAgentSteps: 130,
   requestTimeoutMs: 120_000,
@@ -61,7 +61,7 @@ export const DEFAULT_CONFIG_SETTINGS = Object.freeze({
   askBeforeConsequentialActions: true,
   wb_permissions: [],
   providers: {},
-  activeProvider: 'webbrain_cloud',
+  activeProvider: 'sincetoggle_cloud',
   visionModel: null,
   transcriptionModel: null,
   profileEnabled: false,
@@ -85,7 +85,7 @@ const BOOLEAN_KEYS = new Set([
   'verboseMode',
   'selectionShortcutEnabled',
   AUTO_GROUP_TABS_KEY,
-  'helpImproveWebBrain',
+  'helpImproveSince Toggle',
   'screenshotFallback',
   'clarifyTimeoutSemanticsV2',
   'useSiteAdapters',
@@ -206,7 +206,7 @@ export function createConfigExport(stored = {}, options = {}) {
   return {
     schema: CONFIG_SCHEMA,
     exportedAt: new Date(options.exportedAt ?? Date.now()).toISOString(),
-    webbrainVersion: String(options.webbrainVersion || 'unknown'),
+    sincetoggleVersion: String(options.sincetoggleVersion || 'unknown'),
     warning: 'Contains plaintext provider API keys and other sensitive Settings data. Store securely.',
     settings,
   };
@@ -233,7 +233,7 @@ export function parseConfigImport(json) {
   return {
     settings: normalizeSettings(parsed.settings, { strict: true }),
     ignoredKeys: Object.keys(parsed.settings).filter((key) => !CONFIG_STORAGE_KEY_SET.has(key)),
-    sourceVersion: typeof parsed.webbrainVersion === 'string' ? parsed.webbrainVersion : '',
+    sourceVersion: typeof parsed.sincetoggleVersion === 'string' ? parsed.sincetoggleVersion : '',
   };
 }
 
@@ -276,7 +276,7 @@ export function parseConfigPatchImport(json) {
   return {
     settings,
     ignoredKeys,
-    sourceVersion: typeof parsed.webbrainVersion === 'string' ? parsed.webbrainVersion : '',
+    sourceVersion: typeof parsed.sincetoggleVersion === 'string' ? parsed.sincetoggleVersion : '',
   };
 }
 
@@ -287,8 +287,8 @@ export function mergeConfigPatchSettings(current = {}, patch = {}) {
   const patchProviders = isPlainObject(merged.providers) ? merged.providers : {};
   // Cloud provisioning owns this provider's credentials, endpoint and device
   // identity. A portable export may contain a stale copy, so never let it
-  // replace the runtime's current WebBrain Compass configuration.
-  delete patchProviders.webbrain_cloud;
+  // replace the runtime's current Since Toggle Compass configuration.
+  delete patchProviders.sincetoggle_cloud;
   merged.providers = { ...currentProviders, ...patchProviders };
   return merged;
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Stands in for the WebBrain extension so the MCP server can be driven without
+// Stands in for the Since Toggle extension so the MCP server can be driven without
 // Chrome. Speaks the same frames as src/chrome/src/offscreen/cloud-bridge.js:
 // the `hello` handshake, then canned replies to cloud_run / cloud_status /
 // cloud_respond / cloud_abort. Anything else comes back as an error, which is
@@ -26,7 +26,7 @@ socket.on("open", () => {
   socket.send(
     JSON.stringify({
       type: "hello",
-      client: "webbrain-extension",
+      client: "sincetoggle-extension",
       protocolVersion: 2,
       capabilities: ["saved_workflows_v1", "run_modes_v1", "scheduled_jobs_v1"],
       status: { enabled: true },

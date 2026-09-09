@@ -3,10 +3,10 @@ import { createApocalypseStore } from './apocalypse-mode.js';
 
 export { OPENSTAX_CATALOG_SNAPSHOT_DATE, PREFETCHED_OPENSTAX_CATALOG };
 
-const EMERGENCY_BOX_DB_NAME = 'webbrain_emergency_box';
+const EMERGENCY_BOX_DB_NAME = 'sincetoggle_emergency_box';
 const EMERGENCY_BOX_DB_VERSION = 1;
 const RESOURCE_STORE = 'resources';
-const RESOURCE_DIRECTORY = 'webbrain-emergency-box';
+const RESOURCE_DIRECTORY = 'sincetoggle-emergency-box';
 const OPENSTAX_API = 'https://openstax.org/apps/cms/api/v2';
 const ALL_RESOURCE_CATEGORY_PRIORITY = Object.freeze({ communication: 0, health: 1, field: 2, education: 3 });
 export const EMERGENCY_BOX_SIZE_ESTIMATES = Object.freeze({
@@ -868,7 +868,7 @@ export async function resolveEmergencyResource(resource, fetchImpl = globalThis.
 export async function withEmergencyResourceLock(resourceId, task, options = {}) {
   const lockManager = options.lockManager ?? globalThis.navigator?.locks;
   if (typeof lockManager?.request !== 'function') return await task();
-  const lockName = `webbrain-emergency-pdf:${safeResourceKey(resourceId)}`;
+  const lockName = `sincetoggle-emergency-pdf:${safeResourceKey(resourceId)}`;
   const lockOptions = { mode: 'exclusive' };
   if (options.signal) lockOptions.signal = options.signal;
   return await lockManager.request(lockName, lockOptions, task);

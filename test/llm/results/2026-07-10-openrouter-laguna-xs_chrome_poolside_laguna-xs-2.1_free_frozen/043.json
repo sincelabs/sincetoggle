@@ -3,8 +3,8 @@
   "user": "open a pull request",
   "mode": "act",
   "tab": {
-    "url": "https://github.com/esokullu/webbrain",
-    "title": "esokullu/webbrain — GitHub"
+    "url": "https://github.com/esokullu/sincetoggle",
+    "title": "esokullu/sincetoggle — GitHub"
   },
   "latencyMs": 1394,
   "error": null,
@@ -16,7 +16,7 @@
   },
   "toolCallSource": "tool_calls",
   "finishReason": "tool_calls",
-  "content": "I'll help you open a pull request on the esokullu/webbrain repository. Let me start by reading the current page to understand the repository structure.",
+  "content": "I'll help you open a pull request on the esokullu/sincetoggle repository. Let me start by reading the current page to understand the repository structure.",
   "usage": {
     "prompt_tokens": 17494,
     "completion_tokens": 151,

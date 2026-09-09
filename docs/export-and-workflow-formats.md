@@ -1,15 +1,15 @@
 # Export and saved-workflow formats
 
-WebBrain can export a conversation, a recorded tool chain, Settings, or a saved
+Since Toggle can export a conversation, a recorded tool chain, Settings, or a saved
 workflow. These files have different privacy and compatibility properties.
 
 | Command or UI | File | Format | Treat as sensitive? |
 |---|---|---|---|
-| `/export` | `webbrain-chat-<timestamp>.md` | Conversation Markdown | Yes. It contains visible chat and system messages. |
-| `/export --traces` | `webbrain-traces-<timestamp>.md` | Recorded tool-chain Markdown | Yes. It can contain user prompts, model output, tool arguments, URLs, and results. Raw system prompts are not embedded. |
-| `/export --config` | `webbrain-config-<timestamp>.json` | `webbrain-config/1` | **Yes. It is plaintext and can contain API keys, profile data, and user memory.** |
-| `/workflow --export <id>` | `<name>.webbrain-workflow.json` | `webbrain-workflow/1` | Review before sharing. Runtime values are omitted, but saved targets and URL scopes remain. |
-| Traces page **Export JSON** | `webbrain-trace-<model>-<run-id>.json` or `webbrain-session-<session-id>.json` | `webbrain-trace/1` | Yes. It contains one recorded run or a session bundle and may include screenshots. |
+| `/export` | `sincetoggle-chat-<timestamp>.md` | Conversation Markdown | Yes. It contains visible chat and system messages. |
+| `/export --traces` | `sincetoggle-traces-<timestamp>.md` | Recorded tool-chain Markdown | Yes. It can contain user prompts, model output, tool arguments, URLs, and results. Raw system prompts are not embedded. |
+| `/export --config` | `sincetoggle-config-<timestamp>.json` | `sincetoggle-config/1` | **Yes. It is plaintext and can contain API keys, profile data, and user memory.** |
+| `/workflow --export <id>` | `<name>.sincetoggle-workflow.json` | `sincetoggle-workflow/1` | Review before sharing. Runtime values are omitted, but saved targets and URL scopes remain. |
+| Traces page **Export JSON** | `sincetoggle-trace-<model>-<run-id>.json` or `sincetoggle-session-<session-id>.json` | `sincetoggle-trace/1` | Yes. It contains one recorded run or a session bundle and may include screenshots. |
 
 All exports are created locally by the browser. Exporting a file does not upload
 it.
@@ -19,13 +19,13 @@ it.
 `/export` serializes the messages currently rendered in the side panel:
 
 ```md
-# WebBrain Conversation
+# Since Toggle Conversation
 
-_Exported with WebBrain v25.8.5_
+_Exported with Since Toggle v25.8.5_
 
 **You:** Summarize this page.
 
-**WebBrain:** ...
+**Since Toggle:** ...
 ```
 
 The export is intended for reading rather than round-trip import. It includes
@@ -54,11 +54,11 @@ runs retain the legacy shape:
 
 ```json
 {
-  "schema": "webbrain-trace/1",
+  "schema": "sincetoggle-trace/1",
   "run": {},
   "events": [],
   "exportedAt": 1784937600000,
-  "exportedByWebBrainVersion": "25.8.5"
+  "exportedBySince ToggleVersion": "25.8.5"
 }
 ```
 
@@ -70,17 +70,17 @@ on undocumented event internals.
 When the selected run belongs to a conversation, the same action exports the
 indexed conversation runs as one session bundle. Each entry keeps its own run
 metadata and event list so parent-run lineage can be reconstructed without
-changing the `webbrain-trace/1` schema:
+changing the `sincetoggle-trace/1` schema:
 
 ```json
 {
-  "schema": "webbrain-trace/1",
+  "schema": "sincetoggle-trace/1",
   "session": { "sessionId": "conversation-7" },
   "runs": [
     { "run": {}, "events": [] }
   ],
   "exportedAt": 1784937600000,
-  "exportedByWebBrainVersion": "25.8.5"
+  "exportedBySince ToggleVersion": "25.8.5"
 }
 ```
 
@@ -98,10 +98,10 @@ The dependency-free converter turns one Traces-page JSON export into the
 [Agent Trajectory Interchange Format (ATIF)](https://github.com/harbor-framework/harbor/blob/main/rfcs/0001-trajectory-format.md):
 
 ```bash
-node scripts/trace-to-atif.mjs webbrain-trace-model-run.json
+node scripts/trace-to-atif.mjs sincetoggle-trace-model-run.json
 ```
 
-By default this writes `webbrain-trace-model-run.atif.json` next to the source
+By default this writes `sincetoggle-trace-model-run.atif.json` next to the source
 file. Pass a second path to choose another destination, or `-` to write the
 trajectory to standard output:
 
@@ -113,25 +113,25 @@ node scripts/trace-to-atif.mjs trace.json -
 Standalone exports remain one ATIF trajectory keyed by the run ID. Session
 bundles become one multi-turn ATIF trajectory keyed by the session ID; runs are
 ordered chronologically, step numbers stay contiguous, and each step records
-its source run in `extra.webbrain_run_id`.
+its source run in `extra.sincetoggle_run_id`.
 
 The converter maps user and agent messages, tool calls and observations, token
 metrics, errors, model metadata, and final content. It does not upload data.
 Screenshots and verbose diagnostic event kinds are counted in
 `extra.omitted_event_counts` but are not copied: ATIF represents images as
-files referenced alongside the trajectory, while a WebBrain JSON export embeds
+files referenced alongside the trajectory, while a Since Toggle JSON export embeds
 them as data URLs or base64. The converted trajectory remains sensitive because
 it still contains prompts, tool arguments, URLs, and results.
 
 ### Convert a trace to OpenTelemetry OTLP JSON
 
 The repository includes an offline converter for sending an exported
-`webbrain-trace/1` run through an OpenTelemetry-compatible observability
+`sincetoggle-trace/1` run through an OpenTelemetry-compatible observability
 pipeline:
 
 ```sh
-npm run trace:otlp -- webbrain-trace-example.json \
-  --output webbrain-trace-example.otlp.json
+npm run trace:otlp -- sincetoggle-trace-example.json \
+  --output sincetoggle-trace-example.otlp.json
 ```
 
 For a legacy single-run input, the output retains the existing root span with
@@ -142,7 +142,7 @@ links rather than parent spans.
 
 The output is an
 [OTLP/HTTP JSON](https://opentelemetry.io/docs/specs/otlp/#json-protobuf-encoding)
-`ExportTraceServiceRequest`. Legacy input contains one `invoke_agent WebBrain`
+`ExportTraceServiceRequest`. Legacy input contains one `invoke_agent Since Toggle`
 root span, child model-call and `execute_tool` spans, and lightweight lifecycle
 events; session bundles contain one `invoke_agent` span per run.
 The mappings follow the current
@@ -155,7 +155,7 @@ collector:
 
 ```sh
 curl -H 'Content-Type: application/json' \
-  --data-binary @webbrain-trace-example.otlp.json \
+  --data-binary @sincetoggle-trace-example.otlp.json \
   http://127.0.0.1:4318/v1/traces
 ```
 
@@ -167,8 +167,8 @@ identifiers remains. Screenshots are never embedded in the OTLP output. Add
 reviewed:
 
 ```sh
-npm run trace:otlp -- webbrain-trace-example.json \
-  --output webbrain-trace-example.otlp.json \
+npm run trace:otlp -- sincetoggle-trace-example.json \
+  --output sincetoggle-trace-example.otlp.json \
   --include-content
 ```
 
@@ -181,19 +181,19 @@ span start times are reconstructed from the recorder's completion timestamp and
 reported latency, so they should be used for diagnostics rather than
 distributed context propagation.
 
-## Settings snapshots: `webbrain-config/1`
+## Settings snapshots: `sincetoggle-config/1`
 
 `/export --config` creates a versioned Settings snapshot:
 
 ```json
 {
-  "schema": "webbrain-config/1",
+  "schema": "sincetoggle-config/1",
   "exportedAt": "2026-07-25T00:00:00.000Z",
-  "webbrainVersion": "25.8.5",
+  "sincetoggleVersion": "25.8.5",
   "warning": "Contains plaintext provider API keys and other sensitive Settings data. Store securely.",
   "settings": {
     "wbLocale": "en",
-    "activeProvider": "webbrain_cloud",
+    "activeProvider": "sincetoggle_cloud",
     "providers": {},
     "askBeforeConsequentialActions": true
   }
@@ -202,37 +202,37 @@ distributed context propagation.
 
 | Field | Meaning |
 |---|---|
-| `schema` | Required format identifier. Imports accept `webbrain-config/1`. |
+| `schema` | Required format identifier. Imports accept `sincetoggle-config/1`. |
 | `exportedAt` | ISO 8601 export time. |
-| `webbrainVersion` | Version of the extension that created the file. |
+| `sincetoggleVersion` | Version of the extension that created the file. |
 | `warning` | Human-readable plaintext-secret warning. |
 | `settings` | Allowlisted, default-resolved portable Settings values. |
 
 The snapshot includes provider, vision, transcription, and CapSolver API keys;
 profile data; user memory; custom skills; and permission choices. It excludes
 conversations, traces, schedules, usage counters, accumulated spend, and
-device-bound WebBrain Compass or Cloud Sync identity and session data.
+device-bound Since Toggle Compass or Cloud Sync identity and session data.
 
 Import with `/import <json>` or `/import --file`. Import validates known setting
 types, ignores unknown setting keys, and fills omitted known settings with the
 importing version's defaults. A provider's device-bound identity is preserved
 locally rather than replaced by a portable snapshot.
 
-## Portable workflows: `webbrain-workflow/1`
+## Portable workflows: `sincetoggle-workflow/1`
 
 A saved workflow is a normalized automation definition compiled from the latest
 successful recorded run. It is not a raw trace replay.
 
 ```json
 {
-  "schema": "webbrain-workflow/1",
+  "schema": "sincetoggle-workflow/1",
   "id": "workflow_1784937600000_example",
   "name": "Search the catalog",
   "createdAt": 1784937600000,
   "updatedAt": 1784937600000,
   "source": {
     "runId": "run_example",
-    "webbrainVersion": "25.8.5"
+    "sincetoggleVersion": "25.8.5"
   },
   "start": {
     "origin": "https://shop.example",
@@ -281,7 +281,7 @@ successful recorded run. It is not a raw trace replay.
 
 | Field | Meaning |
 |---|---|
-| `schema` | Required format identifier. Imports accept `webbrain-workflow/1`. |
+| `schema` | Required format identifier. Imports accept `sincetoggle-workflow/1`. |
 | `id`, `createdAt`, `updatedAt` | Local identity and Unix-millisecond timestamps. Import replaces these with fresh local values. |
 | `name` | Display name, limited to 80 characters. |
 | `source` | Diagnostic source run and recording version. The source trace itself is not embedded. |
@@ -306,7 +306,7 @@ more than once and moved between the Chrome and Firefox extensions.
 
 - Read `schema` before consuming JSON. A different schema string is a different
   format version.
-- Use `webbrainVersion` or `source.webbrainVersion` for diagnostics, not as a
+- Use `sincetoggleVersion` or `source.sincetoggleVersion` for diagnostics, not as a
   substitute for the schema identifier.
 - Tolerate additional object fields when reading exports.
 - Do not edit generated files unless you are prepared for import validation to

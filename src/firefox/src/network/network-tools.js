@@ -2,7 +2,7 @@ import { firefoxRestrictedDomainFailure } from '../firefox-restricted-domains.js
 import { filenameInConfiguredDownloadDirectory } from '../download-directory.js';
 
 /**
- * Network & download tools for the WebBrain agent (Firefox).
+ * Network & download tools for the Since Toggle agent (Firefox).
  *
  * Same surface as the chrome version but uses browser.* APIs and
  * browser.tabs.executeScript instead of chrome.scripting.executeScript.
@@ -1313,7 +1313,7 @@ export async function executeHttpSkillTool(tool, args = {}, ctx = {}) {
 function apiReplayOptionsForFetch(rawUrl, opts = {}, ctx = {}) {
   const replayRequestId = opts.replayRequestId || opts.apiReplayRequestId;
   if (!replayRequestId) return { ok: true, opts };
-  const replay = globalThis.__webbrainApiRequestReplay?.get(String(replayRequestId));
+  const replay = globalThis.__sincetoggleApiRequestReplay?.get(String(replayRequestId));
   if (!replay) {
     return { ok: false, error: `No captured API request replay data found for replayRequestId: ${replayRequestId}` };
   }

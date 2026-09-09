@@ -16,10 +16,10 @@ import {
 } from './offline-rag.js';
 import { createApocalypseStore } from './apocalypse-mode.js';
 
-export const EMERGENCY_CORPUS_DB_NAME = 'webbrain_offline_rag';
+export const EMERGENCY_CORPUS_DB_NAME = 'sincetoggle_offline_rag';
 export const EMERGENCY_CORPUS_DB_VERSION = 1;
 export const EMERGENCY_CORPUS_STORE = 'corpora';
-export const EMERGENCY_CORPUS_DIRECTORY = 'webbrain-offline-rag';
+export const EMERGENCY_CORPUS_DIRECTORY = 'sincetoggle-offline-rag';
 export const MAX_EMERGENCY_ARCHIVE_BYTES = 2 * 1024 * 1024 * 1024;
 export const MAX_EMERGENCY_DOCUMENT_BYTES = 16 * 1024 * 1024;
 export const MAX_EMERGENCY_INDEX_BYTES = 2 * 1024 * 1024 * 1024;
@@ -559,7 +559,7 @@ export async function withEmergencyCorpusLock(task, options = {}) {
   const lockOptions = { mode: 'exclusive' };
   if (options.signal) lockOptions.signal = options.signal;
   if (options.ifAvailable) lockOptions.ifAvailable = true;
-  return await lockManager.request('webbrain-emergency-corpus', lockOptions, async (lock) => {
+  return await lockManager.request('sincetoggle-emergency-corpus', lockOptions, async (lock) => {
     if (options.ifAvailable && !lock) {
       if (typeof options.onLockUnavailable === 'function') {
         return await options.onLockUnavailable();

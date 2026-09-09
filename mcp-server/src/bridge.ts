@@ -1,5 +1,5 @@
 /**
- * Bridge server — the local endpoint the WebBrain extension connects OUT to.
+ * Bridge server — the local endpoint the Since Toggle extension connects OUT to.
  *
  * Direction matters: a Manifest V3 extension cannot listen on a socket, so
  * `src/chrome/src/offscreen/cloud-bridge.js` dials out from an offscreen
@@ -78,7 +78,7 @@ export class BridgeError extends Error {
 
 /** Log to stderr only — stdout is the MCP stdio transport and must stay clean. */
 function log(...args: unknown[]): void {
-  console.error("[webbrain-mcp]", ...args);
+  console.error("[sincetoggle-mcp]", ...args);
 }
 
 function isAllowedBridgeOrigin(origin: string | string[] | undefined): boolean {
@@ -92,7 +92,7 @@ function isAllowedBridgeOrigin(origin: string | string[] | undefined): boolean {
   }
 }
 
-export class WebBrainBridge {
+export class Since ToggleBridge {
   private wss: WebSocketServer | null = null;
   private socket: WebSocket | null = null;
   private pending = new Map<number, Pending>();
@@ -138,7 +138,7 @@ export class WebBrainBridge {
       if (this.socket) {
         this.failAllPending(
           new BridgeError(
-            "WebBrain extension connection was superseded mid-command.",
+            "Since Toggle extension connection was superseded mid-command.",
             undefined,
             "COMMAND_INTERRUPTED",
           ),
@@ -167,7 +167,7 @@ export class WebBrainBridge {
         log("extension disconnected");
         this.failAllPending(
           new BridgeError(
-            "WebBrain extension disconnected mid-command.",
+            "Since Toggle extension disconnected mid-command.",
             undefined,
             "COMMAND_INTERRUPTED",
           ),
@@ -195,7 +195,7 @@ export class WebBrainBridge {
 
     // Handshake frame — no id, nothing to correlate.
     if (msg.type === "hello") {
-      if (msg.client !== "webbrain-extension") {
+      if (msg.client !== "sincetoggle-extension") {
         log(`rejecting unknown bridge client: ${String(msg.client)}`);
         socket.close(1008, "Unknown client");
         if (this.socket === socket) {
@@ -280,8 +280,8 @@ export class WebBrainBridge {
     const socket = this.socket;
     if (!socket || !this.isConnected()) {
       throw new BridgeError(
-        "No WebBrain extension is connected. Open the browser, then set " +
-          "WebBrain → Settings → General → Advanced → MCP to " +
+        "No Since Toggle extension is connected. Open the browser, then set " +
+          "Since Toggle → Settings → General → Advanced → MCP to " +
           `ws://127.0.0.1:${config.bridgePort}${config.bridgePath} and enable it.`,
       );
     }
@@ -295,7 +295,7 @@ export class WebBrainBridge {
         this.pending.delete(id);
         reject(
           new BridgeError(
-            `WebBrain did not answer '${action}' within ${responseTimeoutMs}ms.`,
+            `Since Toggle did not answer '${action}' within ${responseTimeoutMs}ms.`,
             undefined,
             "COMMAND_TIMEOUT",
           ),

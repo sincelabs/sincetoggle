@@ -5,8 +5,8 @@ let storedRows = [];
 const chromeApi = {
   storage: {
     session: {
-      async get() { return { webbrainCloudRunSnapshots: storedRows }; },
-      async set(value) { storedRows = value.webbrainCloudRunSnapshots; },
+      async get() { return { sincetoggleCloudRunSnapshots: storedRows }; },
+      async set(value) { storedRows = value.sincetoggleCloudRunSnapshots; },
     },
     local: {
       async get() { return {}; },
@@ -39,7 +39,7 @@ const controller = createCloudRunController({
   },
   stopRecording: async (options) => {
     calls.push(['stop', options]);
-    return { ok: true, filename: 'webbrain-ci-run_capture_fixture.webm' };
+    return { ok: true, filename: 'sincetoggle-ci-run_capture_fixture.webm' };
   },
 });
 
@@ -54,10 +54,10 @@ for (let attempt = 0; attempt < 40; attempt += 1) {
 assert.equal(snapshot.status, 'completed');
 assert.equal(calls[0][0], 'start');
 assert.equal(calls[0][2].mic, false);
-assert.equal(calls[0][2].filename, 'webbrain-ci-run_capture_fixture.webm');
+assert.equal(calls[0][2].filename, 'sincetoggle-ci-run_capture_fixture.webm');
 assert.deepEqual(calls[1], ['stop', { expectedRecordingId: 'rec_fixture' }]);
 assert.equal(snapshot.updates.at(-1).type, 'artifact');
-assert.equal(snapshot.updates.at(-1).data.filename, 'webbrain-ci-run_capture_fixture.webm');
+assert.equal(snapshot.updates.at(-1).data.filename, 'sincetoggle-ci-run_capture_fixture.webm');
 
 storedRows = [];
 const strictSecretAgent = {

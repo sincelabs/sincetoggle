@@ -1,5 +1,5 @@
 {
-  "model": "webbrain-compass-tiny-v1",
+  "model": "sincetoggle-compass-tiny-v1",
   "grader": "fixed",
   "byCategory": {
     "loop-bad-url": {

@@ -6,7 +6,7 @@ import {
 import { isCredentialField } from './agent/credential-fields.js';
 
 const DEFAULT_CLOUD_BRIDGE_URL = 'ws://127.0.0.1:17374/extension';
-const CLOUD_RUN_STORAGE_KEY = 'webbrainCloudRunSnapshots';
+const CLOUD_RUN_STORAGE_KEY = 'sincetoggleCloudRunSnapshots';
 const CLOUD_UPDATE_LIMIT = 200;
 const CLOUD_RUN_LIMIT = 50;
 const CLOUD_STRING_LIMIT = 16 * 1024;
@@ -77,7 +77,7 @@ export function normalizeCloudBridgeUrl(value = DEFAULT_CLOUD_BRIDGE_URL) {
   // hostname "[::1]", so both spellings must be allowlisted (same as
   // LOCAL_OLLAMA_HOSTS in ollama-handoff.js).
   if (url.protocol !== 'ws:' || !['127.0.0.1', 'localhost', '::1', '[::1]'].includes(host)) {
-    throw new Error('WebBrain cloud bridge URL must use ws:// on localhost.');
+    throw new Error('Since Toggle cloud bridge URL must use ws:// on localhost.');
   }
   return url.href;
 }
@@ -746,8 +746,8 @@ export function createCloudRunController({
           restored.status = restored.status === 'aborting' ? 'aborted' : 'failed';
           restored.pendingInput = null;
           restored.error = restored.status === 'aborted'
-            ? 'Run aborted when the WebBrain service worker restarted.'
-            : 'Run interrupted when the WebBrain service worker restarted.';
+            ? 'Run aborted when the Since Toggle service worker restarted.'
+            : 'Run interrupted when the Since Toggle service worker restarted.';
           restored.updatedAt = at;
           restored.completedAt = at;
           changed = true;
@@ -1029,7 +1029,7 @@ export function createCloudRunController({
       : String(msg.task || msg.text || '').trim();
     if (!task) throw new Error('cloud_run requires `task`.');
     if (startingTabs.has(tabId) || agent.isRunning(tabId)) {
-      throw new Error(`Tab ${tabId} already has an active WebBrain run.`);
+      throw new Error(`Tab ${tabId} already has an active Since Toggle run.`);
     }
 
     const apiMutationsAllowed = msg.apiMutationsAllowed === true || msg.api_mutations_allowed === true;
@@ -1116,7 +1116,7 @@ export function createCloudRunController({
               video: true,
               mic: false,
               showBanner: false,
-              filename: `webbrain-ci-${run.runId}.webm`,
+              filename: `sincetoggle-ci-${run.runId}.webm`,
             });
             if (!recording?.ok) throw new Error(recording?.error || 'Cloud run video capture could not start.');
             recordingId = recording.state?.recordingId || null;
@@ -1129,7 +1129,7 @@ export function createCloudRunController({
           }
           pushUpdate(run, 'artifact_started', {
             kind: 'video',
-            filename: `webbrain-ci-${run.runId}.webm`,
+            filename: `sincetoggle-ci-${run.runId}.webm`,
           });
         }
         if (grantApiMutationsForRun) agent.setTemporaryApiMutationsAllowed(tabId, true);
@@ -1239,7 +1239,7 @@ export function createCloudRunController({
             if (!capture?.ok) throw new Error(capture?.error || 'Cloud run video capture could not stop.');
             pushUpdate(run, 'artifact', {
               kind: 'video',
-              filename: capture.filename || `webbrain-ci-${run.runId}.webm`,
+              filename: capture.filename || `sincetoggle-ci-${run.runId}.webm`,
             });
           } catch (captureError) {
             pushUpdate(run, 'capture_error', {
@@ -1370,7 +1370,7 @@ export function createCloudRunController({
     const answer = String(msg.answer ?? '').trim();
     if (!answer) throw cloudRunError('cloud_respond requires `answer`.', 400);
     if (!agent.submitClarifyResponse(run.tabId, clarifyId, answer, 'cloud_api')) {
-      throw cloudRunError('Clarification is no longer available in the active WebBrain run.', 409);
+      throw cloudRunError('Clarification is no longer available in the active Since Toggle run.', 409);
     }
     run.status = 'running';
     run.pendingInput = null;
@@ -1395,9 +1395,9 @@ export function createCloudRunController({
   }
 
   async function syncBridge() {
-    const stored = await api.storage.local.get(['webbrainCloudBridgeEnabled', 'webbrainCloudBridgeUrl']);
-    if (!stored.webbrainCloudBridgeEnabled) return stopBridge().catch(() => ({ enabled: false, connected: false }));
-    return startBridge(stored.webbrainCloudBridgeUrl || DEFAULT_CLOUD_BRIDGE_URL);
+    const stored = await api.storage.local.get(['sincetoggleCloudBridgeEnabled', 'sincetoggleCloudBridgeUrl']);
+    if (!stored.sincetoggleCloudBridgeEnabled) return stopBridge().catch(() => ({ enabled: false, connected: false }));
+    return startBridge(stored.sincetoggleCloudBridgeUrl || DEFAULT_CLOUD_BRIDGE_URL);
   }
 
   return {

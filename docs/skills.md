@@ -1,7 +1,7 @@
 # Skills
 
 A skill is trusted instruction text — optionally with its own tool manifest —
-that WebBrain loads into a run **only when it is relevant**. Manage them under
+that Since Toggle loads into a run **only when it is relevant**. Manage them under
 Settings → Skills, where you can import skill text or a URL, or remove any
 bundled skill.
 
@@ -17,7 +17,7 @@ Imported skills are copied into browser local storage.
 
 ## Metadata
 
-An optional fenced `webbrain-skill` JSON block can declare:
+An optional fenced `sincetoggle-skill` JSON block can declare:
 
 | Field | Meaning |
 |---|---|
@@ -29,24 +29,24 @@ Intents are cross-language *meaning* hints for the LLM, not literal keyword
 matching. Skills without metadata infer the first prose paragraph as their
 summary, have no inferred intents, and default to Act/Dev.
 
-WebBrain also recognizes the required `name` and `description` YAML frontmatter
+Since Toggle also recognizes the required `name` and `description` YAML frontmatter
 from an imported [Agent Skills `SKILL.md`](https://agentskills.io/specification).
 The name and description populate the routing catalog, and the frontmatter is
 removed before the Markdown body is loaded. A name entered in Settings and a
-`webbrain-skill` block still take precedence.
+`sincetoggle-skill` block still take precedence.
 
-This is instruction-only compatibility. WebBrain imports one text document; it
+This is instruction-only compatibility. Since Toggle imports one text document; it
 does not fetch bundled `scripts/`, `references/`, or `assets/`, execute skill
-code, or treat the Agent Skills `allowed-tools` field as a WebBrain permission
-or tool manifest. Use `webbrain-tools` for WebBrain HTTP tools. WebBrain
-recognizes `webbrain-skill` and `webbrain-tools` fences only in the Markdown
+code, or treat the Agent Skills `allowed-tools` field as a Since Toggle permission
+or tool manifest. Use `sincetoggle-tools` for Since Toggle HTTP tools. Since Toggle
+recognizes `sincetoggle-skill` and `sincetoggle-tools` fences only in the Markdown
 body after valid frontmatter; fence-like text inside frontmatter cannot grant
 routing eligibility or register tools.
 
 ## Skill tools
 
 A skill can expose read-only HTTP tools, or short-lived download-job tools, with
-a fenced `webbrain-tools` JSON manifest.
+a fenced `sincetoggle-tools` JSON manifest.
 
 **Importing a skill is the trust boundary for its declared HTTPS endpoint.**
 Download-job skill tools still run in Act mode and use the normal Downloads
@@ -103,7 +103,7 @@ deleted.
 
 #### Humanizer
 
-Rewrites prose WebBrain composes for you, such as an email reply or a post, so
+Rewrites prose Since Toggle composes for you, such as an email reply or a post, so
 it reads as human writing. It declares no network tool and adds no tools.
 
 On webmail tabs (Gmail, Outlook, Yahoo, Proton, Fastmail, Zoho, Yandex) it is

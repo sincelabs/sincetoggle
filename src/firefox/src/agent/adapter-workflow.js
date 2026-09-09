@@ -7,7 +7,7 @@
  * language or unstable page selectors.
  */
 
-export const ADAPTER_WORKFLOW_SCHEMA = 'webbrain-adapter-workflow/2';
+export const ADAPTER_WORKFLOW_SCHEMA = 'sincetoggle-adapter-workflow/2';
 
 export const ADAPTER_WORKFLOW_TEMPLATES = Object.freeze([
   'collection',

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-model_path="${DEEPSEEK_VISION_MODEL_PATH:-webbrain-one/DeepSeek-V4-Flash-Vision-NVFP4}"
+model_path="${DEEPSEEK_VISION_MODEL_PATH:-sincetoggle-one/DeepSeek-V4-Flash-Vision-NVFP4}"
 model_revision="${DEEPSEEK_VISION_REVISION:-}"
 tensor_parallel_size="${DEEPSEEK_VISION_TP:-4}"
 context_length="${DEEPSEEK_VISION_CONTEXT_LENGTH:-4096}"

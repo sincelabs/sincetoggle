@@ -14,7 +14,7 @@ Two complementary test sets:
    traces. The 20 security cases live under `scenarios/security/`.
 
 Both sets emit OpenAI-compatible chat-completion payloads that mirror
-what the WebBrain extension actually sends.
+what the Since Toggle extension actually sends.
 
 ## Layout
 
@@ -37,7 +37,7 @@ test/llm/
 ├── safety-report.mjs           # scoreboard for the injection / control runs
 ├── _generate.mjs               # source-of-truth for questions/expected
 ├── _generate-scenarios.mjs     # source-of-truth for scenarios
-└── _redact-trace.mjs           # convert a real webbrain-trace JSON → scenario stub (PII-scrubbed)
+└── _redact-trace.mjs           # convert a real sincetoggle-trace JSON → scenario stub (PII-scrubbed)
 ```
 
 `questions/NNN.json` and `expected/NNN.json` are matched by id. Edit
@@ -342,13 +342,13 @@ node --test test/llm/lib/score.test.mjs
 
 ## Adding scenarios from a real trace
 
-Use the redactor to bootstrap a scenario stub from a `webbrain-trace-*.json`
+Use the redactor to bootstrap a scenario stub from a `sincetoggle-trace-*.json`
 file. It scrubs Stripe-style IDs, emails, JWTs, OpenAI/OpenRouter keys,
 GitHub PATs, and bearer-token URL params; add `--extra-pattern` flags for
 business names or anything site-specific.
 
 ```
-node test/llm/_redact-trace.mjs ~/Downloads/webbrain-trace-foo.json \
+node test/llm/_redact-trace.mjs ~/Downloads/sincetoggle-trace-foo.json \
   --challenge-step 5 \
   --extra-pattern "MyCompany" \
   --extra-pattern "my-tenant" \

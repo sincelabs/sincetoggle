@@ -53,9 +53,9 @@ const elements = Object.fromEntries([
   'offline-rag-readiness', 'rag-components',
 ].map(id => [id, document.getElementById(id)]));
 
-const OPENSTAX_CACHE_KEY = 'webbrainEmergencyOpenStaxCatalog';
+const OPENSTAX_CACHE_KEY = 'sincetoggleEmergencyOpenStaxCatalog';
 const EMERGENCY_COMPONENT_STATE_EVENT = 'wb-emergency-component-download-state';
-const EMERGENCY_COMPONENT_STATE_CHANNEL = 'webbrain-emergency-download-state';
+const EMERGENCY_COMPONENT_STATE_CHANNEL = 'sincetoggle-emergency-download-state';
 const EMERGENCY_READER_PAGES = new Set(['emergency-pdf.html', 'emergency-communication.html']);
 const downloadStateChannel = typeof BroadcastChannel === 'function'
   ? new BroadcastChannel(EMERGENCY_COMPONENT_STATE_CHANNEL)

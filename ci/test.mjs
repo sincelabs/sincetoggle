@@ -11,12 +11,12 @@ import {
   suiteShouldFail,
   unappliedSessionSettings,
 } from './lib/suite.mjs';
-import { GnippetsE2EClient, WebBrainCloudClient } from './lib/webbrain-client.mjs';
+import { GnippetsE2EClient, Since ToggleCloudClient } from './lib/sincetoggle-client.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const scenarios = JSON.parse(await fs.readFile(path.join(root, 'catalog', 'scenarios.json'), 'utf8'));
 const smokeWorkflow = await fs.readFile(
-  path.join(root, '..', '.github', 'workflows', 'webbrain-cloud-smoke.yml'),
+  path.join(root, '..', '.github', 'workflows', 'sincetoggle-cloud-smoke.yml'),
   'utf8',
 );
 const manualWorkflow = await fs.readFile(
@@ -106,9 +106,9 @@ assert.deepEqual(
 
 let cloudRunRequest;
 let scheduledPolls = 0;
-const cloudClient = new WebBrainCloudClient({
+const cloudClient = new Since ToggleCloudClient({
   apiKey: 'test-cloud-key',
-  baseUrl: 'https://webbrain.example',
+  baseUrl: 'https://sincetoggle.example',
   fetchImpl: async (url, options = {}) => {
     if (new URL(url).pathname.endsWith('/scheduled-jobs')) {
       scheduledPolls += 1;
@@ -160,7 +160,7 @@ const scheduleTraceFixture = {
             mode: 'act',
             schedule: { type: 'once', after_seconds: 0 },
             target: { type: 'url', url: 'https://forms.gle/nDSbn2B6Cym4x9Bi8' },
-            prompt: 'Use WebBrain CI A with a random shirt size and random harmless comment. Use set_field and verify_form, submit exactly once, and finish only after the response was recorded.',
+            prompt: 'Use Since Toggle CI A with a random shirt size and random harmless comment. Use set_field and verify_form, submit exactly once, and finish only after the response was recorded.',
           },
         },
       },
@@ -174,7 +174,7 @@ const scheduleTraceFixture = {
             mode: 'act',
             schedule: { type: 'once', after_seconds: 60 },
             target: { type: 'url', url: 'https://forms.gle/nDSbn2B6Cym4x9Bi8' },
-            prompt: 'Use WebBrain CI B with a random shirt size and random harmless comment. Use set_field and verify_form, submit exactly once, and finish only after the response was recorded.',
+            prompt: 'Use Since Toggle CI B with a random shirt size and random harmless comment. Use set_field and verify_form, submit exactly once, and finish only after the response was recorded.',
           },
         },
       },
@@ -226,10 +226,10 @@ await assert.rejects(
   },
 );
 assert.equal(diagnosticRequest.options.headers.accept, 'application/json');
-assert.match(diagnosticRequest.options.headers['user-agent'], /WebBrainCloudE2E/);
+assert.match(diagnosticRequest.options.headers['user-agent'], /Since ToggleCloudE2E/);
 
 const sensitiveTrace = sanitizeTrace({
-  format: 'webbrain.run-trace',
+  format: 'sincetoggle.run-trace',
   version: 1,
   run: {
     run_id: 'run_sensitive',
@@ -683,9 +683,9 @@ assert.equal(cleanupGrade.stuck_at, 'cleanup');
 // A run row read straight after an answer can still say needs_user_input with
 // the clarify_id we just answered. That is a stale read, not a handoff.
 let clarifyPolls = 0;
-const staleClarifyClient = new WebBrainCloudClient({
+const staleClarifyClient = new Since ToggleCloudClient({
   apiKey: 'test-cloud-key',
-  baseUrl: 'https://webbrain.example',
+  baseUrl: 'https://sincetoggle.example',
   fetchImpl: async () => ({
     ok: true,
     status: 200,

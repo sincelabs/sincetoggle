@@ -1,6 +1,6 @@
 # Ajouter un outil
 
-Ce guide explique comment ajouter un nouvel outil à l'agent WebBrain — de la définition du schéma à la répartition de l'exécution en passant par la gestion des résultats.
+Ce guide explique comment ajouter un nouvel outil à l'agent Since Toggle — de la définition du schéma à la répartition de l'exécution en passant par la gestion des résultats.
 
 ---
 
@@ -8,8 +8,8 @@ Ce guide explique comment ajouter un nouvel outil à l'agent WebBrain — de la 
 
 Il existe deux façons d'ajouter un outil appelable par le modèle :
 
-- **Outil central** : navigateur, DOM, réseau, téléchargement, planificateur ou comportement privilégié appartenant au produit et implémenté dans le code source de WebBrain. Utilisez la liste de contrôle complète ci-dessous.
-- **Outil de compétence** : intégration HTTP ou de tâche de téléchargement importable et supprimable par l'utilisateur, déclarée dans le manifeste `webbrain-tools` d'une compétence. Utilisez ceci lorsque l'outil est mieux traité comme une extension tierce de confiance plutôt qu'une primitive centrale de WebBrain.
+- **Outil central** : navigateur, DOM, réseau, téléchargement, planificateur ou comportement privilégié appartenant au produit et implémenté dans le code source de Since Toggle. Utilisez la liste de contrôle complète ci-dessous.
+- **Outil de compétence** : intégration HTTP ou de tâche de téléchargement importable et supprimable par l'utilisateur, déclarée dans le manifeste `sincetoggle-tools` d'une compétence. Utilisez ceci lorsque l'outil est mieux traité comme une extension tierce de confiance plutôt qu'une primitive centrale de Since Toggle.
 
 Un outil central nécessite des modifications dans trois couches :
 
@@ -25,14 +25,14 @@ La plupart des outils doivent également être dupliqués vers les builds Chrome
 
 Si l'intégration est un service HTTP tiers de confiance, préférez un outil de compétence avant de coder en dur un outil central. Les outils de compétence sont supprimables depuis Paramètres -> Compétences et peuvent être renommés ou remplacés en modifiant le manifeste. Utilisez `kind: "http"` pour les recherches en lecture seule et `kind: "httpDownloadJob"` pour les services qui créent une tâche temporaire, exposent une URL de fichier et ont besoin des téléchargements du navigateur.
 
-Ajoutez un bloc JSON `webbrain-tools` délimité dans le markdown de la compétence :
+Ajoutez un bloc JSON `sincetoggle-tools` délimité dans le markdown de la compétence :
 
 ````markdown
 # Compétence exemple
 
 Utilisez cette compétence lorsque...
 
-```webbrain-tools
+```sincetoggle-tools
 {
   "tools": [
     {
@@ -69,7 +69,7 @@ Utilisez cette compétence lorsque...
 Une compétence de type tâche de téléchargement utilise la même clôture de manifeste, mais déclare les points d'accès de la tâche. L'origine du point d'accès doit rester la même entre les URL de création, statut, fichier et nettoyage :
 
 ````markdown
-```webbrain-tools
+```sincetoggle-tools
 {
   "tools": [
     {

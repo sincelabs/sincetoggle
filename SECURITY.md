@@ -2,14 +2,14 @@
 
 ## Reporting a Vulnerability
 
-WebBrain operates with extensive browser permissions (`<all_urls>`, `debugger`, `downloads`, `tabCapture`) and drives authenticated sessions. If you discover a security vulnerability, please handle it responsibly.
+Since Toggle operates with extensive browser permissions (`<all_urls>`, `debugger`, `downloads`, `tabCapture`) and drives authenticated sessions. If you discover a security vulnerability, please handle it responsibly.
 
 **Do NOT file a public GitHub issue.** Instead, email the maintainer directly:
 
-**emre@webbrain.one**
+**emre@sincetoggle.one**
 
 You can also use GitHub's private vulnerability reporting:
-**[Report a vulnerability →](https://github.com/webbrain-one/webbrain/security/advisories/new)**
+**[Report a vulnerability →](https://github.com/sincetoggle-one/sincetoggle/security/advisories/new)**
 
 ### What to include
 

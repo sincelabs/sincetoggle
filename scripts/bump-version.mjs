@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Bump the WebBrain version across every file that carries it.
+ * Bump the Since Toggle version across every file that carries it.
  *
  *   node scripts/bump-version.mjs              # patch:  7.0.0 → 7.0.1
  *   node scripts/bump-version.mjs patch        # explicit patch
@@ -123,7 +123,7 @@ export function isReleaseBoundary(version) {
 export const SUBMISSION_ZIP_PACKAGES = Object.freeze(['chrome', 'edge', 'firefox']);
 
 export function submissionZipPaths(version) {
-  return SUBMISSION_ZIP_PACKAGES.map((browser) => `dist/webbrain-${browser}-${version}.zip`);
+  return SUBMISSION_ZIP_PACKAGES.map((browser) => `dist/sincetoggle-${browser}-${version}.zip`);
 }
 
 export function submissionZipRemoveCommand(version) {

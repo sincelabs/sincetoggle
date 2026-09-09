@@ -1,6 +1,6 @@
 # 斜杠命令
 
-WebBrain 接受作为输入框某行开头的斜杠命令。在面板内输入 `/help` 可查看完整的用法
+Since Toggle 接受作为输入框某行开头的斜杠命令。在面板内输入 `/help` 可查看完整的用法
 签名和参数说明。输入规范命令并加一个空格后，自动补全会显示该命令可用的参数。
 
 ## 命令参考
@@ -26,14 +26,14 @@ WebBrain 接受作为输入框某行开头的斜杠命令。在面板内输入 `
 | `/workflow --save <名称>` | 将最近一次成功的追踪运行编译为可复用、不含具体值的工作流 |
 | `/workflow --run <id>` | 在 Act 模式运行已保存的工作流，并在本地收集运行时参数 |
 | `/workflow --delete <id>` | 删除已保存的工作流 |
-| `/workflow --export <id>` | 下载经过清洗的可移植 `webbrain-workflow/1` JSON 文件 |
+| `/workflow --export <id>` | 下载经过清洗的可移植 `sincetoggle-workflow/1` JSON 文件 |
 | `/workflow --import --file` | 将可移植工作流文件导入为新的本地工作流 |
 | `/teach` | 显示当前标签页的示教状态和已捕获操作数 |
 | `/teach --start <名称>` | 开始从您演示的点击和字段编辑中学习工作流 |
 | `/teach --end` | 结束示教，并将捕获的操作编译为不含实际输入值的已保存工作流 |
 | `/allow-api` | **按对话的 API 变更覆盖。** 参见[下文](#allow-api)。 |
 | `/foreground [提示词]` | 为视觉兼容性在前台运行一次本地任务 |
-| `/dangerously-skip-permissions` | **全局权限提示绕过。** 无需打开设置即可关闭「操作前询问」。在你重新启用该设置之前，WebBrain 将不再按站点弹出提示。 |
+| `/dangerously-skip-permissions` | **全局权限提示绕过。** 无需打开设置即可关闭「操作前询问」。在你重新启用该设置之前，Since Toggle 将不再按站点弹出提示。 |
 | `/compact` | 强制压缩当前对话上下文 |
 | `/verbose` | 切换详细/压缩工具显示 |
 | `/reset` | 清除对话与所有按对话的标志 |
@@ -63,7 +63,7 @@ WebBrain 接受作为输入框某行开头的斜杠命令。在面板内输入 `
 
 常规本地运行会固定在最初的标签页上执行，不会激活该标签页或聚焦其窗口。Chrome 通过
 CDP 截图，并仅在该次运行期间模拟焦点；Firefox 使用 `tabs.captureTab` 直接捕获目标
-标签页。如果 Chrome 多次返回空白的后台画面，WebBrain 会丢弃该画面，继续使用 DOM
+标签页。如果 Chrome 多次返回空白的后台画面，Since Toggle 会丢弃该画面，继续使用 DOM
 和无障碍数据。
 
 若某个网站无法在后台正确渲染视觉状态，可使用 `/foreground <提示词>` 作为仅对本次
@@ -94,7 +94,7 @@ CDP 截图，并仅在该次运行期间模拟焦点；Firefox 使用 `tabs.capt
 在普通提示词末尾追加 `/screenshot [--save-as <文件名>]`，会在运行前后各保存一张
 视口截图（Chrome 与 Firefox）。例如
 `测试结账流程 /screenshot --save-as checkout.png` 会保存 `checkout-before.png` 和
-`checkout-after.png`；若不带 `--save-as`，WebBrain 使用带时间戳的文件名。
+`checkout-after.png`；若不带 `--save-as`，Since Toggle 使用带时间戳的文件名。
 
 对于这个诊断后缀，Chrome 可能会在保存「之后」截图前重新激活发起运行的标签页；
 Firefox 会直接捕获该标签页而不激活它。如果录制或初始截图无法启动并保存，该运行不会
@@ -105,13 +105,13 @@ Firefox 会直接捕获该标签页而不激活它。如果录制或初始截图
 每种导出的完整 schema 和隐私属性见
 [导出与工作流格式](../export-and-workflow-formats.md)（英文）。简要说明：
 
-- **设置快照** 使用 `webbrain-config/1` 架构，包含所有可移植的设置值，包括提供商、
+- **设置快照** 使用 `sincetoggle-config/1` 架构，包含所有可移植的设置值，包括提供商、
   视觉、转录和 CapSolver API 密钥、资料数据、用户记忆、自定义技能和权限选择。
   **该 JSON 是明文的，应妥善保管。** 设备绑定的 Cloud Sync 会话/设备 ID、对话、
   追踪、计划任务、用量计数器和累计花费不会被导出。
-- **已保存的工作流** 使用独立的 `webbrain-workflow/1` 架构；它们不是原始的追踪回放。
+- **已保存的工作流** 使用独立的 `sincetoggle-workflow/1` 架构；它们不是原始的追踪回放。
   历史 `ref_id` 值、动作 CSS 选择器、坐标、查询字符串、片段和输入的字段值都会被排除。
-  输入值会成为运行时参数，每个动作都绑定到记录时的来源和 URL 族。运行时 WebBrain 会
+  输入值会成为运行时参数，每个动作都绑定到记录时的来源和 URL 族。运行时 Since Toggle 会
   解析一个新的可访问性树目标，并通过常规的 Act 权限、提交确认和验证关卡执行。目标
   不明确时会安全失败。如果某个动作可能已经发生但结果未知，回放会停止而不是重试。
   运行时参数值不会保存到工作流、对话、用户记忆、回放追踪或 Agent 回退提示中；它们
@@ -119,7 +119,7 @@ Firefox 会直接捕获该标签页而不激活它。如果录制或初始截图
   追踪前可能包含原始工具参数。
 - 如果回放起点在已保存的来源或 URL 族之外，确定性回放会将控制权连同经过清洗的起始
   范围交给 Agent，以便常规的导航、权限和验证规则可以恢复该工作流，而不是立即结束它。
-- **可移植工作流文件** 包含经过清洗的原始 `webbrain-workflow/1` 定义，大小上限
+- **可移植工作流文件** 包含经过清洗的原始 `sincetoggle-workflow/1` 定义，大小上限
   1 MiB。导出会在下载前重新规范化定义。导入会再次规范化，并分配新的本地 ID 和时间戳，
-  且永不覆盖已有工作流，因此同一文件可以安全地在 Chrome、Firefox 和 WebBrain Cloud
+  且永不覆盖已有工作流，因此同一文件可以安全地在 Chrome、Firefox 和 Since Toggle Cloud
   之间迁移。

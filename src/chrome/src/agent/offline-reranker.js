@@ -73,7 +73,7 @@ function requestAbortError(signal) {
 export function createOfflineSemanticReranker(options = {}) {
   const worker = options.worker || new Worker(new URL('./offline-reranker-worker.js', import.meta.url), {
     type: 'module',
-    name: 'webbrain-offline-e5',
+    name: 'sincetoggle-offline-e5',
   });
   const pending = new Map();
   let nextId = 1;

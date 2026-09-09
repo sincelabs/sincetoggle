@@ -1,4 +1,4 @@
-# WebBrain brand assets 2026 — v2
+# Since Toggle brand assets 2026 — v2
 
 A non-destructive, typography-led refresh of the existing social card, store promos,
 and banner set. The original top-level files remain unchanged.
@@ -18,13 +18,13 @@ giving small wordmarks and supporting text cleaner antialiasing.
 
 Files:
 
-- `webbrain-social-card.png` — 1280×640
-- `webbrain-social-card-300x188.png` — 300×188 thumbnail derivative, retypeset rather than downscaled
+- `sincetoggle-social-card.png` — 1280×640
+- `sincetoggle-social-card-300x188.png` — 300×188 thumbnail derivative, retypeset rather than downscaled
 - `store-promo-1400x560.png` — 1400×560 store marquee
 - `store-promo-440x280.png` — 440×280 small store tile
-- `banners/webbrain-banner-en.png` — 2560×800 English horizontal banner
-- `banners/webbrain-banner-tr.png` — 2560×800 Turkish horizontal banner
-- `banners/webbrain-banner-vertical-en.png` — 1280×2560 English vertical banner
+- `banners/sincetoggle-banner-en.png` — 2560×800 English horizontal banner
+- `banners/sincetoggle-banner-tr.png` — 2560×800 Turkish horizontal banner
+- `banners/sincetoggle-banner-vertical-en.png` — 1280×2560 English vertical banner
 - `website/og-image.png` — 1200×630 website social card; mirrored byte-for-byte to
   `web/og-image.png` and `web/twitter-image.png`
 

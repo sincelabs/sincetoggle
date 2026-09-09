@@ -10,13 +10,13 @@ import {
 
 const runtimeApi = globalThis.browser || globalThis.chrome;
 const corpusStore = createEmergencyCorpusStore();
-const EMERGENCY_DB_NAME = 'webbrain_emergency_box';
+const EMERGENCY_DB_NAME = 'sincetoggle_emergency_box';
 const EMERGENCY_DB_VERSION = 1;
 const EMERGENCY_STORE = 'resources';
 const VISION_STATE_KEY = 'webgpuVisionDownloadState';
 const EXPANDED_KEY = 'wbDownloadTrackerExpanded';
 const EMERGENCY_COMPONENT_STATE_EVENT = 'wb-emergency-component-download-state';
-const EMERGENCY_COMPONENT_STATE_CHANNEL = 'webbrain-emergency-download-state';
+const EMERGENCY_COMPONENT_STATE_CHANNEL = 'sincetoggle-emergency-download-state';
 const ACTIVE_STATUSES = new Set([
   'starting', 'queued', 'downloading', 'retrying', 'verifying', 'extracting', 'indexing', 'stopping',
 ]);

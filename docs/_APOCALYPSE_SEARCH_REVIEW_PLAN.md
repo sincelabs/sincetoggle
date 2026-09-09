@@ -26,7 +26,7 @@ Therefore, instead of adopting zvec, the plan focuses on solving the four concer
 
 The critical point is that **build-time use does not solve the problem either.** zvec's value lies in its native query engine and its own index formats (HNSW, IVF-RaBitQ). It does not produce a browser-portable artifact. Even if we generated a zvec index on the build machine, we would have to write its reader from scratch in JS — at which point zvec's contribution would drop to zero.
 
-**The only defensible use of zvec:** the corpus producer (`build_emergency_pack.py`, in the separate `webbrain-one/emergency-box-corpus` repository) is written in Python, and zvec's primary SDK is Python. We could use zvec there as an **evaluation oracle**: load the same 251k E5 vectors and generate exact-KNN ground truth to measure recall loss when moving to ANN. To be honest, we could also do this with about 20 lines of numpy; zvec's contribution here would be marginal. It is not worth adding the dependency, but it could be tried as a measurement tool in Phase 0 if desired.
+**The only defensible use of zvec:** the corpus producer (`build_emergency_pack.py`, in the separate `sincetoggle-one/emergency-box-corpus` repository) is written in Python, and zvec's primary SDK is Python. We could use zvec there as an **evaluation oracle**: load the same 251k E5 vectors and generate exact-KNN ground truth to measure recall loss when moving to ANN. To be honest, we could also do this with about 20 lines of numpy; zvec's contribution here would be marginal. It is not worth adding the dependency, but it could be tried as a measurement tool in Phase 0 if desired.
 
 What can be taken from `zvec-grep` is not code, but an **idea**: hybrid BM25+vector fusion (which we already have through RRF) and structure-aware chunking. It introduces nothing new.
 
@@ -116,7 +116,7 @@ Measure both changes using the category breakdown in the Phase 0 matrix; no cate
 | `scripts/benchmark-offline-relevance.mjs` | Phase 0 variant matrix; floors (`:40`) |
 | `src/firefox/src/agent/…` | Firefox copies of the same files — tests require them to be byte-identical |
 
-**The largest complication outside this repository:** the index format is produced by `build_emergency_pack.py` in the `webbrain-one/emergency-box-corpus` repository. Phases 1 and 2 require **a coordinated corpus release** (501 MB ZIP), plus an `OFFLINE_RAG_INDEX_PROTOCOL_VERSION` bump (currently 2) and a manifest migration path for users still on the old format. This is the most expensive item in the plan, and its timing is determined by that repository.
+**The largest complication outside this repository:** the index format is produced by `build_emergency_pack.py` in the `sincetoggle-one/emergency-box-corpus` repository. Phases 1 and 2 require **a coordinated corpus release** (501 MB ZIP), plus an `OFFLINE_RAG_INDEX_PROTOCOL_VERSION` bump (currently 2) and a manifest migration path for users still on the old format. This is the most expensive item in the plan, and its timing is determined by that repository.
 
 ---
 

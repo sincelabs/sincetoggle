@@ -3,43 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xiaomi MiMo V2.5 Pro vs &quot;V2.5 Flash&quot;: should WebBrain add both? — WebBrain Blog</title>
-  <meta name="description" content="Research notes on Xiaomi&#39;s MiMo V2.5 Pro and the V2.5/Flash-style tier: why these multimodal models look promising for WebBrain compared with text-only alternatives, and how they slot into our routing policy alongside Qwen 3.6.">
-  <meta name="keywords" content="Xiaomi MiMo, MiMo V2.5 Pro, MiMo V2.5 Flash, multimodal model routing, browser agent, WebBrain, Qwen 3.6, DeepSeek-V4, MiniMax M2.7, Nemotron-3-Nano-Omni, OpenRouter, model routing">
-  <meta property="og:title" content="Xiaomi MiMo V2.5 Pro vs Flash for WebBrain — research notes">
+  <title>Xiaomi MiMo V2.5 Pro vs &quot;V2.5 Flash&quot;: should Since Toggle add both? — Since Toggle Blog</title>
+  <meta name="description" content="Research notes on Xiaomi&#39;s MiMo V2.5 Pro and the V2.5/Flash-style tier: why these multimodal models look promising for Since Toggle compared with text-only alternatives, and how they slot into our routing policy alongside Qwen 3.6.">
+  <meta name="keywords" content="Xiaomi MiMo, MiMo V2.5 Pro, MiMo V2.5 Flash, multimodal model routing, browser agent, Since Toggle, Qwen 3.6, DeepSeek-V4, MiniMax M2.7, Nemotron-3-Nano-Omni, OpenRouter, model routing">
+  <meta property="og:title" content="Xiaomi MiMo V2.5 Pro vs Flash for Since Toggle — research notes">
   <meta property="og:description" content="Multimodal by design, long-context, strong vendor benchmarks. We sketch a routing policy that uses MiMo Pro for hard reasoning, MiMo Flash for routine throughput, and Qwen 3.6 as the text-only anchor.">
   <meta property="og:type" content="article">
-  <meta property="og:url" content="https://webbrain.one/blog/mimo-v25-pro-vs-flash">
-  <meta property="og:image" content="https://webbrain.one/og-image.png">
-  <meta property="og:image:secure_url" content="https://webbrain.one/og-image.png">
+  <meta property="og:url" content="https://sincetoggle.one/blog/mimo-v25-pro-vs-flash">
+  <meta property="og:image" content="https://sincetoggle.one/og-image.png">
+  <meta property="og:image:secure_url" content="https://sincetoggle.one/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="Since Toggle — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Xiaomi MiMo V2.5 Pro vs Flash for WebBrain">
+  <meta name="twitter:title" content="Xiaomi MiMo V2.5 Pro vs Flash for Since Toggle">
   <meta name="twitter:description" content="Why Xiaomi&#39;s omni-modal MiMo looks like a serious candidate for browser-agent routing, and where it doesn&#39;t displace Qwen 3.6.">
-  <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image" content="https://sincetoggle.one/twitter-image.png">
+  <meta name="twitter:image:alt" content="Since Toggle — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="canonical" href="https://webbrain.one/blog/mimo-v25-pro-vs-flash">
+  <link rel="canonical" href="https://sincetoggle.one/blog/mimo-v25-pro-vs-flash">
   <!-- Blog is English-only; alternates point to locale homepages. -->
-  <link rel="alternate" hreflang="en" href="https://webbrain.one/">
-  <link rel="alternate" hreflang="es" href="https://webbrain.one/es/">
-  <link rel="alternate" hreflang="fr" href="https://webbrain.one/fr/">
-  <link rel="alternate" hreflang="tr" href="https://webbrain.one/tr/">
-  <link rel="alternate" hreflang="zh" href="https://webbrain.one/zh/">
-  <link rel="alternate" hreflang="ru" href="https://webbrain.one/ru/">
-  <link rel="alternate" hreflang="uk" href="https://webbrain.one/uk/">
-  <link rel="alternate" hreflang="ar" href="https://webbrain.one/ar/">
-  <link rel="alternate" hreflang="ja" href="https://webbrain.one/ja/">
-  <link rel="alternate" hreflang="ko" href="https://webbrain.one/ko/">
-  <link rel="alternate" hreflang="id" href="https://webbrain.one/id/">
-  <link rel="alternate" hreflang="th" href="https://webbrain.one/th/">
-  <link rel="alternate" hreflang="ms" href="https://webbrain.one/ms/">
-  <link rel="alternate" hreflang="tl" href="https://webbrain.one/tl/">
-  <link rel="alternate" hreflang="he" href="https://webbrain.one/he/">
-  <link rel="alternate" hreflang="x-default" href="https://webbrain.one/">
+  <link rel="alternate" hreflang="en" href="https://sincetoggle.one/">
+  <link rel="alternate" hreflang="es" href="https://sincetoggle.one/es/">
+  <link rel="alternate" hreflang="fr" href="https://sincetoggle.one/fr/">
+  <link rel="alternate" hreflang="tr" href="https://sincetoggle.one/tr/">
+  <link rel="alternate" hreflang="zh" href="https://sincetoggle.one/zh/">
+  <link rel="alternate" hreflang="ru" href="https://sincetoggle.one/ru/">
+  <link rel="alternate" hreflang="uk" href="https://sincetoggle.one/uk/">
+  <link rel="alternate" hreflang="ar" href="https://sincetoggle.one/ar/">
+  <link rel="alternate" hreflang="ja" href="https://sincetoggle.one/ja/">
+  <link rel="alternate" hreflang="ko" href="https://sincetoggle.one/ko/">
+  <link rel="alternate" hreflang="id" href="https://sincetoggle.one/id/">
+  <link rel="alternate" hreflang="th" href="https://sincetoggle.one/th/">
+  <link rel="alternate" hreflang="ms" href="https://sincetoggle.one/ms/">
+  <link rel="alternate" hreflang="tl" href="https://sincetoggle.one/tl/">
+  <link rel="alternate" hreflang="he" href="https://sincetoggle.one/he/">
+  <link rel="alternate" hreflang="x-default" href="https://sincetoggle.one/">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -445,14 +445,14 @@
     }
     @media (max-width: 420px) {
       .nav-inner { gap: 12px; }
-      .nav-links a[href="https://github.com/webbrain-one/webbrain"] { display: none; }
+      .nav-links a[href="https://github.com/sincetoggle-one/sincetoggle"] { display: none; }
       .theme-toggle { width: 28px; height: 28px; }
     }
   </style>
   <script>
     (function () {
       try {
-        var saved = localStorage.getItem('webbrain-theme');
+        var saved = localStorage.getItem('sincetoggle-theme');
         var theme = (saved === 'light' || saved === 'dark')
           ? saved
           : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
@@ -474,26 +474,26 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Xiaomi MiMo V2.5 Pro vs \"V2.5 Flash\": should WebBrain add both?",
-  "description": "Research notes on Xiaomi's MiMo V2.5 Pro and the V2.5/Flash-style tier: why these multimodal models look promising for WebBrain compared with text-only alternatives, and how they slot into our routing policy alongside Qwen 3.6.",
+  "headline": "Xiaomi MiMo V2.5 Pro vs \"V2.5 Flash\": should Since Toggle add both?",
+  "description": "Research notes on Xiaomi's MiMo V2.5 Pro and the V2.5/Flash-style tier: why these multimodal models look promising for Since Toggle compared with text-only alternatives, and how they slot into our routing policy alongside Qwen 3.6.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
     "url": "https://emresokullu.com"
   },
   "datePublished": "2026-04-30",
-  "image": "https://webbrain.one/og-image.png",
+  "image": "https://sincetoggle.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "Since Toggle",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://webbrain.one/logo-github.png"
+      "url": "https://sincetoggle.one/logo-github.png"
     }
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://webbrain.one/blog/mimo-v25-pro-vs-flash"
+    "@id": "https://sincetoggle.one/blog/mimo-v25-pro-vs-flash"
   }
 }
   </script>
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> Since Toggle<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -517,44 +517,44 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
         </button>
-        <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </nav>
 
   <article>
     <div class="meta">April 30, 2026 &middot; 6 min read &middot; <a href="/blog">&larr; All posts</a></div>
-    <h1>Xiaomi MiMo V2.5 Pro vs &quot;V2.5 Flash&quot;: should WebBrain add both?</h1>
+    <h1>Xiaomi MiMo V2.5 Pro vs &quot;V2.5 Flash&quot;: should Since Toggle add both?</h1>
     <p class="lede">Short answer: yes, these look like serious candidates. They pair strong reasoning with multimodal input, which is exactly where text-only models can bottleneck a browser agent. Long answer: read on for the routing-policy sketch, then check our <a href="/blog/vision-shootout-round-3">empirical follow-up</a> for what actually held up.</p>
 <h2 id="first-naming-clarity">First, naming clarity</h2>
 <p>Xiaomi's official open model cards are <strong>MiMo-V2.5-Pro</strong> and <strong>MiMo-V2.5</strong>. In API ecosystems, people often refer to a lower-cost tier as "flash", and comparisons are frequently written as <code>mimo-v2.5-pro</code> vs <code>mimo-v2.5-flash</code>. For this post, "V2.5 Flash" means the faster/cheaper V2.5-tier experience, while "Pro" is the flagship reasoning tier.</p>
-<h2 id="why-mimo-is-interesting-for-webbrain">Why MiMo is interesting for WebBrain</h2>
-<ul><li><strong>Multimodal by design.</strong> Xiaomi positions MiMo-V2.5 as native omni-modal (image / video / audio / text), which better matches WebBrain's screenshot-heavy browsing loop than a text-only model wrapped in a separate vision sub-call.</li><li><strong>Long-context agent work.</strong> Both tiers are published with up to 1M context claims, useful for long tool traces and replay buffers.</li><li><strong>Strong benchmark posture.</strong> Xiaomi's own tables show Pro very competitive against DeepSeek-V4-Pro/Flash and Kimi-K2 on reasoning and agent-style tasks.</li></ul>
+<h2 id="why-mimo-is-interesting-for-sincetoggle">Why MiMo is interesting for Since Toggle</h2>
+<ul><li><strong>Multimodal by design.</strong> Xiaomi positions MiMo-V2.5 as native omni-modal (image / video / audio / text), which better matches Since Toggle's screenshot-heavy browsing loop than a text-only model wrapped in a separate vision sub-call.</li><li><strong>Long-context agent work.</strong> Both tiers are published with up to 1M context claims, useful for long tool traces and replay buffers.</li><li><strong>Strong benchmark posture.</strong> Xiaomi's own tables show Pro very competitive against DeepSeek-V4-Pro/Flash and Kimi-K2 on reasoning and agent-style tasks.</li></ul>
 <h2 id="public-benchmark-snapshots-as-reported-by-xiaomi">Public benchmark snapshots (as reported by Xiaomi)</h2>
 <p>Using Xiaomi's public release tables for MiMo V2.5, the Pro tier posts top-tier results across math/coding/reasoning suites and is generally in the same class as DeepSeek-V4-Pro and Kimi-K2 on many reasoning-heavy tests. The non-Pro V2.5 tier trails Pro but still lands in a strong efficiency band for routine agent work.</p>
-<ul><li><strong>AIME-style math + GPQA-style science reasoning.</strong> Pro is reported in the leading cluster among open frontier models.</li><li><strong>Code benchmarks (LiveCodeBench / SWE-style slices).</strong> Pro is competitive enough to be a realistic primary for difficult coding turns.</li><li><strong>Agentic / tool benchmarks.</strong> Xiaomi reports gains in agent scenarios, which matters more for WebBrain than pure single-turn chat scores.</li></ul>
-<p><strong>Important caveat:</strong> these are vendor-reported numbers. Treat them as a prioritization signal, not final truth, until WebBrain's own eval harness confirms behavior. We've now run one such test — see <a href="/blog/vision-shootout-round-3">round 3 of the vision shootout</a> — and the picture is more nuanced than the headline benchmarks suggest.</p>
+<ul><li><strong>AIME-style math + GPQA-style science reasoning.</strong> Pro is reported in the leading cluster among open frontier models.</li><li><strong>Code benchmarks (LiveCodeBench / SWE-style slices).</strong> Pro is competitive enough to be a realistic primary for difficult coding turns.</li><li><strong>Agentic / tool benchmarks.</strong> Xiaomi reports gains in agent scenarios, which matters more for Since Toggle than pure single-turn chat scores.</li></ul>
+<p><strong>Important caveat:</strong> these are vendor-reported numbers. Treat them as a prioritization signal, not final truth, until Since Toggle's own eval harness confirms behavior. We've now run one such test — see <a href="/blog/vision-shootout-round-3">round 3 of the vision shootout</a> — and the picture is more nuanced than the headline benchmarks suggest.</p>
 <h2 id="pro-vs-flashstyle-tier-in-practical-routing">Pro vs Flash-style tier in practical routing</h2>
-<div class="table-wrap"><table><thead><tr><th>Workload</th><th>Default pick</th><th>Why</th></tr></thead><tbody><tr><td>Complex multi-step bugfixes, architecture refactors, hard planning</td><td>MiMo V2.5 Pro</td><td>Higher headroom for long-horizon reasoning and tool trajectories.</td></tr><tr><td>Routine coding turns, UI inspections, broad agent throughput</td><td>MiMo V2.5 ("flash" tier)</td><td>Better cost / latency profile while retaining multimodal capability.</td></tr><tr><td>Single-turn text-only transforms</td><td>Qwen 3.6 27B / 35B-A3B</td><td>Still excellent value and reliably strong for many WebBrain tasks.</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Workload</th><th>Default pick</th><th>Why</th></tr></thead><tbody><tr><td>Complex multi-step bugfixes, architecture refactors, hard planning</td><td>MiMo V2.5 Pro</td><td>Higher headroom for long-horizon reasoning and tool trajectories.</td></tr><tr><td>Routine coding turns, UI inspections, broad agent throughput</td><td>MiMo V2.5 ("flash" tier)</td><td>Better cost / latency profile while retaining multimodal capability.</td></tr><tr><td>Single-turn text-only transforms</td><td>Qwen 3.6 27B / 35B-A3B</td><td>Still excellent value and reliably strong for many Since Toggle tasks.</td></tr></tbody></table></div>
 <h2 id="how-this-compares-to-today-s-baseline-set">How this compares to today's baseline set</h2>
-<p>The tradeoff is not "best benchmark wins." For WebBrain, the better question is: <em>which model family gives us the best reliability per dollar across mixed text + vision workflows?</em></p>
+<p>The tradeoff is not "best benchmark wins." For Since Toggle, the better question is: <em>which model family gives us the best reliability per dollar across mixed text + vision workflows?</em></p>
 <p>On that lens:</p>
-<ul><li><strong>DeepSeek-V4-Pro / DeepSeek-V4-Flash.</strong> Very strong text reasoning, but weaker fit when screenshot-grounded understanding is first-class. WebBrain frequently needs direct visual grounding, not just text abstraction.</li><li><strong>MiniMax M2.7.</strong> Compelling on pure text reasoning and long-context throughput, but not the best fit when we need robust, repeatable multimodal grounding inside browser loops.</li><li><strong>Qwen 3.6 27B and 35B-A3B.</strong> Still best-for-buck anchors and should remain default for many text-dominant routes. The 35B-A3B is also still our pick for the dedicated vision sub-call, per <a href="/blog/vision-shootout-round-2">round 2</a>.</li><li><strong>Nemotron-3-Nano-Omni.</strong> Not too shabby at all; good budget multimodal fallback and worth keeping in the eval matrix — though English-only is a hard ceiling for multilingual users.</li></ul>
+<ul><li><strong>DeepSeek-V4-Pro / DeepSeek-V4-Flash.</strong> Very strong text reasoning, but weaker fit when screenshot-grounded understanding is first-class. Since Toggle frequently needs direct visual grounding, not just text abstraction.</li><li><strong>MiniMax M2.7.</strong> Compelling on pure text reasoning and long-context throughput, but not the best fit when we need robust, repeatable multimodal grounding inside browser loops.</li><li><strong>Qwen 3.6 27B and 35B-A3B.</strong> Still best-for-buck anchors and should remain default for many text-dominant routes. The 35B-A3B is also still our pick for the dedicated vision sub-call, per <a href="/blog/vision-shootout-round-2">round 2</a>.</li><li><strong>Nemotron-3-Nano-Omni.</strong> Not too shabby at all; good budget multimodal fallback and worth keeping in the eval matrix — though English-only is a hard ceiling for multilingual users.</li></ul>
 <div class="callout">
 <strong>Recommendation:</strong> Add MiMo V2.5 Pro and MiMo V2.5 as opt-in providers behind model routing flags. If local inference is too heavy for your hardware budget, run them through <a href="https://openrouter.ai" target="_blank" rel="noopener">OpenRouter</a> first, then decide whether to self-host. Don't make either one the default vision sub-call yet — see <a href="/blog/vision-shootout-round-3">round 3</a> for why.
 </div>
-<h2 id="suggested-webbrain-eval-plan">Suggested WebBrain eval plan</h2>
+<h2 id="suggested-sincetoggle-eval-plan">Suggested Since Toggle eval plan</h2>
 <ul><li>Run a 50-task mixed benchmark: visual extraction, click-path planning, form completion, and recovery from ambiguous UI states.</li><li>Track: task success, retries, hallucinated actions, tool-call efficiency, and token-normalized cost.</li><li>Route policy: "flash" tier for first pass, automatic escalate to Pro when uncertainty or retries exceed threshold.</li><li>Per the round 3 finding: when MiMo is in the loop, watch §6 ("Unknowns") behavior carefully — at low quants the calibrated-uncertainty signal collapses, which would defeat the whole point of escalating on uncertainty.</li></ul>
 <p>If these results hold across a broader workload, MiMo could become the best multimodal addition to the current Qwen-heavy stack. The follow-up post is the first data point on whether they do.</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. Since Toggle 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
-    <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
+    <div>&copy; 2026 Since Toggle &middot; <a href="/privacy">Privacy</a></div>
+    <div><a href="https://github.com/sincetoggle-one/sincetoggle" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>
     (function () {
@@ -565,7 +565,7 @@
       function setTheme(theme, persist) {
         root.setAttribute('data-theme', theme);
         if (persist) {
-          try { localStorage.setItem('webbrain-theme', theme); } catch (_) {}
+          try { localStorage.setItem('sincetoggle-theme', theme); } catch (_) {}
         }
       }
 
@@ -577,7 +577,7 @@
       const mq = window.matchMedia('(prefers-color-scheme: light)');
       function onMQ(e) {
         try {
-          if (localStorage.getItem('webbrain-theme')) return;
+          if (localStorage.getItem('sincetoggle-theme')) return;
         } catch (_) {}
         setTheme(e.matches ? 'light' : 'dark', false);
       }

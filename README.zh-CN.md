@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="assets/logo-mark.png" alt="WebBrain 标志" width="92">
+  <img src="assets/logo-mark.png" alt="Since Toggle 标志" width="92">
 </p>
 
-<h1 align="center">WebBrain</h1>
+<h1 align="center">Since Toggle</h1>
 
 <p align="center">
   开源 AI 浏览器智能体：与网页对话、自动化浏览器任务，并使用你选择的 LLM 运行多步骤工作流。
 </p>
 
 <p align="center">
-  <a href="https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb"><img src="https://img.shields.io/badge/Chrome-Install-4285F4?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="从 Chrome 应用商店安装 WebBrain"></a>
-  <a href="https://addons.mozilla.org/en-US/firefox/addon/webbrain/"><img src="https://img.shields.io/badge/Firefox-Install-FF7139?style=for-the-badge&amp;logo=firefoxbrowser&amp;logoColor=white" alt="从 Firefox 浏览器附加组件安装 WebBrain"></a>
-  <a href="https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo"><img src="https://img.shields.io/badge/Edge-Install-0A84FF?style=for-the-badge&amp;logo=microsoftedge&amp;logoColor=white" alt="从 Microsoft Edge 加载项安装 WebBrain"></a>
+  <a href="https://chromewebstore.google.com/detail/sincetoggle/ljhijonmfahplgbbacgcfnaihbjljhhb"><img src="https://img.shields.io/badge/Chrome-Install-4285F4?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="从 Chrome 应用商店安装 Since Toggle"></a>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/sincetoggle/"><img src="https://img.shields.io/badge/Firefox-Install-FF7139?style=for-the-badge&amp;logo=firefoxbrowser&amp;logoColor=white" alt="从 Firefox 浏览器附加组件安装 Since Toggle"></a>
+  <a href="https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo"><img src="https://img.shields.io/badge/Edge-Install-0A84FF?style=for-the-badge&amp;logo=microsoftedge&amp;logoColor=white" alt="从 Microsoft Edge 加载项安装 Since Toggle"></a>
 </p>
 
 <p align="center">
@@ -19,20 +19,20 @@
   <a href="README.zh-CN.md">中文</a> ·
   <a href="README.fr.md">Français</a> ·
   <a href="docs/zh-CN/">文档</a> ·
-  <a href="https://webbrain.one">官网</a> ·
+  <a href="https://sincetoggle.one">官网</a> ·
   <a href="LICENSE">GPL-3.0-or-later</a>
 </p>
 
-![WebBrain 阅读页面、填写表单并下载文件](assets/webbrain-demo.gif)
+![Since Toggle 阅读页面、填写表单并下载文件](assets/sincetoggle-demo.gif)
 
-WebBrain 是一个浏览器扩展，在标签页旁的侧边栏中放入一个 AI 智能体。你可以就当前页面
+Since Toggle 是一个浏览器扩展，在标签页旁的侧边栏中放入一个 AI 智能体。你可以就当前页面
 向它提问，也可以交给它一项任务，让它自己点击、输入、导航完成。它运行在你选择的模型
 上 —— 本地的 llama.cpp 或 Ollama 服务、前沿云端 API，或者完全无需配置的内置托管选项。
 
 ## 安装
 
-从 [Chrome 应用商店](https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb)、
-[Firefox 附加组件](https://addons.mozilla.org/en-US/firefox/addon/webbrain/) 或
+从 [Chrome 应用商店](https://chromewebstore.google.com/detail/sincetoggle/ljhijonmfahplgbbacgcfnaihbjljhhb)、
+[Firefox 附加组件](https://addons.mozilla.org/en-US/firefox/addon/sincetoggle/) 或
 [Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo)
 安装。
 
@@ -40,11 +40,11 @@ WebBrain 是一个浏览器扩展，在标签页旁的侧边栏中放入一个 A
 <summary><b>或从源码加载</b></summary>
 
 ```bash
-git clone https://github.com/webbrain-one/webbrain.git
+git clone https://github.com/sincetoggle-one/sincetoggle.git
 ```
 
 **Chrome** —— 打开 `chrome://extensions/`，启用**开发者模式**（右上角），点击
-**加载已解压的扩展程序**，选择 `webbrain/src/chrome` 文件夹。
+**加载已解压的扩展程序**，选择 `sincetoggle/src/chrome` 文件夹。
 
 **Firefox** —— 打开 `about:debugging#/runtime/this-firefox`，点击**临时载入附加组件**，
 选择 `src/firefox/manifest.json`。临时附加组件会在 Firefox 重启后被移除；永久安装需
@@ -54,7 +54,7 @@ git clone https://github.com/webbrain-one/webbrain.git
 
 ## 使用方法
 
-点击 WebBrain 图标打开侧边栏，然后输入例如：
+点击 Since Toggle 图标打开侧边栏，然后输入例如：
 
 - 「总结这个页面」
 - 「找出所有关于定价的链接」
@@ -71,9 +71,9 @@ git clone https://github.com/webbrain-one/webbrain.git
 
 ## 选择模型
 
-**WebBrain Compass 1.0** 是默认选项，无需 API 密钥或本地配置。
+**Since Toggle Compass 1.0** 是默认选项，无需 API 密钥或本地配置。
 
-**本地模型** 同样无需 API 密钥。将 WebBrain 指向任意 OpenAI 兼容服务即可：
+**本地模型** 同样无需 API 密钥。将 Since Toggle 指向任意 OpenAI 兼容服务即可：
 
 ```bash
 llama-server -m your-model.gguf --port 8080          # llama.cpp
@@ -86,9 +86,9 @@ LM Studio（`:1234/v1`）、Jan（`:1337/v1`）、LocalAI（`:8080/v1`）和 GPT
 （`:4891/v1`）用法相同。通用的**本地 OpenAI 兼容代理**卡片也支持 CLIProxyAPI
 等带认证的回环网关；请参阅[安全代理配置](docs/zh-CN/providers-and-models.md#订阅代理示例cliproxyapi)。请加载
 **至少具有 16k 令牌上下文窗口**的模型 —— 8k 仅在 Compact 层级下可用，4k 无法容纳
-系统提示加工具 schema。WebBrain 会为 llama.cpp、Ollama 和 LM Studio 自动检测真实窗口，
+系统提示加工具 schema。Since Toggle 会为 llama.cpp、Ollama 和 LM Studio 自动检测真实窗口，
 并在对话接近上限时自动压缩。此外还有预览版的
-`ollama launch webbrain --model <model>` 交接。详见
+`ollama launch sincetoggle --model <model>` 交接。详见
 [提供商与模型](docs/zh-CN/providers-and-models.md#本地提供商)。
 
 **云端 API** —— OpenAI、Anthropic Claude、Google Gemini、Azure OpenAI、AWS Bedrock、
@@ -120,7 +120,7 @@ Cloudflare、Nvidia NIM、Hugging Face、Fireworks、OpenRouter 等。设置中�
 
 ## 智能体工具
 
-WebBrain 将**层级**与**模式**分开。层级（`compact`、`mid`、`full`）是按提供商设置的，
+Since Toggle 将**层级**与**模式**分开。层级（`compact`、`mid`、`full`）是按提供商设置的，
 控制模型可见的工具数量 —— Compact 适合小型本地模型，Full 解锁 hover、drag-drop、
 frames 和 shadow DOM。模式（`ask`、`act`、`dev`）控制用户允许的任务类型。
 
@@ -153,7 +153,7 @@ frames 和 shadow DOM。模式（`ask`、`act`、`dev`）控制用户允许的�
 
 ## 键盘快捷键
 
-Chrome 侧边面板快捷键在 WebBrain 侧边面板获得焦点时生效。
+Chrome 侧边面板快捷键在 Since Toggle 侧边面板获得焦点时生效。
 
 | 快捷键 | 作用 |
 |----------|--------------|
@@ -162,7 +162,7 @@ Chrome 侧边面板快捷键在 WebBrain 侧边面板获得焦点时生效。
 | `Ctrl+Shift+X` 或 `Cmd+Shift+X` | 切换到 Act 模式 |
 | `Ctrl+Shift+D` 或 `Cmd+Shift+D` | 切换到 Dev 模式 |
 | `Escape` | 停止当前运行，除非它只是关闭斜杠命令自动补全 |
-| `Escape` 两次 | 从 WebBrain 或浏览器页面停止当前录制 |
+| `Escape` 两次 | 从 Since Toggle 或浏览器页面停止当前录制 |
 
 ## 文档
 
@@ -178,7 +178,7 @@ Chrome 侧边面板快捷键在 WebBrain 侧边面板获得焦点时生效。
 | [隐私与数据流](docs/zh-CN/privacy-and-data-flow.md) | 什么会离开浏览器，什么不会 |
 | [可访问性树与引用](docs/zh-CN/accessibility-tree-and-refs.md) | 页面如何被读取和定位 |
 | [站点适配器](docs/zh-CN/site-adapters.md) | 按站点的引导 |
-| [导出与工作流格式](docs/export-and-workflow-formats.md) | `webbrain-config/1`、`webbrain-workflow/1`（英文） |
+| [导出与工作流格式](docs/export-and-workflow-formats.md) | `sincetoggle-config/1`、`sincetoggle-workflow/1`（英文） |
 | [添加工具](docs/zh-CN/adding-a-tool.md) · [本地化](docs/zh-CN/localization.md) · [测试场景](docs/zh-CN/test-scenarios.md) | 贡献者指南 |
 
 也提供 [English](docs/) 和 [Français](docs/fr/) 版本。
@@ -221,12 +221,12 @@ DevTools Protocol 等价物，因此 Firefox 构建没有 shadow-DOM 穿透、�
 ## LM Studio 插件
 
 `fetch_url` 和 `research_url` 也作为独立的 [LM Studio](https://lmstudio.ai) 插件提供，
-位于 [`webbrain/web-tools`](https://lmstudio.ai/webbrain/web-tools)，面向希望在
+位于 [`sincetoggle/web-tools`](https://lmstudio.ai/sincetoggle/web-tools)，面向希望在
 LM Studio 聊天中使用网页抓取工具、又不想运行完整浏览器扩展的用户。纯 Node，无需
 无头浏览器。
 
 ```bash
-lms clone webbrain/web-tools
+lms clone sincetoggle/web-tools
 ```
 
 源代码：[`lmstudio-plugin/`](lmstudio-plugin/)。
@@ -234,25 +234,25 @@ lms clone webbrain/web-tools
 
 ## 贡献者
 
-<a href="https://github.com/webbrain-one/webbrain/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=webbrain-one/webbrain" />
+<a href="https://github.com/sincetoggle-one/sincetoggle/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=sincetoggle-one/sincetoggle" />
 </a>
 
 ## 引用
 
 ```bibtex
-@software{webbrain2026,
+@software{sincetoggle2026,
   author = {Sokullu, Emre},
-  title = {WebBrain: 开源 AI 浏览器智能体，用于与网页对话},
+  title = {Since Toggle: 开源 AI 浏览器智能体，用于与网页对话},
   year = {2026},
   publisher = {GitHub},
-  url = {https://github.com/webbrain-one/webbrain}
+  url = {https://github.com/sincetoggle-one/sincetoggle}
 }
 ```
 
 ## 许可证
 
-WebBrain 33.0.0 及更高版本采用 [GPL-3.0-or-later](LICENSE) 许可证，因为发布的
+Since Toggle 33.0.0 及更高版本采用 [GPL-3.0-or-later](LICENSE) 许可证，因为发布的
 浏览器扩展捆绑并集成了采用 GPL 许可证的 Xapian/libzim WebAssembly 运行时。
 33.0.0 之前发布的版本仍采用其发布时适用的 MIT 许可证；历史许可证文本保存在
 [LICENSES/MIT.txt](LICENSES/MIT.txt)。

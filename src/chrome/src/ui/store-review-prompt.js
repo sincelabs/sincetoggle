@@ -3,11 +3,11 @@
 export const STORAGE_KEY = 'storeReviewPrompt';
 
 export const STORE_URLS = {
-  chrome: 'https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb',
-  firefox: 'https://addons.mozilla.org/en-US/firefox/addon/webbrain/',
+  chrome: 'https://chromewebstore.google.com/detail/sincetoggle/ljhijonmfahplgbbacgcfnaihbjljhhb',
+  firefox: 'https://addons.mozilla.org/en-US/firefox/addon/sincetoggle/',
 };
 
-export const FEEDBACK_ISSUES_URL = 'https://github.com/webbrain-one/webbrain/issues/new';
+export const FEEDBACK_ISSUES_URL = 'https://github.com/sincetoggle-one/sincetoggle/issues/new';
 
 export const MIN_SUCCESSFUL_TASKS = 3;
 export const MIN_DAYS_BEFORE_PROMPT = 0;
@@ -111,14 +111,14 @@ export function getStoreUrl(browserKey = 'chrome') {
 }
 
 export function buildFeedbackUrl({ rating, comment = '' } = {}) {
-  const title = encodeURIComponent(`WebBrain feedback (${rating}/5)`);
+  const title = encodeURIComponent(`Since Toggle feedback (${rating}/5)`);
   const bodyParts = [
     `**Rating:** ${rating}/5`,
     '',
     String(comment || '').trim() || '_No additional comments provided._',
     '',
     '---',
-    '_Submitted from the WebBrain side panel feedback prompt._',
+    '_Submitted from the Since Toggle side panel feedback prompt._',
   ];
   const body = encodeURIComponent(bodyParts.join('\n'));
   return `${FEEDBACK_ISSUES_URL}?title=${title}&body=${body}`;

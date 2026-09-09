@@ -128,7 +128,7 @@ export function renderPdfOcrTextLayer(container, lines, width, height) {
     const box = line?.box;
     if (!text || !box) continue;
     const span = document.createElement('span');
-    span.dataset.webbrainOcr = 'true';
+    span.dataset.sincetoggleOcr = 'true';
     span.textContent = text;
     span.title = `OCR confidence ${Math.round(Math.max(0, Math.min(1, Number(line.confidence) || 0)) * 100)}%`;
     span.style.left = `${Math.round(box.x * layerWidth)}px`;

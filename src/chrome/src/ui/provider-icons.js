@@ -11,7 +11,7 @@ import {
 } from '../providers/provider-catalog.js';
 
 export const PROVIDER_ICON_FILES = {
-  webbrain_cloud: 'webbrain_cloud.png',
+  sincetoggle_cloud: 'sincetoggle_cloud.png',
   llamacpp: 'llamacpp.svg',
   ollama: 'ollama.svg',
   lmstudio: 'lmstudio.svg',
@@ -79,7 +79,7 @@ export function providerIconHtml(id, label, className = 'provider-icon', opts = 
 
 /** Short display name for a known provider id (sniff hints, menus). */
 export const PROVIDER_SHORT_LABELS = {
-  webbrain_cloud: 'WebBrain Compass',
+  sincetoggle_cloud: 'Since Toggle Compass',
   llamacpp: 'llama.cpp',
   ollama: 'Ollama',
   lmstudio: 'LM Studio',
@@ -173,7 +173,7 @@ export function sniffProviderIdFromBaseUrl(baseUrl) {
   if (hostMatchesDomain(host, 'aliyuncs.com')) return 'alibaba';
   if (hostMatchesDomain(host, 'minimax.chat') || hostMatchesDomain(host, 'minimax.io')
       || hostMatchesDomain(host, 'minimaxi.com')) return 'minimax';
-  if (hostMatchesDomain(host, 'webbrain.one')) return 'webbrain_cloud';
+  if (hostMatchesDomain(host, 'sincetoggle.one')) return 'sincetoggle_cloud';
   if (hostMatchesDomain(host, 'z.ai') || hostMatchesDomain(host, 'chatglm.cn')) return 'z_ai';
   return '';
 }

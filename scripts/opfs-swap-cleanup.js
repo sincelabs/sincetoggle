@@ -1,5 +1,5 @@
 /**
- * WebBrain — OPFS swap-file cleanup (manual, one-off).
+ * Since Toggle — OPFS swap-file cleanup (manual, one-off).
  *
  * Chrome writes FileSystemWritableFileStream data to a sibling `.crswap` file
  * and only renames it into place on close(). A stream that never closes leaks
@@ -7,22 +7,22 @@
  * copy of the file it was writing.
  *
  * HOW TO RUN
- *   1. chrome://extensions → WebBrain → "Inspect views: service worker"
+ *   1. chrome://extensions → Since Toggle → "Inspect views: service worker"
  *   2. Paste this whole file into the Console.
- *   3. await WEBBRAIN_OPFS.report()      // read-only inventory
- *   4. await WEBBRAIN_OPFS.sweepSwap()   // delete every orphaned *.crswap
- *   5. await WEBBRAIN_OPFS.dedupe()      // dry run: show redundant full copies
- *      await WEBBRAIN_OPFS.dedupe({ dryRun: false })   // keep one, delete the rest
+ *   3. await SINCETOGGLE_OPFS.report()      // read-only inventory
+ *   4. await SINCETOGGLE_OPFS.sweepSwap()   // delete every orphaned *.crswap
+ *   5. await SINCETOGGLE_OPFS.dedupe()      // dry run: show redundant full copies
+ *      await SINCETOGGLE_OPFS.dedupe({ dryRun: false })   // keep one, delete the rest
  *
  * sweepSwap() never touches a completed archive. dedupe() only ever removes a
  * file when another copy of the same archive survives.
  */
 (() => {
   const BUCKETS = [
-    'webbrain-apocalypse',
-    'webbrain-emergency-box',
-    'webbrain-offline-rag',
-    'webbrain-webgpu-models',
+    'sincetoggle-apocalypse',
+    'sincetoggle-emergency-box',
+    'sincetoggle-offline-rag',
+    'sincetoggle-webgpu-models',
   ];
   const SWAP = '.crswap';
   const gb = n => `${(n / 1024 ** 3).toFixed(2)} GB`;
@@ -111,6 +111,6 @@
     return { removed, bytes };
   }
 
-  globalThis.WEBBRAIN_OPFS = { report, sweepSwap, dedupe, scan };
-  console.log('WEBBRAIN_OPFS ready — try: await WEBBRAIN_OPFS.report()');
+  globalThis.SINCETOGGLE_OPFS = { report, sweepSwap, dedupe, scan };
+  console.log('SINCETOGGLE_OPFS ready — try: await SINCETOGGLE_OPFS.report()');
 })();

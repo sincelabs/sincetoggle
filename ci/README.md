@@ -1,6 +1,6 @@
-# WebBrain Cloud E2E
+# Since Toggle Cloud E2E
 
-`ci/` runs catalogued browser-agent scenarios in a fresh WebBrain Cloud
+`ci/` runs catalogued browser-agent scenarios in a fresh Since Toggle Cloud
 incognito browser. Each scenario produces a structured result, exported trace,
 deterministic rubric, optional `.webm` recording, and a suite summary.
 
@@ -21,7 +21,7 @@ project; they never touch production members or content.
 ## Run locally
 
 ```powershell
-$env:WEBBRAIN_API_KEY = "..."
+$env:SINCETOGGLE_API_KEY = "..."
 $env:GNIPPETS_E2E_CONTROL_TOKEN = "..."
 $env:CAPSOLVER_API_KEY = "..." # required by cloud-smoke signup and gnippets-captcha
 npm run ci:e2e -- --pack cloud-smoke --no-video
@@ -37,7 +37,7 @@ npm run test:ci
 
 Optional configuration:
 
-- `WEBBRAIN_BASE_URL` defaults to `https://webbrain.cloud`.
+- `SINCETOGGLE_BASE_URL` defaults to `https://sincetoggle.cloud`.
 - `GNIPPETS_BASE_URL` defaults to `https://gnippets.com`.
 - `--concurrency N` defaults to 2.
 
@@ -46,7 +46,7 @@ The GitHub Actions workflow uploads that directory even when a scenario fails.
 
 Scenario `session_settings` are hard requirements. Provisioning must either
 report them in an applied/accepted list or attest their exact values in
-`webbrain_config_result.enforced`; a managed-but-unattested setting fails the
+`sincetoggle_config_result.enforced`; a managed-but-unattested setting fails the
 scenario before the browser run starts.
 
 ## Gnippets deployment
@@ -75,7 +75,7 @@ APIs were actually exercised successfully.
 
 Scenarios are graded from three independent signals:
 
-1. WebBrain run status and schema-valid `done_json` output.
+1. Since Toggle run status and schema-valid `done_json` output.
 2. Expected structured-result values and final host.
 3. For Gnippets challenge runs, server-observed events such as
    `login_succeeded`, `post_created`, or `captcha_solved`.

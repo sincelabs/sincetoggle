@@ -6,7 +6,7 @@ import {
   CLAUDE_CODE_SYSTEM_PREAMBLE,
 } from './oauth-claude.js';
 
-const ANTHROPIC_REPLAY_TYPE = 'webbrain_provider_replay';
+const ANTHROPIC_REPLAY_TYPE = 'sincetoggle_provider_replay';
 const ANTHROPIC_REPLAY_VERSION = 1;
 
 /**

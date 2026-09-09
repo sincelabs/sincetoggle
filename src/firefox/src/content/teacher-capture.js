@@ -1,9 +1,9 @@
 /** Captures trusted, value-free user actions while /teach is active. */
 (() => {
-  if (window.top !== window || window.__webbrainTeacherCaptureInstalled) return;
-  window.__webbrainTeacherCaptureInstalled = true;
+  if (window.top !== window || window.__sincetoggleTeacherCaptureInstalled) return;
+  window.__sincetoggleTeacherCaptureInstalled = true;
 
-  const INDICATOR_ID = 'webbrain-teacher-indicator';
+  const INDICATOR_ID = 'sincetoggle-teacher-indicator';
   const recordedFields = new WeakMap();
   const dirtyFields = new WeakSet();
   let active = false;
@@ -140,7 +140,7 @@
     indicator.id = INDICATOR_ID;
     indicator.setAttribute('role', 'status');
     indicator.setAttribute('aria-live', 'polite');
-    indicator.textContent = `● WebBrain Teach${sessionName ? ` · ${sessionName}` : ''}`;
+    indicator.textContent = `● Since Toggle Teach${sessionName ? ` · ${sessionName}` : ''}`;
     Object.assign(indicator.style, {
       position: 'fixed', left: '12px', bottom: '12px', zIndex: '2147483647',
       padding: '7px 10px', borderRadius: '999px', background: '#241b3d',

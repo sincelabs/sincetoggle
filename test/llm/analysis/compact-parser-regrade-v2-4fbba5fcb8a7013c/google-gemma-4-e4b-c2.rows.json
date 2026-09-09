@@ -2,7 +2,7 @@
   "label": "google-gemma-4-e4b-c2",
   "firstTurn": {
     "kind": "first-turn",
-    "sourceDir": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results\\2026-09-07-google-gemma-4-e4b-compact-full-c2-v1_chrome_google_gemma-4-e4b_compact",
+    "sourceDir": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results\\2026-09-07-google-gemma-4-e4b-compact-full-c2-v1_chrome_google_gemma-4-e4b_compact",
     "sourceSummarySha256": "8b98a6c446396be68e239e86d310113f2cab7c534fcfd81b0fefc92f826c2b9f",
     "rows": 100,
     "structured": 91,
@@ -632,7 +632,7 @@
         "firstToolCall": {
           "name": "navigate",
           "args": {
-            "url": "https://github.com/esokullu/webbrain/releases/new"
+            "url": "https://github.com/esokullu/sincetoggle/releases/new"
           }
         },
         "verdict": "exact",
@@ -1482,7 +1482,7 @@
   },
   "scenarios": {
     "kind": "scenarios",
-    "sourceDir": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results-scenarios\\2026-09-07-google-gemma-4-e4b-compact-full-c2-v1_chrome_google_gemma-4-e4b_compact",
+    "sourceDir": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results-scenarios\\2026-09-07-google-gemma-4-e4b-compact-full-c2-v1_chrome_google_gemma-4-e4b_compact",
     "sourceSummarySha256": "cc72135d2fe7af8fca6224db84c4f17e7ecd0060f194004453ad828e5f610336",
     "rows": 100,
     "structured": 73,

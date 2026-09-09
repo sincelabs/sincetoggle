@@ -1,6 +1,6 @@
 {
   "runTag": "compact-parser-ab-v2-lfm2-backport-20260905T1612Z",
-  "model": "webbrain-compass-tiny-v1",
+  "model": "sincetoggle-compass-tiny-v1",
   "browser": "chrome",
   "base": "http://127.0.0.1:8326/v1",
   "saveRequest": false,

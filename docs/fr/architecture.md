@@ -1,10 +1,10 @@
-# Architecture de WebBrain
+# Architecture de Since Toggle
 
 > Version 25.7.12
 
 ## Aperçu
 
-WebBrain est une extension de navigateur qui donne à un LLM le contrôle de l'onglet actif du navigateur de l'utilisateur. L'utilisateur tape une instruction en langage naturel dans un panneau latéral, et une boucle d'agent autonome appelle le LLM, exécute des appels d'outils (clic, saisie, navigation, lecture d'état de page, etc.), renvoie les résultats au LLM, et répète jusqu'à ce que la tâche soit terminée.
+Since Toggle est une extension de navigateur qui donne à un LLM le contrôle de l'onglet actif du navigateur de l'utilisateur. L'utilisateur tape une instruction en langage naturel dans un panneau latéral, et une boucle d'agent autonome appelle le LLM, exécute des appels d'outils (clic, saisie, navigation, lecture d'état de page, etc.), renvoie les résultats au LLM, et répète jusqu'à ce que la tâche soit terminée.
 
 Il existe deux builds qui partagent presque tout le code :
 - **Chrome** — Manifest V3, service worker, événements de confiance basés sur CDP
@@ -85,7 +85,7 @@ Le routeur de messages central. Sur Chrome c'est un service worker (MV3) ; sur F
 1. **Router les messages** entre le panneau latéral, les scripts de contenu et l'agent
 2. **Gérer le cycle de vie de l'agent** : `chat` / `chat_stream` / `continue` / `abort` / `clear_conversation`
 3. **Gérer la configuration du fournisseur** : charger, sauvegarder, tester, changer de fournisseur actif
-4. **Gérer la visibilité du panneau latéral** : le groupe d'onglets « WebBrain » par fenêtre contrôle où le panneau est activé
+4. **Gérer la visibilité du panneau latéral** : le groupe d'onglets « Since Toggle » par fenêtre contrôle où le panneau est activé
 5. **Observer les requêtes XHR/fetch du même onglet** avec `webRequest` pour que la détection de boucle puisse suggérer un raccourci `fetch_url` exact lorsque des clics d'interface répétés déclenchent la même requête d'arrière-plan
 6. **Exposer OAuth Claude**, l'enregistrement d'onglet, CAPTCHA et autres sous-fonctionnalités comme gestionnaires de messages
 
@@ -200,13 +200,13 @@ while (steps < maxSteps) {
 
 Paramètres -> Compétences stocke les compétences activées dans `customSkills` (`chrome.storage.local` ou `browser.storage.local`). Au démarrage, `background.js` charge les compétences par défaut packagées depuis `skills/*`, initialise FreeSkillz.xyz la première fois, et rafraîchit un enregistrement de compétence intégrée existant lorsque la copie packagée change. Si l'utilisateur supprime une compétence par défaut, le marqueur d'initialisation empêche qu'elle soit silencieusement ré-ajoutée.
 
-`agent/skills.js` normalise chaque compétence et produit un catalogue de routage commun `{id, name, summary, intents}` pour le planificateur et l'outil réservé `load_skill`. Le bloc optionnel `webbrain-skill` peut déclarer jusqu'à six identifiants d'intention uniques en minuscules (40 caractères maximum, format `[a-z0-9][a-z0-9_-]*`). Ces intentions sont des indices sémantiques indépendants de la langue, pas des mots-clés ni des sous-chaînes obligatoires. Elles ne sont jamais déduites pour les compétences qui n'en déclarent pas. Un fichier Agent Skills `SKILL.md` importé peut fournir son `name` et sa `description` standard pour le nom et le résumé ; le nom saisi dans Paramètres et les métadonnées `webbrain-skill` restent prioritaires. Les métadonnées Agent Skills valides sont retirées avant le chargement du corps Markdown. Les manifestes `webbrain-skill` et `webbrain-tools` ne sont lus que dans ce corps, jamais dans les métadonnées Agent Skills.
+`agent/skills.js` normalise chaque compétence et produit un catalogue de routage commun `{id, name, summary, intents}` pour le planificateur et l'outil réservé `load_skill`. Le bloc optionnel `sincetoggle-skill` peut déclarer jusqu'à six identifiants d'intention uniques en minuscules (40 caractères maximum, format `[a-z0-9][a-z0-9_-]*`). Ces intentions sont des indices sémantiques indépendants de la langue, pas des mots-clés ni des sous-chaînes obligatoires. Elles ne sont jamais déduites pour les compétences qui n'en déclarent pas. Un fichier Agent Skills `SKILL.md` importé peut fournir son `name` et sa `description` standard pour le nom et le résumé ; le nom saisi dans Paramètres et les métadonnées `sincetoggle-skill` restent prioritaires. Les métadonnées Agent Skills valides sont retirées avant le chargement du corps Markdown. Les manifestes `sincetoggle-skill` et `sincetoggle-tools` ne sont lus que dans ce corps, jamais dans les métadonnées Agent Skills.
 
 Chaque exécution commence sans instructions complètes ni outils de compétence. Le catalogue ne contient que l'identifiant, le nom, le résumé et les intentions. Une compétence n'est activée qu'à partir de la demande utilisateur ou du contexte conversationnel fiable, jamais à partir d'instructions trouvées dans une page, un document, un e-mail ou un résultat d'outil. Ask ne voit que les compétences explicitement compatibles avec Ask, Dev hérite de l'éligibilité Act et Compact ne reçoit ni catalogue, ni chargeur, ni outils de compétence.
 
 Après activation, deux surfaces sont ajoutées uniquement pour l'exécution courante :
 
-- Instructions de prompt : `buildCustomSkillsPrompt()` supprime les blocs `webbrain-tools` délimités avant d'ajouter le texte de la compétence au prompt système.
+- Instructions de prompt : `buildCustomSkillsPrompt()` supprime les blocs `sincetoggle-tools` délimités avant d'ajouter le texte de la compétence au prompt système.
 - Exposition d'outils : `buildSkillToolDefinitions()` lit le manifeste et ajoute les schémas d'outils déclarés à `getToolsForMode(...)` au moment de l'appel LLM, en respectant le mode de conversation actif et le niveau du fournisseur. Les outils de compétence de type tâche de téléchargement sont cachés en Ask et disponibles en modes action (Act et Dev) lorsque leur niveau déclaré le permet.
 
 Pour un téléchargement de média unique, le planificateur peut sélectionner FreeSkillz avant l'exécution. Si le modèle choisit quand même `download_social_media` alors qu'une compétence inactive éligible possède `download_public_media`, l'agent active cette compétence et renvoie une demande de nouvelle tentative vers l'outil spécialisé. Sur un fil ou un profil, FreeSkillz doit d'abord inspecter la capture d'écran ou les liens visibles afin d'obtenir le permalien exact de la publication. Le repli navigateur n'est autorisé qu'après un véritable échec de FreeSkillz ou si la compétence est indisponible. Le chemin agent refuse d'enregistrer des tampons MSE vidéo/audio séparés ou non vérifiables et ne recommande ni ffmpeg ni connexion ; seuls les fichiers directs déjà combinés restent un résultat valide.
@@ -214,7 +214,7 @@ Pour un téléchargement de média unique, le planificateur peut sélectionner F
 Le format du manifeste est un bloc JSON délimité dans le markdown de la compétence :
 
 ````markdown
-```webbrain-tools
+```sincetoggle-tools
 {
   "tools": [
     {
@@ -264,7 +264,7 @@ La porte de planification optionnelle en mode action s'exécute avant le premier
 
 Les appels du planificateur sont tracés avec `phase: "planner"` lorsque l'enregistrement de trace est activé. Ils utilisent également la garde de limite de coût, les vérifications d'abandon, une nouvelle tentative de réparation JSON et la gestion no-think Qwen/DeepSeek. Un échec de réparation ne peut pas autoriser d'action : Essai passe à un tour Ask en lecture seule, tandis que Strict s'arrête.
 
-Chaque nouvel enregistrement de trace conserve `webbrainVersion`. `/export` inclut la version courante du manifeste ; `/export --traces` indique la version d'export et la version d'enregistrement de chaque tour, ou « indisponible » pour les traces héritées. L'export JSON de la page Traces ajoute `exportedByWebBrainVersion` tout en conservant le schéma rétrocompatible `webbrain-trace/1`.
+Chaque nouvel enregistrement de trace conserve `sincetoggleVersion`. `/export` inclut la version courante du manifeste ; `/export --traces` indique la version d'export et la version d'enregistrement de chaque tour, ou « indisponible » pour les traces héritées. L'export JSON de la page Traces ajoute `exportedBySince ToggleVersion` tout en conservant le schéma rétrocompatible `sincetoggle-trace/1`.
 
 ### Tâches planifiées (`scheduler.js`)
 
@@ -413,7 +413,7 @@ rouvert reconstruise correctement le Markdown en cours. Chrome utilise
 | Observateur de raccourci API | Tampon URL/méthode `chrome.webRequest` | Tampon URL/méthode `browser.webRequest` |
 | Enregistrement d'onglet/écran par barre oblique | `chrome.tabCapture` / `getDisplayMedia()` + hors-écran | Non disponible |
 | Panneau latéral | API `sidePanel` (MV3) | `sidebar_action` (MV2) |
-| Téléversement de fichier | Chemin CDP ou `downloadId` | Rechargement via `downloadId` ou sélecteur de fichier WebBrain ; pas de chemin local arbitraire |
+| Téléversement de fichier | Chemin CDP ou `downloadId` | Rechargement via `downloadId` ou sélecteur de fichier Since Toggle ; pas de chemin local arbitraire |
 
 Tout le reste (boucle d'agent, outils, adaptateurs, fournisseurs, détection de boucle, gestion de contexte, prompts système) est architecturalement identique entre les deux builds.
 

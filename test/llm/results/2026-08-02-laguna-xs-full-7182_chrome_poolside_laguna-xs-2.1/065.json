@@ -11,7 +11,7 @@
   "firstToolCall": null,
   "toolCallSource": null,
   "finishReason": "stop",
-  "content": "I can't take screenshots directly, but you can use the slash commands in the WebBrain side panel:\n\n- Type `/screenshot` for the visible viewport\n- Type `/screenshot --full-page` for the entire page\n\nThese commands will capture and display the screenshot for you.",
+  "content": "I can't take screenshots directly, but you can use the slash commands in the Since Toggle side panel:\n\n- Type `/screenshot` for the visible viewport\n- Type `/screenshot --full-page` for the entire page\n\nThese commands will capture and display the screenshot for you.",
   "usage": {
     "prompt_tokens": 23196,
     "completion_tokens": 128,

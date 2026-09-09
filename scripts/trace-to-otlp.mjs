@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { TRACE_FORMAT_VERSION, isKnownKind } from '../src/chrome/src/trace/event-model.js';
 import { buildTraceLineageGroups } from '../src/chrome/src/trace/lineage.js';
 
-const WEBBRAIN_TRACE_SCHEMA = 'webbrain-trace/1';
+const SINCETOGGLE_TRACE_SCHEMA = 'sincetoggle-trace/1';
 const CONTENT_LIMIT = 20_000;
 const SPAN_KIND_INTERNAL = 1;
 const SPAN_KIND_CLIENT = 3;
@@ -13,7 +13,7 @@ const STATUS_CODE_ERROR = 2;
 
 // Canonical session export mapping. The legacy { run, events } shape keeps
 // its historical child-span layout; session bundles use this profile so a
-// collector can reconstruct the WebBrain execution graph without guessing.
+// collector can reconstruct the Since Toggle execution graph without guessing.
 export const TRACE_OTLP_MAPPING = Object.freeze({
   session: 'trace',
   run: 'span',
@@ -131,8 +131,8 @@ function failedToolResult(result, resultStatus = '') {
 function contentAttributes(run, includeContent) {
   if (!includeContent) return [];
   return [
-    ['webbrain.user.message', boundedContent(run.userMessage)],
-    ['webbrain.final.response', boundedContent(run.finalContent)],
+    ['sincetoggle.user.message', boundedContent(run.userMessage)],
+    ['sincetoggle.final.response', boundedContent(run.finalContent)],
   ];
 }
 
@@ -140,12 +140,12 @@ function genericEvent(event, includeContent, runStart) {
   const data = event?.data || {};
   return {
     timeUnixNano: unixNano(eventTime(event, runStart)),
-    name: 'webbrain.unknown',
+    name: 'sincetoggle.unknown',
     attributes: attributes([
-      ['webbrain.event.sequence', finiteNumber(event?.seq)],
-      ['webbrain.event.kind', String(event?.kind || 'unknown')],
-      ['webbrain.step', finiteNumber(data.step)],
-      ...(includeContent ? [['webbrain.event.data', boundedContent(data)]] : []),
+      ['sincetoggle.event.sequence', finiteNumber(event?.seq)],
+      ['sincetoggle.event.kind', String(event?.kind || 'unknown')],
+      ['sincetoggle.step', finiteNumber(data.step)],
+      ...(includeContent ? [['sincetoggle.event.data', boundedContent(data)]] : []),
     ]),
   };
 }
@@ -155,8 +155,8 @@ function rootEvents(events, includeContent, runStart) {
     const data = event?.data || {};
     if (!isKnownKind(event?.kind)) return [genericEvent(event, includeContent, runStart)];
     const base = [
-      ['webbrain.event.sequence', finiteNumber(event?.seq)],
-      ['webbrain.step', finiteNumber(data.step)],
+      ['sincetoggle.event.sequence', finiteNumber(event?.seq)],
+      ['sincetoggle.step', finiteNumber(data.step)],
     ];
     if (event?.kind === 'error') {
       return [{
@@ -164,7 +164,7 @@ function rootEvents(events, includeContent, runStart) {
         name: 'exception',
         attributes: attributes([
           ...base,
-          ['exception.type', data.phase ? `webbrain.${data.phase}` : 'webbrain.error'],
+          ['exception.type', data.phase ? `sincetoggle.${data.phase}` : 'sincetoggle.error'],
           ...(includeContent ? [['exception.message', boundedContent(data.message)]] : []),
         ]),
       }];
@@ -172,13 +172,13 @@ function rootEvents(events, includeContent, runStart) {
     if (event?.kind === 'streaming' || event?.kind === 'note' || event?.kind === 'screenshot') {
       return [{
         timeUnixNano: unixNano(eventTime(event, runStart)),
-        name: `webbrain.${event.kind}`,
+        name: `sincetoggle.${event.kind}`,
         attributes: attributes([
           ...base,
-          ['webbrain.event.status', data.status],
-          ['webbrain.event.reason', data.reason],
+          ['sincetoggle.event.status', data.status],
+          ['sincetoggle.event.reason', data.reason],
           ...(includeContent && event.kind === 'note'
-            ? [['webbrain.note', boundedContent(data.note)]]
+            ? [['sincetoggle.note', boundedContent(data.note)]]
             : []),
         ]),
       }];
@@ -204,10 +204,10 @@ function inferenceSpan(event, context, includeContent) {
       ['gen_ai.request.model', model],
       ['gen_ai.usage.input_tokens', usage.prompt_tokens],
       ['gen_ai.usage.output_tokens', usage.completion_tokens],
-      ['webbrain.event.sequence', finiteNumber(event.seq)],
-      ['webbrain.step', finiteNumber(data.step)],
+      ['sincetoggle.event.sequence', finiteNumber(event.seq)],
+      ['sincetoggle.step', finiteNumber(data.step)],
       ...(includeContent
-        ? [['webbrain.llm.response.content', boundedContent(data.content)]]
+        ? [['sincetoggle.llm.response.content', boundedContent(data.content)]]
         : []),
     ]),
   };
@@ -228,12 +228,12 @@ function toolSpan(event, context, includeContent) {
     attributes: attributes([
       ['gen_ai.operation.name', 'execute_tool'],
       ['gen_ai.tool.name', name],
-      ['gen_ai.agent.name', 'WebBrain'],
-      ['webbrain.tool.result.status', resultStatus],
-      ...(data.resultErrorCode ? [['webbrain.tool.result.error_code', data.resultErrorCode]] : []),
+      ['gen_ai.agent.name', 'Since Toggle'],
+      ['sincetoggle.tool.result.status', resultStatus],
+      ...(data.resultErrorCode ? [['sincetoggle.tool.result.error_code', data.resultErrorCode]] : []),
       ...(failed ? [['error.type', 'tool_error']] : []),
-      ['webbrain.event.sequence', finiteNumber(event.seq)],
-      ['webbrain.step', finiteNumber(data.step)],
+      ['sincetoggle.event.sequence', finiteNumber(event.seq)],
+      ['sincetoggle.step', finiteNumber(data.step)],
       ...(includeContent
         ? [
             ['gen_ai.tool.call.arguments', boundedContent(data.args)],
@@ -256,13 +256,13 @@ function normalizeBundleEntry(entry, index) {
 }
 
 export function normalizeTraceExport(input) {
-  if (!input || input.schema !== WEBBRAIN_TRACE_SCHEMA) {
-    throw new Error(`Expected a ${WEBBRAIN_TRACE_SCHEMA} export.`);
+  if (!input || input.schema !== SINCETOGGLE_TRACE_SCHEMA) {
+    throw new Error(`Expected a ${SINCETOGGLE_TRACE_SCHEMA} export.`);
   }
   const exported = {
     schema: input.schema,
     exportedAt: finiteNumber(input.exportedAt),
-    exportedByWebBrainVersion: String(input.exportedByWebBrainVersion || ''),
+    exportedBySince ToggleVersion: String(input.exportedBySince ToggleVersion || ''),
   };
   if (Array.isArray(input.runs)) {
     if (input.runs.length === 0) throw new Error('Trace export must contain a non-empty runs array.');
@@ -379,7 +379,7 @@ function buildLineageRecords(bundle) {
     const occurrence = occurrences.get(record.runId) || 0;
     occurrences.set(record.runId, occurrence + 1);
     const suffix = counts.get(record.runId) > 1 ? `:duplicate:${occurrence}` : '';
-    record.spanId = stableHex(`webbrain:run:${record.runId || record.index}${suffix}`, 16);
+    record.spanId = stableHex(`sincetoggle:run:${record.runId || record.index}${suffix}`, 16);
   }
   return records;
 }
@@ -388,15 +388,15 @@ function bundleEvent(event, includeContent, runStart) {
   const data = event?.data || {};
   const kind = String(event?.kind || 'unknown');
   const base = [
-    ['webbrain.event.sequence', finiteNumber(event?.seq)],
-    ['webbrain.event.kind', kind],
-    ['webbrain.step', finiteNumber(data.step)],
+    ['sincetoggle.event.sequence', finiteNumber(event?.seq)],
+    ['sincetoggle.event.kind', kind],
+    ['sincetoggle.step', finiteNumber(data.step)],
   ];
-  let name = isKnownKind(kind) ? `webbrain.${kind}` : 'webbrain.unknown';
+  let name = isKnownKind(kind) ? `sincetoggle.${kind}` : 'sincetoggle.unknown';
   const extra = [];
   if (kind === 'error') {
     name = 'exception';
-    extra.push(['exception.type', data.phase ? `webbrain.${data.phase}` : 'webbrain.error']);
+    extra.push(['exception.type', data.phase ? `sincetoggle.${data.phase}` : 'sincetoggle.error']);
     if (includeContent) extra.push(['exception.message', boundedContent(data.message)]);
   } else if (kind === 'llm_response') {
     extra.push(
@@ -404,14 +404,14 @@ function bundleEvent(event, includeContent, runStart) {
       ['gen_ai.usage.input_tokens', data.usage?.prompt_tokens],
       ['gen_ai.usage.output_tokens', data.usage?.completion_tokens],
     );
-    if (includeContent) extra.push(['webbrain.llm.response.content', boundedContent(data.content)]);
+    if (includeContent) extra.push(['sincetoggle.llm.response.content', boundedContent(data.content)]);
   } else if (kind === 'tool') {
     const resultStatus = normalizedToolResultStatus(data.result, data.resultStatus);
     const failed = failedToolResult(data.result, resultStatus);
     extra.push(
       ['gen_ai.tool.name', data.name],
-      ['webbrain.tool.result.status', resultStatus],
-      ...(data.resultErrorCode ? [['webbrain.tool.result.error_code', data.resultErrorCode]] : []),
+      ['sincetoggle.tool.result.status', resultStatus],
+      ...(data.resultErrorCode ? [['sincetoggle.tool.result.error_code', data.resultErrorCode]] : []),
       ...(failed ? [['error.type', 'tool_error']] : []),
     );
     if (includeContent) {
@@ -421,10 +421,10 @@ function bundleEvent(event, includeContent, runStart) {
       );
     }
   } else if (kind === 'streaming' || kind === 'note') {
-    extra.push(['webbrain.event.status', data.status], ['webbrain.event.reason', data.reason]);
-    if (includeContent && kind === 'note') extra.push(['webbrain.note', boundedContent(data.note)]);
+    extra.push(['sincetoggle.event.status', data.status], ['sincetoggle.event.reason', data.reason]);
+    if (includeContent && kind === 'note') extra.push(['sincetoggle.note', boundedContent(data.note)]);
   }
-  if (!isKnownKind(kind) && includeContent) extra.push(['webbrain.event.data', boundedContent(data)]);
+  if (!isKnownKind(kind) && includeContent) extra.push(['sincetoggle.event.data', boundedContent(data)]);
   return {
     timeUnixNano: unixNano(eventTime(event, runStart)),
     name,
@@ -438,17 +438,17 @@ function bundleEvents(events, includeContent, runStart) {
 
 function lineageAttributes(record) {
   return [
-    ['webbrain.trace.format.version', record.run.traceFormatVersion],
-    ['webbrain.parent.run.id', record.parentRunId],
-    ['webbrain.parent.session.id', record.parentSessionId],
+    ['sincetoggle.trace.format.version', record.run.traceFormatVersion],
+    ['sincetoggle.parent.run.id', record.parentRunId],
+    ['sincetoggle.parent.session.id', record.parentSessionId],
     ...(record.lineageState !== 'root' && record.lineageState !== 'attached'
-      ? [['webbrain.lineage.state', record.lineageState]]
+      ? [['sincetoggle.lineage.state', record.lineageState]]
       : []),
   ];
 }
 
 function sessionTraceId(sessionId) {
-  return stableHex(`webbrain:session:${sessionId}`, 32);
+  return stableHex(`sincetoggle:session:${sessionId}`, 32);
 }
 
 function bundleRunSpan(record, bundle, includeContent) {
@@ -464,15 +464,15 @@ function bundleRunSpan(record, bundle, includeContent) {
     endTimeUnixNano: unixNano(runEnd),
     attributes: attributes([
       ['gen_ai.operation.name', 'invoke_agent'],
-      ['gen_ai.agent.name', 'WebBrain'],
-      ['gen_ai.agent.version', record.run.webbrainVersion || bundle.exportedByWebBrainVersion],
+      ['gen_ai.agent.name', 'Since Toggle'],
+      ['gen_ai.agent.version', record.run.sincetoggleVersion || bundle.exportedBySince ToggleVersion],
       ['gen_ai.provider.name', record.run.providerId],
       ['gen_ai.request.model', record.run.model],
       ['gen_ai.conversation.id', record.sessionId],
       ['gen_ai.usage.input_tokens', record.run.totalInputTokens],
       ['gen_ai.usage.output_tokens', record.run.totalOutputTokens],
-      ['webbrain.run.id', record.run.runId],
-      ['webbrain.run.status', record.run.status],
+      ['sincetoggle.run.id', record.run.runId],
+      ['sincetoggle.run.status', record.run.status],
       ...lineageAttributes(record),
       ...contentAttributes(record.run, includeContent),
     ]),
@@ -484,10 +484,10 @@ function bundleRunSpan(record, bundle, includeContent) {
     const { parent, sessionId } = record.crossSessionParent;
     span.links = [{
       traceId: sessionTraceId(sessionId),
-      spanId: parent?.spanId || stableHex(`webbrain:run:${record.parentRunId}`, 16),
+      spanId: parent?.spanId || stableHex(`sincetoggle:run:${record.parentRunId}`, 16),
       attributes: attributes([
-        ['webbrain.parent.run.id', record.parentRunId],
-        ['webbrain.parent.session.id', sessionId],
+        ['sincetoggle.parent.run.id', record.parentRunId],
+        ['sincetoggle.parent.session.id', sessionId],
       ]),
     }];
   }
@@ -506,16 +506,16 @@ function sessionBundleToOtlp(bundle, includeContent) {
     resourceSpans: [...groups.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([sessionId, sessionRecords]) => ({
       resource: {
         attributes: attributes([
-          ['service.name', 'webbrain'],
-          ['service.version', bundle.exportedByWebBrainVersion],
-          ['webbrain.session.id', sessionId],
+          ['service.name', 'sincetoggle'],
+          ['service.version', bundle.exportedBySince ToggleVersion],
+          ['sincetoggle.session.id', sessionId],
         ]),
       },
       scopeSpans: [{
         scope: {
-          name: 'webbrain.trace-export',
-          ...(bundle.exportedByWebBrainVersion
-            ? { version: String(bundle.exportedByWebBrainVersion) }
+          name: 'sincetoggle.trace-export',
+          ...(bundle.exportedBySince ToggleVersion
+            ? { version: String(bundle.exportedBySince ToggleVersion) }
             : {}),
         },
         spans: sessionRecords
@@ -533,8 +533,8 @@ export function traceExportToOtlp(input, { includeContent = false } = {}) {
   const [{ run, events: rawEvents }] = bundle.runs;
   const events = sortedEvents(rawEvents);
   const { runStart, runEnd } = runBounds(run, events, bundle.exportedAt);
-  const traceId = stableHex(`webbrain:${run.runId || runStart}`, 32);
-  const rootSpanId = stableHex(`webbrain:${run.runId || runStart}:root`, 16);
+  const traceId = stableHex(`sincetoggle:${run.runId || runStart}`, 32);
+  const rootSpanId = stableHex(`sincetoggle:${run.runId || runStart}:root`, 16);
   const context = { run, runStart, traceId, rootSpanId };
   const hasError = ['error', 'failed', 'loop_stopped'].includes(String(run.status || '').toLowerCase())
     || events.some((event) => event.kind === 'error');
@@ -542,21 +542,21 @@ export function traceExportToOtlp(input, { includeContent = false } = {}) {
   const root = {
     traceId,
     spanId: rootSpanId,
-    name: 'invoke_agent WebBrain',
+    name: 'invoke_agent Since Toggle',
     kind: SPAN_KIND_INTERNAL,
     startTimeUnixNano: unixNano(runStart),
     endTimeUnixNano: unixNano(runEnd),
     attributes: attributes([
       ['gen_ai.operation.name', 'invoke_agent'],
-      ['gen_ai.agent.name', 'WebBrain'],
-      ['gen_ai.agent.version', run.webbrainVersion || input.exportedByWebBrainVersion],
+      ['gen_ai.agent.name', 'Since Toggle'],
+      ['gen_ai.agent.version', run.sincetoggleVersion || input.exportedBySince ToggleVersion],
       ['gen_ai.provider.name', run.providerId],
       ['gen_ai.request.model', run.model],
       ['gen_ai.conversation.id', run.conversationId],
       ['gen_ai.usage.input_tokens', run.totalInputTokens],
       ['gen_ai.usage.output_tokens', run.totalOutputTokens],
-      ['webbrain.run.id', run.runId],
-      ['webbrain.run.status', run.status],
+      ['sincetoggle.run.id', run.runId],
+      ['sincetoggle.run.status', run.status],
       ...contentAttributes(run, includeContent),
     ]),
     events: rootEvents(events, includeContent, runStart),
@@ -572,15 +572,15 @@ export function traceExportToOtlp(input, { includeContent = false } = {}) {
     resourceSpans: [{
       resource: {
         attributes: attributes([
-          ['service.name', 'webbrain'],
-          ['service.version', run.webbrainVersion || input.exportedByWebBrainVersion],
+          ['service.name', 'sincetoggle'],
+          ['service.version', run.sincetoggleVersion || input.exportedBySince ToggleVersion],
         ]),
       },
       scopeSpans: [{
         scope: {
-          name: 'webbrain.trace-export',
-          ...(input.exportedByWebBrainVersion
-            ? { version: String(input.exportedByWebBrainVersion) }
+          name: 'sincetoggle.trace-export',
+          ...(input.exportedBySince ToggleVersion
+            ? { version: String(input.exportedBySince ToggleVersion) }
             : {}),
         },
         spans: [root, ...childSpans],

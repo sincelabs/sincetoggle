@@ -19,4 +19,4 @@ But for the small-model distillation slot, we're sticking with Gemma 4-E2B. Two 
 
 2. Licensing. Gemma 4 just moved to plain Apache 2.0 — no revenue thresholds, no usage caveats. LFM 2.5 ships under the LFM Open License v1.0, which is Apache-2.0-derived but adds one clause: commercial rights terminate once your annual revenue passes $10M USD. Makes complete sense for a young lab without Google-scale backing — calibrated to let hobbyists and pre-revenue startups use it freely while monetizing the enterprise tail. But if you're a startup deciding what to build on, that $10M cliff is a future-self problem worth thinking about now.
 
-Full write-up → https://www.webbrain.one/blog/liquid-lfm25-tool-calling
+Full write-up → https://www.sincetoggle.one/blog/liquid-lfm25-tool-calling

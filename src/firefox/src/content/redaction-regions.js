@@ -13,8 +13,8 @@
  */
 (function () {
   'use strict';
-  if (globalThis.__webbrain_redaction_regions_injected) return;
-  globalThis.__webbrain_redaction_regions_injected = true;
+  if (globalThis.__sincetoggle_redaction_regions_injected) return;
+  globalThis.__sincetoggle_redaction_regions_injected = true;
 
   const runtime = globalThis.browser?.runtime || globalThis.chrome?.runtime;
   if (!runtime?.onMessage) return;
@@ -200,7 +200,7 @@
           && !String(sandboxValue).toLowerCase().split(/\s+/).includes('allow-same-origin');
       };
       const onMessage = event => {
-        if (event?.data?.__webbrainExactFrameRectToken !== token) return;
+        if (event?.data?.__sincetoggleExactFrameRectToken !== token) return;
         const frame = reachableFrames()
           .find(candidate => candidate.contentWindow === event.source);
         if (!frame) return;
@@ -280,7 +280,7 @@
     if (!token || window.parent === window) return { announced: false };
     try {
       window.parent.postMessage(
-        { __webbrainExactFrameRectToken: token },
+        { __sincetoggleExactFrameRectToken: token },
         parentOrigin || '*',
       );
       return { announced: true };

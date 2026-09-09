@@ -1,10 +1,10 @@
-# WebBrain 架构
+# Since Toggle 架构
 
 > 版本 25.7.12
 
 ## 概述
 
-WebBrain 是一个浏览器扩展，让 LLM 能够控制用户当前活动的浏览器标签页。用户在侧面板中输入自然语言指令，自主代理循环调用 LLM，执行工具调用（点击、输入、导航、读取页面状态等），将结果反馈给 LLM，并重复此过程直到任务完成。
+Since Toggle 是一个浏览器扩展，让 LLM 能够控制用户当前活动的浏览器标签页。用户在侧面板中输入自然语言指令，自主代理循环调用 LLM，执行工具调用（点击、输入、导航、读取页面状态等），将结果反馈给 LLM，并重复此过程直到任务完成。
 
 有两个构建版本共享几乎相同的代码：
 - **Chrome** — Manifest V3，Service Worker，基于 CDP 的受信任事件
@@ -78,7 +78,7 @@ WebBrain 是一个浏览器扩展，让 LLM 能够控制用户当前活动的浏
 1. **路由消息** 在侧面板、内容脚本和代理之间
 2. **管理代理生命周期**：`chat` / `chat_stream` / `continue` / `abort` / `clear_conversation`
 3. **管理提供商配置**：加载、保存、测试、切换活动提供商
-4. **管理侧面板可见性**：每个窗口的"WebBrain"标签组控制面板启用的位置
+4. **管理侧面板可见性**：每个窗口的"Since Toggle"标签组控制面板启用的位置
 5. **使用 `webRequest` 观察同标签页的 XHR/fetch 请求**，以便循环检测可以在重复 UI 点击触发相同后台请求时建议精确的 `fetch_url` 快捷方式
 6. **暴露 Claude OAuth**、标签页录制、CAPTCHA 和其他子功能作为消息处理器
 
@@ -191,12 +191,12 @@ while (steps < maxSteps) {
 
 ### 步骤 6a：技能与动态工具暴露
 
-技能（`skills.js`）会规范每个技能，并为规划器和保留工具 `load_skill` 生成同一个 `{id, name, summary, intents}` 路由目录。可选的 `webbrain-skill` 块最多声明 6 个唯一的小写意图标识符，每个不超过 40 个字符，并符合 `[a-z0-9][a-z0-9_-]*`。这些意图是与语言无关的语义路由提示，不是必须逐字匹配的关键词或子字符串；未声明意图的技能不会被自动推断标签。导入的 Agent Skills `SKILL.md` 可以用标准 `name` 和 `description` 提供名称及摘要；设置中输入的名称和 `webbrain-skill` 元数据仍然优先。在加载 Markdown 正文前会移除有效的 Agent Skills frontmatter。`webbrain-skill` 和 `webbrain-tools` 清单只从该正文读取，绝不会从 Agent Skills frontmatter 读取。
+技能（`skills.js`）会规范每个技能，并为规划器和保留工具 `load_skill` 生成同一个 `{id, name, summary, intents}` 路由目录。可选的 `sincetoggle-skill` 块最多声明 6 个唯一的小写意图标识符，每个不超过 40 个字符，并符合 `[a-z0-9][a-z0-9_-]*`。这些意图是与语言无关的语义路由提示，不是必须逐字匹配的关键词或子字符串；未声明意图的技能不会被自动推断标签。导入的 Agent Skills `SKILL.md` 可以用标准 `name` 和 `description` 提供名称及摘要；设置中输入的名称和 `sincetoggle-skill` 元数据仍然优先。在加载 Markdown 正文前会移除有效的 Agent Skills frontmatter。`sincetoggle-skill` 和 `sincetoggle-tools` 清单只从该正文读取，绝不会从 Agent Skills frontmatter 读取。
 
 每次运行开始时都不包含完整技能说明或技能工具。目录只暴露 ID、名称、摘要和意图。技能只能根据用户请求或可信的对话上下文激活，不能根据页面、文档、邮件或工具结果中的指令激活。Ask 只看到明确兼容 Ask 的技能，Dev 继承 Act 的可用性，Compact 则没有目录、加载器或技能工具。
 
 技能激活后，仅在当前运行中添加：
-- 提示指令：`buildCustomSkillsPrompt()` 在将技能文本附加到系统提示之前，剥离围栏的 `webbrain-tools` 块。
+- 提示指令：`buildCustomSkillsPrompt()` 在将技能文本附加到系统提示之前，剥离围栏的 `sincetoggle-tools` 块。
 - 工具暴露：`buildSkillToolDefinitions()` 读取清单并在 LLM 调用时附加声明的工具模式，尊重模式和层级。
 
 当前技能工具支持 `kind: "http"` 用于只读 HTTPS GET/POST 集成，以及 `kind: "httpDownloadJob"` 用于短生命周期的 HTTPS POST 任务。
@@ -222,7 +222,7 @@ while (steps < maxSteps) {
 
 可选的行动模式规划门控，启用后在首次浏览器工具调用之前运行。生成结构化的 JSON 方案，包含摘要、具体步骤、记忆策略、调度提示、风险、行动模式和 `skill_ids`。规划器只收到当前模式和层级可用的技能目录；返回的 ID 会按目录校验，并且仅在方案获批后、执行模型首次调用前激活。意图匹配依靠模型的多语言语义理解，不使用字面关键词匹配器或额外的嵌入调用。
 
-每个新轨迹记录都会保存 `webbrainVersion`。`/export` 包含当前清单版本；`/export --traces` 标注导出版本以及每一轮的记录版本，旧轨迹则标为版本不可用。轨迹页面的 JSON 导出增加 `exportedByWebBrainVersion`，同时保留向后兼容的 `webbrain-trace/1` 模式。
+每个新轨迹记录都会保存 `sincetoggleVersion`。`/export` 包含当前清单版本；`/export --traces` 标注导出版本以及每一轮的记录版本，旧轨迹则标为版本不可用。轨迹页面的 JSON 导出增加 `exportedBySince ToggleVersion`，同时保留向后兼容的 `sincetoggle-trace/1` 模式。
 
 ### 定时任务（`scheduler.js`）
 
@@ -299,7 +299,7 @@ Trace 运行时元数据中新增的选区作用域字段只记录作用域策�
 | API 快捷观察器 | `chrome.webRequest` URL/方法缓冲 | `browser.webRequest` URL/方法缓冲 |
 | 斜杠驱动的标签页/屏幕录制 | `chrome.tabCapture` / `getDisplayMedia()` + 离屏 | 不可用 |
 | 侧面板 | `sidePanel` API（MV3） | `sidebar_action`（MV2） |
-| 文件上传 | CDP 路径或 `downloadId` | 通过 `downloadId` 重新获取或使用 WebBrain 文件选择器；不支持任意本地路径 |
+| 文件上传 | CDP 路径或 `downloadId` | 通过 `downloadId` 重新获取或使用 Since Toggle 文件选择器；不支持任意本地路径 |
 
 ---
 

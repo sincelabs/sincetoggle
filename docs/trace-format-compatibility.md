@@ -1,6 +1,6 @@
 # Trace format compatibility
 
-WebBrain trace data has three independent version layers:
+Since Toggle trace data has three independent version layers:
 
 - `DB_VERSION` describes IndexedDB object-store structure and changes only when
   stores or indexes change.
@@ -8,7 +8,7 @@ WebBrain trace data has three independent version layers:
   log. New optional fields and new event kinds are additive and remain at the
   current version. Bump this value only when an existing meaning changes, a
   field becomes required, or `seq`/`ts` semantics change.
-- `schema` describes the JSON export envelope. `webbrain-trace/1` remains the
+- `schema` describes the JSON export envelope. `sincetoggle-trace/1` remains the
   envelope for additive run and event changes. A new schema is reserved for a
   container-shape or semantic break.
 
@@ -30,7 +30,7 @@ perform destructive migration and does not change the default privacy policy.
 
 ## Session bundles
 
-The existing single-run `webbrain-trace/1` shape remains valid. A session bundle
+The existing single-run `sincetoggle-trace/1` shape remains valid. A session bundle
 may carry a `session` identity and a `runs` array containing `{ run, events }`
 entries. Session-aware consumers use persisted `conversationId`, `parentRunId`,
 and `parentSessionId` values; they do not infer lineage from in-memory state.

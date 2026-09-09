@@ -1,19 +1,19 @@
 {
-  "schema": "webbrain-compact-parser-regrade-v2",
+  "schema": "sincetoggle-compact-parser-regrade-v2",
   "createdAt": "2026-09-07T16:51:41.930Z",
   "inferenceRequests": 0,
   "inputSignatureSha256": "98bd2b98db28c4c4241e25760c0fedb0a81d94cd2774f9da6caacfa69483572e",
   "implementation": {
     "regrader": {
-      "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\regrade-compact-parser-v2.mjs",
+      "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\regrade-compact-parser-v2.mjs",
       "sha256": "0a882a5b6a6bbe36a1581f8c64d98467b79496d8644db303d420567981a9e30d"
     },
     "contentParser": {
-      "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\lib\\content-tool-call-parser.mjs",
+      "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\lib\\content-tool-call-parser.mjs",
       "sha256": "479dba3660d7ee168001a854f7b8f871797ac152b31b1367d574b0f27661fdba"
     },
     "grader": {
-      "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\lib\\score.mjs",
+      "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\lib\\score.mjs",
       "sha256": "35297349d3cbdec9ebe290aa8e8941a07b0cde51dd2077f0281266b7180f5cc6"
     }
   },

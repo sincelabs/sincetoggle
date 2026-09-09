@@ -11,7 +11,7 @@
   "firstToolCall": null,
   "toolCallSource": null,
   "finishReason": "stop",
-  "content": "I can't take a screenshot directly, but you can do it yourself right from the WebBrain side panel:\n\n- Type `/screenshot` to capture the **visible viewport** (what you currently see in the browser window).\n- Type `/full-page-screenshot` to capture the **entire page** from top to bottom, including content below the fold.\n\nEither command will insert the screenshot directly into our chat so I can see it and help you with whatever you need next.",
+  "content": "I can't take a screenshot directly, but you can do it yourself right from the Since Toggle side panel:\n\n- Type `/screenshot` to capture the **visible viewport** (what you currently see in the browser window).\n- Type `/full-page-screenshot` to capture the **entire page** from top to bottom, including content below the fold.\n\nEither command will insert the screenshot directly into our chat so I can see it and help you with whatever you need next.",
   "usage": {
     "prompt_tokens": 20571,
     "completion_tokens": 97,

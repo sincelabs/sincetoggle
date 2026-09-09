@@ -1,6 +1,6 @@
 # Prompt-injection defense — how it works & how not to break it
 
-WebBrain's agent acts **inside the user's authenticated browser session**: it
+Since Toggle's agent acts **inside the user's authenticated browser session**: it
 can click, type, navigate, run JS, and submit forms *as the logged-in user*. So
 any text it reads from a web page is **attacker-controllable** — a malicious
 tweet, a shared doc, an email, an issue comment, a PDF. The whole point of the
@@ -82,7 +82,7 @@ Add its name to `UNTRUSTED_CONTENT_TOOLS` in `permission-gate.js` (both builds).
 The exhaustiveness test will fail until every act-mode tool is classified.
 
 For a dynamic skill tool, do not add the name to the static set. Declare
-`"resultPolicy": "untrusted"` in the skill's `webbrain-tools` manifest instead;
+`"resultPolicy": "untrusted"` in the skill's `sincetoggle-tools` manifest instead;
 `agent.js` consults the enabled-skill registry at runtime and applies the same
 wrapper/digest behavior.
 

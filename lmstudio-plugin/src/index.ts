@@ -1,12 +1,12 @@
 /**
  * LM Studio plugin entry — registers web-fetching tools plus, when the
- * WebBrain browser extension is attached, real browser delegation.
+ * Since Toggle browser extension is attached, real browser delegation.
  *
  * Two tiers, deliberately:
  *   - `fetch_url` / `research_url` are pure Node HTTP. They need nothing
  *     installed and work forever, but they have no cookies, no session and
  *     no JavaScript — anything behind a login is invisible to them.
- *   - `browser_task` hands a goal to the WebBrain extension running in the
+ *   - `browser_task` hands a goal to the Since Toggle extension running in the
  *     user's own signed-in browser. It degrades with a clear, actionable
  *     message when no extension is connected rather than failing opaquely.
  *
@@ -169,7 +169,7 @@ const browserTaskTool = tool({
     "If a task keeps running, poll browser_status with its runId. If it needs user " +
     "input, ask the user and forward their answer with browser_respond. If the user " +
     "wants a continuing run stopped, call browser_abort.\n\n" +
-    "Requires the WebBrain extension (https://webbrain.one) on a Chromium browser " +
+    "Requires the Since Toggle extension (https://sincetoggle.one) on a Chromium browser " +
     "(Chrome, Edge, Brave), pointed at this plugin's bridge. Firefox cannot host the " +
     "bridge. If it is not connected the tool returns a hint explaining exactly what to " +
     "do — relay that to the user rather than retrying.",
@@ -202,7 +202,7 @@ const browserTaskTool = tool({
       .boolean()
       .optional()
       .describe(
-        "Lift WebBrain's UI-first rule so it may issue mutating HTTP requests " +
+        "Lift Since Toggle's UI-first rule so it may issue mutating HTTP requests " +
           "directly instead of clicking through the visible interface. Off by " +
           "default and rarely correct. Only valid when mode is 'act'.",
       ),
@@ -216,7 +216,7 @@ const browserTaskTool = tool({
 const browserStatusTool = tool({
   name: "browser_status",
   description:
-    "With no runId, check whether the WebBrain extension is connected to this plugin. " +
+    "With no runId, check whether the Since Toggle extension is connected to this plugin. " +
     "With a runId returned by browser_task or browser_respond, retrieve that run's " +
     "current progress or final result. Poll the existing run instead of starting a " +
     "duplicate task after a timeout.",
@@ -295,7 +295,7 @@ export async function main(ctx: PluginContext): Promise<void> {
     await sharedBridge().ensureStarted();
   } catch (error) {
     console.error(
-      "[webbrain-lmstudio] browser bridge listener could not start:",
+      "[sincetoggle-lmstudio] browser bridge listener could not start:",
       error instanceof Error ? error.message : String(error),
     );
   }

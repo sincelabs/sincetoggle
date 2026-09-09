@@ -107,7 +107,7 @@ function reduceToBudget(messages, maxBytes, state, preserveMessageIndices = []) 
       // authority. Mark it app-owned or the agent's task binding would treat
       // the placeholder as the latest genuine user request after a restart.
       ...(message.role === 'user'
-        ? { webbrainAppOwned: true, webbrainAppOwnedKind: 'session_recovery_placeholder' }
+        ? { sincetoggleAppOwned: true, sincetoggleAppOwnedKind: 'session_recovery_placeholder' }
         : {}),
       content: '[Earlier message omitted from bounded session recovery snapshot.]',
     };

@@ -6,9 +6,9 @@ const TERMINAL_SCHEDULED = new Set(['completed', 'failed', 'cancelled', 'cancele
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export class WebBrainCloudClient {
-  constructor({ apiKey, baseUrl = 'https://webbrain.cloud', fetchImpl = globalThis.fetch }) {
-    if (!apiKey) throw new Error('WEBBRAIN_API_KEY is required.');
+export class Since ToggleCloudClient {
+  constructor({ apiKey, baseUrl = 'https://sincetoggle.cloud', fetchImpl = globalThis.fetch }) {
+    if (!apiKey) throw new Error('SINCETOGGLE_API_KEY is required.');
     this.apiKey = apiKey;
     this.baseUrl = String(baseUrl).replace(/\/$/, '');
     this.fetch = fetchImpl;
@@ -27,7 +27,7 @@ export class WebBrainCloudClient {
     let value;
     try { value = text ? JSON.parse(text) : null; } catch { value = text; }
     if (!response.ok) {
-      const error = new Error(value?.error || `WebBrain Cloud returned HTTP ${response.status}.`);
+      const error = new Error(value?.error || `Since Toggle Cloud returned HTTP ${response.status}.`);
       error.status = response.status;
       error.body = value;
       throw error;
@@ -39,14 +39,14 @@ export class WebBrainCloudClient {
     const response = await this.request('POST', '/api/browser-sessions', {
       type: 'incognito',
       display_name: name,
-      webbrain_config: {
-        schema: 'webbrain-config/1',
+      sincetoggle_config: {
+        schema: 'sincetoggle-config/1',
         settings,
       },
     });
     return {
       ...response.browser_session,
-      webbrain_config_result: response.webbrain_config_result || null,
+      sincetoggle_config_result: response.sincetoggle_config_result || null,
     };
   }
 
@@ -167,7 +167,7 @@ export class WebBrainCloudClient {
 
   async downloadCapture(sessionId, runId, destination, { timeoutMs = 90_000 } = {}) {
     const access = await this.downloadsAccess(sessionId);
-    const expected = `webbrain-ci-${runId}.webm`;
+    const expected = `sincetoggle-ci-${runId}.webm`;
     const deadline = Date.now() + timeoutMs;
     const headers = {
       authorization: `Basic ${Buffer.from(`${access.username}:${access.password}`).toString('base64')}`,
@@ -206,7 +206,7 @@ export class GnippetsE2EClient {
       headers: {
         authorization: `Bearer ${this.controlToken}`,
         accept: 'application/json',
-        'user-agent': 'Mozilla/5.0 (compatible; WebBrainCloudE2E/1.0; +https://webbrain.cloud)',
+        'user-agent': 'Mozilla/5.0 (compatible; Since ToggleCloudE2E/1.0; +https://sincetoggle.cloud)',
         ...(body === undefined ? {} : { 'content-type': 'application/json' }),
       },
       body: body === undefined ? undefined : JSON.stringify(body),

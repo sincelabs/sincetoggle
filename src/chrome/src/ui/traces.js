@@ -828,15 +828,15 @@ document.getElementById('btn-export').addEventListener('click', async () => {
     const payload = buildTraceExportPayload(entries, {
       sessionId,
       exportedAt: Date.now(),
-      exportedByWebBrainVersion: chrome.runtime.getManifest().version || '',
+      exportedBySince ToggleVersion: chrome.runtime.getManifest().version || '',
     });
     const blob = new Blob([JSON.stringify(sanitizeTraceExport(payload), null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = isSession
-      ? `webbrain-session-${safeFilenamePart(sessionId, 'session')}.json`
-      : `webbrain-trace-${run.model || 'unknown'}-${run.runId}.json`;
+      ? `sincetoggle-session-${safeFilenamePart(sessionId, 'session')}.json`
+      : `sincetoggle-trace-${run.model || 'unknown'}-${run.runId}.json`;
     document.body.appendChild(a);
     try {
       a.click();

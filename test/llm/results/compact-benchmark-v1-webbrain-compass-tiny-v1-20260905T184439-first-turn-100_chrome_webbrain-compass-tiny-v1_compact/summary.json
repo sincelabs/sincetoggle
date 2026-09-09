@@ -1,6 +1,6 @@
 {
-  "runTag": "compact-benchmark-v1-webbrain-compass-tiny-v1-20260905T184439-first-turn-100",
-  "model": "webbrain-compass-tiny-v1",
+  "runTag": "compact-benchmark-v1-sincetoggle-compass-tiny-v1-20260905T184439-first-turn-100",
+  "model": "sincetoggle-compass-tiny-v1",
   "browser": "chrome",
   "base": "http://127.0.0.1:8325/v1",
   "saveRequest": false,

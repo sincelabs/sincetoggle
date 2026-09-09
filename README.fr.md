@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="assets/logo-mark.png" alt="Logo WebBrain" width="92">
+  <img src="assets/logo-mark.png" alt="Logo Since Toggle" width="92">
 </p>
 
-<h1 align="center">WebBrain</h1>
+<h1 align="center">Since Toggle</h1>
 
 <p align="center">
   Agent de navigation IA open source pour discuter avec les pages, automatiser les tâches et exécuter des workflows multi-étapes avec le LLM de votre choix.
 </p>
 
 <p align="center">
-  <a href="https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb"><img src="https://img.shields.io/badge/Chrome-Installer-4285F4?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="Installer WebBrain depuis le Chrome Web Store"></a>
-  <a href="https://addons.mozilla.org/en-US/firefox/addon/webbrain/"><img src="https://img.shields.io/badge/Firefox-Installer-FF7139?style=for-the-badge&amp;logo=firefoxbrowser&amp;logoColor=white" alt="Installer WebBrain depuis Firefox Browser Add-ons"></a>
-  <a href="https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo"><img src="https://img.shields.io/badge/Edge-Installer-0A84FF?style=for-the-badge&amp;logo=microsoftedge&amp;logoColor=white" alt="Installer WebBrain depuis Microsoft Edge Add-ons"></a>
+  <a href="https://chromewebstore.google.com/detail/sincetoggle/ljhijonmfahplgbbacgcfnaihbjljhhb"><img src="https://img.shields.io/badge/Chrome-Installer-4285F4?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="Installer Since Toggle depuis le Chrome Web Store"></a>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/sincetoggle/"><img src="https://img.shields.io/badge/Firefox-Installer-FF7139?style=for-the-badge&amp;logo=firefoxbrowser&amp;logoColor=white" alt="Installer Since Toggle depuis Firefox Browser Add-ons"></a>
+  <a href="https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo"><img src="https://img.shields.io/badge/Edge-Installer-0A84FF?style=for-the-badge&amp;logo=microsoftedge&amp;logoColor=white" alt="Installer Since Toggle depuis Microsoft Edge Add-ons"></a>
 </p>
 
 <p align="center">
@@ -19,13 +19,13 @@
   <a href="README.zh-CN.md">中文</a> ·
   <a href="README.fr.md">Français</a> ·
   <a href="docs/fr/">Documentation</a> ·
-  <a href="https://webbrain.one">Site web</a> ·
+  <a href="https://sincetoggle.one">Site web</a> ·
   <a href="LICENSE">GPL-3.0-or-later</a>
 </p>
 
-![WebBrain lit une page, remplit un formulaire et télécharge un fichier](assets/webbrain-demo.gif)
+![Since Toggle lit une page, remplit un formulaire et télécharge un fichier](assets/sincetoggle-demo.gif)
 
-WebBrain est une extension de navigateur qui place un agent IA dans un panneau
+Since Toggle est une extension de navigateur qui place un agent IA dans un panneau
 latéral, à côté de vos onglets. Posez-lui des questions sur la page où vous
 êtes, ou confiez-lui une tâche et laissez-le cliquer, saisir et naviguer pour
 l'accomplir. Il tourne sur le modèle de votre choix — un serveur local
@@ -34,20 +34,20 @@ ne demande aucune configuration.
 
 ## Installation
 
-Installez depuis le [Chrome Web Store](https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb),
-les [modules Firefox](https://addons.mozilla.org/en-US/firefox/addon/webbrain/)
+Installez depuis le [Chrome Web Store](https://chromewebstore.google.com/detail/sincetoggle/ljhijonmfahplgbbacgcfnaihbjljhhb),
+les [modules Firefox](https://addons.mozilla.org/en-US/firefox/addon/sincetoggle/)
 ou les [modules Edge](https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo).
 
 <details>
 <summary><b>Ou chargez-le depuis les sources</b></summary>
 
 ```bash
-git clone https://github.com/webbrain-one/webbrain.git
+git clone https://github.com/sincetoggle-one/sincetoggle.git
 ```
 
 **Chrome** — ouvrez `chrome://extensions/`, activez le **mode développeur** (en
 haut à droite), cliquez sur **Charger l'extension non empaquetée** et
-sélectionnez le dossier `webbrain/src/chrome`.
+sélectionnez le dossier `sincetoggle/src/chrome`.
 
 **Firefox** — ouvrez `about:debugging#/runtime/this-firefox`, cliquez sur
 **Charger un module complémentaire temporaire** et sélectionnez
@@ -59,7 +59,7 @@ redémarrage de Firefox ; une installation permanente nécessite une signature v
 
 ## Utilisation
 
-Cliquez sur l'icône WebBrain pour ouvrir le panneau latéral, puis tapez par
+Cliquez sur l'icône Since Toggle pour ouvrir le panneau latéral, puis tapez par
 exemple :
 
 - « Résume cette page »
@@ -77,10 +77,10 @@ Trois modes contrôlent ce que l'agent a le droit de faire :
 
 ## Choisir un modèle
 
-**WebBrain Compass 1.0** est l'option par défaut : ni clé API, ni configuration
+**Since Toggle Compass 1.0** est l'option par défaut : ni clé API, ni configuration
 locale.
 
-**Les modèles locaux** ne demandent pas non plus de clé API. Pointez WebBrain
+**Les modèles locaux** ne demandent pas non plus de clé API. Pointez Since Toggle
 vers n'importe quel serveur compatible OpenAI :
 
 ```bash
@@ -96,10 +96,10 @@ compatible OpenAI** accepte aussi les passerelles de boucle locale authentifiée
 comme CLIProxyAPI ; consultez la [configuration sécurisée du proxy](docs/fr/providers-and-models.md#exemple-de-proxy-dabonnement-cliproxyapi).
 Chargez un modèle avec **au moins une fenêtre de contexte de
 16k jetons** — 8k ne fonctionne qu'avec le niveau Compact, et 4k est trop petit
-pour le prompt système et les schémas d'outils. WebBrain détecte
+pour le prompt système et les schémas d'outils. Since Toggle détecte
 automatiquement la fenêtre réelle pour llama.cpp, Ollama et LM Studio, et
 compacte la conversation à mesure qu'elle se remplit. Il existe aussi un relais
-`ollama launch webbrain --model <model>` en préversion. Détails :
+`ollama launch sincetoggle --model <model>` en préversion. Détails :
 [fournisseurs et modèles](docs/fr/providers-and-models.md#fournisseurs-locaux).
 
 **API cloud** — OpenAI, Anthropic Claude, Google Gemini, Azure OpenAI, AWS
@@ -141,7 +141,7 @@ d'autres. Les Paramètres embarquent **106 cartes de fournisseurs sur Chromium**
 
 ## Outils de l'agent
 
-WebBrain sépare le **niveau** du **mode**. Le niveau (`compact`, `mid`, `full`)
+Since Toggle sépare le **niveau** du **mode**. Le niveau (`compact`, `mid`, `full`)
 est un réglage par fournisseur contrôlant le nombre d'outils que le modèle voit
 — Compact convient aux petits modèles locaux, Full débloque hover, drag-drop,
 frames et shadow DOM. Le mode (`ask`, `act`, `dev`) contrôle ce que
@@ -180,7 +180,7 @@ capture d'exécution : [commandes slash](docs/fr/slash-commands.md).
 ## Raccourcis clavier
 
 Les raccourcis du panneau latéral Chrome fonctionnent lorsque le panneau latéral
-WebBrain a le focus.
+Since Toggle a le focus.
 
 | Raccourci | Ce qu'il fait |
 |----------|--------------|
@@ -189,7 +189,7 @@ WebBrain a le focus.
 | `Ctrl+Shift+X` ou `Cmd+Shift+X` | Passer en mode Act |
 | `Ctrl+Shift+D` ou `Cmd+Shift+D` | Passer en mode Dev |
 | `Escape` | Arrêter l'exécution active, sauf s'il ne fait que fermer l'autocomplétion des commandes slash |
-| `Escape` deux fois | Arrêter un enregistrement actif depuis WebBrain ou une page du navigateur |
+| `Escape` deux fois | Arrêter un enregistrement actif depuis Since Toggle ou une page du navigateur |
 
 ## Documentation
 
@@ -205,7 +205,7 @@ WebBrain a le focus.
 | [Confidentialité et flux de données](docs/fr/privacy-and-data-flow.md) | Ce qui quitte le navigateur, et ce qui reste |
 | [Arbre d'accessibilité et refs](docs/fr/accessibility-tree-and-refs.md) | Comment les pages sont lues et ciblées |
 | [Adaptateurs de sites](docs/fr/site-adapters.md) | Consignes par site |
-| [Export and workflow formats](docs/export-and-workflow-formats.md) | `webbrain-config/1`, `webbrain-workflow/1` (en anglais) |
+| [Export and workflow formats](docs/export-and-workflow-formats.md) | `sincetoggle-config/1`, `sincetoggle-workflow/1` (en anglais) |
 | [Ajouter un outil](docs/fr/adding-a-tool.md) · [Localisation](docs/fr/localization.md) · [Scénarios de test](docs/fr/test-scenarios.md) | Guides pour contributeurs |
 
 Également disponible en [English](docs/) et [中文](docs/zh-CN/).
@@ -254,12 +254,12 @@ Les changements récents sont dans [CHANGELOG.md](CHANGELOG.md).
 
 `fetch_url` et `research_url` sont également fournis comme plugin
 [LM Studio](https://lmstudio.ai) autonome sur
-[`webbrain/web-tools`](https://lmstudio.ai/webbrain/web-tools), pour utiliser des
+[`sincetoggle/web-tools`](https://lmstudio.ai/sincetoggle/web-tools), pour utiliser des
 outils de récupération web dans les chats LM Studio sans l'extension de
 navigateur. Pur Node, sans navigateur sans interface.
 
 ```bash
-lms clone webbrain/web-tools
+lms clone sincetoggle/web-tools
 ```
 
 Source : [`lmstudio-plugin/`](lmstudio-plugin/).
@@ -267,25 +267,25 @@ Source : [`lmstudio-plugin/`](lmstudio-plugin/).
 
 ## Contributeurs
 
-<a href="https://github.com/webbrain-one/webbrain/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=webbrain-one/webbrain" />
+<a href="https://github.com/sincetoggle-one/sincetoggle/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=sincetoggle-one/sincetoggle" />
 </a>
 
 ## Citation
 
 ```bibtex
-@software{webbrain2026,
+@software{sincetoggle2026,
   author = {Sokullu, Emre},
-  title = {WebBrain : Agent de navigation IA open source pour discuter avec les pages},
+  title = {Since Toggle : Agent de navigation IA open source pour discuter avec les pages},
   year = {2026},
   publisher = {GitHub},
-  url = {https://github.com/webbrain-one/webbrain}
+  url = {https://github.com/sincetoggle-one/sincetoggle}
 }
 ```
 
 ## Licence
 
-WebBrain 33.0.0 et les versions ultérieures sont distribués sous
+Since Toggle 33.0.0 et les versions ultérieures sont distribués sous
 [GPL-3.0-or-later](LICENSE), car l’extension de navigateur distribuée intègre
 le runtime WebAssembly Xapian/libzim sous GPL. Les versions antérieures à
 33.0.0 restent sous la licence MIT applicable lors de leur publication ; ce

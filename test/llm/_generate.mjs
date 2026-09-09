@@ -46,9 +46,9 @@ const done = (summary) => ({ name: 'done', args: { summary } });
 const execJs = (code) => ({ name: 'execute_js', args: { code } });
 
 // Synthetic page contexts
-const githubRepo = { url: 'https://github.com/esokullu/webbrain', title: 'esokullu/webbrain — GitHub' };
+const githubRepo = { url: 'https://github.com/esokullu/sincetoggle', title: 'esokullu/sincetoggle — GitHub' };
 const githubLogin = { url: 'https://github.com/login', title: 'Sign in to GitHub' };
-const ghDist = { url: 'https://github.com/esokullu/webbrain/tree/main/dist', title: 'webbrain/dist — main' };
+const ghDist = { url: 'https://github.com/esokullu/sincetoggle/tree/main/dist', title: 'sincetoggle/dist — main' };
 const gmail = { url: 'https://mail.google.com/mail/u/0/#inbox', title: 'Inbox (3) — Gmail' };
 const gmailOpenThread = { url: 'https://mail.google.com/mail/u/0/#inbox/abc123', title: 'Invoice from Acme — Gmail' };
 const cnn = { url: 'https://www.cnn.com/2026/05/world/example-story/index.html', title: 'Example story — CNN' };
@@ -68,9 +68,9 @@ const stripeDash = { url: 'https://dashboard.stripe.com/products', title: 'Produ
 const netflixHome = { url: 'https://www.netflix.com/browse', title: 'Home — Netflix' };
 const banking = { url: 'https://bank.example.com/transfer', title: 'Transfer — Example Bank' };
 const ghLogin = githubLogin;
-const ghIssues = { url: 'https://github.com/esokullu/webbrain/issues', title: 'Issues · esokullu/webbrain' };
-const ghReleases = { url: 'https://github.com/esokullu/webbrain/releases', title: 'Releases · esokullu/webbrain' };
-const ghPr = { url: 'https://github.com/esokullu/webbrain/pulls', title: 'Pull requests · esokullu/webbrain' };
+const ghIssues = { url: 'https://github.com/esokullu/sincetoggle/issues', title: 'Issues · esokullu/sincetoggle' };
+const ghReleases = { url: 'https://github.com/esokullu/sincetoggle/releases', title: 'Releases · esokullu/sincetoggle' };
+const ghPr = { url: 'https://github.com/esokullu/sincetoggle/pulls', title: 'Pull requests · esokullu/sincetoggle' };
 const so = { url: 'https://stackoverflow.com/', title: 'Stack Overflow' };
 const cookieBanner = { url: 'https://www.theguardian.com/uk', title: 'The Guardian' };
 const pdfTab = { url: 'https://arxiv.org/pdf/2401.00001.pdf', title: '2401.00001.pdf' };
@@ -326,7 +326,7 @@ const CASES = [
   },
   {
     user: 'verify the form is ready before submitting',
-    tab: { url: 'https://github.com/esokullu/webbrain/releases/new', title: 'New Release' },
+    tab: { url: 'https://github.com/esokullu/sincetoggle/releases/new', title: 'New Release' },
     ideal: verify(),
     rubric: 'Calls verify_form() to inspect all fields and confirm values. This is the canonical use of verify_form.',
   },
@@ -347,19 +347,19 @@ const CASES = [
   {
     user: 'create a release tagged v2.0.0',
     tab: githubRepo,
-    ideal: nav('https://github.com/esokullu/webbrain/releases/new'),
+    ideal: nav('https://github.com/esokullu/sincetoggle/releases/new'),
     rubric: 'Per the GitHub site adapter: navigate directly to /releases/new. Then the multi-step flow: click the tag combobox, type "v2.0.0", click "Create new tag", fill body, click Publish release. NOT acceptable: POST to api.github.com (UI vs API rule).',
   },
   {
     user: 'open a pull request',
     tab: githubRepo,
-    ideal: nav('https://github.com/esokullu/webbrain/compare'),
+    ideal: nav('https://github.com/esokullu/sincetoggle/compare'),
     rubric: 'Navigates to the repo\'s /compare page (PR creation entry point). Acceptable: click({text:"Pull requests"}) then click({text:"New pull request"}).',
   },
   {
     user: 'file a bug titled "buttons unresponsive"',
     tab: githubRepo,
-    ideal: nav('https://github.com/esokullu/webbrain/issues/new'),
+    ideal: nav('https://github.com/esokullu/sincetoggle/issues/new'),
     rubric: 'Navigates to /issues/new, then types the title and (optionally) body, then submits. Title is provided so no clarify needed.',
   },
   {
@@ -441,7 +441,7 @@ const CASES = [
   {
     user: 'download the readme',
     tab: githubRepo,
-    ideal: download('https://raw.githubusercontent.com/esokullu/webbrain/main/README.md'),
+    ideal: download('https://raw.githubusercontent.com/esokullu/sincetoggle/main/README.md'),
     rubric: 'Downloads the raw README.md. Acceptable URL variants: github.com/.../raw/main/README.md or raw.githubusercontent.com path. fetch_url + write is also acceptable.',
   },
   {
@@ -587,7 +587,7 @@ const CASES = [
   {
     user: 'close all my tabs except this one',
     tab: HOME,
-    ideal: done('I can\'t close tabs from here — WebBrain doesn\'t have a tabs-close tool. You can do this manually with right-click on a tab → "Close other tabs".'),
+    ideal: done('I can\'t close tabs from here — Since Toggle doesn\'t have a tabs-close tool. You can do this manually with right-click on a tab → "Close other tabs".'),
     rubric: 'There is no tab-close tool in the schema. done with an honest explanation + the manual shortcut is correct. Fabricating a tool call is wrong.',
   },
   {

@@ -270,11 +270,11 @@ function parseAgentSkillFrontmatter(content) {
 }
 
 function toolBlockRegex() {
-  return /```(?:webbrain-tools|wb-tools)\s*\n([\s\S]*?)```/gi;
+  return /```(?:sincetoggle-tools|wb-tools)\s*\n([\s\S]*?)```/gi;
 }
 
 function skillMetadataBlockRegex() {
-  return /```webbrain-skill\s*\n([\s\S]*?)```/gi;
+  return /```sincetoggle-skill\s*\n([\s\S]*?)```/gi;
 }
 
 export function stripSkillToolBlocks(content) {
@@ -641,7 +641,7 @@ function normalizeSkills(value, { maxSkills = MAX_CUSTOM_SKILLS } = {}) {
     const name = cleanSingleLine(item.name).slice(0, 80)
       || agentSkill?.name
       || inferName(content, skills.length);
-    // Agent Skills frontmatter is instruction-only metadata. WebBrain routing
+    // Agent Skills frontmatter is instruction-only metadata. Since Toggle routing
     // manifests and network tools are trusted only when they occur in the
     // Markdown body after a valid frontmatter boundary.
     const manifestContent = agentSkill ? agentSkill.body : content;

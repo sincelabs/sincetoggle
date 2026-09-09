@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Convert a Traces-page `webbrain-trace/1` JSON export to ATIF v1.7.
+ * Convert a Traces-page `sincetoggle-trace/1` JSON export to ATIF v1.7.
  *
  * This deliberately stays offline and dependency-free. Screenshots and verbose
  * diagnostic events are counted but not copied because ATIF represents images
@@ -13,7 +13,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
-const SOURCE_SCHEMA = 'webbrain-trace/1';
+const SOURCE_SCHEMA = 'sincetoggle-trace/1';
 const ATIF_SCHEMA_VERSION = 'ATIF-v1.7';
 
 function isObject(value) {
@@ -78,10 +78,10 @@ function resultContent(value) {
 function usageMetrics(usage) {
   if (!isObject(usage)) return undefined;
   const extra = {};
-  // WebBrain records provider-native cost. Some providers report USD, while
+  // Since Toggle records provider-native cost. Some providers report USD, while
   // others do not guarantee a currency, so never mislabel it as ATIF cost_usd.
   const reportedCost = finiteNumber(usage.cost);
-  if (reportedCost !== undefined) extra.webbrain_reported_cost = reportedCost;
+  if (reportedCost !== undefined) extra.sincetoggle_reported_cost = reportedCost;
   const metrics = compactObject({
     prompt_tokens: finiteNumber(usage.prompt_tokens),
     completion_tokens: finiteNumber(usage.completion_tokens),
@@ -104,22 +104,22 @@ function sameToolName(left, right) {
   return String(left || '') === String(right || '');
 }
 
-export function webbrainTraceToAtif(input) {
-  if (!isObject(input)) throw new TypeError('WebBrain trace export must be an object.');
+export function sincetoggleTraceToAtif(input) {
+  if (!isObject(input)) throw new TypeError('Since Toggle trace export must be an object.');
   if (input.schema !== SOURCE_SCHEMA) {
     throw new TypeError(`Expected schema "${SOURCE_SCHEMA}".`);
   }
-  if (Array.isArray(input.runs)) return webbrainTraceBundleToAtif(input);
-  if (!isObject(input.run)) throw new TypeError('WebBrain trace run must be an object.');
-  if (!Array.isArray(input.events)) throw new TypeError('WebBrain trace events must be an array.');
+  if (Array.isArray(input.runs)) return sincetoggleTraceBundleToAtif(input);
+  if (!isObject(input.run)) throw new TypeError('Since Toggle trace run must be an object.');
+  if (!Array.isArray(input.events)) throw new TypeError('Since Toggle trace events must be an array.');
   if (typeof input.run.runId !== 'string' || !input.run.runId.trim()) {
-    throw new TypeError('WebBrain trace run.runId must be a non-empty string.');
+    throw new TypeError('Since Toggle trace run.runId must be a non-empty string.');
   }
 
   const run = input.run;
   const runId = String(run.runId).trim();
   const version = String(
-    run.webbrainVersion || input.exportedByWebBrainVersion || 'unknown',
+    run.sincetoggleVersion || input.exportedBySince ToggleVersion || 'unknown',
   );
   const steps = [];
   const omittedEventCounts = {};
@@ -152,7 +152,7 @@ export function webbrainTraceToAtif(input) {
         ? data.toolCalls.map((call, index) => {
           const parsed = parseArguments(call?.args);
           const recordedId = String(call?.id || '').trim();
-          const fallbackId = `webbrain-${runId}-${eventSeq ?? 'unknown'}-${index + 1}`;
+          const fallbackId = `sincetoggle-${runId}-${eventSeq ?? 'unknown'}-${index + 1}`;
           const toolCallId = recordedId && !allocatedToolCallIds.has(recordedId)
             ? recordedId
             : fallbackId;
@@ -167,8 +167,8 @@ export function webbrainTraceToAtif(input) {
         : [];
       const message = String(data.content || '');
       const extra = compactObject({
-        webbrain_seq: eventSeq,
-        webbrain_step: finiteNumber(data.step),
+        sincetoggle_seq: eventSeq,
+        sincetoggle_step: finiteNumber(data.step),
         phase: data.phase ? String(data.phase) : undefined,
         latency_ms: finiteNumber(data.latencyMs),
       });
@@ -184,7 +184,7 @@ export function webbrainTraceToAtif(input) {
       });
       pendingAgent = {
         step,
-        webbrainStep: finiteNumber(data.step),
+        sincetoggleStep: finiteNumber(data.step),
         usedCallIds: new Set(),
       };
       if (message.trim()) lastAgentMessage = message.trim();
@@ -197,14 +197,14 @@ export function webbrainTraceToAtif(input) {
         !pendingAgent.usedCallIds.has(call.tool_call_id)
         && sameToolName(call.function_name, toolName)
         && (
-          pendingAgent.webbrainStep === undefined
+          pendingAgent.sincetoggleStep === undefined
           || finiteNumber(data.step) === undefined
-          || pendingAgent.webbrainStep === finiteNumber(data.step)
+          || pendingAgent.sincetoggleStep === finiteNumber(data.step)
         )
       ));
       const observationExtra = compactObject({
         latency_ms: finiteNumber(data.latencyMs),
-        webbrain_seq: eventSeq,
+        sincetoggle_seq: eventSeq,
       });
       if (pendingCall) {
         pendingAgent.usedCallIds.add(pendingCall.tool_call_id);
@@ -218,16 +218,16 @@ export function webbrainTraceToAtif(input) {
       }
 
       const parsed = parseArguments(data.args);
-      let toolCallId = `webbrain-${runId}-${eventSeq ?? steps.length + 1}-1`;
+      let toolCallId = `sincetoggle-${runId}-${eventSeq ?? steps.length + 1}-1`;
       let suffix = 2;
       while (allocatedToolCallIds.has(toolCallId)) {
-        toolCallId = `webbrain-${runId}-${eventSeq ?? steps.length + 1}-${suffix}`;
+        toolCallId = `sincetoggle-${runId}-${eventSeq ?? steps.length + 1}-${suffix}`;
         suffix += 1;
       }
       allocatedToolCallIds.add(toolCallId);
       const stepExtra = compactObject({
-        webbrain_seq: eventSeq,
-        webbrain_step: finiteNumber(data.step),
+        sincetoggle_seq: eventSeq,
+        sincetoggle_step: finiteNumber(data.step),
       });
       appendStep({
         timestamp: timestamp(event.ts),
@@ -255,14 +255,14 @@ export function webbrainTraceToAtif(input) {
 
     if (event.kind === 'error') {
       const errorExtra = compactObject({
-        webbrain_seq: eventSeq,
-        webbrain_step: finiteNumber(data.step),
+        sincetoggle_seq: eventSeq,
+        sincetoggle_step: finiteNumber(data.step),
         phase: data.phase ? String(data.phase) : undefined,
       });
       appendStep({
         timestamp: timestamp(event.ts),
         source: 'system',
-        message: 'WebBrain runtime error',
+        message: 'Since Toggle runtime error',
         observation: {
           results: [{ content: String(data.message || 'Unknown error') }],
         },
@@ -282,7 +282,7 @@ export function webbrainTraceToAtif(input) {
       timestamp: timestamp(run.endedAt),
       source: 'agent',
       message: finalContent,
-      extra: { webbrain_final_content: true },
+      extra: { sincetoggle_final_content: true },
     });
   }
 
@@ -294,8 +294,8 @@ export function webbrainTraceToAtif(input) {
   const rootExtra = compactObject({
     source_schema: SOURCE_SCHEMA,
     source_exported_at: timestamp(input.exportedAt),
-    source_exported_by_webbrain_version: input.exportedByWebBrainVersion
-      ? String(input.exportedByWebBrainVersion)
+    source_exported_by_sincetoggle_version: input.exportedBySince ToggleVersion
+      ? String(input.exportedBySince ToggleVersion)
       : undefined,
     status: run.status ? String(run.status) : undefined,
     tab_url: run.tabUrl ? String(run.tabUrl) : undefined,
@@ -315,7 +315,7 @@ export function webbrainTraceToAtif(input) {
     session_id: runId,
     trajectory_id: runId,
     agent: compactObject({
-      name: 'webbrain',
+      name: 'sincetoggle',
       version,
       model_name: run.model ? String(run.model) : undefined,
       extra: Object.keys(agentExtra).length ? agentExtra : undefined,
@@ -345,12 +345,12 @@ function appendBundleSteps(target, trajectory, runId, allocatedToolCallIds) {
       step_id: target.length + 1,
       extra: {
         ...(sourceStep.extra || {}),
-        webbrain_run_id: runId,
+        sincetoggle_run_id: runId,
       },
     };
     if (Array.isArray(sourceStep.tool_calls)) {
       step.tool_calls = sourceStep.tool_calls.map((call) => {
-        const originalId = String(call.tool_call_id || 'webbrain-call');
+        const originalId = String(call.tool_call_id || 'sincetoggle-call');
         let toolCallId = originalId;
         if (allocatedToolCallIds.has(toolCallId)) {
           const stem = `${originalId}-${runId}`;
@@ -383,20 +383,20 @@ function appendBundleSteps(target, trajectory, runId, allocatedToolCallIds) {
   }
 }
 
-function webbrainTraceBundleToAtif(input) {
+function sincetoggleTraceBundleToAtif(input) {
   const sessionId = isObject(input.session) && typeof input.session.sessionId === 'string'
     ? input.session.sessionId.trim()
     : '';
   if (!sessionId) {
-    throw new TypeError('WebBrain trace bundle session.sessionId must be a non-empty string.');
+    throw new TypeError('Since Toggle trace bundle session.sessionId must be a non-empty string.');
   }
   if (input.runs.length === 0) {
-    throw new TypeError('WebBrain trace bundle runs must be a non-empty array.');
+    throw new TypeError('Since Toggle trace bundle runs must be a non-empty array.');
   }
 
   const entries = input.runs.map((entry, index) => {
     if (!isObject(entry)) {
-      throw new TypeError(`WebBrain trace bundle entry ${index} must be an object.`);
+      throw new TypeError(`Since Toggle trace bundle entry ${index} must be an object.`);
     }
     return entry;
   }).sort((left, right) => {
@@ -408,10 +408,10 @@ function webbrainTraceBundleToAtif(input) {
 
   const trajectories = entries.map((entry) => ({
     runId: String(entry.run?.runId || '').trim(),
-    trajectory: webbrainTraceToAtif({
+    trajectory: sincetoggleTraceToAtif({
       schema: input.schema,
       exportedAt: input.exportedAt,
-      exportedByWebBrainVersion: input.exportedByWebBrainVersion,
+      exportedBySince ToggleVersion: input.exportedBySince ToggleVersion,
       run: entry.run,
       events: entry.events,
     }),
@@ -427,13 +427,13 @@ function webbrainTraceBundleToAtif(input) {
   const providerClasses = uniqueValues(trajectories.map(({ trajectory }) => trajectory.agent.extra?.provider_class));
   const modes = uniqueValues(trajectories.map(({ trajectory }) => trajectory.agent.extra?.mode));
   const agentExtra = compactObject({
-    webbrain_run_count: trajectories.length,
+    sincetoggle_run_count: trajectories.length,
     provider_id: providerIds.length === 1 ? providerIds[0] : undefined,
     provider_class: providerClasses.length === 1 ? providerClasses[0] : undefined,
     mode: modes.length === 1 ? modes[0] : undefined,
   });
   const version = String(
-    input.exportedByWebBrainVersion || trajectories[0].trajectory.agent.version || 'unknown',
+    input.exportedBySince ToggleVersion || trajectories[0].trajectory.agent.version || 'unknown',
   );
 
   return {
@@ -441,7 +441,7 @@ function webbrainTraceBundleToAtif(input) {
     session_id: sessionId,
     trajectory_id: sessionId,
     agent: compactObject({
-      name: 'webbrain',
+      name: 'sincetoggle',
       version,
       model_name: models.length === 1 ? models[0] : undefined,
       extra: agentExtra,
@@ -455,8 +455,8 @@ function webbrainTraceBundleToAtif(input) {
     extra: compactObject({
       source_schema: SOURCE_SCHEMA,
       source_exported_at: timestamp(input.exportedAt),
-      source_exported_by_webbrain_version: input.exportedByWebBrainVersion
-        ? String(input.exportedByWebBrainVersion)
+      source_exported_by_sincetoggle_version: input.exportedBySince ToggleVersion
+        ? String(input.exportedBySince ToggleVersion)
         : undefined,
       source_session_id: sessionId,
       source_run_count: trajectories.length,
@@ -471,7 +471,7 @@ async function main(argv) {
     throw new Error('Usage: node scripts/trace-to-atif.mjs <trace.json> [trajectory.json|-]');
   }
   const raw = await fs.readFile(inputPath, 'utf8');
-  const trajectory = webbrainTraceToAtif(JSON.parse(raw));
+  const trajectory = sincetoggleTraceToAtif(JSON.parse(raw));
   const serialized = `${JSON.stringify(trajectory, null, 2)}\n`;
   if (outputPath === '-') {
     process.stdout.write(serialized);

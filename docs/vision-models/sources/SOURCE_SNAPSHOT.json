@@ -6,7 +6,7 @@
   "snapshot_kind": "base_commit_plus_working_tree_changes",
   "published_sglang_sync": {
     "synced_at": "2026-08-04",
-    "source_repository": "webbrain-one/DeepSeek-V4-Flash-Vision-NVFP4",
+    "source_repository": "sincetoggle-one/DeepSeek-V4-Flash-Vision-NVFP4",
     "nvfp4": {
       "fix_parent_revision": "e50f91a535bfad0e6fdd69a9a7920ed8b401cf65",
       "working_fix_revision": "5a882728507b78fe355e0eddbb875834ac979d1a",

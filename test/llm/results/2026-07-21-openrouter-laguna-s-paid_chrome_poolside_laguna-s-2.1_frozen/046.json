@@ -3,8 +3,8 @@
   "user": "fork it",
   "mode": "act",
   "tab": {
-    "url": "https://github.com/esokullu/webbrain",
-    "title": "esokullu/webbrain — GitHub"
+    "url": "https://github.com/esokullu/sincetoggle",
+    "title": "esokullu/sincetoggle — GitHub"
   },
   "latencyMs": 1202,
   "error": null,
@@ -16,7 +16,7 @@
   },
   "toolCallSource": "tool_calls",
   "finishReason": "tool_calls",
-  "content": "I'll fork the esokullu/webbrain repository for you. Let me start by reading the current page to find the fork button.",
+  "content": "I'll fork the esokullu/sincetoggle repository for you. Let me start by reading the current page to find the fork button.",
   "usage": {
     "prompt_tokens": 17513,
     "completion_tokens": 121,

@@ -19,8 +19,8 @@ import {
 } from './offline-rag.js';
 
 const MODEL_CACHE_NAME = 'transformers-cache';
-const MODEL_MARKER_URL = `https://webbrain.one/.well-known/offline-e5-ready/${encodeURIComponent(E5_MODEL_VERSION)}`;
-const VECTOR_DB_NAME = 'webbrain_offline_rag_vectors';
+const MODEL_MARKER_URL = `https://sincetoggle.one/.well-known/offline-e5-ready/${encodeURIComponent(E5_MODEL_VERSION)}`;
+const VECTOR_DB_NAME = 'sincetoggle_offline_rag_vectors';
 const VECTOR_DB_VERSION = 1;
 const VECTOR_STORE = 'vectors';
 const VECTOR_META_STORE = 'vectorMetadata';

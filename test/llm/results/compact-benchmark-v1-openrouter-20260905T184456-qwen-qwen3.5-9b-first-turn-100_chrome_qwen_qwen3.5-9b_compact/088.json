@@ -11,7 +11,7 @@
   "firstToolCall": null,
   "toolCallSource": null,
   "finishReason": "stop",
-  "content": "I don't have the ability to close browser tabs directly through my available tools. You'll need to close this tab manually by:\n\n1. Clicking the **X** button on the tab in your browser\n2. Or using your keyboard shortcut (Ctrl+W on Windows/Linux, Cmd+W on Mac)\n\nThis is a browser-level action that I cannot perform through the WebBrain interface.",
+  "content": "I don't have the ability to close browser tabs directly through my available tools. You'll need to close this tab manually by:\n\n1. Clicking the **X** button on the tab in your browser\n2. Or using your keyboard shortcut (Ctrl+W on Windows/Linux, Cmd+W on Mac)\n\nThis is a browser-level action that I cannot perform through the Since Toggle interface.",
   "usage": {
     "prompt_tokens": 9767,
     "completion_tokens": 135,

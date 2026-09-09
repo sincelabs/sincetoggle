@@ -1,7 +1,7 @@
 # RAG hors ligne et corpus d'urgence
 
 Le pipeline de génération augmentée par récupération (RAG) hors ligne de
-WebBrain permet à l'extension de répondre à des questions en utilisant des
+Since Toggle permet à l'extension de répondre à des questions en utilisant des
 documents de référence stockés localement, sans aucune connexion réseau. Il
 s'appuie sur les archives Wikipedia du mode Apocalypse et ajoute un nouveau
 corpus de textes Emergency Box — une collection de documents de référence
@@ -17,7 +17,7 @@ qu'il ne peut pas.
 
 - **Corpus de textes Emergency Box.** Un ZIP vérifié d'environ 502 Mo contenant
   environ 570 documents en texte brut du domaine public (environ 304 Mo de
-  texte source) distribué depuis le dépôt `webbrain-one/emergency-box-corpus`.
+  texte source) distribué depuis le dépôt `sincetoggle-one/emergency-box-corpus`.
   Les documents sont des références dérivées de PDF dans plusieurs langues. Les
   PDF Emergency Box installés forment une étagère de lecture séparée et **ne
   sont pas** recherchés par ce chemin RAG.
@@ -85,7 +85,7 @@ qu'il ne peut pas.
    (actuellement 2048 nouveaux jetons). LFM2.5 retire `<think>` de la réponse
    visible ; Bonsai 27B utilise un budget de raisonnement de 128 jetons pour
    que le raisonnement ne consomme pas tout le décodage. Si le modèle épuise
-   ce budget dans son raisonnement, WebBrain réessaie avec un prompt de
+   ce budget dans son raisonnement, Since Toggle réessaie avec un prompt de
    preuves plus court plutôt que d'inventer une réponse.
 5. **Citer localement.** Chaque passage conservé reçoit un jeton stable
    (`[WB-E-…]` ou équivalent Wikipedia) et une URL de lecteur local. Les
@@ -131,10 +131,10 @@ synchrone OPFS.
 ### Disposition du stockage
 
 - **OPFS** (Origin Private File System) :
-  - `.webbrain-offline-rag-sahpool-v1/` — répertoire du pool SAH SQLite
-  - `webbrain-offline-rag/emergency-box-text/downloads/` et `installs/` — fichiers du corpus d'urgence
-- **IndexedDB** (`webbrain_offline_rag`) : état du cycle de vie du corpus, version active, manifeste, ID d'installation, chemin d'index, déclaration d'index vectoriel
-- **IndexedDB** (`webbrain_emergency_box`) : enregistrements PDF/ressources installés utilisés pour les liens **Open PDF**
+  - `.sincetoggle-offline-rag-sahpool-v1/` — répertoire du pool SAH SQLite
+  - `sincetoggle-offline-rag/emergency-box-text/downloads/` et `installs/` — fichiers du corpus d'urgence
+- **IndexedDB** (`sincetoggle_offline_rag`) : état du cycle de vie du corpus, version active, manifeste, ID d'installation, chemin d'index, déclaration d'index vectoriel
+- **IndexedDB** (`sincetoggle_emergency_box`) : enregistrements PDF/ressources installés utilisés pour les liens **Open PDF**
 - **Cache hérité passage-vector** : plafonné à 256 Mo
 
 ### Schéma FTS5
@@ -208,7 +208,7 @@ les données de corpus sont téléchargés par l'utilisateur.
 ## Licence
 
 Le corpus Emergency Box, SQLite, fflate et Transformers.js sont tous sous
-licences permissives et n'imposent pas eux-mêmes de copyleft. WebBrain 33.0.0
+licences permissives et n'imposent pas eux-mêmes de copyleft. Since Toggle 33.0.0
 et les versions ultérieures sont néanmoins sous GPL-3.0-or-later, car
 l'extension distribuée intègre le runtime Xapian/libzim sous GPL.
 

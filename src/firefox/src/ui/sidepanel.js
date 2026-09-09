@@ -1,5 +1,5 @@
 /**
- * WebBrain Side Panel — Chat UI logic.
+ * Since Toggle Side Panel — Chat UI logic.
  * Default: compact history in chat plus the live label; click for status-only mode.
  * Verbose mode: always-open tool calls with arguments and results.
  */
@@ -107,7 +107,7 @@ if (globalThis.browser?.storage?.onChanged) {
 
 // ─── Onboarding (first-launch wizard) ───────────────────────────────
 (async function initOnboarding() {
-  const stored = await browser.storage.local.get(['onboardingComplete', 'helpImproveWebBrain']);
+  const stored = await browser.storage.local.get(['onboardingComplete', 'helpImproveSince Toggle']);
   if (stored.onboardingComplete) return;
 
   const overlay = document.getElementById('onboarding');
@@ -136,7 +136,7 @@ if (globalThis.browser?.storage?.onChanged) {
   let localModelChoices = [];
   let selectedLocalModelIndex = 0;
   let cloudReady = false;
-  let persistedHelpImprove = stored.helpImproveWebBrain !== false;
+  let persistedHelpImprove = stored.helpImproveSince Toggle !== false;
   let helpImproveSavePromise = Promise.resolve(true);
 
   if (helpImproveCheckbox) {
@@ -324,7 +324,7 @@ if (globalThis.browser?.storage?.onChanged) {
 
     try {
       const { providers = {}, active } = await sendToBackground('get_providers');
-      if (active === 'webbrain_cloud' && providers.webbrain_cloud?.enabled !== false) {
+      if (active === 'sincetoggle_cloud' && providers.sincetoggle_cloud?.enabled !== false) {
         showCloudReady();
         return;
       }
@@ -371,7 +371,7 @@ if (globalThis.browser?.storage?.onChanged) {
         // running" as the same generic network error, so we can't tell them
         // apart — the hint is phrased conditionally. Log the real underlying
         // errors so they're visible in the console for debugging.
-        console.warn('[WebBrain] onboarding local-model scan failed:', errors);
+        console.warn('[Since Toggle] onboarding local-model scan failed:', errors);
         showProviderFallback('ob.tokens.none_blocked');
       } else {
         showProviderFallback();
@@ -606,7 +606,7 @@ const storeReviewFeedbackEl = document.getElementById('store-review-feedback');
 const scheduledJobsEl = document.getElementById('scheduled-jobs');
 const stopBtn = document.getElementById('btn-stop');
 const RECOMMENDED_ACTIONS_COLLAPSED_KEY = 'recommendedActionsCollapsed';
-const WEBBRAIN_PROMOTION_ACTION_IDS = new Set(['tweet-webbrain', 'post-webbrain-linkedin']);
+const SINCETOGGLE_PROMOTION_ACTION_IDS = new Set(['tweet-sincetoggle', 'post-sincetoggle-linkedin']);
 const PLACEHOLDER_ROTATION_INTERVAL_MS = 10_000;
 const ASK_PLACEHOLDER_KEYS = [
   'sp.input.ask_placeholder',
@@ -965,7 +965,7 @@ function runCaptureTimestamp(date = new Date()) {
 
 function buildRunScreenshotFilenames(saveAs, date = new Date()) {
   const requested = sanitizeRunCaptureSaveAs(saveAs);
-  const stem = (requested.replace(/\.png$/i, '') || `webbrain-run-${runCaptureTimestamp(date)}`).slice(0, 170);
+  const stem = (requested.replace(/\.png$/i, '') || `sincetoggle-run-${runCaptureTimestamp(date)}`).slice(0, 170);
   return {
     before: `${stem}-before.png`,
     after: `${stem}-after.png`,
@@ -975,7 +975,7 @@ function buildRunScreenshotFilenames(saveAs, date = new Date()) {
 function buildRunRecordingFilename(saveAs) {
   const requested = sanitizeRunCaptureSaveAs(saveAs);
   if (!requested) return null;
-  const stem = requested.replace(/\.webm$/i, '').replace(/[. ]+$/g, '') || 'webbrain-recording';
+  const stem = requested.replace(/\.webm$/i, '').replace(/[. ]+$/g, '') || 'sincetoggle-recording';
   return `${stem.slice(0, 175)}.webm`;
 }
 
@@ -1051,7 +1051,7 @@ const failedConversationClearRecoveryTabs = new Set();
 let recommendationsRequestId = 0;
 let providerSelectionRequestId = 0;
 let providerTestRequestId = 0;
-let selectedProviderId = 'webbrain_cloud';
+let selectedProviderId = 'sincetoggle_cloud';
 const standaloneRagReadinessRoot = document.getElementById('standalone-rag-readiness');
 const standaloneRagReadiness = isStandaloneWindow && standaloneRagReadinessRoot
   ? createOfflineRagReadinessController({
@@ -1062,7 +1062,7 @@ const standaloneRagReadiness = isStandaloneWindow && standaloneRagReadinessRoot
   : null;
 standaloneRagReadinessRoot?.classList.add('hidden');
 let recommendedActionsCollapsed = false;
-let webbrainPromotionHasAnimated = false;
+let sincetogglePromotionHasAnimated = false;
 let slashCommandMatches = [];
 let slashCommandSelectedIndex = 0;
 let busySlashNoticeLastShownAt = 0;
@@ -2063,7 +2063,7 @@ function migrateLegacyEmptyStateFromRestoredChat(tabId, root = messagesEl) {
   if (Number.isFinite(numericTabId)) {
     tabChats.set(numericTabId, migratedHtml);
     void persistTabChat(numericTabId, migratedHtml, { allowHidden: true }).catch((error) => {
-      console.warn('[WebBrain] failed to persist restored empty-state migration:', error);
+      console.warn('[Since Toggle] failed to persist restored empty-state migration:', error);
     });
   }
   return true;
@@ -2203,7 +2203,7 @@ async function persistChatHistorySnapshot(tabId, { refreshTabInfo = false } = {}
     updatedAt: Date.now(),
     messages,
   }).catch((error) => {
-    console.warn('[WebBrain] failed to save chat history:', error);
+    console.warn('[Since Toggle] failed to save chat history:', error);
   });
 }
 
@@ -2217,7 +2217,7 @@ async function repairRestoredChatHistorySnapshot(tabId) {
   const messages = extractChatHistoryMessages(messagesEl);
   if (!messages.some((message) => message.role === 'user')) return;
   await repairChatHistoryRecordMessages(recordId, messages).catch((error) => {
-    console.warn('[WebBrain] failed to repair restored chat history:', error);
+    console.warn('[Since Toggle] failed to repair restored chat history:', error);
   });
 }
 
@@ -2264,7 +2264,7 @@ async function resetChatHistoryStateForTab(tabId) {
   ].filter(Boolean));
   await Promise.all(Array.from(recordIdsToDelete).map((recordId) => (
     deleteChatHistoryRecord(recordId).catch((error) => {
-      console.warn('[WebBrain] failed to delete chat history:', error);
+      console.warn('[Since Toggle] failed to delete chat history:', error);
     })
   )));
   chatHistoryRecordIdsByTab.delete(numericTabId);
@@ -3044,7 +3044,7 @@ async function refreshScheduledJobs({ tabId = null } = {}) {
     renderScheduledJobs(jobs);
     return jobs;
   } catch (e) {
-    console.warn('[WebBrain] failed to refresh scheduled jobs:', e);
+    console.warn('[Since Toggle] failed to refresh scheduled jobs:', e);
     return [];
   }
 }
@@ -4060,7 +4060,7 @@ function savedWorkflowDownloadFilename(name) {
     .replace(/[^A-Za-z0-9._-]+/g, '-')
     .replace(/^[.-]+|[.-]+$/g, '')
     .slice(0, 120) || 'workflow';
-  return `${stem}.webbrain-workflow.json`;
+  return `${stem}.sincetoggle-workflow.json`;
 }
 
 async function exportSavedWorkflow(id, tabId = currentTabId) {
@@ -4107,7 +4107,7 @@ async function importSavedWorkflowDefinition(definition, tabId = currentTabId) {
 function requestSavedWorkflowFile(tabId) {
   const input = document.createElement('input');
   input.type = 'file';
-  input.accept = '.json,.webbrain-workflow.json,application/json';
+  input.accept = '.json,.sincetoggle-workflow.json,application/json';
   input.addEventListener('change', () => {
     const file = input.files?.[0];
     if (!file) return;
@@ -4422,7 +4422,7 @@ async function init() {
   restoreLatestChatTurnPosition();
 
   await loadProviders();
-  await testConnection({ skipWebBrainCloud: true });
+  await testConnection({ skipSince ToggleCloud: true });
   await windowScope.syncActiveTab();
   refreshScheduledJobs({ tabId: currentTabId });
   refreshRecommendedActions();
@@ -4456,7 +4456,7 @@ if (verboseBtn) {
       try {
         const response = await sendToBackground('get_debug_log');
         if (response?.log?.length) {
-          console.group('%c[WebBrain Deep Verbose] %d entries', 'color:#7c3aed;font-weight:bold', response.log.length);
+          console.group('%c[Since Toggle Deep Verbose] %d entries', 'color:#7c3aed;font-weight:bold', response.log.length);
           for (const entry of response.log) {
             const label = entry.type || 'unknown';
             const ts = entry.timestamp || '';
@@ -4479,10 +4479,10 @@ if (verboseBtn) {
           }
           console.groupEnd();
         } else {
-          console.log('%c[WebBrain Deep Verbose] No entries yet — run a query first.', 'color:#7c3aed');
+          console.log('%c[Since Toggle Deep Verbose] No entries yet — run a query first.', 'color:#7c3aed');
         }
       } catch (err) {
-        console.error('[WebBrain Deep Verbose] Failed to fetch debug log:', err);
+        console.error('[Since Toggle Deep Verbose] Failed to fetch debug log:', err);
       }
       return; // don't toggle verbose mode
     }
@@ -5080,7 +5080,7 @@ function hideRecommendedActions() {
   recommendedActionsEl.classList.add('hidden');
 }
 
-function createWebbrainPromotionIcon(actionId) {
+function createSincetogglePromotionIcon(actionId) {
   const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   icon.classList.add('recommended-action-icon');
   icon.setAttribute('viewBox', '0 0 24 24');
@@ -5088,19 +5088,19 @@ function createWebbrainPromotionIcon(actionId) {
   icon.setAttribute('focusable', 'false');
 
   const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('d', actionId === 'post-webbrain-linkedin'
+  path.setAttribute('d', actionId === 'post-sincetoggle-linkedin'
     ? 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zM7.119 20.452H3.555V9H7.12v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0z'
     : 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z');
   icon.appendChild(path);
   return icon;
 }
 
-function animateWebbrainPromotionOnce() {
-  if (webbrainPromotionHasAnimated || recommendedActionsCollapsed) return;
+function animateSincetogglePromotionOnce() {
+  if (sincetogglePromotionHasAnimated || recommendedActionsCollapsed) return;
   const promotionAction = recommendedActionsListEl?.querySelector('.recommended-action-chip-promotion');
   if (!promotionAction) return;
   promotionAction.classList.add('recommended-action-chip-promotion-enter');
-  webbrainPromotionHasAnimated = true;
+  sincetogglePromotionHasAnimated = true;
 }
 
 function updateRecommendedActionsCollapsedState() {
@@ -5120,7 +5120,7 @@ function updateRecommendedActionsCollapsedState() {
 function setRecommendedActionsCollapsed(collapsed, { persist = true } = {}) {
   recommendedActionsCollapsed = Boolean(collapsed);
   updateRecommendedActionsCollapsedState();
-  animateWebbrainPromotionOnce();
+  animateSincetogglePromotionOnce();
   if (persist) {
     void browser.storage.local.set({ [RECOMMENDED_ACTIONS_COLLAPSED_KEY]: recommendedActionsCollapsed }).catch(() => {});
   }
@@ -5166,8 +5166,8 @@ async function refreshRecommendedActions() {
     const pageInfo = await sendToBackground('get_page_info', { tabId });
     if (requestId !== recommendationsRequestId || currentTabId !== tabId || isProcessing) return;
     const sourceUrl = typeof pageInfo?.url === 'string' ? pageInfo.url : '';
-    const webbrainPromotionVariant = Math.random() < 0.5 ? 'linkedin' : 'x';
-    const actions = buildRecommendedActions(pageInfo, { max: 4, webbrainPromotionVariant });
+    const sincetogglePromotionVariant = Math.random() < 0.5 ? 'linkedin' : 'x';
+    const actions = buildRecommendedActions(pageInfo, { max: 4, sincetogglePromotionVariant });
     recommendedActionsListEl.replaceChildren();
     actions.forEach((action) => {
       const actionForClick = sourceUrl ? { ...action, sourceUrl } : action;
@@ -5176,16 +5176,16 @@ async function refreshRecommendedActions() {
       btn.className = 'recommended-action-chip';
       btn.textContent = action.label;
       btn.dataset.actionId = action.id;
-      if (WEBBRAIN_PROMOTION_ACTION_IDS.has(action.id)) {
+      if (SINCETOGGLE_PROMOTION_ACTION_IDS.has(action.id)) {
         btn.classList.add('recommended-action-chip-promotion');
-        btn.prepend(createWebbrainPromotionIcon(action.id));
+        btn.prepend(createSincetogglePromotionIcon(action.id));
       }
       btn.dataset.prompt = action.prompt;
       btn.addEventListener('click', () => runRecommendedAction(actionForClick));
       recommendedActionsListEl.appendChild(btn);
     });
     recommendedActionsEl.classList.toggle('hidden', actions.length === 0);
-    animateWebbrainPromotionOnce();
+    animateSincetogglePromotionOnce();
   } catch {
     if (requestId === recommendationsRequestId) hideRecommendedActions();
   }
@@ -6791,7 +6791,7 @@ function appendProviderPickerOption(id, name, meta, iconProviderId = id) {
   btn.setAttribute('aria-selected', 'false');
 
   // Icons only in the open menu — closed header stays text-only so the
-  // WebBrain mark (and other brand chips) don't compete with the chrome.
+  // Since Toggle mark (and other brand chips) don't compete with the chrome.
   const iconSrc = providerIconUrl(iconProviderId);
   if (iconSrc) {
     const img = document.createElement('img');
@@ -7005,21 +7005,21 @@ async function loadProviders() {
     providerPickerMenu?.replaceChildren();
     providerPickerLabelById.clear();
 
-    const cloudConfig = res.providers.webbrain_cloud || { label: 'WebBrain Compass' };
-    const cloudLabel = cloudConfig.label || 'WebBrain Compass';
+    const cloudConfig = res.providers.sincetoggle_cloud || { label: 'Since Toggle Compass' };
+    const cloudLabel = cloudConfig.label || 'Since Toggle Compass';
     const cloudGroup = document.createElement('optgroup');
     cloudGroup.label = t('sp.providers.no_setup_group');
     const cloudOption = document.createElement('option');
-    cloudOption.value = 'webbrain_cloud';
+    cloudOption.value = 'sincetoggle_cloud';
     cloudOption.textContent = `${cloudLabel} — ${t('sp.providers.no_setup')}`;
     cloudGroup.appendChild(cloudOption);
     providerSelect.appendChild(cloudGroup);
-    providerPickerLabelById.set('webbrain_cloud', cloudLabel);
+    providerPickerLabelById.set('sincetoggle_cloud', cloudLabel);
     appendProviderPickerGroup(cloudGroup.label);
-    appendProviderPickerOption('webbrain_cloud', cloudLabel, t('sp.providers.no_setup'));
+    appendProviderPickerOption('sincetoggle_cloud', cloudLabel, t('sp.providers.no_setup'));
 
     const configuredEntries = Object.entries(res.providers)
-      .filter(([id, config]) => id !== 'webbrain_cloud' && config?.configured === true);
+      .filter(([id, config]) => id !== 'sincetoggle_cloud' && config?.configured === true);
     if (configuredEntries.length) {
       const activeGroup = document.createElement('optgroup');
       activeGroup.label = t('sp.providers.active_group');
@@ -7042,8 +7042,8 @@ async function loadProviders() {
     providerSelect.appendChild(moreOption);
     appendProviderPickerOption(MORE_PROVIDERS_OPTION_VALUE, t('sp.providers.more'), '');
 
-    const selectableProviderIds = new Set(['webbrain_cloud', ...configuredEntries.map(([id]) => id)]);
-    selectedProviderId = selectableProviderIds.has(res.active) ? res.active : 'webbrain_cloud';
+    const selectableProviderIds = new Set(['sincetoggle_cloud', ...configuredEntries.map(([id]) => id)]);
+    selectedProviderId = selectableProviderIds.has(res.active) ? res.active : 'sincetoggle_cloud';
     providerSelect.value = selectedProviderId;
     syncProviderPickerButton();
   } catch (e) {
@@ -7060,8 +7060,8 @@ async function openProvidersSettingsPage() {
   }
 }
 
-function isWebBrainCloudProviderSelected() {
-  return providerSelect?.value === 'webbrain_cloud';
+function isSince ToggleCloudProviderSelected() {
+  return providerSelect?.value === 'sincetoggle_cloud';
 }
 
 function markSelectedProviderUntested() {
@@ -7078,7 +7078,7 @@ function markSelectedProviderFailed(error) {
 async function testConnection(options = {}) {
   const providerId = options.providerId || providerSelect.value;
   const requestId = ++providerTestRequestId;
-  if (options.skipWebBrainCloud && providerId === 'webbrain_cloud') {
+  if (options.skipSince ToggleCloud && providerId === 'sincetoggle_cloud') {
     if (requestId === providerTestRequestId && providerSelect.value === providerId) {
       markSelectedProviderUntested();
     }
@@ -7552,7 +7552,7 @@ function screenshotFilenamePrefix(pageUrl) {
 }
 
 function screenshotDownloadFilename(pageUrl = '', fullPage = false) {
-  const prefix = screenshotFilenamePrefix(pageUrl) || 'webbrain';
+  const prefix = screenshotFilenamePrefix(pageUrl) || 'sincetoggle';
   return `${prefix}-${fullPage ? 'full-page-' : ''}screenshot.png`;
 }
 
@@ -8030,7 +8030,7 @@ async function parseSlashCommands(text, tabId = currentTabId, options = {}) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `webbrain-config-${Date.now()}.json`;
+      a.download = `sincetoggle-config-${Date.now()}.json`;
       document.body.appendChild(a);
       try {
         a.click();
@@ -8069,7 +8069,7 @@ async function parseSlashCommands(text, tabId = currentTabId, options = {}) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `webbrain-traces-${Date.now()}.md`;
+    a.download = `sincetoggle-traces-${Date.now()}.md`;
     document.body.appendChild(a);
     try {
       a.click();
@@ -8089,8 +8089,8 @@ async function parseSlashCommands(text, tabId = currentTabId, options = {}) {
 
   if (command.value === '/export' && action === 'conversation') {
     const messages = messagesEl.querySelectorAll('.message');
-    const webbrainVersion = browser.runtime.getManifest().version || 'unknown';
-    let md = `# WebBrain Conversation\n\n_Exported with WebBrain v${webbrainVersion}_\n\n`;
+    const sincetoggleVersion = browser.runtime.getManifest().version || 'unknown';
+    let md = `# Since Toggle Conversation\n\n_Exported with Since Toggle v${sincetoggleVersion}_\n\n`;
     for (const msg of messages) {
       const textEl = msg.querySelector('.message-text');
       if (!textEl) continue;
@@ -8099,7 +8099,7 @@ async function parseSlashCommands(text, tabId = currentTabId, options = {}) {
       if (msg.classList.contains('user')) {
         md += `**You:** ${content}\n\n`;
       } else if (msg.classList.contains('assistant')) {
-        md += `**WebBrain:** ${content}\n\n`;
+        md += `**Since Toggle:** ${content}\n\n`;
       } else if (msg.classList.contains('system')) {
         md += `*${content}*\n\n`;
       }
@@ -8108,7 +8108,7 @@ async function parseSlashCommands(text, tabId = currentTabId, options = {}) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `webbrain-chat-${Date.now()}.md`;
+    a.download = `sincetoggle-chat-${Date.now()}.md`;
     document.body.appendChild(a);
     try {
       a.click();
@@ -9026,7 +9026,7 @@ function handleAgentUpdateMessage(msg) {
   }
   if (msg.type === 'scheduled_job') {
     handleScheduledJobEvent(msg.data, msg.tabId).catch((err) => {
-      console.warn('[WebBrain] failed to handle scheduled job event:', err);
+      console.warn('[Since Toggle] failed to handle scheduled job event:', err);
     });
     return;
   }
@@ -9490,7 +9490,7 @@ function renderClarifyCard(data) {
     card.dataset.submitConfirmation = '1';
     const submit = data.submitConfirmation || {};
     const host = String(submit.host || '').slice(0, 300) || 'this site';
-    qEl.textContent = String(data.question || `WebBrain wants to submit this form on ${host}.`).slice(0, 600);
+    qEl.textContent = String(data.question || `Since Toggle wants to submit this form on ${host}.`).slice(0, 600);
 
     const summary = String(submit.summary || '').trim();
     if (summary) {
@@ -10086,7 +10086,7 @@ function submitPlanReview(card, tabId, planId, action, editedText) {
   note.className = 'plan-review-note';
   const expiredText = () => (typeof t === 'function' ? t('sp.plan.expired') : 'This plan is no longer awaiting review — the run was cancelled.');
   const failureText = (error) => isBackgroundConnectionError(error)
-    ? 'WebBrain reloaded or the background worker stopped before this plan could be approved. Reload the sidebar and try again.'
+    ? 'Since Toggle reloaded or the background worker stopped before this plan could be approved. Reload the sidebar and try again.'
     : expiredText();
 
   sendPlanReviewDecisionWithReconnect(
@@ -10651,9 +10651,9 @@ function clearTransientAssistantTextForToolCall() {
 // UI Helpers
 // ==========================================================================
 
-// WebBrain Compass returns a 402 with one trailing billing action. Keep the
+// Since Toggle Compass returns a 402 with one trailing billing action. Keep the
 // matcher narrow so ordinary subscription text is not converted into billing UI.
-const SUBSCRIBE_ERROR_RE = /(Subscribe for more usage|Upgrade to WebBrain Plus):\s*(https?:\/\/\S+)/i;
+const SUBSCRIBE_ERROR_RE = /(Subscribe for more usage|Upgrade to Since Toggle Plus):\s*(https?:\/\/\S+)/i;
 const COST_ALLOWANCE_ERROR_RE = /Cloud cost allowance reached:\s*(this session|total cloud\/router usage)\s+is\s+\$[\d.]+\s+against\s+the\s+\$([\d.]+)\s+limit\./i;
 const COST_ALLOWANCE_BUMP_USD = 10;
 
@@ -12108,7 +12108,7 @@ function scheduleMathRender() {
         ignoredClasses: ['katex', 'code-block-wrapper'],
       });
     } catch (e) {
-      console.warn('[webbrain] math render failed:', e);
+      console.warn('[sincetoggle] math render failed:', e);
     }
   }, 50);
 }
@@ -12410,10 +12410,10 @@ async function sendRunWithReconnect(initialAction, payload, recoveryOptions = {}
 
 function formatBackgroundSendError(action, message) {
   if (String(message || '').trim() === `Unknown action: ${action}`) {
-    return `WebBrain's sidebar and background are out of sync. Reload WebBrain from your browser's extension manager, reopen the sidebar, and try again.`;
+    return `Since Toggle's sidebar and background are out of sync. Reload Since Toggle from your browser's extension manager, reopen the sidebar, and try again.`;
   }
   if (isBackgroundConnectionError(message)) {
-    return `WebBrain extension connection was lost while sending "${action}". Reload the sidebar/extension and try again.`;
+    return `Since Toggle extension connection was lost while sending "${action}". Reload the sidebar/extension and try again.`;
   }
   return message;
 }
@@ -12428,7 +12428,7 @@ async function sendToBackground(action, data = {}) {
     throw new Error(formatBackgroundSendError(action, error?.message || String(error || 'Unknown background error')));
   }
   if (response == null) {
-    throw new Error(`No response from WebBrain background for "${action}". The background script may have restarted or crashed; reload the sidebar/extension and check the Firefox extension console for the original error.`);
+    throw new Error(`No response from Since Toggle background for "${action}". The background script may have restarted or crashed; reload the sidebar/extension and check the Firefox extension console for the original error.`);
   }
   if (response?.error) {
     throw new Error(formatBackgroundSendError(action, response.error));
@@ -12932,7 +12932,7 @@ function decodeStagedScreenshotMetadata(value, dataUrl, storedRecord = null) {
     }
     return {
       kind: 'image',
-      name: String(metadata.name || 'webbrain-screenshot.png').slice(0, 240),
+      name: String(metadata.name || 'sincetoggle-screenshot.png').slice(0, 240),
       dataUrl,
       mimeType: String(metadata.mimeType || '').startsWith('image/jpeg') ? 'image/jpeg' : 'image/png',
       size,

@@ -18,7 +18,7 @@ import { projectTraceEventData, projectTraceRun } from './privacy.js';
  * Trace recorder — writes per-run traces (LLM requests/responses, tool calls,
  * screenshots) into IndexedDB for later inspection and cross-model comparison.
  *
- * Schema (db `webbrain_traces`, v2):
+ * Schema (db `sincetoggle_traces`, v2):
  *   - runs       keyPath=runId                  // top-level run metadata
  *   - events     keyPath=[runId, seq]           // ordered event log
  *   - shots      keyPath=[runId, seq]           // screenshot Blobs
@@ -27,7 +27,7 @@ import { projectTraceEventData, projectTraceRun } from './privacy.js';
  * setting. When disabled, every call is a cheap no-op.
  */
 
-const DB_NAME = 'webbrain_traces';
+const DB_NAME = 'sincetoggle_traces';
 const DB_VERSION = 2;
 
 // Lossless tier bounds: tool results up to 200 KB verbatim, request payloads
@@ -394,7 +394,7 @@ export async function startRun(meta) {
       model: meta.model || '',
       providerId: meta.providerId || '',
       providerClass: meta.providerClass || '',
-      webbrainVersion: meta.webbrainVersion || '',
+      sincetoggleVersion: meta.sincetoggleVersion || '',
       traceFormatVersion: TRACE_FORMAT_VERSION,
       runtimeConfig: normalizeRuntimeTraceConfig(meta.runtimeConfig),
       userMessage: meta.userMessage || '',
@@ -424,7 +424,7 @@ export async function startRun(meta) {
         conversationId: meta.conversationId || null,
         status: 'running',
         tabUrl: meta.tabUrl || '',
-        webbrainVersion: meta.webbrainVersion || '',
+        sincetoggleVersion: meta.sincetoggleVersion || '',
       },
       events: [],
       nextSeq: 0,

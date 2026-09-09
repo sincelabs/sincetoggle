@@ -55,9 +55,9 @@ with a structured contract use their declared workflow revision.
 ### Structured Workflow Contracts
 
 Adapters with repeated, evidence-backed tasks may also declare a versioned
-`webbrain-adapter-workflow/2` contract. This is runtime policy, not more page
+`sincetoggle-adapter-workflow/2` contract. This is runtime policy, not more page
 prose. Before either the compact intent planner or the full planner runs,
-WebBrain gives it only the active adapter name and a bounded list of app-owned
+Since Toggle gives it only the active adapter name and a bounded list of app-owned
 job IDs plus short descriptions. The planner selects `site_job` semantically,
 so routing does not depend on the language of the user's request. Page content
 cannot add or select a job, and an ID is accepted only if it still belongs to
@@ -100,7 +100,7 @@ or message content.
   regions: ['global'],
   jobs: ['submit-form'],
   workflow: {
-    schema: 'webbrain-adapter-workflow/2',
+    schema: 'sincetoggle-adapter-workflow/2',
     jobs: {
       'submit-form': {
         description: 'Fill, review, submit, and verify the form.',
@@ -153,7 +153,7 @@ the behavioral contract changes.
 | `revision` | positive integer | Optional workflow-contract revision. Required when any structured workflow field is present. |
 | `regions` | string[] | Stable regions where the structured job contract applies, such as `global`, `CN`, or `MENA`. |
 | `jobs` | string[] | Stable planner-routing IDs. Must exactly match `workflow.jobs`. |
-| `workflow` | object | Optional validated `webbrain-adapter-workflow/2` job contract used to tighten runtime completion. |
+| `workflow` | object | Optional validated `sincetoggle-adapter-workflow/2` job contract used to tighten runtime completion. |
 
 ### Ordering
 

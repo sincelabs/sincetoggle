@@ -1,6 +1,6 @@
 # Security Model
 
-This document describes the security architecture of WebBrain — what the extension can do, what it trusts, how it handles credentials, and how it defends against prompt injection.
+This document describes the security architecture of Since Toggle — what the extension can do, what it trusts, how it handles credentials, and how it defends against prompt injection.
 
 For vulnerability disclosure, see [SECURITY.md](../SECURITY.md).
 
@@ -58,7 +58,7 @@ credentials, profile
 autofill, and user memory are encrypted before network egress in an authenticated
 AES-GCM envelope. The service stores opaque ciphertext and hashed, revocable sync
 tokens. Revision-based compare-and-swap prevents silent concurrent overwrite.
-The sync password is never sent or persisted and cannot be recovered by WebBrain.
+The sync password is never sent or persisted and cannot be recovered by Since Toggle.
 Legacy OAuth access and refresh token stores are explicitly outside the sync scope.
 
 ### Detection
@@ -123,7 +123,7 @@ The primary threat: a malicious page crafts content that, when read by the agent
 | **Ask/Act/Dev mode** | Ask mode exposes only semantic read-only tools. The user must explicitly switch to an action mode for clicks/types/navigation. Act exposes the selected provider tier's normal tools. Dev requires Mid/Full tier and adds source/style/page-inspection tools for developer debugging. |
 | **Tiered tool exposure** | Provider tiers (`compact | mid | full`) limit the normal browser-agent surface for smaller models. Compact gets the smallest action surface; Mid adds common task tools; Full adds advanced UI/DOM fallbacks. Compact Dev is blocked. |
 | **Plan before Act** | When enabled, action-mode runs first produce a structured plan and wait for side-panel approval before any browser tool executes. In Try mode, planner JSON that remains invalid after repair degrades that turn to Ask/read-only; Strict stops. Scheduled runs can auto-approve the plan only through scheduler policy. |
-| **Skill import boundary** | Skills can expose read-only HTTP tools and download-job tools through a `webbrain-tools` manifest. Importing or keeping the skill enabled is the trust decision for the declared HTTPS endpoint; declared skill tools use `credentials: "omit"` and should mark third-party results `resultPolicy: "untrusted"`. Download-job skill tools still require an action mode and the normal Downloads permission gate before saving files. |
+| **Skill import boundary** | Skills can expose read-only HTTP tools and download-job tools through a `sincetoggle-tools` manifest. Importing or keeping the skill enabled is the trust decision for the declared HTTPS endpoint; declared skill tools use `credentials: "omit"` and should mark third-party results `resultPolicy: "untrusted"`. Download-job skill tools still require an action mode and the normal Downloads permission gate before saving files. |
 | **WebMCP boundary** | Experimental WebMCP is off by default, so its tools and prompt guidance do not enter ordinary model requests unless the user opts in under Settings → General → Advanced. When enabled, Chrome page-registered names, descriptions, schemas, frame URLs, annotations, outputs, and errors are page-controlled and always use the untrusted-content wrapper. Calls use opaque IDs. Ask may list tools but cannot invoke them. Because a callback can run arbitrary page logic, every invocation requires Act/Dev, fresh per-call confirmation, and a permission grant for the actual registration-frame origin; a page-authored `readOnly` hint never bypasses those gates. Missing/opaque frame identity fails closed, and the frame plus effective HTTP(S) security origin are revalidated immediately before dispatch to prevent navigation races from borrowing an old grant. |
 | **API mutation override** | A per-conversation `/allow-api` flag, or the default-off persistent setting under General → Advanced, *waives* the permission prompt for write-method network egress (`fetch_url`/`research_url` with POST/PUT/PATCH/DELETE). Neither option waives GET egress or any other capability. Conversation reset clears only the slash-command override. |
 | **`done()` blocking** | Before accepting completion, the agent probes for open dialogs/forms. If the summary claims "created"/"saved" but a modal is still open, the agent is forced to continue. |

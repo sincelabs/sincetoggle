@@ -102,7 +102,7 @@ import {
 } from './chrome-web-store-release.js';
 
 /**
- * WebBrain Background Script (Firefox)
+ * Since Toggle Background Script (Firefox)
  * Routes messages between sidebar, content scripts, and the agent.
  */
 
@@ -133,11 +133,11 @@ Promise.all([
   // one is a full copy of the archive it was writing.
   sweepOpfsSwapFiles().then(({ removed, bytes }) => {
     if (removed > 0) {
-      console.info(`[WebBrain] Reclaimed ${removed} orphaned OPFS swap file(s), ${(bytes / 1024 ** 3).toFixed(2)} GB.`);
+      console.info(`[Since Toggle] Reclaimed ${removed} orphaned OPFS swap file(s), ${(bytes / 1024 ** 3).toFixed(2)} GB.`);
     }
   }),
 ]).catch((error) => {
-  console.warn('[WebBrain] Apocalypse Mode schedules could not be restored:', error);
+  console.warn('[Since Toggle] Apocalypse Mode schedules could not be restored:', error);
 });
 const agent = new Agent(providerManager);
 const ALWAYS_ALLOW_API_MUTATIONS_KEY = 'alwaysAllowApiMutations';
@@ -199,13 +199,13 @@ scheduler.start();
 
 const MAX_AGENT_STEPS_DEFAULT = 130;
 const MAX_AGENT_STEPS_UNLIMITED_SENTINEL = 200;
-const CONTEXT_MENU_ASK_SELECTION_ID = 'webbrain-ask-selection';
-const CONTEXT_MENU_OPEN_CHAT_ID = 'webbrain-selection-open-chat';
-const CONTEXT_MENU_OPEN_PDF_VIEWER_ID = 'webbrain-open-pdf-viewer';
-const CONTEXT_MENU_ACTION_PREFIX = 'webbrain-selection-action-';
-const CONTEXT_MENU_TRANSLATE_ID = 'webbrain-selection-translate';
-const CONTEXT_MENU_TRANSLATE_PREFIX = 'webbrain-selection-translate-';
-const CONTEXT_MENU_GENERIC_ASK_ID = 'webbrain-selection-generic-ask';
+const CONTEXT_MENU_ASK_SELECTION_ID = 'sincetoggle-ask-selection';
+const CONTEXT_MENU_OPEN_CHAT_ID = 'sincetoggle-selection-open-chat';
+const CONTEXT_MENU_OPEN_PDF_VIEWER_ID = 'sincetoggle-open-pdf-viewer';
+const CONTEXT_MENU_ACTION_PREFIX = 'sincetoggle-selection-action-';
+const CONTEXT_MENU_TRANSLATE_ID = 'sincetoggle-selection-translate';
+const CONTEXT_MENU_TRANSLATE_PREFIX = 'sincetoggle-selection-translate-';
+const CONTEXT_MENU_GENERIC_ASK_ID = 'sincetoggle-selection-generic-ask';
 const pdfResponseTabs = new Set();
 const pdfOcrRequests = new Map();
 function resolveStoredSelectionShortcutLocale(value) {
@@ -327,12 +327,12 @@ async function createContextMenus() {
       const result = api.create(item);
       Promise.resolve(result).catch((e) => {
         if (!/duplicate/i.test(String(e?.message || e))) {
-          console.warn('[WebBrain] Failed to create context menu:', e?.message || e);
+          console.warn('[Since Toggle] Failed to create context menu:', e?.message || e);
         }
       });
     } catch (e) {
       if (!/duplicate/i.test(String(e?.message || e))) {
-        console.warn('[WebBrain] Failed to create context menu:', e?.message || e);
+        console.warn('[Since Toggle] Failed to create context menu:', e?.message || e);
       }
     }
   };
@@ -344,7 +344,7 @@ async function createContextMenus() {
       contexts: ['selection'],
     });
     createItem({ id: CONTEXT_MENU_OPEN_CHAT_ID, parentId: CONTEXT_MENU_ASK_SELECTION_ID, title: strings.openChat, contexts: ['selection'] });
-    createItem({ id: 'webbrain-selection-separator-1', parentId: CONTEXT_MENU_ASK_SELECTION_ID, type: 'separator', contexts: ['selection'] });
+    createItem({ id: 'sincetoggle-selection-separator-1', parentId: CONTEXT_MENU_ASK_SELECTION_ID, type: 'separator', contexts: ['selection'] });
     for (const [action, key] of [
       ['summarize', 'summarize'],
       ['explain', 'explain'],
@@ -363,11 +363,11 @@ async function createContextMenus() {
         contexts: ['selection'],
       });
     }
-    createItem({ id: 'webbrain-selection-separator-2', parentId: CONTEXT_MENU_ASK_SELECTION_ID, type: 'separator', contexts: ['selection'] });
+    createItem({ id: 'sincetoggle-selection-separator-2', parentId: CONTEXT_MENU_ASK_SELECTION_ID, type: 'separator', contexts: ['selection'] });
     createItem({ id: CONTEXT_MENU_GENERIC_ASK_ID, parentId: CONTEXT_MENU_ASK_SELECTION_ID, title: strings.askAbout, contexts: ['selection'] });
     createItem({
       id: CONTEXT_MENU_OPEN_PDF_VIEWER_ID,
-      title: 'Open PDF with WebBrain',
+      title: 'Open PDF with Since Toggle',
       contexts: ['page'],
       visible: false,
     });
@@ -742,7 +742,7 @@ function scheduleUserMemoryExtractionDrain(delayMs = USER_MEMORY_EXTRACTION_DELA
   userMemoryExtractionTimer = setTimeout(() => {
     userMemoryExtractionTimer = null;
     drainUserMemoryExtractionQueue().catch((error) => {
-      console.warn('[WebBrain] user-memory extraction failed:', error);
+      console.warn('[Since Toggle] user-memory extraction failed:', error);
     });
   }, delayMs);
 }
@@ -793,7 +793,7 @@ async function enqueueUserMemoryExtraction(payload = {}) {
 function enqueueUserMemoryExtractionAfterTurn(payload) {
   queueMicrotask(() => {
     enqueueUserMemoryExtraction(payload).catch((error) => {
-      console.warn('[WebBrain] failed to enqueue user-memory extraction:', error);
+      console.warn('[Since Toggle] failed to enqueue user-memory extraction:', error);
     });
   });
 }
@@ -904,7 +904,7 @@ async function loadCustomSkills() {
     try {
       await browser.storage.local.set({ [CUSTOM_SKILLS_STORAGE_KEY]: skills });
     } catch (error) {
-      console.warn('[WebBrain] Retired packaged skills could not be removed', error);
+      console.warn('[Since Toggle] Retired packaged skills could not be removed', error);
     }
   }
   const removedDefaultIds = new Set(normalizeDefaultSkillRemovalIds(stored[DEFAULT_SKILLS_REMOVED_STORAGE_KEY]));
@@ -930,7 +930,7 @@ async function loadCustomSkills() {
       await browser.storage.local.set(update);
     }
   } catch (e) {
-    console.warn('[WebBrain] Default skills could not be loaded', e);
+    console.warn('[Since Toggle] Default skills could not be loaded', e);
   }
   try {
     const refreshed = await refreshPackagedSkillRecords(skills);
@@ -939,7 +939,7 @@ async function loadCustomSkills() {
       await browser.storage.local.set({ [CUSTOM_SKILLS_STORAGE_KEY]: skills });
     }
   } catch (e) {
-    console.warn('[WebBrain] Packaged skills could not be refreshed', e);
+    console.warn('[Since Toggle] Packaged skills could not be refreshed', e);
   }
   agent.setCustomSkills(skills);
 }
@@ -1024,7 +1024,7 @@ function showFirstInstallGuide(details) {
     url: browser.runtime.getURL('src/ui/install.html'),
     active: true,
   }).catch((error) => {
-    console.warn('[WebBrain] Could not open the first-install pinning guide:', error);
+    console.warn('[Since Toggle] Could not open the first-install pinning guide:', error);
   });
 }
 
@@ -1038,7 +1038,7 @@ browser.runtime.onInstalled.addListener(async (details) => {
   await loadAutoScreenshot();
   await syncAgentUserMemoryFromStorage().catch(() => {});
   scheduleUserMemoryExtractionDrain(5000);
-  console.log('[WebBrain] Extension installed, providers loaded.');
+  console.log('[Since Toggle] Extension installed, providers loaded.');
 });
 
 browser.runtime.onStartup?.addListener?.(async () => {
@@ -1054,7 +1054,7 @@ browser.storage.onChanged.addListener((changes) => {
     createContextMenus().catch(() => {});
   }
   if (PROFILE_SYNC_DATA_KEYS.some((key) => changes[key])) profileSync.noteChanges(changes).catch(() => {});
-  if (changes.providers || changes.activeProvider || changes.helpImproveWebBrain) providerManager.load().catch(() => {});
+  if (changes.providers || changes.activeProvider || changes.helpImproveSince Toggle) providerManager.load().catch(() => {});
   if (changes.maxAgentSteps) {
     agent.maxSteps = normalizeMaxAgentSteps(changes.maxAgentSteps.newValue);
   }
@@ -1124,7 +1124,7 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if (shouldClearUserMemoryExtractionQueueForChanges(changes)) {
     clearUserMemoryExtractionQueue().catch((error) => {
-      console.warn('[WebBrain] failed to clear user-memory extraction queue:', error);
+      console.warn('[Since Toggle] failed to clear user-memory extraction queue:', error);
     });
   }
   if (changes[CUSTOM_SKILLS_STORAGE_KEY]) {
@@ -1135,7 +1135,7 @@ browser.storage.onChanged.addListener((changes) => {
     agent.customSkills = normalizeCustomSkills(retainedSkills);
     if (retainedSkills.length !== storedSkills.length) {
       browser.storage.local.set({ [CUSTOM_SKILLS_STORAGE_KEY]: agent.customSkills }).catch((error) => {
-        console.warn('[WebBrain] Retired packaged skills could not be removed', error);
+        console.warn('[Since Toggle] Retired packaged skills could not be removed', error);
       });
     }
     refreshPrompts = true;
@@ -1143,7 +1143,7 @@ browser.storage.onChanged.addListener((changes) => {
   if (changes.capsolverApiKey || changes.captchaSolverEnabled) {
     loadCaptchaSolver()
       .then(() => agent._refreshSystemPrompts())
-      .catch((error) => console.warn('[WebBrain] CapSolver setting could not be refreshed', error));
+      .catch((error) => console.warn('[Since Toggle] CapSolver setting could not be refreshed', error));
   }
   if (changes.planBeforeActMode || changes.planBeforeAct) {
     applyPlanBeforeActMode(normalizePlanBeforeActMode({
@@ -1163,23 +1163,23 @@ browser.storage.onChanged.addListener((changes) => {
 browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm?.name === APOCALYPSE_DOWNLOAD_ALARM) {
     apocalypseController.manager.processNext().catch((error) => {
-      console.warn('[WebBrain] Apocalypse Mode archive download failed:', error);
+      console.warn('[Since Toggle] Apocalypse Mode archive download failed:', error);
     });
   } else if (alarm?.name === APOCALYPSE_UPDATE_ALARM) {
     apocalypseController.checkForUpdates().catch((error) => {
-      console.warn('[WebBrain] Apocalypse Mode update check failed:', error);
+      console.warn('[Since Toggle] Apocalypse Mode update check failed:', error);
     });
   }
 });
 
 // ────────────────────────────────────────────────────────────────────────
-// Tab grouping (visual scope for a WebBrain session)
+// Tab grouping (visual scope for a Since Toggle session)
 //
 // Same UX shape as the Chrome build (see src/chrome/src/background.js):
 // when automatic grouping is enabled and the user clicks the browser
-// action, the source tab joins (or seeds) a colored "WebBrain" tab group
+// action, the source tab joins (or seeds) a colored "Since Toggle" tab group
 // for that window. Internal helper tabs and target=_blank redirects auto-join
-// the same group via agent.js's `_addToWebBrainGroup`.
+// the same group via agent.js's `_addToSince ToggleGroup`.
 //
 // What we DON'T do on Firefox: scope the sidebar's visibility to group
 // membership. browser.sidebarAction is window-level, not per-tab —
@@ -1191,7 +1191,7 @@ browser.alarms.onAlarm.addListener((alarm) => {
 const webBrainGroupByWindow = new Map(); // windowId -> tabGroups groupId
 const WB_GROUPS_KEY = 'webBrainGroupByWindow';
 
-async function loadWebBrainGroups() {
+async function loadSince ToggleGroups() {
   if (!browser.tabGroups) return; // Firefox <142 — graceful skip
   try {
     const stored = await browser.storage.session?.get(WB_GROUPS_KEY);
@@ -1208,19 +1208,19 @@ async function loadWebBrainGroups() {
     }
   } catch { /* session storage unavailable on this profile */ }
 }
-function saveWebBrainGroups() {
+function saveSince ToggleGroups() {
   browser.storage.session?.set({
     [WB_GROUPS_KEY]: Array.from(webBrainGroupByWindow.entries()),
   }).catch(() => {});
 }
-loadWebBrainGroups();
+loadSince ToggleGroups();
 
 /**
  * When automatic grouping is enabled, make sure `tab.windowId` has a
- * "WebBrain" group AND that `tab` is in it. Always creates a fresh group
+ * "Since Toggle" group AND that `tab` is in it. Always creates a fresh group
  * rather than rebranding the user's existing group.
  */
-async function ensureWebBrainGroup(tab) {
+async function ensureSince ToggleGroup(tab) {
   if (!browser.tabGroups || !tab?.id || tab.windowId == null) return -1;
   if (!await shouldAutoGroupTabs(browser.storage.local)) return -1;
   try {
@@ -1233,7 +1233,7 @@ async function ensureWebBrainGroup(tab) {
       } catch {
         groupId = null;
         webBrainGroupByWindow.delete(tab.windowId);
-        saveWebBrainGroups();
+        saveSince ToggleGroups();
       }
     }
 
@@ -1244,11 +1244,11 @@ async function ensureWebBrainGroup(tab) {
       groupId = await browser.tabs.group({ tabIds: [tab.id] });
       try {
         await browser.tabGroups.update(groupId, {
-          title: 'WebBrain', color: 'blue', collapsed: false,
+          title: 'Since Toggle', color: 'blue', collapsed: false,
         });
       } catch { /* style update can fail on locked groups; skip */ }
       webBrainGroupByWindow.set(tab.windowId, groupId);
-      saveWebBrainGroups();
+      saveSince ToggleGroups();
     } else if (tab.groupId !== groupId) {
       // Group exists but source tab not in it. Add it.
       try {
@@ -1263,7 +1263,7 @@ async function ensureWebBrainGroup(tab) {
 
 // The install page opens the sidebar directly from its click handler, then
 // reports the successful open here so first-run tabs use the same visual
-// WebBrain grouping as browser-action opens.
+// Since Toggle grouping as browser-action opens.
 browser.runtime.onMessage.addListener((msg, sender) => {
   if (msg?.type !== 'WB_INSTALL_PANEL_OPENED') return;
 
@@ -1282,7 +1282,7 @@ browser.runtime.onMessage.addListener((msg, sender) => {
 
   browser.tabs.get(tabId).then((tab) => {
     if (tab?.url !== installGuideUrl) return;
-    ensureWebBrainGroup(tab).catch(() => {});
+    ensureSince ToggleGroup(tab).catch(() => {});
   }).catch(() => {});
 });
 
@@ -1313,7 +1313,7 @@ function openSidebarForContextMenu(tab) {
   } else {
     browser.sidebarAction?.toggle?.().catch(() => {});
   }
-  if (tab?.id) ensureWebBrainGroup(tab).catch(() => {});
+  if (tab?.id) ensureSince ToggleGroup(tab).catch(() => {});
 }
 
 async function handleContextMenuAsk(info, tab) {
@@ -1399,7 +1399,7 @@ browser.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
 // Firefox does not treat a click in an injected page UI as an authorized
 // sidebarAction.open() gesture. Persist and notify the existing sidebar when
 // it is open; otherwise startup recovery will consume the prompt after the
-// user opens WebBrain manually.
+// user opens Since Toggle manually.
 function queueFirefoxSelectionShortcutPrompt(msg, tab, sendResponse) {
   const selectionAction = normalizeSelectionAction(msg.action);
   const includePageContext = selectionAction === 'custom' && msg.includePageContext === true;
@@ -1480,7 +1480,7 @@ browser.tabGroups?.onRemoved?.addListener?.((group) => {
   for (const [windowId, gid] of webBrainGroupByWindow) {
     if (gid === group.id) {
       webBrainGroupByWindow.delete(windowId);
-      saveWebBrainGroups();
+      saveSince ToggleGroups();
       break;
     }
   }
@@ -1490,7 +1490,7 @@ browser.tabGroups?.onRemoved?.addListener?.((group) => {
 browser.windows?.onRemoved?.addListener?.((windowId) => {
   if (webBrainGroupByWindow.has(windowId)) {
     webBrainGroupByWindow.delete(windowId);
-    saveWebBrainGroups();
+    saveSince ToggleGroups();
   }
 });
 
@@ -1585,8 +1585,8 @@ const API_MUTATION_OBSERVER_DEFAULT = false;
 const API_REPLAY_BODY_LIMIT = 16000;
 const apiRequestsByTab = new Map(); // tabId -> [{ url, method, ts, replayRequestId, ... }]
 const apiRequestReplayById = new Map(); // replayRequestId -> captured same-origin replay options
-globalThis.__webbrainApiRequests = apiRequestsByTab;
-globalThis.__webbrainApiRequestReplay = apiRequestReplayById;
+globalThis.__sincetoggleApiRequests = apiRequestsByTab;
+globalThis.__sincetoggleApiRequestReplay = apiRequestReplayById;
 let apiMutationObserverRegistered = false;
 
 function apiReplayId(tabId, requestId) {
@@ -1741,11 +1741,11 @@ browser.tabs.onRemoved.addListener((tabId) => {
 });
 
 // Action click: toggle sidebar (existing UX) AND ensure source tab is
-// in the WebBrain group so the colored label appears immediately.
+// in the Since Toggle group so the colored label appears immediately.
 browser.browserAction.onClicked.addListener((tab) => {
   browser.sidebarAction.toggle();
   // Async — sidebar toggle doesn't need to wait on grouping.
-  if (tab?.id) ensureWebBrainGroup(tab).catch(() => {});
+  if (tab?.id) ensureSince ToggleGroup(tab).catch(() => {});
 });
 
 // ────────────────────────────────────────────────────────────────────────
@@ -1753,7 +1753,7 @@ browser.browserAction.onClicked.addListener((tab) => {
 //
 // While an agent run is in flight, ask the page's content script to
 // render a pulsing purple inset glow around the viewport plus a "Stop
-// WebBrain" floating button. The chat / chat_stream / continue handlers
+// Since Toggle" floating button. The chat / chat_stream / continue handlers
 // wrap their await in a try/finally that calls sendIndicatorMessage.
 // agent.js fires HIDE_FOR_TOOL_USE / SHOW_AFTER_TOOL_USE around screenshot
 // capture so the agent doesn't see its own border in the pixels it sends
@@ -1873,7 +1873,7 @@ async function showCompletionNotification(tabId, success) {
     notificationId = await browser.notifications.create({
       type: 'basic',
       iconUrl: browser.runtime.getURL('icons/icon48.png'),
-      title: `WebBrain — ${success ? 'Task finished' : 'Task needs attention'}`,
+      title: `Since Toggle — ${success ? 'Task finished' : 'Task needs attention'}`,
       message,
       silent: true,
     });
@@ -2128,7 +2128,7 @@ function finishRunUiSnapshot(tabId, requestId, status, finalContent = '', askSuc
 // only: non-empty content with no error/attachment/max-steps update and no
 // billing terminal (subscribe / cost-allowance messages are actionable
 // failures, not successes).
-const BADGE_SUBSCRIBE_ERROR_RE = /(Subscribe for more usage|Upgrade to WebBrain Plus):\s*(https?:\/\/\S+)/i;
+const BADGE_SUBSCRIBE_ERROR_RE = /(Subscribe for more usage|Upgrade to Since Toggle Plus):\s*(https?:\/\/\S+)/i;
 const BADGE_COST_ALLOWANCE_ERROR_RE = /Cloud cost allowance reached:\s*(this session|total cloud\/router usage)\s+is\s+\$[\d.]+\s+against\s+the\s+\$([\d.]+)\s+limit\./i;
 function askCompletionSucceededForBadge(result, updates = [], error = null) {
   if (error) return false;
@@ -2331,7 +2331,7 @@ function launchDetachedRun(action, msg, sender) {
   entry.promise = task;
   task.catch((error) => {
     rememberDetachedRunFailure(tabId, requestId, error);
-    console.warn(`[WebBrain] detached ${action} run failed:`, error);
+    console.warn(`[Since Toggle] detached ${action} run failed:`, error);
   }).finally(() => {
     if (detachedRunStarts.get(tabId) === entry) detachedRunStarts.delete(tabId);
   });
@@ -2554,7 +2554,7 @@ async function handleMessage(msg, sender) {
       const result = await teacherRunInterlock.start(tabId, {
         name: msg.name,
         url: tab?.url,
-        webbrainVersion: browser.runtime.getManifest().version,
+        sincetoggleVersion: browser.runtime.getManifest().version,
       });
       if (result.changed && !await notifyTeacherState(tabId, result.session)) {
         await withTeacherSessionStoreLock(() => teacherSessionStore.clear(tabId));
@@ -2857,7 +2857,7 @@ async function handleMessage(msg, sender) {
             const captureResult = await runCaptureController.finish(runCaptureState, tabId);
             sendAgentUpdate(tabId, runUi.requestId, 'run_capture_complete', captureResult);
           } catch (error) {
-            console.warn('[WebBrain] trailing run capture failed to finish:', error);
+            console.warn('[Since Toggle] trailing run capture failed to finish:', error);
             sendAgentUpdate(tabId, runUi.requestId, 'run_capture_error', {
               kind: runCaptureState.kind,
               message: error?.message || String(error),
@@ -3124,7 +3124,7 @@ async function handleMessage(msg, sender) {
       const stored = await browser.storage.local.get(CONFIG_STORAGE_KEYS);
       const config = createConfigExport(stored, {
         locale: msg.locale,
-        webbrainVersion: browser.runtime.getManifest().version,
+        sincetoggleVersion: browser.runtime.getManifest().version,
       });
       return {
         ok: true,
@@ -3377,14 +3377,14 @@ async function handleMessage(msg, sender) {
 
     case 'set_help_improve_preference': {
       if (typeof msg.enabled !== 'boolean') throw new Error('enabled must be a boolean');
-      const stored = await browser.storage.local.get('helpImproveWebBrain');
-      const previousEnabled = stored.helpImproveWebBrain !== false;
-      await browser.storage.local.set({ helpImproveWebBrain: msg.enabled });
+      const stored = await browser.storage.local.get('helpImproveSince Toggle');
+      const previousEnabled = stored.helpImproveSince Toggle !== false;
+      await browser.storage.local.set({ helpImproveSince Toggle: msg.enabled });
       try {
         await providerManager.load();
       } catch (error) {
         if (previousEnabled !== msg.enabled) {
-          await browser.storage.local.set({ helpImproveWebBrain: previousEnabled }).catch(() => {});
+          await browser.storage.local.set({ helpImproveSince Toggle: previousEnabled }).catch(() => {});
         }
         throw error;
       }
@@ -3616,7 +3616,7 @@ browser.commands.onCommand.addListener(async (command, tab) => {
       const current = await loadUiScale(browser.storage.local);
       await saveUiScale(browser.storage.local, nextUiScale(current, scaleAction));
     }).catch((error) => {
-      console.error('[WebBrain] failed to update UI scale:', command, error);
+      console.error('[Since Toggle] failed to update UI scale:', command, error);
     });
     await uiScaleCommandQueue;
     return;
@@ -3626,6 +3626,6 @@ browser.commands.onCommand.addListener(async (command, tab) => {
   try {
     await browser.storage.local.set({ [SHORTCUT_COMMAND_STORAGE_KEY]: envelope });
   } catch (err) {
-    console.error('[WebBrain] failed to dispatch command:', command, err);
+    console.error('[Since Toggle] failed to dispatch command:', command, err);
   }
 });

@@ -157,7 +157,7 @@ for (const model of graded) {
   writeFileSync(join(outputDir, `${model.label}.rows.json`), `${JSON.stringify(model, null, 2)}\n`, { flag: 'wx' });
 }
 const summaryBody = {
-  schema: 'webbrain-compact-parser-regrade-v2',
+  schema: 'sincetoggle-compact-parser-regrade-v2',
   createdAt: new Date().toISOString(),
   inferenceRequests: 0,
   inputSignatureSha256: signature,

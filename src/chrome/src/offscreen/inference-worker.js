@@ -27,7 +27,7 @@ const WEBGPU_LFM25_MODEL_ID = 'LiquidAI/LFM2.5-2.6B-ONNX';
 const WEBGPU_BONSAI27_MODEL_ID = 'prism-ml/Bonsai-27B-gguf';
 const WEBGPU_LFM25_MAX_NEW_TOKENS = 2048;
 const WEBGPU_VISION_READY_MARKER_VERSION = 2;
-const WEBGPU_VISION_READY_MARKER_PREFIX = 'https://webbrain.one/.well-known/webgpu-vision-ready/';
+const WEBGPU_VISION_READY_MARKER_PREFIX = 'https://sincetoggle.one/.well-known/webgpu-vision-ready/';
 function createWebGpuTextSessionOptions() {
   return {
     extra: {
@@ -109,7 +109,7 @@ function assertTextDownloadCanStart(payload) {
 
 function textReadyMarkerUrl(modelId, dtype) {
   const key = encodeURIComponent(textModelKey(modelId, dtype));
-  return `https://webbrain.one/.well-known/webgpu-model-ready/${key}`;
+  return `https://sincetoggle.one/.well-known/webgpu-model-ready/${key}`;
 }
 
 function safeDecodedUrl(value) {
@@ -623,7 +623,7 @@ export function tokenizerSupportsTools(tokenizer) {
 
 function assertToolCapableTextRuntime(runtime, modelId) {
   if (tokenizerSupportsTools(runtime?.tokenizer)) return;
-  throw new Error(`${modelId} is not compatible with WebBrain: custom repositories must provide a chat template that accepts tools.`);
+  throw new Error(`${modelId} is not compatible with Since Toggle: custom repositories must provide a chat template that accepts tools.`);
 }
 
 async function getTextDownloadStatus(modelId, dtype) {

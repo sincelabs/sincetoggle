@@ -36,7 +36,7 @@ class BaseLLMProvider {
 
 | ID Fournisseur | Type | Catégorie | Modèle par défaut | Vision |
 |---|---|---|---|---|
-| `webbrain_cloud` | `openai` | cloud | `webbrain-cloud 1.0` | Oui |
+| `sincetoggle_cloud` | `openai` | cloud | `sincetoggle-cloud 1.0` | Oui |
 | `llamacpp` | `llamacpp` | local | (modèle chargé) | Métadonnées auto / surcharge |
 | `ollama` | `openai` | local | (modèle chargé) | Auto via `/api/show` / surcharge |
 | `lmstudio` | `openai` | local | (modèle chargé) | Métadonnées auto / surcharge |
@@ -69,7 +69,7 @@ class BaseLLMProvider {
 
 ### Catalogue étendu de fournisseurs
 
-WebBrain ajoute 76 cartes désactivées par défaut depuis l’instantané du
+Since Toggle ajoute 76 cartes désactivées par défaut depuis l’instantané du
 catalogue OpenCode au commit
 `62e4641235d7847dadc60da37cca8a023dd54fc1`. Avec les cartes existantes,
 les Paramètres proposent **106 fournisseurs intégrés sur Chromium** et **105
@@ -107,7 +107,7 @@ Les réponses sont diffusées pendant les tours Ask interactifs lorsque
 réessaie une seule fois sans diffusion et désactive la diffusion pour le reste
 de l’exécution. Act, Dev, les tâches planifiées, cloud et Continue restent sans
 diffusion. L’utilisation de jetons fournie par le service est enregistrée
-directement ; si elle est absente, WebBrain enregistre une estimation prudente
+directement ; si elle est absente, Since Toggle enregistre une estimation prudente
 fondée sur le nombre de caractères afin que la diffusion ne contourne pas la
 limite de coût configurée.
 
@@ -131,7 +131,7 @@ modèles n'exigent pas de clé sauf si le serveur utilise l'authentification ; l
 carte proxy générique exige une clé client :
 
 - **llama.cpp** : `http://localhost:8080` — exécutez `llama-server -m model.gguf`
-- **Ollama** : `http://localhost:11434/v1` — `ollama serve`, ou `ollama launch webbrain --model <model>`
+- **Ollama** : `http://localhost:11434/v1` — `ollama serve`, ou `ollama launch sincetoggle --model <model>`
 - **LM Studio** : `http://localhost:1234/v1` — le serveur d'inférence local de LM Studio
 - **Jan** : `http://localhost:1337/v1` — le serveur API local compatible OpenAI de Jan
 - **vLLM** : `http://localhost:8000/v1` — le serveur compatible OpenAI de vLLM
@@ -155,7 +155,7 @@ compte avec `./cli-proxy-api --config ./config.yaml --codex-login` ou
 activez les plugins de confiance, installez `gemini-cli` depuis le Plugin Store
 officiel, redémarrez le proxy, puis utilisez `--geminicli-login` (voir le
 [guide de gestion](https://help.router-for.me/management/api#plugins)). Démarrez enfin avec
-`./cli-proxy-api --config ./config.yaml`. Dans WebBrain, conservez l'URL
+`./cli-proxy-api --config ./config.yaml`. Dans Since Toggle, conservez l'URL
 `http://127.0.0.1:8317/v1`, saisissez la même clé, chargez les modèles,
 sélectionnez-en un puis testez la connexion.
 
@@ -167,7 +167,7 @@ le contexte à un compte en amont ; les identifiants OAuth amont restent dans
 CLIProxyAPI.
 
 Ollama, llama.cpp, LM Studio et LocalAI utilisent `visionMode: auto` par défaut.
-WebBrain lit les métadonnées natives du modèle sélectionné avant l'enrichissement et
+Since Toggle lit les métadonnées natives du modèle sélectionné avant l'enrichissement et
 n'envoie des captures que si le serveur déclare explicitement l'entrée image.
 Une détection indisponible ou malformée reste en texte seul pour ce tour et
 sera retentée plus tard. Si le champ Modèle est vide, la capacité du modèle
@@ -179,26 +179,26 @@ interrupteur explicite actuel.
 #### Relais de lancement Ollama (préversion)
 
 <p align="center">
-  <img src="../../web/assets/webbrain-ollama-heart.png" alt="WebBrain adore le relais de lancement Ollama" width="720">
+  <img src="../../web/assets/sincetoggle-ollama-heart.png" alt="Since Toggle adore le relais de lancement Ollama" width="720">
 </p>
 
-WebBrain prend aujourd'hui en charge Ollama via le fournisseur local compatible
-OpenAI. Un nouveau relais `ollama launch webbrain --model <model>` peut aussi
-configurer WebBrain automatiquement, mais il n'est pas encore intégré à Ollama
+Since Toggle prend aujourd'hui en charge Ollama via le fournisseur local compatible
+OpenAI. Un nouveau relais `ollama launch sincetoggle --model <model>` peut aussi
+configurer Since Toggle automatiquement, mais il n'est pas encore intégré à Ollama
 en amont. Pour l'instant, essayez-le depuis la [branche
-`codex/ollama-webbrain-launch-handoff` de
-`esokullu/ollama`](https://github.com/esokullu/ollama/tree/codex/ollama-webbrain-launch-handoff) ;
+`codex/ollama-sincetoggle-launch-handoff` de
+`esokullu/ollama`](https://github.com/esokullu/ollama/tree/codex/ollama-sincetoggle-launch-handoff) ;
 nous espérons qu'Ollama l'intégrera en amont.
 
 ```bash
 git clone https://github.com/esokullu/ollama.git
 cd ollama
-git switch codex/ollama-webbrain-launch-handoff
+git switch codex/ollama-sincetoggle-launch-handoff
 cmake -S . -B build -G Ninja -DOLLAMA_MLX_BACKENDS=
 cmake --build build --parallel 8
 
 OLLAMA_ORIGINS="chrome-extension://*,moz-extension://*" ./ollama serve
-./ollama launch webbrain --model <model>
+./ollama launch sincetoggle --model <model>
 ```
 
 **Fenêtre de contexte.** Chargez les modèles locaux avec **au moins une fenêtre de contexte de 16k tokens** pour des exécutions d'agent fiables — c'est le minimum utilisable. 8k peut fonctionner avec le niveau Compact sélectionné ; 4k est trop petit pour contenir le prompt système + les schémas d'outils. L'agent lit la fenêtre depuis `provider.contextWindow` (`providers/base.js`) pour piloter l'auto-compaction ; quand une configuration de fournisseur ne définit pas `contextWindow`, les fournisseurs locaux utilisent par défaut une valeur prudente de **16k** (cloud/routeur par défaut à 128k). **Tester la connexion** / **Charger les modèles** détectent pour **llama.cpp**, **Ollama** et **LM Studio** quand c'est rapporté (llama.cpp `GET /props` `n_ctx`, Ollama `GET /api/ps` puis `/api/show` `num_ctx`, LM Studio `/api/v0/models` `loaded_context_length`). La détection rafraîchit le 16k par défaut ; elle réduit une surcharge manuelle plus grande seulement depuis le contexte live/runtime (pas depuis Ollama `/api/show` seul). Jan / vLLM / SGLang / LocalAI ne détectent pas encore. Vous pouvez toujours définir `config.contextWindow` explicitement, et le serveur de modèle doit effectivement être démarré avec cette taille de contexte (par exemple `llama-server -c 16384`).
@@ -280,12 +280,12 @@ visible à travers les filtres de catégorie.
 
 Les configurations sont stockées dans `chrome.storage.local` sous la clé `providers`, fusionnées avec les valeurs par défaut. Les valeurs par défaut fournissent la STRUCTURE (quelles clés de fournisseur existent) ; les configurations stockées remplacent les valeurs par clé. Cela permet aux mises à jour qui introduisent de nouvelles entrées de fournisseur de fonctionner sans que les utilisateurs aient à vider le stockage.
 
-Les entrées de fournisseur obsolètes (`webbrain`, `openai_subscription`,
+Les entrées de fournisseur obsolètes (`sincetoggle`, `openai_subscription`,
 `claude_subscription`) sont filtrées.
 
 ### Plafonds de Coût
 
-Les paramètres exposent des plafonds de coût cloud pour la session et le total. L'agent préfère une valeur `usage.cost`/`usage.cost_usd` rapportée par le fournisseur lorsqu'elle est présente (OpenRouter la rapporte directement). Pour les fournisseurs cloud directs qui ne retournent que des compteurs de tokens, WebBrain estime les dépenses à partir des champs de configuration du fournisseur :
+Les paramètres exposent des plafonds de coût cloud pour la session et le total. L'agent préfère une valeur `usage.cost`/`usage.cost_usd` rapportée par le fournisseur lorsqu'elle est présente (OpenRouter la rapporte directement). Pour les fournisseurs cloud directs qui ne retournent que des compteurs de tokens, Since Toggle estime les dépenses à partir des champs de configuration du fournisseur :
 
 - `inputCostPerMillionUsd`
 - `cacheReadCostPerMillionUsd`
@@ -293,7 +293,7 @@ Les paramètres exposent des plafonds de coût cloud pour la session et le total
 - `cacheWrite1hCostPerMillionUsd`
 - `outputCostPerMillionUsd`
 
-OpenAI inclut les lectures et écritures de cache dans le total des tokens d'entrée (`prompt_tokens_details.cached_tokens` / `cache_write_tokens`, ou les équivalents `input_tokens_details` de l'API Responses) ; WebBrain soustrait donc les deux avant d'appliquer le tarif d'entrée normal, et facture les écritures avec `cacheWriteCostPerMillionUsd`. Anthropic et Bedrock rapportent séparément l'entrée normale, les lectures du cache et les écritures dans le cache ; ces compteurs sont donc additionnés comme catégories de facturation distinctes. Ils peuvent également distinguer les écritures de cache de 5 minutes et d'une heure.
+OpenAI inclut les lectures et écritures de cache dans le total des tokens d'entrée (`prompt_tokens_details.cached_tokens` / `cache_write_tokens`, ou les équivalents `input_tokens_details` de l'API Responses) ; Since Toggle soustrait donc les deux avant d'appliquer le tarif d'entrée normal, et facture les écritures avec `cacheWriteCostPerMillionUsd`. Anthropic et Bedrock rapportent séparément l'entrée normale, les lectures du cache et les écritures dans le cache ; ces compteurs sont donc additionnés comme catégories de facturation distinctes. Ils peuvent également distinguer les écritures de cache de 5 minutes et d'une heure.
 
 Ces tarifs sont modifiables dans la carte du fournisseur afin que le prix des modèles personnalisés puisse être ajusté sans modification de code. Si un tarif propre au cache est absent, le tarif d'entrée normal est utilisé ; si le tarif d'écriture d'une heure est absent, le tarif général d'écriture dans le cache est utilisé. Si un fournisseur distant facturé retourne des compteurs sans tarifs d'entrée/sortie configurés, l'agent utilise des valeurs prudentes (`3$` en entrée / `15$` en sortie par million de tokens). Pour chaque requête en streaming, seul le dernier instantané cumulatif d'utilisation est comptabilisé. Les fournisseurs locaux ne sont pas comptabilisés.
 

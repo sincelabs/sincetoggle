@@ -113,7 +113,7 @@ import {
 } from './chrome-web-store-release.js';
 
 /**
- * WebBrain Service Worker (Background Script)
+ * Since Toggle Service Worker (Background Script)
  * Routes messages between side panel, content scripts, and the agent.
  */
 
@@ -184,11 +184,11 @@ Promise.all([
   // one is a full copy of the archive it was writing.
   sweepOpfsSwapFiles().then(({ removed, bytes }) => {
     if (removed > 0) {
-      console.info(`[WebBrain] Reclaimed ${removed} orphaned OPFS swap file(s), ${(bytes / 1024 ** 3).toFixed(2)} GB.`);
+      console.info(`[Since Toggle] Reclaimed ${removed} orphaned OPFS swap file(s), ${(bytes / 1024 ** 3).toFixed(2)} GB.`);
     }
   }),
 ]).catch((error) => {
-  console.warn('[WebBrain] Apocalypse Mode startup work could not be restored:', error);
+  console.warn('[Since Toggle] Apocalypse Mode startup work could not be restored:', error);
 });
 const agent = new Agent(providerManager);
 agent.setStandaloneOfflineRagService(createOffscreenOfflineRetrievalService());
@@ -287,13 +287,13 @@ alwaysAllowApiMutationsReady
 
 const MAX_AGENT_STEPS_DEFAULT = 130;
 const MAX_AGENT_STEPS_UNLIMITED_SENTINEL = 200;
-const CONTEXT_MENU_ASK_SELECTION_ID = 'webbrain-ask-selection';
-const CONTEXT_MENU_OPEN_CHAT_ID = 'webbrain-selection-open-chat';
-const CONTEXT_MENU_OPEN_PDF_VIEWER_ID = 'webbrain-open-pdf-viewer';
-const CONTEXT_MENU_ACTION_PREFIX = 'webbrain-selection-action-';
-const CONTEXT_MENU_TRANSLATE_ID = 'webbrain-selection-translate';
-const CONTEXT_MENU_TRANSLATE_PREFIX = 'webbrain-selection-translate-';
-const CONTEXT_MENU_GENERIC_ASK_ID = 'webbrain-selection-generic-ask';
+const CONTEXT_MENU_ASK_SELECTION_ID = 'sincetoggle-ask-selection';
+const CONTEXT_MENU_OPEN_CHAT_ID = 'sincetoggle-selection-open-chat';
+const CONTEXT_MENU_OPEN_PDF_VIEWER_ID = 'sincetoggle-open-pdf-viewer';
+const CONTEXT_MENU_ACTION_PREFIX = 'sincetoggle-selection-action-';
+const CONTEXT_MENU_TRANSLATE_ID = 'sincetoggle-selection-translate';
+const CONTEXT_MENU_TRANSLATE_PREFIX = 'sincetoggle-selection-translate-';
+const CONTEXT_MENU_GENERIC_ASK_ID = 'sincetoggle-selection-generic-ask';
 const PDF_VIEWER_ENABLED_KEY = 'pdfViewerEnabled';
 const PDF_MIME_TYPE = 'application/pdf';
 const PDF_MIME_HANDLER_INSTALL_SYNC_DELAY_MS = 500;
@@ -340,7 +340,7 @@ async function syncNativePdfMimeHandlerFromStorage() {
 }
 
 function reportPdfMimeHandlerSyncFailure(error) {
-  console.warn('[WebBrain] Could not synchronize the native PDF MIME handler option:', error);
+  console.warn('[Since Toggle] Could not synchronize the native PDF MIME handler option:', error);
 }
 
 function scheduleNativePdfMimeHandlerSync(delayMs = 0) {
@@ -433,7 +433,7 @@ async function createContextMenus() {
     chrome.contextMenus.create(item, () => {
       const err = chrome.runtime.lastError;
       if (err && !/duplicate/i.test(String(err.message || err))) {
-        console.warn('[WebBrain] Failed to create context menu:', err.message || err);
+        console.warn('[Since Toggle] Failed to create context menu:', err.message || err);
       }
       if (item.id === CONTEXT_MENU_OPEN_PDF_VIEWER_ID) {
         syncPdfContextMenuForActiveTab().catch(() => {});
@@ -449,7 +449,7 @@ async function createContextMenus() {
       contexts: ['selection'],
     });
     create({ id: CONTEXT_MENU_OPEN_CHAT_ID, parentId: CONTEXT_MENU_ASK_SELECTION_ID, title: strings.openChat, contexts: ['selection'] });
-    create({ id: 'webbrain-selection-separator-1', parentId: CONTEXT_MENU_ASK_SELECTION_ID, type: 'separator', contexts: ['selection'] });
+    create({ id: 'sincetoggle-selection-separator-1', parentId: CONTEXT_MENU_ASK_SELECTION_ID, type: 'separator', contexts: ['selection'] });
     for (const [action, key] of [
       ['summarize', 'summarize'],
       ['explain', 'explain'],
@@ -468,11 +468,11 @@ async function createContextMenus() {
         contexts: ['selection'],
       });
     }
-    create({ id: 'webbrain-selection-separator-2', parentId: CONTEXT_MENU_ASK_SELECTION_ID, type: 'separator', contexts: ['selection'] });
+    create({ id: 'sincetoggle-selection-separator-2', parentId: CONTEXT_MENU_ASK_SELECTION_ID, type: 'separator', contexts: ['selection'] });
     create({ id: CONTEXT_MENU_GENERIC_ASK_ID, parentId: CONTEXT_MENU_ASK_SELECTION_ID, title: strings.askAbout, contexts: ['selection'] });
     create({
       id: CONTEXT_MENU_OPEN_PDF_VIEWER_ID,
-      title: 'Open PDF with WebBrain',
+      title: 'Open PDF with Since Toggle',
       contexts: ['page'],
       visible: false,
     });
@@ -853,7 +853,7 @@ function scheduleUserMemoryExtractionDrain(delayMs = USER_MEMORY_EXTRACTION_DELA
   userMemoryExtractionTimer = setTimeout(() => {
     userMemoryExtractionTimer = null;
     drainUserMemoryExtractionQueue().catch((error) => {
-      console.warn('[WebBrain] user-memory extraction failed:', error);
+      console.warn('[Since Toggle] user-memory extraction failed:', error);
     });
   }, delayMs);
 }
@@ -904,7 +904,7 @@ async function enqueueUserMemoryExtraction(payload = {}) {
 function enqueueUserMemoryExtractionAfterTurn(payload) {
   queueMicrotask(() => {
     enqueueUserMemoryExtraction(payload).catch((error) => {
-      console.warn('[WebBrain] failed to enqueue user-memory extraction:', error);
+      console.warn('[Since Toggle] failed to enqueue user-memory extraction:', error);
     });
   });
 }
@@ -1015,7 +1015,7 @@ async function loadCustomSkills() {
     try {
       await chrome.storage.local.set({ [CUSTOM_SKILLS_STORAGE_KEY]: skills });
     } catch (error) {
-      console.warn('[WebBrain] Retired packaged skills could not be removed', error);
+      console.warn('[Since Toggle] Retired packaged skills could not be removed', error);
     }
   }
   const removedDefaultIds = new Set(normalizeDefaultSkillRemovalIds(stored[DEFAULT_SKILLS_REMOVED_STORAGE_KEY]));
@@ -1041,7 +1041,7 @@ async function loadCustomSkills() {
       await chrome.storage.local.set(update);
     }
   } catch (e) {
-    console.warn('[WebBrain] Default skills could not be loaded', e);
+    console.warn('[Since Toggle] Default skills could not be loaded', e);
   }
   try {
     const refreshed = await refreshPackagedSkillRecords(skills);
@@ -1050,7 +1050,7 @@ async function loadCustomSkills() {
       await chrome.storage.local.set({ [CUSTOM_SKILLS_STORAGE_KEY]: skills });
     }
   } catch (e) {
-    console.warn('[WebBrain] Packaged skills could not be refreshed', e);
+    console.warn('[Since Toggle] Packaged skills could not be refreshed', e);
   }
   agent.setCustomSkills(skills);
 }
@@ -1132,7 +1132,7 @@ const planReviewReady = loadPlanReviewSettings();
 async function showFirstInstallGuide(details) {
   if (details?.reason !== 'install') return;
   await chrome.storage.local.set({ pinCoachmarkPending: true }).catch((error) => {
-    console.warn('[WebBrain] Could not prepare the first-open pin coachmark:', error);
+    console.warn('[Since Toggle] Could not prepare the first-open pin coachmark:', error);
   });
   try {
     await chrome.tabs.create({
@@ -1140,7 +1140,7 @@ async function showFirstInstallGuide(details) {
       active: true,
     });
   } catch (error) {
-    console.warn('[WebBrain] Could not open the first-install pinning guide:', error);
+    console.warn('[Since Toggle] Could not open the first-install pinning guide:', error);
   }
 }
 
@@ -1160,7 +1160,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   await syncNativePdfMimeHandlerFromStorage().catch(reportPdfMimeHandlerSyncFailure);
   scheduleNativePdfMimeHandlerSync(PDF_MIME_HANDLER_INSTALL_SYNC_DELAY_MS);
   scheduleUserMemoryExtractionDrain(5000);
-  console.log('[WebBrain] Extension installed, providers loaded.');
+  console.log('[Since Toggle] Extension installed, providers loaded.');
 });
 
 // Also load on startup
@@ -1186,8 +1186,8 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     createContextMenus().catch(() => {});
   }
   if (PROFILE_SYNC_DATA_KEYS.some((key) => changes[key])) profileSync.noteChanges(changes).catch(() => {});
-  if (changes.providers || changes.activeProvider || changes.helpImproveWebBrain) providerManager.load().catch(() => {});
-  if (changes.webbrainCloudBridgeEnabled || changes.webbrainCloudBridgeUrl) {
+  if (changes.providers || changes.activeProvider || changes.helpImproveSince Toggle) providerManager.load().catch(() => {});
+  if (changes.sincetoggleCloudBridgeEnabled || changes.sincetoggleCloudBridgeUrl) {
     cloudRunController.syncBridge().catch(() => {});
   }
   if (changes.maxAgentSteps) {
@@ -1265,7 +1265,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   }
   if (shouldClearUserMemoryExtractionQueueForChanges(changes)) {
     clearUserMemoryExtractionQueue().catch((error) => {
-      console.warn('[WebBrain] failed to clear user-memory extraction queue:', error);
+      console.warn('[Since Toggle] failed to clear user-memory extraction queue:', error);
     });
   }
   if (changes[CUSTOM_SKILLS_STORAGE_KEY]) {
@@ -1276,7 +1276,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     agent.customSkills = normalizeCustomSkills(retainedSkills);
     if (retainedSkills.length !== storedSkills.length) {
       chrome.storage.local.set({ [CUSTOM_SKILLS_STORAGE_KEY]: agent.customSkills }).catch((error) => {
-        console.warn('[WebBrain] Retired packaged skills could not be removed', error);
+        console.warn('[Since Toggle] Retired packaged skills could not be removed', error);
       });
     }
     refreshPrompts = true;
@@ -1284,7 +1284,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   if (changes.capsolverApiKey || changes.captchaSolverEnabled) {
     loadCaptchaSolver()
       .then(() => agent._refreshSystemPrompts())
-      .catch((error) => console.warn('[WebBrain] CapSolver setting could not be refreshed', error));
+      .catch((error) => console.warn('[Since Toggle] CapSolver setting could not be refreshed', error));
   }
   if (changes.planBeforeActMode || changes.planBeforeAct) {
     applyPlanBeforeActMode(normalizePlanBeforeActMode({
@@ -1339,7 +1339,7 @@ async function runApocalypseDownloadPass() {
       await apocalypseController.syncDownloadSchedule();
     } catch (scheduleError) {
       if (!passError) throw scheduleError;
-      console.warn('[WebBrain] Failed to re-arm the Apocalypse archive download:', scheduleError);
+      console.warn('[Since Toggle] Failed to re-arm the Apocalypse archive download:', scheduleError);
     }
   }
 }
@@ -1348,11 +1348,11 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm?.name === APOCALYPSE_DOWNLOAD_ALARM) {
     const releaseKeepalive = acquireRunKeepalive();
     runApocalypseDownloadPass().catch((error) => {
-      console.warn('[WebBrain] Apocalypse Mode archive download failed:', error);
+      console.warn('[Since Toggle] Apocalypse Mode archive download failed:', error);
     }).finally(releaseKeepalive);
   } else if (alarm?.name === APOCALYPSE_UPDATE_ALARM) {
     apocalypseController.checkForUpdates().catch((error) => {
-      console.warn('[WebBrain] Apocalypse Mode update check failed:', error);
+      console.warn('[Since Toggle] Apocalypse Mode update check failed:', error);
     });
   }
 });
@@ -1360,7 +1360,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 // ────────────────────────────────────────────────────────────────────────
 // Side-panel visibility model — Claude-for-Chrome style
 //
-// We use a per-window "WebBrain" tab group to keep an active sidebar session
+// We use a per-window "Since Toggle" tab group to keep an active sidebar session
 // visually organized. When automatic grouping is enabled and the user clicks
 // the action, the source tab joins (or seeds) that group. Side-panel access is
 // still enabled per tab, so opting out of grouping never disables the panel.
@@ -1400,11 +1400,11 @@ loadPanelTabs();
 // the exact same orchestration with the sidepanel button. background.js
 // just exposes routes that call into the module.)
 
-// Per-window WebBrain group ID. windowId -> tabGroups groupId.
+// Per-window Since Toggle group ID. windowId -> tabGroups groupId.
 const webBrainGroupByWindow = new Map();
 const WB_GROUPS_KEY = 'webBrainGroupByWindow';
 
-async function loadWebBrainGroups() {
+async function loadSince ToggleGroups() {
   if (!chrome.tabGroups) return;
   try {
     const stored = await chrome.storage.session.get(WB_GROUPS_KEY);
@@ -1421,12 +1421,12 @@ async function loadWebBrainGroups() {
     }
   } catch { /* session storage unavailable */ }
 }
-function saveWebBrainGroups() {
+function saveSince ToggleGroups() {
   chrome.storage.session?.set({
     [WB_GROUPS_KEY]: Array.from(webBrainGroupByWindow.entries()),
   }).catch(() => {});
 }
-loadWebBrainGroups();
+loadSince ToggleGroups();
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() => {});
 
@@ -1443,7 +1443,7 @@ chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() =>
 //     The handler fires a fire-and-forget `setOptions({tabId:X, enabled:true})`
 //     and `sidePanel.open({tabId:X})` back-to-back to keep the user gesture
 //     alive for `open()`.
-// We do NOT have a "tab left the WebBrain group → disable panel" path,
+// We do NOT have a "tab left the Since Toggle group → disable panel" path,
 // even though the WB group is still maintained for visual cohesion. That
 // path is exactly what raced with `action.onClicked` in the original
 // version: a fresh enable+open pair couldn't beat a recent disable, so
@@ -1460,10 +1460,10 @@ chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() =>
 
 /**
  * When automatic grouping is enabled, make sure `tab.windowId` has a
- * WebBrain group AND that `tab` is in it. Returns the group ID, or -1 when
+ * Since Toggle group AND that `tab` is in it. Returns the group ID, or -1 when
  * disabled, unsupported, or failed.
  */
-async function ensureWebBrainGroup(tab) {
+async function ensureSince ToggleGroup(tab) {
   if (!chrome.tabGroups || !tab?.id || tab.windowId == null) return -1;
   if (!await shouldAutoGroupTabs(chrome.storage.local)) return -1;
   try {
@@ -1478,26 +1478,26 @@ async function ensureWebBrainGroup(tab) {
       } catch {
         groupId = null;
         webBrainGroupByWindow.delete(tab.windowId);
-        saveWebBrainGroups();
+        saveSince ToggleGroups();
       }
     }
 
     if (groupId == null) {
-      // Always create a FRESH WebBrain group for this window, even if the
+      // Always create a FRESH Since Toggle group for this window, even if the
       // source tab is currently in some other (user-owned) group. The
       // earlier behaviour adopted the source's existing group and renamed
-      // it to "WebBrain" — surprising for users who had a "Dev" or
+      // it to "Since Toggle" — surprising for users who had a "Dev" or
       // "Research" group of their own. Calling chrome.tabs.group with no
       // groupId moves the source tab out of any old group into the new
       // one; the user's old group keeps its other tabs untouched.
       groupId = await chrome.tabs.group({ tabIds: [tab.id] });
       try {
         await chrome.tabGroups.update(groupId, {
-          title: 'WebBrain', color: 'blue', collapsed: false,
+          title: 'Since Toggle', color: 'blue', collapsed: false,
         });
       } catch { /* ignore styling failure */ }
       webBrainGroupByWindow.set(tab.windowId, groupId);
-      saveWebBrainGroups();
+      saveSince ToggleGroups();
     } else if (tab.groupId !== groupId) {
       // Group exists for this window but source tab isn't in it. Add it.
       try {
@@ -1513,7 +1513,7 @@ async function ensureWebBrainGroup(tab) {
 // The install page must call sidePanel.open() inside its own click handler to
 // retain Chrome's user gesture. Once that succeeds, mirror the bookkeeping
 // performed by chrome.action.onClicked so the first-open tab participates in
-// the same panel visibility and WebBrain group model.
+// the same panel visibility and Since Toggle group model.
 chrome.runtime.onMessage.addListener((msg, sender) => {
   if (msg?.type !== 'WB_INSTALL_PANEL_OPENED') return;
 
@@ -1534,7 +1534,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     if (tab?.url !== installGuideUrl) return;
     panelTabs.add(tab.id);
     savePanelTabs();
-    ensureWebBrainGroup(tab).catch(() => {});
+    ensureSince ToggleGroup(tab).catch(() => {});
   }).catch(() => {});
 });
 
@@ -1569,7 +1569,7 @@ function openSidePanelForContextMenu(tab) {
     enabled: true,
   });
   chrome.sidePanel.open({ tabId: tab.id });
-  ensureWebBrainGroup(tab).catch(() => {});
+  ensureSince ToggleGroup(tab).catch(() => {});
 }
 
 async function handleContextMenuAsk(info, tab) {
@@ -1734,7 +1734,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 //
 // While an agent run is in flight, we ask the page's content script to
 // render a pulsing purple inset glow around the viewport plus a
-// "Stop WebBrain" floating button. The chat / chat_stream / continue
+// "Stop Since Toggle" floating button. The chat / chat_stream / continue
 // handlers wrap their await with sendIndicatorMessage(tabId, 'SHOW' / 'HIDE').
 // agent.js fires HIDE_FOR_TOOL_USE / SHOW_AFTER_TOOL_USE around screenshot
 // capture so the agent doesn't see its own border in the pixels it sends
@@ -1945,7 +1945,7 @@ function finishRunUiSnapshot(tabId, requestId, status, finalContent = '', askSuc
 // only: non-empty content with no error/attachment/max-steps update and no
 // billing terminal (subscribe / cost-allowance messages are actionable
 // failures, not successes).
-const BADGE_SUBSCRIBE_ERROR_RE = /(Subscribe for more usage|Upgrade to WebBrain Plus):\s*(https?:\/\/\S+)/i;
+const BADGE_SUBSCRIBE_ERROR_RE = /(Subscribe for more usage|Upgrade to Since Toggle Plus):\s*(https?:\/\/\S+)/i;
 const BADGE_COST_ALLOWANCE_ERROR_RE = /Cloud cost allowance reached:\s*(this session|total cloud\/router usage)\s+is\s+\$[\d.]+\s+against\s+the\s+\$([\d.]+)\s+limit\./i;
 function askCompletionSucceededForBadge(result, updates = [], error = null) {
   if (error) return false;
@@ -2153,7 +2153,7 @@ function launchDetachedRun(action, msg, sender) {
   entry.promise = task;
   task.catch((error) => {
     rememberDetachedRunFailure(tabId, requestId, error);
-    console.warn(`[WebBrain] detached ${action} run failed:`, error);
+    console.warn(`[Since Toggle] detached ${action} run failed:`, error);
   }).finally(() => {
     if (detachedRunStarts.get(tabId) === entry) detachedRunStarts.delete(tabId);
   });
@@ -2285,9 +2285,9 @@ chrome.action.onClicked.addListener((tab) => {
   chrome.sidePanel.open({ tabId: tab.id });
   // Now group the source tab so the visibility scope is established
   // before the user can switch tabs. Async — we already lost the user-
-  // gesture window for sidePanel.open, but ensureWebBrainGroup doesn't
+  // gesture window for sidePanel.open, but ensureSince ToggleGroup doesn't
   // need it.
-  ensureWebBrainGroup(tab).catch(() => {});
+  ensureSince ToggleGroup(tab).catch(() => {});
 });
 
 // (Was: chrome.tabs.onActivated + chrome.tabs.onUpdated listeners that
@@ -2297,14 +2297,14 @@ chrome.action.onClicked.addListener((tab) => {
 // already preserves per-tab panel state across tab switches; we don't
 // need to re-assert it.)
 
-// User ungrouped (or Chrome auto-collapsed) the WebBrain group entirely.
+// User ungrouped (or Chrome auto-collapsed) the Since Toggle group entirely.
 // Forget the mapping for that window so the next action click can seed
 // a fresh group rather than try to reuse a dead ID.
 chrome.tabGroups?.onRemoved?.addListener?.((group) => {
   for (const [windowId, gid] of webBrainGroupByWindow) {
     if (gid === group.id) {
       webBrainGroupByWindow.delete(windowId);
-      saveWebBrainGroups();
+      saveSince ToggleGroups();
       break;
     }
   }
@@ -2314,7 +2314,7 @@ chrome.tabGroups?.onRemoved?.addListener?.((group) => {
 chrome.windows?.onRemoved?.addListener?.((windowId) => {
   if (webBrainGroupByWindow.has(windowId)) {
     webBrainGroupByWindow.delete(windowId);
-    saveWebBrainGroups();
+    saveSince ToggleGroups();
   }
 });
 
@@ -2354,7 +2354,7 @@ function invalidateContextMenuForTab(tabId) {
 // extend its retry budget when a click/type fires soon after a nav (the new
 // route may still be hydrating).
 const lastNavByTab = new Map(); // tabId -> { ts, type, url }
-globalThis.__webbrainLastNav = lastNavByTab;
+globalThis.__sincetoggleLastNav = lastNavByTab;
 
 function recordNav(tabId, type, url, { resetTypeIdentity = true } = {}) {
   if (tabId == null) return;
@@ -2436,8 +2436,8 @@ const API_MUTATION_OBSERVER_DEFAULT = false;
 const API_REPLAY_BODY_LIMIT = 16000;
 const apiRequestsByTab = new Map(); // tabId -> [{ url, method, ts, replayRequestId, ... }]
 const apiRequestReplayById = new Map(); // replayRequestId -> captured same-origin replay options
-globalThis.__webbrainApiRequests = apiRequestsByTab;
-globalThis.__webbrainApiRequestReplay = apiRequestReplayById;
+globalThis.__sincetoggleApiRequests = apiRequestsByTab;
+globalThis.__sincetoggleApiRequestReplay = apiRequestReplayById;
 let apiMutationObserverRegistered = false;
 
 function apiReplayId(tabId, requestId) {
@@ -2630,7 +2630,7 @@ async function showCompletionNotification(tabId, success) {
       chrome.notifications.create({
         type: 'basic',
         iconUrl: chrome.runtime.getURL('icons/icon48.png'),
-        title: `WebBrain — ${success ? 'Task finished' : 'Task needs attention'}`,
+        title: `Since Toggle — ${success ? 'Task finished' : 'Task needs attention'}`,
         message,
         silent: true,
       }, (notificationId) => {
@@ -3047,7 +3047,7 @@ async function handleMessage(msg, sender) {
       const result = await teacherRunInterlock.start(tabId, {
         name: msg.name,
         url: tab?.url,
-        webbrainVersion: chrome.runtime.getManifest().version,
+        sincetoggleVersion: chrome.runtime.getManifest().version,
       });
       if (result.changed && !await notifyTeacherState(tabId, result.session)) {
         await withTeacherSessionStoreLock(() => teacherSessionStore.clear(tabId));
@@ -3369,7 +3369,7 @@ async function handleMessage(msg, sender) {
             const captureResult = await runCaptureController.finish(runCaptureState, tabId);
             sendAgentUpdate(tabId, runUi.requestId, 'run_capture_complete', captureResult);
           } catch (error) {
-            console.warn('[WebBrain] trailing run capture failed to finish:', error);
+            console.warn('[Since Toggle] trailing run capture failed to finish:', error);
             sendAgentUpdate(tabId, runUi.requestId, 'run_capture_error', {
               kind: runCaptureState.kind,
               message: error?.message || String(error),
@@ -3669,7 +3669,7 @@ async function handleMessage(msg, sender) {
       const stored = await chrome.storage.local.get(CONFIG_STORAGE_KEYS);
       const config = createConfigExport(stored, {
         locale: msg.locale,
-        webbrainVersion: chrome.runtime.getManifest().version,
+        sincetoggleVersion: chrome.runtime.getManifest().version,
       });
       return {
         ok: true,
@@ -3915,14 +3915,14 @@ async function handleMessage(msg, sender) {
     // --- Provider Management ---
     case 'set_help_improve_preference': {
       if (typeof msg.enabled !== 'boolean') throw new Error('enabled must be a boolean');
-      const stored = await chrome.storage.local.get('helpImproveWebBrain');
-      const previousEnabled = stored.helpImproveWebBrain !== false;
-      await chrome.storage.local.set({ helpImproveWebBrain: msg.enabled });
+      const stored = await chrome.storage.local.get('helpImproveSince Toggle');
+      const previousEnabled = stored.helpImproveSince Toggle !== false;
+      await chrome.storage.local.set({ helpImproveSince Toggle: msg.enabled });
       try {
         await providerManager.load();
       } catch (error) {
         if (previousEnabled !== msg.enabled) {
-          await chrome.storage.local.set({ helpImproveWebBrain: previousEnabled }).catch(() => {});
+          await chrome.storage.local.set({ helpImproveSince Toggle: previousEnabled }).catch(() => {});
         }
         throw error;
       }
@@ -4206,7 +4206,7 @@ chrome.commands.onCommand.addListener(async (command) => {
     const current = await loadUiScale(chrome.storage.local);
     await saveUiScale(chrome.storage.local, nextUiScale(current, action));
   }).catch((error) => {
-    console.error('[WebBrain] failed to update UI scale:', command, error);
+    console.error('[Since Toggle] failed to update UI scale:', command, error);
   });
   await uiScaleCommandQueue;
 });

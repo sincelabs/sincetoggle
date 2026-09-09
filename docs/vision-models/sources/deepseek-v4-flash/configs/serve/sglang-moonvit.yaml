@@ -1,4 +1,4 @@
-model-path: webbrain-one/DeepSeek-V4-Flash-Vision-NVFP4
+model-path: sincetoggle-one/DeepSeek-V4-Flash-Vision-NVFP4
 host: 127.0.0.1
 port: 30000
 tensor-parallel-size: 5

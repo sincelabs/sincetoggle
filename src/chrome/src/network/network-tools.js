@@ -1,5 +1,5 @@
 /**
- * Network & download tools for the WebBrain agent.
+ * Network & download tools for the Since Toggle agent.
  *
  * These run in the background service worker context, so they have access
  * to fetch() (with the user's cookies via credentials:'include'), the
@@ -1304,7 +1304,7 @@ export async function executeHttpSkillTool(tool, args = {}, ctx = {}) {
 function apiReplayOptionsForFetch(rawUrl, opts = {}, ctx = {}) {
   const replayRequestId = opts.replayRequestId || opts.apiReplayRequestId;
   if (!replayRequestId) return { ok: true, opts };
-  const replay = globalThis.__webbrainApiRequestReplay?.get(String(replayRequestId));
+  const replay = globalThis.__sincetoggleApiRequestReplay?.get(String(replayRequestId));
   if (!replay) {
     return { ok: false, error: `No captured API request replay data found for replayRequestId: ${replayRequestId}` };
   }

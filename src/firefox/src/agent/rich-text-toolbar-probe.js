@@ -239,7 +239,7 @@ export class RichTextToolbarProbe {
     const selected = candidates[0];
     const selectedIndex = matchIndex == null ? 0 : matchIndex;
     const markerToken = `wbit_${Date.now().toString(36)}_${secureRandomBase36Token(12)}`;
-    const markerAttribute = `data-webbrain-legacy-iframe-type-${markerToken}`;
+    const markerAttribute = `data-sincetoggle-legacy-iframe-type-${markerToken}`;
     const markerValue = markerToken;
     const deadlineResult = result => {
       const dispatched = result?.dispatched === true;

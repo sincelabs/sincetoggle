@@ -31,15 +31,15 @@ of MoonViT patches and maps the resulting 4608-dimensional representation into
 DeepSeek's 4096-dimensional token space. Original text routing IDs are preserved;
 image positions receive deterministic routing IDs from a fixed 64-ID palette.
 
-## Why vision at WebBrain
+## Why vision at Since Toggle
 
-At [WebBrain](https://www.webbrain.one), we build browser agents that need to
+At [Since Toggle](https://www.sincetoggle.one), we build browser agents that need to
 understand the visual state of the web—not just extracted text. Screenshots,
 charts, dashboards, rich editors, and the location and appearance of controls
 are part of real browser work, so vision is a practical product requirement.
 
 In our
-[American–Chinese open-model frontier benchmark](https://www.webbrain.one/blog/american-chinese-open-model-frontier-gap-benchmark),
+[American–Chinese open-model frontier benchmark](https://www.sincetoggle.one/blog/american-chinese-open-model-frontier-gap-benchmark),
 DeepSeek V4 Flash stood out as a very strong model and the cheapest to run in its class, but the upstream
 checkpoint is text-only. This project adds a basic MoonViT vision bridge while
 keeping both the language backbone and vision tower frozen.

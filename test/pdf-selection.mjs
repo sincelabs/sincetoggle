@@ -33,7 +33,7 @@ async function testHandlerUsesChromeStreamAndTextLayer() {
   assert.match(source, /fetch\(streamInfo\.streamUrl/);
   assert.match(source, /getDocument\(\{ data:/);
   assert.match(source, /new (?:state\.)?(?:pdfjs\.)?TextLayer\(/);
-  assert.match(source, /__webbrainSelectionShortcutConfig/);
+  assert.match(source, /__sincetoggleSelectionShortcutConfig/);
   assert.match(source, /allowNestedFrame: true/);
   assert.match(source, /streamInfo\.embedded/);
 }
@@ -166,7 +166,7 @@ async function testPdfResponseStreamingStopsAtTheByteLimit() {
   };
   await assert.rejects(
     readPdfResponseBytes(oversizedResponse, { maxBytes: 5 }),
-    /larger than the WebBrain viewer limit/,
+    /larger than the Since Toggle viewer limit/,
   );
   assert.equal(cancelled, true, 'the response stream should be cancelled as soon as it exceeds the limit');
 
@@ -275,14 +275,14 @@ async function testPdfSelectionCarriesItsTabScope() {
           onChanged: { addListener: (listener) => window.__selectionStorageListeners.push(listener) },
         },
       };
-      window.__webbrainSelectionShortcutConfig = {
+      window.__sincetoggleSelectionShortcutConfig = {
         submitMessage: 'WB_PDF_SELECTION_SHORTCUT_SUBMIT',
         submitFields: { tabId: 73, originalUrl: 'https://papers.example.test/reading.pdf' },
         allowNestedFrame: true,
       };
     ` });
     await page.addScriptTag({ content: await readFile(selectionShortcutPath, 'utf8') });
-    await page.waitForFunction(() => typeof window.__webbrainSelectionShortcut?.getState === 'function');
+    await page.waitForFunction(() => typeof window.__sincetoggleSelectionShortcut?.getState === 'function');
     await page.evaluate(async () => {
       const range = document.createRange();
       range.selectNodeContents(document.getElementById('pdf-text'));
@@ -292,8 +292,8 @@ async function testPdfSelectionCarriesItsTabScope() {
       await new Promise(resolve => requestAnimationFrame(resolve));
       document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     });
-    await page.waitForFunction(() => window.__webbrainSelectionShortcut.getState().shortcutVisible);
-    await page.evaluate(() => window.__webbrainSelectionShortcut.submitPreset('summarize'));
+    await page.waitForFunction(() => window.__sincetoggleSelectionShortcut.getState().shortcutVisible);
+    await page.evaluate(() => window.__sincetoggleSelectionShortcut.submitPreset('summarize'));
     await page.waitForFunction(() => window.__selectionMessages.length === 1);
     const message = await page.evaluate(() => window.__selectionMessages[0]);
     assert.equal(message.type, 'WB_PDF_SELECTION_SHORTCUT_SUBMIT');
@@ -343,7 +343,7 @@ async function testPdfSelectionShortcutRunsInHandlerFrame() {
           onChanged: { addListener: (listener) => window.__selectionStorageListeners.push(listener) },
         },
       };
-      window.__webbrainSelectionShortcutConfig = {
+      window.__sincetoggleSelectionShortcutConfig = {
         submitMessage: 'WB_PDF_SELECTION_SHORTCUT_SUBMIT',
         submitFields: { tabId: 91, originalUrl: 'https://papers.example.test/frame.pdf' },
         allowNestedFrame: true,
@@ -351,7 +351,7 @@ async function testPdfSelectionShortcutRunsInHandlerFrame() {
     `;
     await frame.addScriptTag({ content: bootstrap });
     await frame.addScriptTag({ content: await readFile(selectionShortcutPath, 'utf8') });
-    await frame.waitForFunction(() => typeof window.__webbrainSelectionShortcut?.getState === 'function', null, { timeout: 5000 });
+    await frame.waitForFunction(() => typeof window.__sincetoggleSelectionShortcut?.getState === 'function', null, { timeout: 5000 });
     await frame.evaluate(async () => {
       const range = document.createRange();
       range.selectNodeContents(document.getElementById('pdf-text'));
@@ -361,8 +361,8 @@ async function testPdfSelectionShortcutRunsInHandlerFrame() {
       await new Promise(resolve => requestAnimationFrame(resolve));
       document.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
     });
-    await frame.waitForFunction(() => window.__webbrainSelectionShortcut.getState().shortcutVisible, null, { timeout: 5000 });
-    await frame.evaluate(() => window.__webbrainSelectionShortcut.submitPreset('summarize'));
+    await frame.waitForFunction(() => window.__sincetoggleSelectionShortcut.getState().shortcutVisible, null, { timeout: 5000 });
+    await frame.evaluate(() => window.__sincetoggleSelectionShortcut.submitPreset('summarize'));
     await frame.waitForFunction(() => window.__selectionMessages.length === 1);
     const message = await frame.evaluate(() => window.__selectionMessages[0]);
     assert.equal(message.type, 'WB_PDF_SELECTION_SHORTCUT_SUBMIT');

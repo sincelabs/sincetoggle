@@ -10,12 +10,12 @@
   "firstToolCall": {
     "name": "navigate",
     "args": {
-      "url": "https://www.google.com/search?q=%C2%A0webbrain+chrome"
+      "url": "https://www.google.com/search?q=%C2%A0sincetoggle+chrome"
     }
   },
   "toolCallSource": "content_fallback",
   "finishReason": "stop",
-  "content": "<tool_call>{\"name\":\"navigate\",\"arguments\":{\"url\":\"https://www.google.com/search?q=%C2%A0webbrain+chrome\"}}</tool_call>",
+  "content": "<tool_call>{\"name\":\"navigate\",\"arguments\":{\"url\":\"https://www.google.com/search?q=%C2%A0sincetoggle+chrome\"}}</tool_call>",
   "usage": {
     "completion_tokens": 328,
     "prompt_tokens": 9191,

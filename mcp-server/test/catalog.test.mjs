@@ -26,10 +26,10 @@ test("MCP catalog exposes structured extraction alongside run controls", async (
     command: process.execPath,
     args: ["dist/index.js"],
     cwd: packageDir,
-    env: { ...process.env, WEBBRAIN_BRIDGE_PORT: String(port) },
+    env: { ...process.env, SINCETOGGLE_BRIDGE_PORT: String(port) },
     stderr: "pipe",
   });
-  const client = new Client({ name: "webbrain-catalog-test", version: "1.0.0" });
+  const client = new Client({ name: "sincetoggle-catalog-test", version: "1.0.0" });
 
   try {
     await client.connect(transport);
@@ -37,24 +37,24 @@ test("MCP catalog exposes structured extraction alongside run controls", async (
     assert.deepEqual(
       tools.map((tool) => tool.name),
       [
-        "webbrain_run",
-        "webbrain_extract",
-        "webbrain_status",
-        "webbrain_respond",
-        "webbrain_abort",
-        "webbrain_connection",
+        "sincetoggle_run",
+        "sincetoggle_extract",
+        "sincetoggle_status",
+        "sincetoggle_respond",
+        "sincetoggle_abort",
+        "sincetoggle_connection",
       ],
     );
 
-    const extract = tools.find((tool) => tool.name === "webbrain_extract");
+    const extract = tools.find((tool) => tool.name === "sincetoggle_extract");
     assert.ok(extract, "structured extraction tool is missing");
     assert.deepEqual(extract.inputSchema.required, ["task", "output_schema"]);
     assert.equal(extract.inputSchema.properties.output_schema.type, "object");
-    assert.match(extract.description, /always uses WebBrain Ask mode/i);
+    assert.match(extract.description, /always uses Since Toggle Ask mode/i);
 
-    const respond = tools.find((tool) => tool.name === "webbrain_respond");
+    const respond = tools.find((tool) => tool.name === "sincetoggle_respond");
     assert.ok(respond, "respond tool is missing");
-    assert.match(respond.description, /exact stable value shown by WebBrain: 'once', 'always', or 'deny'/i);
+    assert.match(respond.description, /exact stable value shown by Since Toggle: 'once', 'always', or 'deny'/i);
     assert.match(respond.inputSchema.properties.answer.description, /one-time approval maps to 'once'/i);
   } finally {
     await client.close().catch(() => {});

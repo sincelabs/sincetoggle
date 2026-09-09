@@ -18,7 +18,7 @@ extensions for full download/index/search testing. Its 501,799,481-byte ZIP
 contains 301,370,399 installed text bytes, a 1,052,307,456-byte prebuilt SQLite
 FTS5 database, and a 97,447,968-byte int8 multilingual E5 index covering
 251,144 passages. It is hosted in the separate
-`webbrain-one/emergency-box-corpus` GitHub repository. The browser imports the
+`sincetoggle-one/emergency-box-corpus` GitHub repository. The browser imports the
 FTS5 database and performs exact full-corpus vector search, so it does not
 compute either corpus index after download. It remains explicitly marked as a
 preview because metadata refinements, known extraction warnings, and additional
@@ -115,7 +115,7 @@ Run on current stable Chrome and Firefox with a fresh profile for each:
    available. Verify that source/language filters persist and that citations
    retain distinct archive identity.
 3. In browser developer tools, set the network to Offline (or disconnect the
-   machine), close all WebBrain pages, and restart the browser.
+   machine), close all Since Toggle pages, and restart the browser.
 4. Ask an English factual question, an English emergency question, and a CJK
    question. Verify retrieval/generation readiness are shown independently,
    no request reaches the network, and answers cite only returned evidence.
@@ -144,6 +144,6 @@ Run on current stable Chrome and Firefox with a fresh profile for each:
 - [ ] If GPL was approved, complete corresponding source, build scripts,
       notices, SBOM, and package hashes ship with the release. Confirm the
       tagged tree retains `dist/corresponding-source/` and the GitHub release
-      includes `webbrain-*-corresponding-source.zip` beside the browser ZIPs.
+      includes `sincetoggle-*-corresponding-source.zip` beside the browser ZIPs.
 - [ ] The repository test suite passes apart from no acknowledged pre-existing
       artifact/environment failures.

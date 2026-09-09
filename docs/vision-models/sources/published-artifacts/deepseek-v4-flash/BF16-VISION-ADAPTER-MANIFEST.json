@@ -42,7 +42,7 @@
     "gpu_validated_in_this_package": false
   },
   "packaging_source": {
-    "model_id": "webbrain-one/DeepSeek-V4-Flash-Vision-NVFP4",
+    "model_id": "sincetoggle-one/DeepSeek-V4-Flash-Vision-NVFP4",
     "revision": "970dbcf866f06a1bd66b23bf14d7acf30f0c095b",
     "nvfp4_text_shards_included": false
   }

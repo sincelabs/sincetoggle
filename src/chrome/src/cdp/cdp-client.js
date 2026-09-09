@@ -1662,7 +1662,7 @@ export class CDPClient {
     state.network.length = 0;
     state.networkByRequestId.clear();
     this.devDiagnostics.delete(tabId);
-    // Removing WebBrain's handlers stops local buffering, but the browser
+    // Removing Since Toggle's handlers stops local buffering, but the browser
     // continues producing domain events until the matching CDP domains are
     // disabled. Issue the commands after local teardown so late events cannot
     // repopulate the cleared buffers while shutdown is in flight. Other CDP
@@ -1881,7 +1881,7 @@ export class CDPClient {
    */
   async querySelectorPierce(tabId, selector) {
     await this.sendCommand(tabId, 'Runtime.enable');
-    const objectGroup = `webbrain-query-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const objectGroup = `sincetoggle-query-${Date.now()}-${Math.random().toString(36).slice(2)}`;
     try {
       const evaluated = await this.sendCommand(tabId, 'Runtime.evaluate', {
         expression: `
@@ -2376,7 +2376,7 @@ export class CDPClient {
         // programmatic guard alive through a short TTL. Restore that wrapper
         // before CDP snapshots the native methods, otherwise the two restore
         // lifecycles can re-install each other's stale wrapper.
-        document.dispatchEvent(new Event('webbrain:file-picker-guard-reset'));
+        document.dispatchEvent(new Event('sincetoggle:file-picker-guard-reset'));
         const uniqueFileInputSelector = (input) => {
           const allPiercedMatches = (selector) => {
             const matches = [];
@@ -2670,7 +2670,7 @@ export class CDPClient {
         if (frameId) {
           const isolated = await this.sendCommand(tabId, 'Page.createIsolatedWorld', {
             frameId,
-            worldName: 'webbrain-upload-probe',
+            worldName: 'sincetoggle-upload-probe',
             grantUniveralAccess: false,
           });
           contextId = isolated?.executionContextId || null;
@@ -2853,7 +2853,7 @@ export class CDPClient {
 
     const result = await this.evaluate(tabId, `
       (() => {
-        const node = window.webbrain_getNodeById(${nodeId});
+        const node = window.sincetoggle_getNodeById(${nodeId});
         return node ? node.innerText : null;
       })()
     `).catch(() => null);
@@ -3298,11 +3298,11 @@ export class CDPClient {
     // If a SPA navigation just happened on this tab, the new route is
     // probably still hydrating — extend the retry window so we wait through
     // the framework re-render instead of failing fast. background.js writes
-    // to globalThis.__webbrainLastNav via chrome.webNavigation listeners.
+    // to globalThis.__sincetoggleLastNav via chrome.webNavigation listeners.
     let retries = options.retries ?? 3;
     let delayMs = options.delayMs ?? 200;
     try {
-      const navMap = globalThis.__webbrainLastNav;
+      const navMap = globalThis.__sincetoggleLastNav;
       const last = navMap?.get(tabId);
       if (last && Date.now() - last.ts < 4000) {
         // Recent nav: give it ~3 seconds total (10 × 300ms).
@@ -4563,7 +4563,7 @@ export class CDPClient {
       let objectId = null;
       let objectGroup = null;
       let releaseObject = false;
-      const markerAttribute = 'data-webbrain-dispatch-binding';
+      const markerAttribute = 'data-sincetoggle-dispatch-binding';
       const entropy = new Uint32Array(3);
       globalThis.crypto.getRandomValues(entropy);
       const marker = `wbdb_${Date.now().toString(36)}_${Array.from(entropy, value => value.toString(36)).join('_')}`;
@@ -4592,7 +4592,7 @@ export class CDPClient {
           returnByValue: true,
           functionDeclaration: `function (attribute, marker) {
             if (!this || this.nodeType !== 1 || !this.isConnected) return false;
-            const tokenKey = Symbol.for('webbrain.dispatchBinding');
+            const tokenKey = Symbol.for('sincetoggle.dispatchBinding');
             try {
               Object.defineProperty(this, tokenKey, { value: marker, configurable: true });
             } catch {
@@ -4618,7 +4618,7 @@ export class CDPClient {
             objectId,
             returnByValue: true,
             functionDeclaration: `function (attribute, marker) {
-              const tokenKey = Symbol.for('webbrain.dispatchBinding');
+              const tokenKey = Symbol.for('sincetoggle.dispatchBinding');
               if (this?.getAttribute?.(attribute) === marker) this.removeAttribute(attribute);
               if (this?.[tokenKey] === marker) {
                 try { delete this[tokenKey]; } catch {}
@@ -4688,7 +4688,7 @@ export class CDPClient {
           };
           const el = queryDeep(document);
           if (!el || el.tagName !== 'SELECT') return { success: false, error: 'Select element not found' };
-          if (targetToken && el[Symbol.for('webbrain.dispatchBinding')] !== targetToken) {
+          if (targetToken && el[Symbol.for('sincetoggle.dispatchBinding')] !== targetToken) {
             return { success: false, targetChanged: true, error: 'The selector target changed after safety preflight' };
           }
           if (deadlineExpired()) return { success: false, deadlineExpired: true, error: 'Select action deadline expired' };
@@ -4795,7 +4795,7 @@ export class CDPClient {
               returnByValue: true,
               functionDeclaration: `function (targetToken, actionDeadlineAt) {
                 if (actionDeadlineAt > 0 && Date.now() >= actionDeadlineAt) return false;
-                if (!this || !this.isConnected || this[Symbol.for('webbrain.dispatchBinding')] !== targetToken) return false;
+                if (!this || !this.isConnected || this[Symbol.for('sincetoggle.dispatchBinding')] !== targetToken) return false;
                 try { this.focus(); } catch { return false; }
                 const root = this.getRootNode?.();
                 return root?.activeElement === this || document.activeElement === this;
@@ -4838,7 +4838,7 @@ export class CDPClient {
               return active;
             };
             const el = queryDeep(document);
-            if (!el || !el.isConnected || el[Symbol.for('webbrain.dispatchBinding')] !== targetToken) return false;
+            if (!el || !el.isConnected || el[Symbol.for('sincetoggle.dispatchBinding')] !== targetToken) return false;
             if (deadlineExpired()) return false;
             try { el.focus(); } catch { return false; }
             return activeDeep() === el;

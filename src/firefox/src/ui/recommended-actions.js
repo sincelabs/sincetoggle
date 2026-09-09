@@ -167,13 +167,13 @@ function couponRunOptions() {
   };
 }
 
-function webbrainTweetRunOptions(postText) {
+function sincetoggleTweetRunOptions(postText) {
   const exactPost = String(postText || '').trim();
   return {
-    id: 'tweet-webbrain',
+    id: 'tweet-sincetoggle',
     skipPlanner: true,
     tool: 'navigate',
-    summary: 'Publish the reviewed localized WebBrain post exactly as supplied.',
+    summary: 'Publish the reviewed localized Since Toggle post exactly as supplied.',
     steps: [
       'Open https://x.com/compose/post in the current tab through the visible browser UI.',
       'Wait for the visible X composer to become stable before entering text.',
@@ -185,13 +185,13 @@ function webbrainTweetRunOptions(postText) {
   };
 }
 
-function webbrainLinkedInRunOptions(postText) {
+function sincetoggleLinkedInRunOptions(postText) {
   const exactPost = String(postText || '').trim();
   return {
-    id: 'post-webbrain-linkedin',
+    id: 'post-sincetoggle-linkedin',
     skipPlanner: true,
     tool: 'navigate',
-    summary: 'Publish the reviewed localized WebBrain post on LinkedIn exactly as supplied.',
+    summary: 'Publish the reviewed localized Since Toggle post on LinkedIn exactly as supplied.',
     steps: [
       'Open https://www.linkedin.com/feed/ in the current tab through the visible browser UI.',
       'Select Start a post to open LinkedIn\'s visible composer.',
@@ -334,23 +334,23 @@ export function buildRecommendedActions(pageInfo = {}, options = {}) {
   const host = hostFromUrl(pageInfo.url || '');
   const path = pathFromUrl(pageInfo.url || '');
   const actions = [];
-  const webbrainPostText = t('sp.recommended.tweet.text');
-  const webbrainPromotionVariant = options.webbrainPromotionVariant === 'linkedin' ? 'linkedin' : 'x';
+  const sincetogglePostText = t('sp.recommended.tweet.text');
+  const sincetogglePromotionVariant = options.sincetogglePromotionVariant === 'linkedin' ? 'linkedin' : 'x';
 
-  const webbrainPromotion = webbrainPromotionVariant === 'linkedin'
+  const sincetogglePromotion = sincetogglePromotionVariant === 'linkedin'
     ? {
-      id: 'post-webbrain-linkedin',
+      id: 'post-sincetoggle-linkedin',
       label: t('sp.recommended.linkedin.label'),
-      prompt: t('sp.recommended.linkedin.prompt', { post: webbrainPostText }),
+      prompt: t('sp.recommended.linkedin.prompt', { post: sincetogglePostText }),
       mode: 'act',
-      runOptions: webbrainLinkedInRunOptions(webbrainPostText),
+      runOptions: sincetoggleLinkedInRunOptions(sincetogglePostText),
     }
     : {
-      id: 'tweet-webbrain',
+      id: 'tweet-sincetoggle',
       label: t('sp.recommended.tweet.label'),
-      prompt: t('sp.recommended.tweet.prompt', { post: webbrainPostText }),
+      prompt: t('sp.recommended.tweet.prompt', { post: sincetogglePostText }),
       mode: 'act',
-      runOptions: webbrainTweetRunOptions(webbrainPostText),
+      runOptions: sincetoggleTweetRunOptions(sincetogglePostText),
     };
 
   if (host === 'github.com' && RELEASES_PATH_RE.test(path)) {
@@ -477,7 +477,7 @@ export function buildRecommendedActions(pageInfo = {}, options = {}) {
       id: 'loop-youtube-video',
       label: 'Loop this video',
       prompt: `Use execute_js once with exactly this function body, then report whether a video was found and looping was enabled:
-const KEY = '__webbrainYouTubeLoop';
+const KEY = '__sincetoggleYouTubeLoop';
 const previous = window[KEY];
 if (typeof previous?.stop === 'function') {
   previous.stop();
@@ -623,7 +623,7 @@ return { found, loop: state.video?.loop === true, intervalSet: Boolean(state.tim
 
   // Promotion is a fallback, not page context: fill only a remaining slot and
   // keep it after every action derived from the active page.
-  addUnique(actions, webbrainPromotion);
+  addUnique(actions, sincetogglePromotion);
 
   return actions.slice(0, Math.max(0, max));
 }

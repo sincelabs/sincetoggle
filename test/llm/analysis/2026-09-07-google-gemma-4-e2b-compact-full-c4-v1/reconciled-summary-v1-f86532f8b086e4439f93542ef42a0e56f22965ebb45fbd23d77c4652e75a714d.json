@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "webbrain.text-benchmark.reconciled-summary.v1",
+  "schemaVersion": "sincetoggle.text-benchmark.reconciled-summary.v1",
   "createdAt": "2026-09-07T19:59:29.1057727+03:00",
   "model": {
     "requested": "google/gemma-4-e2b",
@@ -68,7 +68,7 @@
   "artifacts": [
     {
       "role": "first-turn",
-      "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results\\2026-09-07-google-gemma-4-e2b-compact-full-c4-v1_chrome_google_gemma-4-e2b_compact",
+      "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results\\2026-09-07-google-gemma-4-e2b-compact-full-c4-v1_chrome_google_gemma-4-e2b_compact",
       "files": 101,
       "bytes": 5470352,
       "treeSha256": "9d7bf77ce6a0a58d2f5d8e4224458a30e83ea953840b56b6cd3dad7be585c1b5",
@@ -76,7 +76,7 @@
     },
     {
       "role": "scenarios",
-      "path": "G:\\esoku\\Documents\\webbrain\\test\\llm\\results-scenarios\\2026-09-07-google-gemma-4-e2b-compact-full-c4-v1_chrome_google_gemma-4-e2b_compact",
+      "path": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\results-scenarios\\2026-09-07-google-gemma-4-e2b-compact-full-c4-v1_chrome_google_gemma-4-e2b_compact",
       "files": 101,
       "bytes": 1109938,
       "treeSha256": "3e741ebbb3a3a07c8189b5c86b164b57a02c0f9cdd30de3511828e3aa04d8087",
@@ -88,6 +88,6 @@
     "runLlamacppSha256": "b1bd3de7d6dad90a55dee52f3df7bdae175a95af9c6812716440f4a2f8911495",
     "runScenariosSha256": "e3a54dbcdfd8370015175f0a3bfe2b1119c92f366d3496bd6e0dee0184031c88",
     "scoreSha256": "35297349d3cbdec9ebe290aa8e8941a07b0cde51dd2077f0281266b7180f5cc6",
-    "inferenceFreeRegradeReport": "G:\\esoku\\Documents\\webbrain\\test\\llm\\analysis\\compact-parser-regrade-v2-b5e3619d89e3bf59\\summary-d20fc8c9b58390e770ddef60e7eaadef96d059480b29d9b460eb1996f453f150.json"
+    "inferenceFreeRegradeReport": "G:\\esoku\\Documents\\sincetoggle\\test\\llm\\analysis\\compact-parser-regrade-v2-b5e3619d89e3bf59\\summary-d20fc8c9b58390e770ddef60e7eaadef96d059480b29d9b460eb1996f453f150.json"
   }
 }

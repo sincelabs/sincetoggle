@@ -1,18 +1,18 @@
-# WebBrain vs Claude Chrome Extension
+# Since Toggle vs Claude Chrome Extension
 
-This note compares the local WebBrain checkout with `../webbrain-claude`, a
+This note compares the local Since Toggle checkout with `../sincetoggle-claude`, a
 deobfuscated Claude Chrome extension tree. It focuses on architecture,
 model-callable tools, and website-specific adapter behavior.
 
 ## Sources Inspected
 
-WebBrain:
+Since Toggle:
 
 - `docs/architecture.md`
 - `docs/adding-a-tool.md`
 - `docs/site-adapters.md`
 - `docs/accessibility-tree-and-refs.md`
-- `docs/webbrain-tool-tiers.xlsx`
+- `docs/sincetoggle-tool-tiers.xlsx`
 - `src/chrome/ARCHITECTURE.md`
 - `src/chrome/src/agent/tools.js`
 - `src/chrome/src/agent/skills.js`
@@ -22,14 +22,14 @@ WebBrain:
 
 Claude Chrome:
 
-- `../webbrain-claude/manifest.json`
-- `../webbrain-claude/settings.html`
-- `../webbrain-claude/settings.js`
-- `../webbrain-claude/assets/service-worker.js`
-- `../webbrain-claude/assets/mcpPermissions.js`
-- `../webbrain-claude/assets/PermissionManager.js`
-- `../webbrain-claude/assets/sidepanel.js`
-- `../webbrain-claude/assets/accessibility-tree.js`
+- `../sincetoggle-claude/manifest.json`
+- `../sincetoggle-claude/settings.html`
+- `../sincetoggle-claude/settings.js`
+- `../sincetoggle-claude/assets/service-worker.js`
+- `../sincetoggle-claude/assets/mcpPermissions.js`
+- `../sincetoggle-claude/assets/PermissionManager.js`
+- `../sincetoggle-claude/assets/sidepanel.js`
+- `../sincetoggle-claude/assets/accessibility-tree.js`
 
 The Claude tree is bundled/minified in places. Tool names below were recovered
 from `toAnthropicSchema()` definitions, native-message dispatch, and the
@@ -37,7 +37,7 @@ sidepanel quick-command prompt.
 
 ## Architecture
 
-| Area | WebBrain | Claude Chrome extension |
+| Area | Since Toggle | Claude Chrome extension |
 |---|---|---|
 | Browser support | Two mirrored extension builds: Chrome/Edge MV3 and Firefox MV2. | Chrome MV3 only in this tree. |
 | Agent location | Extension owns the full agent loop in `agent.js`; providers are local extension modules. | Two paths: a normal Anthropic tool-calling loop in the sidepanel, plus a native-host/MCP bridge in the service worker. |
@@ -46,9 +46,9 @@ sidepanel quick-command prompt.
 | Page reading | Preferred AX tree tool with stable `ref_id`s plus prose/page-source/PDF readers. | AX tree reader also exists and uses `window.__wbElementMap` / `ref_` IDs, but the primary browser action tool is more coordinate/computer oriented. |
 | Trusted browser events | Chrome uses CDP for trusted mouse/keyboard events, screenshots, closed shadow-root access, and some file-upload paths. Firefox uses synthetic events. | Chrome uses `debugger`/CDP for computer actions, screenshots, JavaScript evaluation, uploads, console/network tracking, and zoom screenshots. |
 | Conversation controls | Ask/Act modes, plan-before-act, scratchpad, progress ledger, scheduled tasks/resumes, optional traces. | Permission modes, plan approval via `update_plan`, domain transition prompts, tab groups, compaction, native host/MCP status. |
-| Dynamic extension model | User/imported skills can inject prompt text and declare `webbrain-tools` runtime tools. | Native/MCP and shortcuts are the extension points visible in the deobfuscated tree; no equivalent user-editable Markdown tool manifest was found. |
+| Dynamic extension model | User/imported skills can inject prompt text and declare `sincetoggle-tools` runtime tools. | Native/MCP and shortcuts are the extension points visible in the deobfuscated tree; no equivalent user-editable Markdown tool manifest was found. |
 
-## WebBrain Tool Surface
+## Since Toggle Tool Surface
 
 Current static core tools from the local source:
 
@@ -89,7 +89,7 @@ verify_form, download_social_media, solve_captcha
 Firefox omits the Chrome-only Dev tools and `shadow_dom_query`; the remaining
 core surface, including Dev-only `execute_js`, is shared.
 
-### WebBrain Tool Families
+### Since Toggle Tool Families
 
 | Family | Tools |
 |---|---|
@@ -105,9 +105,9 @@ core surface, including Dev-only `execute_js`, is shared.
 | Safety/workflow | `verify_form`, `clarify`, `done`, `solve_captcha` |
 | Media | `download_social_media`, plus dynamic skill tools when enabled |
 
-### WebBrain Dynamic Skill Tools
+### Since Toggle Dynamic Skill Tools
 
-WebBrain has two tool classes declared inside skill Markdown fences:
+Since Toggle has two tool classes declared inside skill Markdown fences:
 
 - `kind: "http"`: read-only HTTPS GET/POST tools, available in Ask and Act
   according to their manifest `modes`.
@@ -185,7 +185,7 @@ fresh screenshot.
 
 ## Tool Differences
 
-| Capability | WebBrain | Claude Chrome |
+| Capability | Since Toggle | Claude Chrome |
 |---|---|---|
 | Tool granularity | Many narrow tools: separate AX click/type/set-field, network, downloads, scheduler, iframe, PDF, source, progress tools. | Fewer high-level tools; browser input is mostly one `computer` tool plus action enum. |
 | Primary reading path | `get_accessibility_tree` is the preferred first read and returns stable refs with pagination/auto-degradation behavior. | `read_page` also returns an accessibility tree, but screenshot-driven coordinate control is more central, especially in quick mode. |
@@ -193,7 +193,7 @@ fresh screenshot.
 | Page text | `read_page` is prose/article-oriented; `get_accessibility_tree` is UI-oriented. | Splits `read_page` as AX tree and `get_page_text` as raw/article text. |
 | PDF reading | `read_pdf` extracts PDF text directly. | No equivalent recovered. |
 | Raw source reading | `read_page_source` exposes server-delivered HTML and asset URLs. | No equivalent recovered. |
-| Network fetch | `fetch_url` / `research_url`, with WebBrain-specific API mutation rules and `/allow-api` for mutating methods. | No generic fetch tool recovered. Debug network logs exist through `read_network_requests`. |
+| Network fetch | `fetch_url` / `research_url`, with Since Toggle-specific API mutation rules and `/allow-api` for mutating methods. | No generic fetch tool recovered. Debug network logs exist through `read_network_requests`. |
 | Console/network inspection | Chrome Dev exposes `read_console`, `inspect_network_requests`, and `inspect_event_listeners`; Firefox does not expose these Chrome-only diagnostics. | Dedicated `read_console_messages` and `read_network_requests`. |
 | Downloads | Several browser download/file tools plus dynamic download-job skill tools. | `downloads` permission exists and `gif_creator` can download exports, but no general download manager equivalent was recovered. |
 | Media download | `download_public_media` skill first; `download_social_media` browser fallback. | No public-media download equivalent recovered. |
@@ -204,20 +204,20 @@ fresh screenshot.
 | Form safety | `verify_form` for important forms. | `form_input` can set values; no dedicated verify-form tool recovered. |
 | Iframes | Dedicated `get_frames`, `iframe_read`, `iframe_click`, and `iframe_type`, plus `promote_iframe` to move a discovered child frame into the current tab as a standalone page with ambiguity and unsaved-draft checks. | No dedicated iframe tools recovered; actions are likely through coordinates/JS where permitted. |
 | Shortcuts/workflows | Custom skills are Markdown plus optional tool manifests. | `shortcuts_list` / `shortcuts_execute` expose saved shortcuts/workflows. |
-| GIF/video workflow | Slash-driven recording exists in WebBrain Chrome, but not as model-callable tools. | `gif_creator` is model-callable and can record/export browser automation sessions as GIF. |
+| GIF/video workflow | Slash-driven recording exists in Since Toggle Chrome, but not as model-callable tools. | `gif_creator` is model-callable and can record/export browser automation sessions as GIF. |
 
 ## Website-Specific Adapters
 
-### WebBrain
+### Since Toggle
 
-WebBrain has a real site-adapter system:
+Since Toggle has a real site-adapter system:
 
 - Adapter files live in both `src/chrome/src/agent/adapters.js` and
   `src/firefox/src/agent/adapters.js`.
 - `getActiveAdapter(url)` returns the first matching adapter.
 - Only one adapter fires at a time.
 - Adapter notes inject into the first user message.
-- If navigation moves to a different matching adapter mid-conversation, WebBrain
+- If navigation moves to a different matching adapter mid-conversation, Since Toggle
   injects a new `[Site context changed ...]` user message.
 - `UNIVERSAL_PREAMBLE` is added to the system prompt when adapters are enabled.
   It covers cookie/consent banners, paywalls, and PDF-tab behavior.
@@ -257,7 +257,7 @@ The deobfuscated Claude tree has settings UI that claims "Site adapters":
 
 However, no backing adapter registry, `getActiveAdapter` equivalent, universal
 preamble injection, or site-specific guidance injection path was found in the
-inspected Claude tree. Searches for WebBrain-style adapter markers only found
+inspected Claude tree. Searches for Since Toggle-style adapter markers only found
 the settings label/storage path.
 
 The closest Claude equivalents are not website adapters:
@@ -269,7 +269,7 @@ The closest Claude equivalents are not website adapters:
 
 So the practical adapter difference is:
 
-- WebBrain has website-specific prompt augmentation as a first-class browser
+- Since Toggle has website-specific prompt augmentation as a first-class browser
   agent feature.
 - Claude Chrome, in this deobfuscated tree, appears to rely on screenshots,
   `find`, domain permissions, and tab/domain context rather than per-site
@@ -277,13 +277,13 @@ So the practical adapter difference is:
 
 ## Ideas Worth Borrowing
 
-Potentially useful Claude ideas for WebBrain:
+Potentially useful Claude ideas for Since Toggle:
 
 - A `find` tool that uses a small/fast model over the AX tree to return
   candidate refs for vague element descriptions.
 - Model-facing console and network request readers for debugging web apps.
 - A GIF/workflow export tool if model-callable recording/export is desired.
-- Shortcut/workflow list and execution primitives, if WebBrain wants a reusable
+- Shortcut/workflow list and execution primitives, if Since Toggle wants a reusable
   workflow layer separate from Markdown skills.
 - Direct image upload by captured screenshot/image ID, if sidepanel image
   attachment workflows grow.
@@ -293,7 +293,7 @@ Ideas to avoid copying directly:
 - A settings-only "site adapters" surface without a backing registry and
   injection path.
 - Collapsing too many deterministic browser operations into one `computer`
-  schema if WebBrain wants to preserve its current narrow, auditable tool
+  schema if Since Toggle wants to preserve its current narrow, auditable tool
   semantics.
 - Treating screenshot/coordinate control as the primary path when stable AX refs
   are available.

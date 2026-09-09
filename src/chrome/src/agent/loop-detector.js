@@ -511,7 +511,7 @@ export class LoopDetector {
   _detectApiShortcut(tabId, loop, buf) {
     if (loop.type !== 'repeat') return null;
     if (!['click', 'click_ax'].includes(loop.name)) return null;
-    const apiRequests = globalThis.__webbrainApiRequests?.get(tabId);
+    const apiRequests = globalThis.__sincetoggleApiRequests?.get(tabId);
     if (!apiRequests || apiRequests.length === 0) return null;
 
     const clickTimes = buf.filter(e => e.key === loop.key).map(e => e.ts);

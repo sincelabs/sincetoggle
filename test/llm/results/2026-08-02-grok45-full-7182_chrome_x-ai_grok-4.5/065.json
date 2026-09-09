@@ -11,7 +11,7 @@
   "firstToolCall": null,
   "toolCallSource": null,
   "finishReason": "stop",
-  "content": "I can’t take screenshots directly from here. In the WebBrain side panel, run:\n\n- `/screenshot` — visible viewport  \n- `/screenshot --full-page` — full page",
+  "content": "I can’t take screenshots directly from here. In the Since Toggle side panel, run:\n\n- `/screenshot` — visible viewport  \n- `/screenshot --full-page` — full page",
   "usage": {
     "prompt_tokens": 23794,
     "completion_tokens": 128,

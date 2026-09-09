@@ -1,4 +1,4 @@
-name: WebBrain Cloud Smoke
+name: Since Toggle Cloud Smoke
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: webbrain-cloud-smoke-${{ github.ref }}
+  group: sincetoggle-cloud-smoke-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -29,10 +29,10 @@ jobs:
       - run: npm ci
       - run: npm run test:ci
 
-      - name: Run WebBrain Cloud smoke tests
+      - name: Run Since Toggle Cloud smoke tests
         env:
-          WEBBRAIN_API_KEY: ${{ secrets.WEBBRAIN_API_KEY }}
-          WEBBRAIN_BASE_URL: ${{ vars.WEBBRAIN_BASE_URL }}
+          SINCETOGGLE_API_KEY: ${{ secrets.SINCETOGGLE_API_KEY }}
+          SINCETOGGLE_BASE_URL: ${{ vars.SINCETOGGLE_BASE_URL }}
           GNIPPETS_BASE_URL: ${{ vars.GNIPPETS_BASE_URL }}
           GNIPPETS_E2E_CONTROL_TOKEN: ${{ secrets.GNIPPETS_E2E_CONTROL_TOKEN }}
           CAPSOLVER_API_KEY: ${{ secrets.CAPSOLVER_API_KEY }}
@@ -46,14 +46,14 @@ jobs:
           if [[ -n "$summary" ]]; then
             cat "$summary" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "No WebBrain Cloud smoke summary was produced." >> "$GITHUB_STEP_SUMMARY"
+            echo "No Since Toggle Cloud smoke summary was produced." >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload sanitized smoke artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: webbrain-cloud-smoke-${{ github.run_id }}
+          name: sincetoggle-cloud-smoke-${{ github.run_id }}
           path: ci/artifacts/
           if-no-files-found: warn
           retention-days: 7

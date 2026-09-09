@@ -16,10 +16,10 @@
  * the submission zip. If you need to ship something, commit it first.
  *
  * Output:
- *   dist/webbrain-chrome-<version>.zip
- *   dist/webbrain-edge-<version>.zip
- *   dist/webbrain-firefox-<version>.zip
- *   dist/webbrain-<source-name>-corresponding-source.zip
+ *   dist/sincetoggle-chrome-<version>.zip
+ *   dist/sincetoggle-edge-<version>.zip
+ *   dist/sincetoggle-firefox-<version>.zip
+ *   dist/sincetoggle-<source-name>-corresponding-source.zip
  *
  * <version> is read from package.json at HEAD, and every archived manifest
  * must match it. An uncommitted version bump is rejected instead of creating
@@ -44,7 +44,7 @@ const targets = [
 const CORRESPONDING_SOURCE_ROOT = 'dist/corresponding-source';
 
 export function correspondingSourceArchivePath(sourceName) {
-  return `dist/webbrain-${sourceName}-corresponding-source.zip`;
+  return `dist/sincetoggle-${sourceName}-corresponding-source.zip`;
 }
 
 export function assertCorrespondingSourceArchiveEntries(entries, sourceName, trackedFiles, label) {
@@ -229,7 +229,7 @@ function runCli() {
   console.log(`Building extension zips for v${version} from HEAD …`);
 
   for (const { packageName, sourceDir } of targets) {
-    const out = path.join(distDir, `webbrain-${packageName}-${version}.zip`);
+    const out = path.join(distDir, `sincetoggle-${packageName}-${version}.zip`);
     // -o writes directly to the file; avoids needing shell redirection,
     // so this runs identically on bash, zsh, cmd, and PowerShell.
     execFileSync(
@@ -238,10 +238,10 @@ function runCli() {
       { stdio: 'inherit', cwd: root }
     );
     const packageEntries = listZipEntryNames(out);
-    const packageLabel = `dist/webbrain-${packageName}-${version}.zip`;
+    const packageLabel = `dist/sincetoggle-${packageName}-${version}.zip`;
     assertSingleRootExtensionManifest(packageEntries, packageLabel);
     assertStoreSafeFlagLicenseEntries(packageEntries, packageLabel);
-    console.log(`  ✓ dist/webbrain-${packageName}-${version}.zip`);
+    console.log(`  ✓ dist/sincetoggle-${packageName}-${version}.zip`);
   }
 
   // These sources are a release artifact, not scratch output. Build their ZIPs

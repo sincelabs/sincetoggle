@@ -6,7 +6,7 @@
  * Keep the Firefox copy byte-identical.
  */
 
-export const CHAT_WORKFLOW_SCHEMA = 'webbrain-chat-workflow/1';
+export const CHAT_WORKFLOW_SCHEMA = 'sincetoggle-chat-workflow/1';
 
 export const CHAT_STATES = Object.freeze([
   'waiting_for_transfer',

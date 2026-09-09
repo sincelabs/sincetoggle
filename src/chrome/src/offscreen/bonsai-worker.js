@@ -102,7 +102,7 @@ async function loadLibraries() {
 
 function textReadyMarkerUrl(modelId, dtype) {
   const key = encodeURIComponent(textModelKey(modelId, dtype));
-  return `https://webbrain.one/.well-known/webgpu-model-ready/${key}`;
+  return `https://sincetoggle.one/.well-known/webgpu-model-ready/${key}`;
 }
 
 function cacheStorageKey(url) {
@@ -137,7 +137,7 @@ async function opfsModelsDirectory(create = false) {
   const storage = globalThis.navigator?.storage;
   if (typeof storage?.getDirectory !== 'function') return null;
   const root = await storage.getDirectory();
-  return await root.getDirectoryHandle('webbrain-webgpu-models', { create });
+  return await root.getDirectoryHandle('sincetoggle-webgpu-models', { create });
 }
 
 async function opfsWeightHandle(url, create = false) {

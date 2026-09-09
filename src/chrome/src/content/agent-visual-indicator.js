@@ -1,11 +1,11 @@
 /**
- * WebBrain Agent Visual Indicator (content script)
+ * Since Toggle Agent Visual Indicator (content script)
  *
  * Renders an animated purple inset glow around the page viewport while
- * the agent is operating on this tab, a "Stop WebBrain" floating button,
- * and a large WebBrain-purple cursor/outline on the element currently
+ * the agent is operating on this tab, a "Stop Since Toggle" floating button,
+ * and a large Since Toggle-purple cursor/outline on the element currently
  * being acted on. The base indicator follows Anthropic's Claude-for-Chrome
- * extension pattern, recolored for WebBrain's accent (#6c63ff).
+ * extension pattern, recolored for Since Toggle's accent (#6c63ff).
  *
  * Lifecycle messages from the service worker:
  *
@@ -28,8 +28,8 @@
  */
 
 (function () {
-  if (window.__webbrainAgentIndicatorInjected) return;
-  window.__webbrainAgentIndicatorInjected = true;
+  if (window.__sincetoggleAgentIndicatorInjected) return;
+  window.__sincetoggleAgentIndicatorInjected = true;
 
   const TARGET_CURSOR_TTL_MS = 3000;
   // The background refreshes this lease every 20 seconds. If its service
@@ -55,11 +55,11 @@
   let savedTargetOutlineVisible = false;
 
   function injectStyles() {
-    if (document.getElementById('webbrain-agent-styles')) return;
+    if (document.getElementById('sincetoggle-agent-styles')) return;
     const style = document.createElement('style');
-    style.id = 'webbrain-agent-styles';
+    style.id = 'sincetoggle-agent-styles';
     style.textContent = `
-      @keyframes webbrain-pulse {
+      @keyframes sincetoggle-pulse {
         0% {
           box-shadow:
             inset 0 0 10px rgba(108, 99, 255, 0.5),
@@ -80,12 +80,12 @@
         }
       }
 
-      @keyframes webbrain-target-pop {
+      @keyframes sincetoggle-target-pop {
         0% { opacity: 0; }
         100% { opacity: 1; }
       }
 
-      @keyframes webbrain-target-ring {
+      @keyframes sincetoggle-target-ring {
         0%, 100% {
           box-shadow:
             0 0 0 3px rgba(108, 99, 255, 0.18),
@@ -103,7 +103,7 @@
 
   function createBorder() {
     const el = document.createElement('div');
-    el.id = 'webbrain-agent-glow-border';
+    el.id = 'sincetoggle-agent-glow-border';
     el.style.cssText = `
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -111,7 +111,7 @@
       z-index: 2147483646;
       opacity: 0;
       transition: opacity 0.3s ease-in-out;
-      animation: webbrain-pulse 2s ease-in-out infinite;
+      animation: sincetoggle-pulse 2s ease-in-out infinite;
       box-shadow:
         inset 0 0 10px rgba(108, 99, 255, 0.5),
         inset 0 0 20px rgba(108, 99, 255, 0.3),
@@ -122,7 +122,7 @@
 
   function createStopButton() {
     const container = document.createElement('div');
-    container.id = 'webbrain-agent-stop-container';
+    container.id = 'sincetoggle-agent-stop-container';
     container.style.cssText = `
       position: fixed;
       bottom: 16px;
@@ -135,14 +135,14 @@
       z-index: 2147483647;
     `;
     const button = document.createElement('button');
-    button.id = 'webbrain-agent-stop-button';
+    button.id = 'sincetoggle-agent-stop-button';
     button.type = 'button';
     button.innerHTML = `
       <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor"
            style="margin-right: 10px; vertical-align: middle;">
         <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"/>
       </svg>
-      <span style="vertical-align: middle;">Stop WebBrain</span>
+      <span style="vertical-align: middle;">Stop Since Toggle</span>
     `;
     button.style.cssText = `
       position: relative;
@@ -193,7 +193,7 @@
 
   function createTargetOutline() {
     const el = document.createElement('div');
-    el.id = 'webbrain-agent-target-outline';
+    el.id = 'sincetoggle-agent-target-outline';
     el.style.cssText = `
       position: fixed;
       pointer-events: none;
@@ -208,14 +208,14 @@
         left 0.18s ease,
         width 0.18s ease,
         height 0.18s ease;
-      animation: webbrain-target-ring 1.3s ease-in-out infinite;
+      animation: sincetoggle-target-ring 1.3s ease-in-out infinite;
     `;
     return el;
   }
 
   function createTargetCursor() {
     const el = document.createElement('div');
-    el.id = 'webbrain-agent-target-cursor';
+    el.id = 'sincetoggle-agent-target-cursor';
     el.setAttribute('aria-hidden', 'true');
     el.innerHTML = `
       <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -239,7 +239,7 @@
       transition:
         opacity 0.16s ease,
         transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
-      animation: webbrain-target-pop 0.18s ease-out;
+      animation: sincetoggle-target-pop 0.18s ease-out;
       will-change: transform, opacity;
     `;
     return el;
@@ -432,7 +432,7 @@
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (borderEl) borderEl.style.opacity = '1';
-        const btn = stopContainerEl?.querySelector('#webbrain-agent-stop-button');
+        const btn = stopContainerEl?.querySelector('#sincetoggle-agent-stop-button');
         if (btn) {
           btn.style.transform = 'translateY(0)';
           btn.style.opacity = '1';
@@ -447,7 +447,7 @@
     indicatorsActive = false;
     if (borderEl) borderEl.style.opacity = '0';
     hideTargetCursor();
-    const btn = stopContainerEl?.querySelector('#webbrain-agent-stop-button');
+    const btn = stopContainerEl?.querySelector('#sincetoggle-agent-stop-button');
     if (btn) {
       btn.style.transform = 'translateY(80px)';
       btn.style.opacity = '0';
@@ -504,7 +504,7 @@
 
   window.addEventListener('scroll', scheduleTargetUpdate, true);
   window.addEventListener('resize', scheduleTargetUpdate, true);
-  window.__webbrainAgentIndicator = { showTarget, showTargetRect, hideTarget: hideTargetCursor };
+  window.__sincetoggleAgentIndicator = { showTarget, showTargetRect, hideTarget: hideTargetCursor };
 
   chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     if (!msg || typeof msg.type !== 'string') return;

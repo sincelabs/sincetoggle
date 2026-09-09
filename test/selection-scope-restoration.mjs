@@ -111,7 +111,7 @@ for (const [label, AgentClass, session] of [
     restarted.conversations.get(tabId),
     question,
   );
-  assert.equal(enriched.webbrainSelectionScopeRestored, true, `${label}: corrected turn was not marked for one-shot consumption`);
+  assert.equal(enriched.sincetoggleSelectionScopeRestored, true, `${label}: corrected turn was not marked for one-shot consumption`);
   assert.match(enriched.content, /user explicitly removed the selected-text boundary/i, `${label}: correction did not override historical selection-only wording`);
   assert.match(enriched.content, /Normal access to the current page, browser tools, files, attachments, and the complete conversation is restored/i, `${label}: correction did not describe restored context`);
   assert.match(enriched.content, /attach a fresh read of the current page before the model answers/i, `${label}: correction did not announce the deterministic page read`);
@@ -182,7 +182,7 @@ for (const [label, AgentClass, session] of [
     afterConsumption.conversations.get(tabId),
     'What else is on the page?',
   );
-  assert.equal(nextTurn.webbrainSelectionScopeRestored, undefined, `${label}: later turn reused the one-shot marker`);
+  assert.equal(nextTurn.sincetoggleSelectionScopeRestored, undefined, `${label}: later turn reused the one-shot marker`);
   assert.doesNotMatch(nextTurn.content, /user explicitly removed the selected-text boundary/i, `${label}: later turn repeated the one-shot correction`);
 
   afterConsumption.selectionGroundingRestorationPendingTabs.add(tabId);
@@ -243,7 +243,7 @@ for (const [label, AgentClass, session] of [
       agent._enrichUserMessageWithCurrentPage = async () => ({
         role: 'user',
         content: 'Use the restored page context.',
-        webbrainSelectionScopeRestored: true,
+        sincetoggleSelectionScopeRestored: true,
       });
 
       const final = streaming

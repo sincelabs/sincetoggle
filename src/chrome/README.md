@@ -1,4 +1,4 @@
-# WebBrain
+# Since Toggle
 
 Open-source AI browser agent for Chrome, Microsoft Edge, and Firefox. Chat with any web page, automate browser tasks, and run multi-step agent workflows — powered by your choice of LLM.
 
@@ -8,9 +8,9 @@ Open-source AI browser agent for Chrome, Microsoft Edge, and Firefox. Chat with 
 - **Browser Actions** — Click, type, scroll, navigate, and interact with page elements
 - **Ask / Act / Dev Modes** — Read-only by default, normal browser actions on request, and Mid/Full Dev tools for source/style/page debugging
 - **Multi-Step Agent** — Autonomous task execution with tool-use loops (configurable, default 130 steps)
-- **Continue from Limit** — At the step limit, WebBrain first delivers a context-only partial result or explicit blocker; click Continue to keep going
-- **Multi-Provider LLM** — WebBrain Compass plus local llama.cpp/Ollama/LM Studio/Jan/vLLM/SGLang/LocalAI and major direct cloud providers
-- **Reliable Compass improvement traces** — when Help Improve WebBrain is enabled, terminal tool outcomes are durably queued and retried without delaying the visible answer
+- **Continue from Limit** — At the step limit, Since Toggle first delivers a context-only partial result or explicit blocker; click Continue to keep going
+- **Multi-Provider LLM** — Since Toggle Compass plus local llama.cpp/Ollama/LM Studio/Jan/vLLM/SGLang/LocalAI and major direct cloud providers
+- **Reliable Compass improvement traces** — when Help Improve Since Toggle is enabled, terminal tool outcomes are durably queued and retried without delaying the visible answer
 - **Side Panel UI** — Clean chat interface that lives alongside your browsing
 - **Reading-first long replies** — Questions stay visible while answers grow, with controls to follow, jump to the latest content, or return to the question
 - **Per-Tab Conversations** — Each tab has its own chat history
@@ -26,22 +26,22 @@ Open-source AI browser agent for Chrome, Microsoft Edge, and Firefox. Chat with 
 ### Chrome
 
 ```bash
-git clone https://github.com/webbrain-one/webbrain.git
+git clone https://github.com/sincetoggle-one/sincetoggle.git
 ```
 
 1. Open Chrome → `chrome://extensions/`
 2. Enable **Developer mode** (top right)
-3. Click **Load unpacked** → select the `webbrain/src/chrome` folder
+3. Click **Load unpacked** → select the `sincetoggle/src/chrome` folder
 
 ### Microsoft Edge
 
 ```bash
-git clone https://github.com/webbrain-one/webbrain.git
+git clone https://github.com/sincetoggle-one/sincetoggle.git
 ```
 
 1. Open Edge → `edge://extensions/`
 2. Enable **Developer mode** (left sidebar)
-3. Click **Load unpacked** → select the `webbrain/src/chrome` folder
+3. Click **Load unpacked** → select the `sincetoggle/src/chrome` folder
 
 The Edge package uses the same Manifest V3 build as Chrome. The extension APIs
 still use the Chromium `chrome.*` namespace in code, which is supported by
@@ -50,12 +50,12 @@ Microsoft Edge.
 ### Firefox
 
 ```bash
-git clone https://github.com/webbrain-one/webbrain.git
+git clone https://github.com/sincetoggle-one/sincetoggle.git
 ```
 
 1. Open Firefox → `about:debugging#/runtime/this-firefox`
 2. Click **Load Temporary Add-on**
-3. Navigate to `webbrain/src/firefox/` and select `manifest.json`
+3. Navigate to `sincetoggle/src/firefox/` and select `manifest.json`
 
 > **Note:** Temporary add-ons are removed when Firefox restarts. For permanent installation, the extension needs to be signed via [addons.mozilla.org](https://addons.mozilla.org).
 
@@ -68,7 +68,7 @@ llama-server -m your-model.gguf --port 8080
 # Or using Ollama (OpenAI-compatible)
 ollama serve
 # Then set base URL to http://localhost:11434/v1 in settings
-# Or run: ollama launch webbrain --model <model>
+# Or run: ollama launch sincetoggle --model <model>
 # Vision defaults to Auto and is detected from Ollama /api/show metadata
 
 # Or using Jan, vLLM, SGLang, or LocalAI (OpenAI-compatible)
@@ -78,14 +78,14 @@ ollama serve
 # LocalAI: http://localhost:8080/v1
 ```
 
-For llama.cpp, LM Studio, and LocalAI, Vision defaults to **Auto**. WebBrain
+For llama.cpp, LM Studio, and LocalAI, Vision defaults to **Auto**. Since Toggle
 reads the selected model's server metadata before a turn and sends screenshots
 only when image input is reported. Settings also offers **Force on** and
 **Off** overrides; metadata failures remain text-only for that turn.
 
 ### Use it
 
-Click the WebBrain icon → the side panel opens. Type a message like:
+Click the Since Toggle icon → the side panel opens. Type a message like:
 
 - "Summarize this page"
 - "Find all links about pricing"
@@ -176,7 +176,7 @@ Console and network capture start before both streaming and non-streaming Dev ru
 ## Known Issues
 
 - **Debugger attachment is visible** — Chrome shows its standard debugger-attached indicator while CDP-backed actions or Dev diagnostics are active. This is expected for trusted input, screenshots, closed-shadow access, uploads, and the Dev-only JavaScript/console/network/listener tools.
-- **Protected browser pages** — Browser-internal and extension-store pages restrict content-script/CDP access; WebBrain reports these as protected instead of retrying DOM actions.
+- **Protected browser pages** — Browser-internal and extension-store pages restrict content-script/CDP access; Since Toggle reports these as protected instead of retrying DOM actions.
 - **Firefox temporary add-on** — Firefox requires the extension to be loaded as a temporary add-on during development, which is removed on restart.
 
 ## Project Status
@@ -199,7 +199,7 @@ All providers normalize to a common response format:
 
 ## Website
 
-The repository `web/` folder contains the landing page for [webbrain.one](https://webbrain.one), deployable to Vercel:
+The repository `web/` folder contains the landing page for [sincetoggle.one](https://sincetoggle.one), deployable to Vercel:
 
 ```bash
 cd web

@@ -20,7 +20,7 @@ export const EMERGENCY_CORPUS_PROVISIONAL_MEASUREMENTS = Object.freeze({
 export const EMERGENCY_CORPUS_RELEASE = Object.freeze({
   id: 'emergency-box-text',
   version: '2026.08.17-preview.3',
-  url: 'https://github.com/webbrain-one/emergency-box-corpus/releases/download/2026.08.17-preview.3/emergency-box-text.zip',
+  url: 'https://github.com/sincetoggle-one/emergency-box-corpus/releases/download/2026.08.17-preview.3/emergency-box-text.zip',
   archiveSha256: '950e5a3c6b52354c1de371b6463df39d9d239aa059dd5d3eabfa21e89c305e5e',
   downloadBytes: 501_799_481,
   installedTextBytes: 301_370_399,

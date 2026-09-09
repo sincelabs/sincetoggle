@@ -2,8 +2,8 @@
   "id": "058",
   "user": "download all the zips in this folder",
   "tab": {
-    "url": "https://github.com/esokullu/webbrain/tree/main/dist",
-    "title": "webbrain/dist — main"
+    "url": "https://github.com/esokullu/sincetoggle/tree/main/dist",
+    "title": "sincetoggle/dist — main"
   },
   "latencyMs": 857,
   "error": null,
@@ -11,7 +11,7 @@
     "name": "read_page",
     "args": {
       "includeChrome": "false",
-      "filename": "webbrain/dist"
+      "filename": "sincetoggle/dist"
     }
   },
   "toolCallSource": "tool_calls",

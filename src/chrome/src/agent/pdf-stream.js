@@ -1,6 +1,6 @@
 export async function readPdfResponseBytes(response, {
   maxBytes,
-  tooLargeMessage = 'This PDF is larger than the WebBrain viewer limit.',
+  tooLargeMessage = 'This PDF is larger than the Since Toggle viewer limit.',
   emptyMessage = 'The PDF stream was empty.',
   unreadableMessage = 'The PDF stream could not be read safely.',
 } = {}) {

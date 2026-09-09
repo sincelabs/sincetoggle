@@ -1,6 +1,6 @@
 # Commandes slash
 
-WebBrain accepte les commandes slash en tant que premier élément d'une ligne dans
+Since Toggle accepte les commandes slash en tant que premier élément d'une ligne dans
 le champ de saisie. Tapez `/help` dans le panneau pour afficher les syntaxes
 complètes et la description des options. Saisir une commande canonique suivie
 d'une espace ouvre l'autocomplétion de ses options disponibles.
@@ -28,14 +28,14 @@ d'une espace ouvre l'autocomplétion de ses options disponibles.
 | `/workflow --save <nom>` | Compiler la dernière exécution tracée réussie en un workflow réutilisable et sans valeurs |
 | `/workflow --run <id>` | Exécuter un workflow enregistré en mode Act, en collectant localement les paramètres d'exécution |
 | `/workflow --delete <id>` | Supprimer un workflow enregistré |
-| `/workflow --export <id>` | Télécharger un fichier JSON portable `webbrain-workflow/1` assaini |
+| `/workflow --export <id>` | Télécharger un fichier JSON portable `sincetoggle-workflow/1` assaini |
 | `/workflow --import --file` | Importer un fichier de workflow portable comme nouveau workflow local |
 | `/teach` | Afficher l’état du mode d’apprentissage et le nombre d’actions capturées dans l’onglet actuel |
 | `/teach --start <nom>` | Commencer à apprendre un workflow à partir de vos clics et modifications de champs |
 | `/teach --end` | Arrêter l’apprentissage et compiler les actions en workflow enregistré sans valeurs saisies |
 | `/allow-api` | **Dérogation de mutation API par conversation.** Voir [plus bas](#allow-api). |
 | `/foreground [invite]` | Exécuter une tâche locale au premier plan pour assurer la compatibilité visuelle |
-| `/dangerously-skip-permissions` | **Contournement global des demandes d'autorisation.** Désactive `Ask before consequential actions` sans ouvrir les Paramètres. WebBrain agira sans demandes par site jusqu'à ce que vous réactiviez le réglage. |
+| `/dangerously-skip-permissions` | **Contournement global des demandes d'autorisation.** Désactive `Ask before consequential actions` sans ouvrir les Paramètres. Since Toggle agira sans demandes par site jusqu'à ce que vous réactiviez le réglage. |
 | `/compact` | Force le compactage du contexte pour la conversation actuelle |
 | `/verbose` | Bascule l'affichage verbeux/compact des outils |
 | `/reset` | Efface la conversation et tous les indicateurs par conversation |
@@ -74,7 +74,7 @@ Les exécutions locales ordinaires restent liées à leur onglet d'origine et
 fonctionnent sans activer cet onglet ni donner le focus à sa fenêtre. Chrome
 effectue les captures via CDP avec une émulation du focus limitée à l'exécution ;
 Firefox capture directement l'onglet cible avec `tabs.captureTab`. Si Chrome
-renvoie plusieurs fois une image vide en arrière-plan, WebBrain l'écarte et
+renvoie plusieurs fois une image vide en arrière-plan, Since Toggle l'écarte et
 continue à partir du DOM et des données d'accessibilité.
 
 Utilisez `/foreground <invite>` comme solution de compatibilité pour une seule
@@ -116,7 +116,7 @@ uniquement).
 Ajoutez `/screenshot [--save-as <fichier>]` pour enregistrer des captures de la
 zone visible juste avant et après l'exécution (Chrome et Firefox). Par exemple,
 `Teste le paiement /screenshot --save-as checkout.png` enregistre
-`checkout-before.png` et `checkout-after.png` ; sans `--save-as`, WebBrain
+`checkout-before.png` et `checkout-after.png` ; sans `--save-as`, Since Toggle
 utilise des noms horodatés.
 
 Pour ce suffixe de diagnostic, Chrome peut réactiver l'onglet d'origine avant
@@ -131,7 +131,7 @@ Les schémas complets et les propriétés de confidentialité de chaque export s
 décrits dans [export and workflow formats](../export-and-workflow-formats.md)
 (en anglais). En bref :
 
-- **Les instantanés de Paramètres** utilisent `webbrain-config/1` et incluent
+- **Les instantanés de Paramètres** utilisent `sincetoggle-config/1` et incluent
   toutes les valeurs portables des Paramètres, y compris les clés d'API
   fournisseur, vision, transcription et CapSolver, les données de profil, la
   mémoire utilisateur, les compétences personnalisées et les choix de
@@ -140,11 +140,11 @@ décrits dans [export and workflow formats](../export-and-workflow-formats.md)
   conversations, les traces, les tâches planifiées, les compteurs d'usage et les
   dépenses cumulées ne sont pas exportés.
 - **Les workflows enregistrés** utilisent un schéma distinct
-  `webbrain-workflow/1` ; ce ne sont pas des rejeux bruts de traces. Les valeurs
+  `sincetoggle-workflow/1` ; ce ne sont pas des rejeux bruts de traces. Les valeurs
   `ref_id` historiques, les sélecteurs CSS d'action, les coordonnées, les chaînes
   de requête, les fragments et les valeurs de champ saisies sont exclus. Les
   valeurs saisies deviennent des paramètres d'exécution, et chaque action est
-  liée à l'origine et à la famille d'URL enregistrées. À l'exécution, WebBrain
+  liée à l'origine et à la famille d'URL enregistrées. À l'exécution, Since Toggle
   résout une cible fraîche dans l'arbre d'accessibilité et passe par les
   contrôles habituels de permission Act, de confirmation de soumission et de
   vérification. Les cibles ambiguës échouent de façon sûre. Si une action a
@@ -160,8 +160,8 @@ décrits dans [export and workflow formats](../export-and-workflow-formats.md)
   afin que les règles normales de navigation, de permission et de vérification
   puissent récupérer le workflow au lieu de l'interrompre immédiatement.
 - **Les fichiers de workflow portables** contiennent la définition
-  `webbrain-workflow/1` brute assainie et sont limités à 1 Mio. L'export
+  `sincetoggle-workflow/1` brute assainie et sont limités à 1 Mio. L'export
   renormalise la définition avant le téléchargement. L'import la renormalise à
   nouveau, attribue un nouvel ID local et de nouveaux horodatages, et n'écrase
   jamais un workflow existant : le même fichier peut donc circuler en toute
-  sécurité entre Chrome, Firefox et WebBrain Cloud.
+  sécurité entre Chrome, Firefox et Since Toggle Cloud.

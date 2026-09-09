@@ -34,14 +34,14 @@ const copy = {
     headline: 'Open-source AI browser agent',
     body: 'Chat with and act on any page — running local models, fully private.',
     features: ['Chrome & Firefox', 'llama.cpp', 'OpenRouter', 'OpenAI', 'GPL-3.0+ licensed'],
-    bannerUrl: 'webbrain.one',
-    socialUrl: 'github.com/webbrain-one/webbrain',
+    bannerUrl: 'sincetoggle.one',
+    socialUrl: 'github.com/sincetoggle-one/sincetoggle',
   },
   tr: {
     headline: 'Yapay Zeka Chrome/Firefox Yardımcısı',
     body: 'Herhangi bir sayfayla sohbet et, işlem yap — yerel modellerle, tamamen özel.',
     features: ['Chrome & Firefox', 'llama.cpp', 'OpenRouter', 'OpenAI', 'GPL-3.0+ lisanslı'],
-    bannerUrl: 'webbrain.one/tr/',
+    bannerUrl: 'sincetoggle.one/tr/',
   },
 };
 
@@ -192,7 +192,7 @@ const sharedCss = `
 function socialCard() {
   const c = copy.en;
   return {
-    file: 'webbrain-social-card.png',
+    file: 'sincetoggle-social-card.png',
     width: 1280,
     height: 640,
     body: `
@@ -200,7 +200,7 @@ function socialCard() {
         <div class="social-inner">
           <div class="social-brand">
             <img class="logo" src="${assets.logo}" alt="">
-            <span class="wordmark">WebBrain</span>
+            <span class="wordmark">Since Toggle</span>
           </div>
           <h1 class="headline">${c.headline}</h1>
           <div class="accent"></div>
@@ -248,7 +248,7 @@ function socialCard() {
 function socialCardSmall() {
   const c = copy.en;
   return {
-    file: 'webbrain-social-card-300x188.png',
+    file: 'sincetoggle-social-card-300x188.png',
     width: 300,
     height: 188,
     body: `
@@ -256,7 +256,7 @@ function socialCardSmall() {
         <div class="small-inner">
           <div class="small-brand">
             <img class="logo" src="${assets.logo}" alt="">
-            <span class="wordmark">WebBrain</span>
+            <span class="wordmark">Since Toggle</span>
           </div>
           <h1 class="headline">${c.headline}</h1>
           <div class="accent"></div>
@@ -315,7 +315,7 @@ function websiteSocialCard() {
         <div class="website-social-inner">
           <div class="website-social-brand">
             <img class="logo" src="${assets.logo}" alt="">
-            <span class="wordmark">WebBrain</span>
+            <span class="wordmark">Since Toggle</span>
           </div>
           <h1 class="headline">${c.headline}</h1>
           <div class="accent"></div>
@@ -372,7 +372,7 @@ function storeMarquee() {
           <img class="logo" src="${assets.logo}" alt="">
         </div>
         <div class="store-copy">
-          <div class="wordmark">WebBrain</div>
+          <div class="wordmark">Since Toggle</div>
           <h1 class="headline">Open-Source AI Browser Agent</h1>
           <div class="body-copy">Any LLM. Any Page. Your Data.</div>
           <div class="store-pills">
@@ -456,7 +456,7 @@ function storeSmall() {
           <img class="logo" src="${assets.logo}" alt="">
         </div>
         <div class="small-store-copy">
-          <div class="wordmark">WebBrain</div>
+          <div class="wordmark">Since Toggle</div>
           <h1 class="headline">Open-Source AI Browser Agent</h1>
           <div class="body-copy">Any LLM. Any Page. Your Data.</div>
           <div class="mini-rule"></div>
@@ -505,14 +505,14 @@ function banner(locale) {
   const c = copy[locale];
   const isTurkish = locale === 'tr';
   return {
-    file: `banners/webbrain-banner-${locale}.png`,
+    file: `banners/sincetoggle-banner-${locale}.png`,
     width: 2560,
     height: 800,
     body: `
       <main class="canvas paper banner-wide ${isTurkish ? 'banner-tr' : 'banner-en'}">
         <section class="banner-brand">
           <img class="logo" src="${assets.logo}" alt="">
-          <div class="banner-wordmark wordmark">WebBrain</div>
+          <div class="banner-wordmark wordmark">Since Toggle</div>
           <div class="url">${c.bannerUrl}</div>
         </section>
         <div class="banner-divider"></div>
@@ -577,14 +577,14 @@ function banner(locale) {
 function bannerVertical() {
   const c = copy.en;
   return {
-    file: 'banners/webbrain-banner-vertical-en.png',
+    file: 'banners/sincetoggle-banner-vertical-en.png',
     width: 1280,
     height: 2560,
     body: `
       <main class="canvas paper banner-vertical">
         <header class="vertical-brand">
           <img class="logo" src="${assets.logo}" alt="">
-          <span class="wordmark">WebBrain</span>
+          <span class="wordmark">Since Toggle</span>
         </header>
         <section class="vertical-message">
           <div class="vertical-kicker">OPEN SOURCE · ANY LLM</div>

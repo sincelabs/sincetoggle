@@ -35,26 +35,26 @@ de suivi, de télémétrie ou d'analytique.
 
 L'utilisateur choisit son fournisseur dans les Paramètres. Les options incluent :
 
-- **WebBrain Compass** : les requêtes passent par `api.webbrain.one` ; Aider à
-  améliorer WebBrain est activé par défaut et, tant qu'il reste activé,
+- **Since Toggle Compass** : les requêtes passent par `api.sincetoggle.one` ; Aider à
+  améliorer Since Toggle est activé par défaut et, tant qu'il reste activé,
   certaines interactions peuvent être conservées et utilisées pour
   l'évaluation, l'amélioration, l'affinage et l'entraînement
 - **Fournisseurs cloud configurés par l'utilisateur** : OpenAI, Anthropic,
   Google Gemini, Mistral, DeepSeek, xAI, Groq, OpenRouter, etc. — les requêtes
   sont envoyées directement au fournisseur avec les identifiants de l'utilisateur
-  et ne sont jamais collectées par WebBrain
+  et ne sont jamais collectées par Since Toggle
 - **Moteurs de modèles locaux** : llama.cpp, Ollama, LM Studio, Jan, vLLM,
   SGLang, LocalAI et GPT4All — les requêtes d'inférence restent sur la machine
   de l'utilisateur
-- **Proxy local compatible OpenAI** : WebBrain contacte seulement la passerelle
+- **Proxy local compatible OpenAI** : Since Toggle contacte seulement la passerelle
   locale configurée, mais celle-ci peut transmettre le contexte à un compte en
   amont. Sa configuration et sa politique de confidentialité déterminent le
   trajet des données.
 
 Les requêtes vers un modèle local ou une API configurée par l'utilisateur ne
-sont jamais collectées par WebBrain. Les requêtes WebBrain Compass sont traitées
+sont jamais collectées par Since Toggle. Les requêtes Since Toggle Compass sont traitées
 et peuvent être conservées conformément à la section détaillée de la
-[documentation anglaise](../privacy-and-data-flow.md#webbrain-compass-improvement-data).
+[documentation anglaise](../privacy-and-data-flow.md#sincetoggle-compass-improvement-data).
 
 ---
 
@@ -72,13 +72,13 @@ Le journal conserve une fenêtre bornée d'événements et un texte streamé
 accumulé, limité séparément, afin de reconstruire le Markdown en cours après
 reconnexion. Le contenu pertinent de la conversation est envoyé au fournisseur
 configuré comme contexte de requête ; les copies stockées ne sont pas
-synchronisées séparément avec WebBrain.
+synchronisées séparément avec Since Toggle.
 
 ### Enregistreur de traces
 
 Lorsqu'il est activé (Paramètres → Affichage → « Enregistrer les traces »),
 chaque exécution de l'agent est écrite dans une base de données IndexedDB
-(`webbrain_traces`) :
+(`sincetoggle_traces`) :
 
 - **Stockage `runs`** : modèle, fournisseur, totaux de jetons, horodatages,
   message utilisateur, contenu final
@@ -150,7 +150,7 @@ Une compétence intégrée « FreeSkillz.xyz »
 lors du premier démarrage, activée par défaut, et peut être supprimée à cet
 endroit. Elle déclare les outils `read_youtube_transcript`,
 `resolve_public_media` et `download_public_media`. Lorsque le modèle appelle
-l'un de ces outils, WebBrain envoie uniquement l'URL actuelle ou fournie par le
+l'un de ces outils, Since Toggle envoie uniquement l'URL actuelle ou fournie par le
 modèle, ainsi que les options déclarées telles que la langue de transcription,
 le type de média, la hauteur maximale ou une indication de nom de fichier, au
 point de terminaison HTTPS déclaré `https://freeskillz.xyz` — un service

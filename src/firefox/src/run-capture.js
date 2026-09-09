@@ -21,7 +21,7 @@ function runCaptureTimestamp(date = new Date()) {
 
 function buildRunScreenshotFilenames(saveAs, date = new Date()) {
   const requested = sanitizeRunCaptureSaveAs(saveAs);
-  const stem = (requested.replace(/\.png$/i, '') || `webbrain-run-${runCaptureTimestamp(date)}`).slice(0, 170);
+  const stem = (requested.replace(/\.png$/i, '') || `sincetoggle-run-${runCaptureTimestamp(date)}`).slice(0, 170);
   return {
     before: `${stem}-before.png`,
     after: `${stem}-after.png`,
@@ -31,7 +31,7 @@ function buildRunScreenshotFilenames(saveAs, date = new Date()) {
 function buildRunRecordingFilename(saveAs) {
   const requested = sanitizeRunCaptureSaveAs(saveAs);
   if (!requested) return null;
-  const stem = requested.replace(/\.webm$/i, '').replace(/[. ]+$/g, '') || 'webbrain-recording';
+  const stem = requested.replace(/\.webm$/i, '').replace(/[. ]+$/g, '') || 'sincetoggle-recording';
   return `${stem.slice(0, 175)}.webm`;
 }
 
@@ -54,7 +54,7 @@ export async function captureAndSaveRunScreenshot(api, tabId, filename) {
   if (!tab) {
     throw new Error('The run tab is no longer available.');
   }
-  // Firefox has supported arbitrary-tab capture since Firefox 59. WebBrain's
+  // Firefox has supported arbitrary-tab capture since Firefox 59. Since Toggle's
   // declared minimum is 109 and the manifest includes the required <all_urls>.
   const dataUrl = await api.tabs.captureTab(tabId, { format: 'png' });
   filename = await filenameInConfiguredDownloadDirectory(api, filename);
