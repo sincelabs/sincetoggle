@@ -1401,21 +1401,21 @@ loadPanelTabs();
 // just exposes routes that call into the module.)
 
 // Per-window Since Toggle group ID. windowId -> tabGroups groupId.
-const webBrainGroupByWindow = new Map();
-const WB_GROUPS_KEY = 'webBrainGroupByWindow';
+const sincetoggleGroupByWindow = new Map();
+const SINCETOGGLE_GROUPS_KEY = 'sincetoggleGroupByWindow';
 
 async function loadSinceToggleGroups() {
   if (!chrome.tabGroups) return;
   try {
-    const stored = await chrome.storage.session.get(WB_GROUPS_KEY);
-    const arr = stored[WB_GROUPS_KEY];
+    const stored = await chrome.storage.session.get(SINCETOGGLE_GROUPS_KEY);
+    const arr = stored[SINCETOGGLE_GROUPS_KEY];
     if (Array.isArray(arr)) {
       // Validate each group still exists before re-adopting — Chrome may
       // have closed some between sessions / service-worker restarts.
       for (const [windowId, groupId] of arr) {
         try {
           await chrome.tabGroups.get(groupId);
-          webBrainGroupByWindow.set(windowId, groupId);
+          sincetoggleGroupByWindow.set(windowId, groupId);
         } catch { /* group gone, skip */ }
       }
     }
@@ -1423,7 +1423,7 @@ async function loadSinceToggleGroups() {
 }
 function saveSinceToggleGroups() {
   chrome.storage.session?.set({
-    [WB_GROUPS_KEY]: Array.from(webBrainGroupByWindow.entries()),
+    [SINCETOGGLE_GROUPS_KEY]: Array.from(sincetoggleGroupByWindow.entries()),
   }).catch(() => {});
 }
 loadSinceToggleGroups();
@@ -1463,11 +1463,11 @@ chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false }).catch(() =>
  * Since Toggle group AND that `tab` is in it. Returns the group ID, or -1 when
  * disabled, unsupported, or failed.
  */
-async function ensureSince ToggleGroup(tab) {
+async function ensureSincetoggleGroup(tab) {
   if (!chrome.tabGroups || !tab?.id || tab.windowId == null) return -1;
   if (!await shouldAutoGroupTabs(chrome.storage.local)) return -1;
   try {
-    let groupId = webBrainGroupByWindow.get(tab.windowId);
+    let groupId = sincetoggleGroupByWindow.get(tab.windowId);
 
     // Validate the cached group still exists in Chrome (user may have
     // ungrouped it manually, or the service worker restarted with a
@@ -1477,7 +1477,7 @@ async function ensureSince ToggleGroup(tab) {
         await chrome.tabGroups.get(groupId);
       } catch {
         groupId = null;
-        webBrainGroupByWindow.delete(tab.windowId);
+        sincetoggleGroupByWindow.delete(tab.windowId);
         saveSinceToggleGroups();
       }
     }
@@ -1496,7 +1496,7 @@ async function ensureSince ToggleGroup(tab) {
           title: 'Since Toggle', color: 'blue', collapsed: false,
         });
       } catch { /* ignore styling failure */ }
-      webBrainGroupByWindow.set(tab.windowId, groupId);
+      sincetoggleGroupByWindow.set(tab.windowId, groupId);
       saveSinceToggleGroups();
     } else if (tab.groupId !== groupId) {
       // Group exists for this window but source tab isn't in it. Add it.
@@ -1534,7 +1534,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     if (tab?.url !== installGuideUrl) return;
     panelTabs.add(tab.id);
     savePanelTabs();
-    ensureSince ToggleGroup(tab).catch(() => {});
+    ensureSincetoggleGroup(tab).catch(() => {});
   }).catch(() => {});
 });
 
@@ -1569,7 +1569,7 @@ function openSidePanelForContextMenu(tab) {
     enabled: true,
   });
   chrome.sidePanel.open({ tabId: tab.id });
-  ensureSince ToggleGroup(tab).catch(() => {});
+  ensureSincetoggleGroup(tab).catch(() => {});
 }
 
 async function handleContextMenuAsk(info, tab) {
@@ -2285,9 +2285,9 @@ chrome.action.onClicked.addListener((tab) => {
   chrome.sidePanel.open({ tabId: tab.id });
   // Now group the source tab so the visibility scope is established
   // before the user can switch tabs. Async — we already lost the user-
-  // gesture window for sidePanel.open, but ensureSince ToggleGroup doesn't
+  // gesture window for sidePanel.open, but ensureSincetoggleGroup doesn't
   // need it.
-  ensureSince ToggleGroup(tab).catch(() => {});
+  ensureSincetoggleGroup(tab).catch(() => {});
 });
 
 // (Was: chrome.tabs.onActivated + chrome.tabs.onUpdated listeners that
@@ -2301,9 +2301,9 @@ chrome.action.onClicked.addListener((tab) => {
 // Forget the mapping for that window so the next action click can seed
 // a fresh group rather than try to reuse a dead ID.
 chrome.tabGroups?.onRemoved?.addListener?.((group) => {
-  for (const [windowId, gid] of webBrainGroupByWindow) {
+  for (const [windowId, gid] of sincetoggleGroupByWindow) {
     if (gid === group.id) {
-      webBrainGroupByWindow.delete(windowId);
+      sincetoggleGroupByWindow.delete(windowId);
       saveSinceToggleGroups();
       break;
     }
@@ -2312,8 +2312,8 @@ chrome.tabGroups?.onRemoved?.addListener?.((group) => {
 
 // Window closed — drop the per-window mapping.
 chrome.windows?.onRemoved?.addListener?.((windowId) => {
-  if (webBrainGroupByWindow.has(windowId)) {
-    webBrainGroupByWindow.delete(windowId);
+  if (sincetoggleGroupByWindow.has(windowId)) {
+    sincetoggleGroupByWindow.delete(windowId);
     saveSinceToggleGroups();
   }
 });

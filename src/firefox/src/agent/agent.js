@@ -5096,7 +5096,7 @@ export class Agent extends LoopDetector {
     return actionSequence > 0 && observationSequence > actionSequence;
   }
 
-  _isSince ToggleCloudProvider(provider) {
+  _isSincetoggleCloudProvider(provider) {
     return String(provider?.config?.providerName || '').trim().toLowerCase() === 'sincetoggle-cloud';
   }
 
@@ -8512,7 +8512,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           // drift as Act/Dev. Eligible interactive modes that advertise `done`
           // get terminal recovery; managed Since Toggle Compass stays advisory.
           enforceTerminal: runOptions?.cloudRun !== true
-            && !this._isSince ToggleCloudProvider(provider)
+            && !this._isSincetoggleCloudProvider(provider)
             && allowedToolNames.has('done'),
         },
       );
@@ -9554,7 +9554,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       context.lineWidth = Math.max(2, Math.round(4 * Math.min(scaleX, scaleY)));
       context.strokeStyle = 'rgba(255, 255, 255, 0.9)';
       context.strokeRect(x - 2, y - 2, width + 4, height + 4);
-      context.strokeStyle = 'rgba(255, 0, 64, 0.95)';
+      context.strokeStyle = 'rgba(224, 122, 56, 0.95)';
       context.strokeRect(x, y, width, height);
       const output = await canvas.convertToBlob({ type: 'image/png' });
       const bytes = new Uint8Array(await output.arrayBuffer());
@@ -9891,7 +9891,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     return isPdf;
   }
 
-  async _addToSince ToggleGroup(sourceTab, tabId) {
+  async _addToSincetoggleGroup(sourceTab, tabId) {
     if (!browser.tabGroups || !sourceTab?.id || tabId == null) return -1;
     if (!await shouldAutoGroupTabs(browser.storage.local)) return -1;
     try {
@@ -20812,7 +20812,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     try {
       ({ markdown, turnCount, toolCount } = tracesToMarkdown(withEvents, {
         notes,
-        exportedBySince ToggleVersion: browser.runtime.getManifest().version || '',
+        exportedBySincetoggleVersion: browser.runtime.getManifest().version || '',
       }));
     } catch (e) {
       return { ok: false, error: String((e && e.message) || e) };
@@ -22309,13 +22309,13 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
   _isRuntimeModeContradictionTerminal(content) {
     const text = String(content || '');
-    const inability = /\b(?:i|we|sincetoggle|the\s+agent|this\s+run|the\s+runtime)\s+(?:cannot|can't|could\s+not|am\s+unable|are\s+unable|is\s+unable|am\s+not\s+able|are\s+not\s+able|is\s+not\s+able|do(?:es)?\s+not\s+have|don't\s+have|can\s+only|am\s+not\s+permitted|are\s+not\s+permitted|is\s+not\s+permitted)\b/i;
+    const inability = /\b(?:i|we|since\s+toggle|the\s+agent|this\s+run|the\s+runtime)\s+(?:cannot|can't|could\s+not|am\s+unable|are\s+unable|is\s+unable|am\s+not\s+able|are\s+not\s+able|is\s+not\s+able|do(?:es)?\s+not\s+have|don't\s+have|can\s+only|am\s+not\s+permitted|are\s+not\s+permitted|is\s+not\s+permitted)\b/i;
     const runtimeBoundClaim = text.split(/(?:[.!?]\s+|\n+)/).some(clause => {
       // Keep the mode claim and inability in one clause and require the mode
       // subject to be the agent/runtime. An application's read-only session
       // followed by "I cannot edit" is a task result, not runtime drift.
       const selfModeClaim = /\b(?:i\s+am|i'm|we\s+are|we're)\s+(?:currently\s+)?(?:running\s+)?in\s+(?:ask|read[- ]only)\s+mode\b/i.test(clause);
-      const namedRuntimeModeClaim = /\b(?:sincetoggle|the\s+agent|this\s+(?:sincetoggle\s+)?run|the\s+runtime)\b[^.!?\n]{0,100}\b(?:ask\s+mode|read[- ]only\s+(?:mode|session))\b/i.test(clause);
+      const namedRuntimeModeClaim = /\b(?:since\s+toggle|the\s+agent|this\s+(?:since\s+toggle\s+)?run|the\s+runtime)\b[^.!?\n]{0,100}\b(?:ask\s+mode|read[- ]only\s+(?:mode|session))\b/i.test(clause);
       return (selfModeClaim || namedRuntimeModeClaim) && inability.test(clause);
     });
     const explicitModeSwitchBlocker = /\b(?:switch|change|set)\s+(?:back\s+)?to\s+act\s+mode\b[^.!?\n]{0,100}\b(?:to|before|and)\s+(?:continue|proceed|complete|execute|retry|use\s+(?:the\s+)?tools?)\b/i.test(text);
@@ -24259,7 +24259,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         error: 'The source tab was closed before research could start. Nothing was submitted.',
       };
     }
-    try { await this._addToSince ToggleGroup(sourceTab, researchTabId); } catch {}
+    try { await this._addToSincetoggleGroup(sourceTab, researchTabId); } catch {}
     try { onUpdate?.('thinking', { note: 'Researching with ChatGPT…' }); } catch {}
 
     const readyDeadline = Date.now() + Math.min(30000, timeoutSeconds * 1000);

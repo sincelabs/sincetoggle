@@ -425,7 +425,7 @@ function buildSubscribeHtml() {
       display: grid;
       place-items: center;
       padding: 24px;
-      background: #0b0e17;
+      background: #1a1917;
       color: #e4e4ec;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
       line-height: 1.6;
@@ -435,7 +435,7 @@ function buildSubscribeHtml() {
       font-size: 20px;
       font-weight: 800;
       margin-bottom: 22px;
-      color: #a78bfa;
+      color: #f0965c;
     }
     h1 {
       margin: 0 0 12px;
@@ -448,7 +448,7 @@ function buildSubscribeHtml() {
       font-size: 16px;
     }
     a {
-      color: #a78bfa;
+      color: #f0965c;
       font-weight: 700;
       text-decoration: none;
     }
@@ -457,8 +457,8 @@ function buildSubscribeHtml() {
       width: 30px;
       height: 30px;
       margin: 26px auto;
-      border: 3px solid rgba(167, 139, 250, 0.25);
-      border-top-color: #a78bfa;
+      border: 3px solid rgba(244, 210, 195, 0.25);
+      border-top-color: #f0965c;
       border-radius: 50%;
       animation: spin 0.85s linear infinite;
     }
@@ -483,7 +483,7 @@ function buildSubscribeHtml() {
         window.location.href = checkoutUrl.toString();
       }, 3500);
     } else {
-      document.getElementById('subscribe-title').textContent = 'Open this link from WebBrain';
+      document.getElementById('subscribe-title').textContent = 'Open this link from Since Toggle';
       document.getElementById('subscribe-copy').textContent = 'You may be using an outdated version of the Since Toggle plugin on your browser, please update.';
       document.getElementById('checkout-row').style.display = 'none';
     }

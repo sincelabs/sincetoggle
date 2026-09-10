@@ -43,16 +43,16 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0b0e17;
-      --bg-card: #111827;
-      --bg-card-hover: #1a2233;
-      --surface: #161d2e;
+      --bg: #1a1917;
+      --bg-card: #232120;
+      --bg-card-hover: #2c2a28;
+      --surface: #232120;
       --border: rgba(255,255,255,0.07);
       --text: #e4e4ec;
       --text-dim: #8b8fa4;
-      --accent: #6c63ff;
-      --accent-glow: rgba(108,99,255,0.25);
-      --accent2: #a78bfa;
+      --accent: #e07a38;
+      --accent-glow: rgba(224,122,56,0.25);
+      --accent2: #f0965c;
       --success: #34d399;
       --warning: #fbbf24;
       --danger: #f87171;
@@ -76,9 +76,9 @@
       --border: rgba(89,55,25,0.15);
       --text: #2c1810;
       --text-dim: #6b5b47;
-      --accent: #5b52e8;
-      --accent-glow: rgba(91,82,232,0.20);
-      --accent2: #7c6ce6;
+      --accent: #a34a1f;
+      --accent-glow: rgba(163,74,31,0.20);
+      --accent2: #c4602a;
       --success: #2d8866;
       --warning: #9a6500;
       --danger: #b74747;
@@ -553,7 +553,7 @@
 <h2 id="the-moe-lesson-for-local-vision">The MoE lesson for local vision</h2>
 <p>If you've been picking vision models by dense parameter count — "27B is smaller than 35B, so it'll be cheaper to run" — this shootout is a reminder that MoE upends that heuristic. For roughly the same VRAM (same-family 4-bit quants land in the 18–22 GB range for both), the A3B variant outperforms the dense 27B on <em>every</em> axis: latency, caption quality, and calibrated uncertainty. You pay for 35B of parameters at load time and get ~3B-worth of latency per token at inference.</p>
 <p>Browser-agent screenshots fire frequently — once after every state-changing tool call in Since Toggle's <code>state_change</code> mode — so per-image latency compounds fast. Five seconds per auto-screenshot vs eight is a meaningful UX difference over a 10-step task.</p>
-<h2 id="what-this-changes-in-sincetoggle">What this changes in Since Toggle</h2>
+<h2 id="what-this-changes-in-since-toggle">What this changes in Since Toggle</h2>
 <p>Nothing in the code, but something in the recommended configuration. If you're setting up the dedicated vision model in <strong>Settings → Vision Model</strong>:</p>
 <ul><li><strong>If you have the VRAM (~20 GB for a decent quant):</strong> Qwen3.6-35B-A3B is the new default recommendation.</li><li><strong>If you're VRAM-constrained or latency-sensitive:</strong> Gemma 4-31B at 574 prompt tokens per image is attractive, but you probably want to tighten the prompt's section 6 wording — escalating it from <em>"say so"</em> to an explicit "if any text is a username, email, dollar amount, date, or ID and you are even slightly unsure of a single character, list it in Unknowns verbatim and leave it out of section 2" — so its identifier-OCR failure mode flags itself instead of confabulating.</li><li><strong>Don't use Qwen3.5-27B unless you can't run the A3B.</strong> Same cost, worse quality, slower.</li><li><strong>Gemma 4-E2B is not a serious option</strong> for this job. Use it for speculative decoding, not for page understanding.</li></ul>
 <h2 id="reproducing-this">Reproducing this</h2>

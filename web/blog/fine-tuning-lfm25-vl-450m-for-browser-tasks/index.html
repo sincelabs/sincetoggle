@@ -43,16 +43,16 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0b0e17;
-      --bg-card: #111827;
-      --bg-card-hover: #1a2233;
-      --surface: #161d2e;
+      --bg: #1a1917;
+      --bg-card: #232120;
+      --bg-card-hover: #2c2a28;
+      --surface: #232120;
       --border: rgba(255,255,255,0.07);
       --text: #e4e4ec;
       --text-dim: #8b8fa4;
-      --accent: #6c63ff;
-      --accent-glow: rgba(108,99,255,0.25);
-      --accent2: #a78bfa;
+      --accent: #e07a38;
+      --accent-glow: rgba(224,122,56,0.25);
+      --accent2: #f0965c;
       --success: #34d399;
       --warning: #fbbf24;
       --danger: #f87171;
@@ -76,9 +76,9 @@
       --border: rgba(89,55,25,0.15);
       --text: #2c1810;
       --text-dim: #6b5b47;
-      --accent: #5b52e8;
-      --accent-glow: rgba(91,82,232,0.20);
-      --accent2: #7c6ce6;
+      --accent: #a34a1f;
+      --accent-glow: rgba(163,74,31,0.20);
+      --accent2: #c4602a;
       --success: #2d8866;
       --warning: #9a6500;
       --danger: #b74747;
@@ -574,7 +574,7 @@
 <p>The result against LFM2.5-VL-3B is more dramatic. The 3B MLX run scored 0/100 strict passes and a 7.76% mean because it repeatedly ignored the required numbered six-section contract. Since Toggle V2 followed that contract far more reliably and scored 44/100 despite having roughly one-seventh as many parameters.</p>
 <p>That does <strong>not</strong> prove that 450M is a generally stronger vision model than LFM 3B. It proves something more useful for product engineering: under Since Toggle&#39;s exact browser-observation prompt and grader, the smaller specialist is much more effective than the larger off-the-shelf checkpoint.</p>
 <p>Kudos to Liquid AI. A fine-tune can only expose capacity and adaptability that exist in the foundation. LFM2.5-VL-450M gave us enough of both to build a useful browser specialist without turning the extension into a multi-gigabyte inference appliance.</p>
-<h2 id="a-much-less-expensive-sincetoggle-stack">A much less expensive Since Toggle stack</h2>
+<h2 id="a-much-less-expensive-since-toggle-stack">A much less expensive Since Toggle stack</h2>
 <p>Since Toggle can split planning and vision instead of paying a multimodal API for every turn:</p>
 <ol><li>Run the main text-and-tool loop through an inexpensive hosted planner such as <a href="/blog/poolside-laguna-s-openrouter-planner-benchmark/">Poolside Laguna S 2.1 on OpenRouter</a>.</li><li>Route the minority of calls that actually need pixels to Since Toggle VL 2 450M locally through WebGPU.</li><li>Keep corroborating high-impact observations with DOM, accessibility, and browser-native state.</li></ol>
 <p>The economics are attractive. Our saved 100-case Laguna S high-reasoning planner replay reported <strong>$0.0227</strong>, while a separate GPT-5.6 Luna Pro 100-case planner replay reported <strong>$0.228</strong>—about ten times as much. Those runs used different benchmark revisions and should not be treated as a controlled billing comparison, but they show the scale of the available budget tier. OpenRouter prices and cache behavior can also change.</p>

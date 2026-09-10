@@ -43,16 +43,16 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0b0e17;
-      --bg-card: #111827;
-      --bg-card-hover: #1a2233;
-      --surface: #161d2e;
+      --bg: #1a1917;
+      --bg-card: #232120;
+      --bg-card-hover: #2c2a28;
+      --surface: #232120;
       --border: rgba(255,255,255,0.07);
       --text: #e4e4ec;
       --text-dim: #8b8fa4;
-      --accent: #6c63ff;
-      --accent-glow: rgba(108,99,255,0.25);
-      --accent2: #a78bfa;
+      --accent: #e07a38;
+      --accent-glow: rgba(224,122,56,0.25);
+      --accent2: #f0965c;
       --success: #34d399;
       --warning: #fbbf24;
       --danger: #f87171;
@@ -76,9 +76,9 @@
       --border: rgba(89,55,25,0.15);
       --text: #2c1810;
       --text-dim: #6b5b47;
-      --accent: #5b52e8;
-      --accent-glow: rgba(91,82,232,0.20);
-      --accent2: #7c6ce6;
+      --accent: #a34a1f;
+      --accent-glow: rgba(163,74,31,0.20);
+      --accent2: #c4602a;
       --success: #2d8866;
       --warning: #9a6500;
       --danger: #b74747;
@@ -534,7 +534,7 @@
 <h2 id="the-origin-trial">The origin trial</h2>
 <p>WebMCP shipped in Chrome 146 Canary in early 2026, and as of June 2026 Chrome 149 has an open <a href="https://developer.chrome.com/origintrials/#/register_trial/4163014905550602241" target="_blank" rel="noopener">origin trial</a>. The specification is still a Community Group Draft — not yet on the formal W3C standards track — but the trajectory is clear. Angular has experimental support. Cloudflare Browser Run supports it. The ecosystem is moving.</p>
 <p>Early benchmarks show roughly a 67% reduction in computational overhead compared to screenshot-based agent interaction. Token usage drops dramatically — some estimates put it at 89% more efficient than pixel-based approaches. That is not a marginal improvement. That is the difference between a local model that can actually help and one that drowns in context before it clicks a single button.</p>
-<h2 id="why-this-matters-for-sincetoggle">Why this matters for Since Toggle</h2>
+<h2 id="why-this-matters-for-since-toggle">Why this matters for Since Toggle</h2>
 <p>Since Toggle reads the DOM and the accessibility tree. It does not take screenshots. That already puts us in a better position than pixel-based agents, but we still face a fundamental problem: the page was designed for human eyes, not for a language model trying to figure out which element to interact with.</p>
 <p>WebMCP changes the equation. If a page exposes its capabilities as structured tools, our planner model does not need to interpret ambiguous UI states to act — it just needs to pick the right tool and fill in the parameters. That is faster, cheaper, more reliable, and safer, because the agent operates within a defined surface instead of having free reign over every element on the page.</p>
 <h2 id="the-conversation-that-started-it">The conversation that started it</h2>

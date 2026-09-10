@@ -43,16 +43,16 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0b0e17;
-      --bg-card: #111827;
-      --bg-card-hover: #1a2233;
-      --surface: #161d2e;
+      --bg: #1a1917;
+      --bg-card: #232120;
+      --bg-card-hover: #2c2a28;
+      --surface: #232120;
       --border: rgba(255,255,255,0.07);
       --text: #e4e4ec;
       --text-dim: #8b8fa4;
-      --accent: #6c63ff;
-      --accent-glow: rgba(108,99,255,0.25);
-      --accent2: #a78bfa;
+      --accent: #e07a38;
+      --accent-glow: rgba(224,122,56,0.25);
+      --accent2: #f0965c;
       --success: #34d399;
       --warning: #fbbf24;
       --danger: #f87171;
@@ -76,9 +76,9 @@
       --border: rgba(89,55,25,0.15);
       --text: #2c1810;
       --text-dim: #6b5b47;
-      --accent: #5b52e8;
-      --accent-glow: rgba(91,82,232,0.20);
-      --accent2: #7c6ce6;
+      --accent: #a34a1f;
+      --accent-glow: rgba(163,74,31,0.20);
+      --accent2: #c4602a;
       --success: #2d8866;
       --warning: #9a6500;
       --danger: #b74747;
@@ -619,7 +619,7 @@
 <h2 id="configuration-variables">Configuration variables</h2>
 <p>All environment-driven, set these before launching the MCP server if you need non-default behavior:</p>
 <div class="table-wrap"><table><thead><tr><th>Variable</th><th>Default</th><th>Meaning</th></tr></thead><tbody><tr><td><code>SINCETOGGLE_BRIDGE_PORT</code></td><td><code>17374</code></td><td>Port the extension connects to.</td></tr><tr><td><code>SINCETOGGLE_BRIDGE_PATH</code></td><td><code>/extension</code></td><td>Path segment; must match the URL in Settings.</td></tr><tr><td><code>SINCETOGGLE_COMMAND_TIMEOUT_MS</code></td><td><code>30000</code></td><td>Per-command reply timeout.</td></tr><tr><td><code>SINCETOGGLE_RUN_TIMEOUT_MS</code></td><td><code>300000</code></td><td>Default ceiling for <code>sincetoggle_run</code> polling.</td></tr><tr><td><code>SINCETOGGLE_POLL_INTERVAL_MS</code></td><td><code>1000</code></td><td>Status poll interval.</td></tr></tbody></table></div>
-<h2 id="when-to-use-sincetoggle-mcp">When to use Since Toggle MCP</h2>
+<h2 id="when-to-use-since-toggle-mcp">When to use Since Toggle MCP</h2>
 <p>Choose Since Toggle MCP when:</p>
 <ul><li>You need to interact with <strong>sites you're already authenticated to</strong> (banking, SaaS dashboards, admin panels, email)</li><li><strong>MFA</strong> is involved and you can't programmatically log in</li><li>You want <strong>explicit safety modes</strong> (read-only first, then gated interactive mode)</li><li>You want <strong>local-first execution</strong> with your own LLMs — no API calls leave your machine</li><li>You need the extension to handle <strong>cross-origin iframes</strong> (Stripe checkout widgets, embedded forms)</li></ul>
 <h2 id="security-model">Security model</h2>

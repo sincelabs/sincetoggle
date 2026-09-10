@@ -24,17 +24,17 @@
 :root {
   color-scheme: dark;
   --page: #121525;
-  --page-glow: rgba(103, 87, 255, 0.18);
+  --page-glow: rgba(224, 122, 56, 0.18);
   --surface: #191c2d;
   --surface-strong: #22263a;
   --text: #f8f8fc;
   --muted: #b3b9c9;
   --quiet: #8c94aa;
-  --accent: #8d86ff;
-  --accent-strong: #6757ff;
-  --accent-soft: rgba(141, 134, 255, 0.15);
+  --accent: #e07a38;
+  --accent-strong: #e07a38;
+  --accent-soft: rgba(224, 122, 56, 0.15);
   --line: rgba(255, 255, 255, 0.12);
-  --success: #65d69d;
+  --success: #639922;
   --error: #ff8b8b;
   --shadow: 0 30px 90px rgba(3, 5, 18, 0.38);
   --display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
@@ -45,15 +45,15 @@
 :root[data-theme="light"] {
   color-scheme: light;
   --page: #f7f9ff;
-  --page-glow: rgba(214, 65, 127, 0.13);
+  --page-glow: rgba(224, 122, 56, 0.13);
   --surface: #ffffff;
   --surface-strong: #f1f4fb;
   --text: #141828;
   --muted: #586074;
   --quiet: #70788d;
-  --accent: #7869ff;
-  --accent-strong: #6757ff;
-  --accent-soft: rgba(103, 87, 255, 0.1);
+  --accent: #e07a38;
+  --accent-strong: #e07a38;
+  --accent-soft: rgba(224, 122, 56, 0.1);
   --line: rgba(28, 34, 64, 0.13);
   --success: #12865c;
   --error: #a43b3b;
@@ -323,7 +323,7 @@ kbd {
 }
 
 .feature-tab[data-feature="ask"] {
-  --feature-color: #7869ff;
+  --feature-color: #e07a38;
 }
 
 .feature-tab[data-feature="act"] {
@@ -401,7 +401,7 @@ kbd {
 
 .feature-copy h2 {
   margin: 0;
-  color: #16141c;
+  color: #2e1e0f;
   font-family: var(--display);
   font-size: clamp(20px, 2.55vw, 36px);
   font-weight: 700;

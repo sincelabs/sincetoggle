@@ -9,7 +9,7 @@
   },
   "toolchain": {
     "emscripten": "3.1.41",
-    "image": "webbrain-emscripten-libzim:3.1.41",
+    "image": "sincetoggle-emscripten-libzim:3.1.41",
     "linkOptimization": "O2"
   },
   "dependencies": [

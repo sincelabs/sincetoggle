@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Regenerate every Since Toggle logo derivative from the canonical brand assets.
+"""Regenerate every Since Toggle logo derivative from the sincelabs brand kit.
 
-The full-background artwork works well for social cards. Toolbar, favicon,
-and store-icon sizes use the matching transparent brain mark so browser chrome
-does not show it as a tiny boxed thumbnail. Requires Pillow.
+Canonical source is the sincelabs/brand tile (terracotta rounded square with
+the warm-white // mark). Requires Pillow; cairosvg only when the tile PNG
+cache is missing.
 """
 
 from __future__ import annotations
 
+import os
 import shutil
 from pathlib import Path
 
@@ -15,8 +16,12 @@ from PIL import Image, ImageDraw
 
 
 ROOT = Path(__file__).resolve().parent.parent
-CANONICAL = ROOT / "assets" / "logo-github.png"
-MARK = ROOT / "assets" / "logo-mark.png"
+BRAND = Path(os.environ.get(
+    "SINCE_BRAND_KIT",
+    "/home/openhands/workspaces/brand/assets/logo",
+))
+TILE_CACHE = ROOT / "assets" / "since-tile-terracotta-1024.png"
+MARK = BRAND / "png" / "since-mark-1024.png"
 ASSETS = ROOT / "assets"
 WEB = ROOT / "web"
 
@@ -32,25 +37,35 @@ COMPOSITE_LOGOS = (
 )
 
 
-def full_logo(source: Image.Image, size: int) -> Image.Image:
-    return source.resize((size, size), Image.Resampling.LANCZOS)
+def load_tile() -> Image.Image:
+    if TILE_CACHE.exists():
+        return Image.open(TILE_CACHE).convert("RGBA")
+    import cairosvg
+    TILE_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    cairosvg.svg2png(
+        url=str(BRAND / "since-tile-terracotta.svg"),
+        write_to=str(TILE_CACHE),
+        output_width=1024,
+        output_height=1024,
+    )
+    return Image.open(TILE_CACHE).convert("RGBA")
 
 
-def icon_logo(mark: Image.Image, size: int) -> Image.Image:
-    """Crop the transparent mark around its alpha bounds with even padding."""
-    bounds = mark.getchannel("A").getbbox()
-    if not bounds:
-        raise SystemExit("Transparent logo mark has no visible pixels")
+TILE = load_tile()
+MARK_IMG = Image.open(MARK).convert("RGBA")
 
-    left, top, right, bottom = bounds
-    subject_side = max(right - left, bottom - top)
-    side = round(subject_side * 1.14)
-    center_x = (left + right) / 2
-    center_y = (top + bottom) / 2
-    crop_left = round(center_x - side / 2)
-    crop_top = round(center_y - side / 2)
-    cropped = mark.crop((crop_left, crop_top, crop_left + side, crop_top + side))
-    return cropped.resize((size, size), Image.Resampling.LANCZOS)
+
+def full_logo(size: int) -> Image.Image:
+    return TILE.resize((size, size), Image.Resampling.LANCZOS)
+
+
+def icon_logo(size: int) -> Image.Image:
+    """The // mark centered on the terracotta tile with even padding."""
+    canvas = full_logo(size).copy()
+    mark = MARK_IMG.copy()
+    mark.thumbnail((int(size * 0.62), int(size * 0.62)), Image.Resampling.LANCZOS)
+    canvas.alpha_composite(mark, ((size - mark.width) // 2, (size - mark.height) // 2))
+    return canvas
 
 
 def save_png(image: Image.Image, path: Path) -> None:
@@ -69,14 +84,14 @@ def save_jpeg(image: Image.Image, path: Path) -> None:
     )
 
 
-def replace_composite_logo(path: Path, source: Image.Image, box: tuple[int, int, int, int], radius: int) -> None:
+def replace_composite_logo(path: Path, box: tuple[int, int, int, int], radius: int) -> None:
     image = Image.open(path).convert("RGB")
     left, top, right, bottom = box
     width, height = right - left, bottom - top
     if width != height:
         raise SystemExit(f"Composite logo box must be square: {path} {box}")
 
-    tile = full_logo(source, width).convert("RGB")
+    tile = full_logo(width).convert("RGB")
     mask = Image.new("L", (width, height), 0)
     ImageDraw.Draw(mask).rounded_rectangle((0, 0, width - 1, height - 1), radius=radius, fill=255)
     image.paste(tile, (left, top), mask)
@@ -84,35 +99,29 @@ def replace_composite_logo(path: Path, source: Image.Image, box: tuple[int, int,
 
 
 def main() -> None:
-    source = Image.open(CANONICAL).convert("RGB")
-    if source.size != (1254, 1254):
-        raise SystemExit(f"Unexpected canonical logo size: {source.size}; expected 1254×1254")
-    mark = Image.open(MARK).convert("RGBA")
-    if mark.size != source.size:
-        raise SystemExit(f"Unexpected transparent logo mark size: {mark.size}; expected {source.size}")
-
-    save_jpeg(full_logo(source, 128), ASSETS / "logo-github-128.jpg")
-    save_png(full_logo(source, 512), ASSETS / "logo-github-512.png")
-    save_jpeg(full_logo(source, 512), ASSETS / "logo-github-512.jpg")
+    save_png(full_logo(1024), ASSETS / "logo-github.png")
+    save_jpeg(full_logo(128), ASSETS / "logo-github-128.jpg")
+    save_png(full_logo(512), ASSETS / "logo-github-512.png")
+    save_jpeg(full_logo(512), ASSETS / "logo-github-512.jpg")
 
     for size in (64, 128):
-        save_png(icon_logo(mark, size), ASSETS / f"store-icon-{size}.png")
+        save_png(icon_logo(size), ASSETS / f"store-icon-{size}.png")
 
     for browser in ("chrome", "firefox"):
         icon_dir = ROOT / "src" / browser / "icons"
         for size in (16, 48, 128):
-            save_png(icon_logo(mark, size), icon_dir / f"icon{size}.png")
+            save_png(icon_logo(size), icon_dir / f"icon{size}.png")
 
-    shutil.copyfile(CANONICAL, WEB / "logo-github.png")
-    save_png(icon_logo(mark, 64), WEB / "favicon.png")
+    shutil.copyfile(ASSETS / "logo-github.png", WEB / "logo-github.png")
+    save_png(icon_logo(64), WEB / "favicon.png")
     # Website social cards are typography-led composites generated by
     # assets/brand-assets-2026-2/render.mjs. Do not replace them with
     # logo-only derivatives here.
 
     for path, box, radius in COMPOSITE_LOGOS:
-        replace_composite_logo(path, source, box, radius)
+        replace_composite_logo(path, box, radius)
 
-    print("Synchronized Since Toggle logo assets from assets/logo-github.png")
+    print("Synchronized Since Toggle logo assets from the sincelabs brand kit")
 
 
 if __name__ == "__main__":

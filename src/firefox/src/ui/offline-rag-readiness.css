@@ -18,7 +18,7 @@
 
 .offline-rag-readiness-head h2 { margin: 0; font-size: 16px; }
 .offline-rag-readiness-head a {
-  color: var(--accent, #7c72ff);
+  color: var(--accent, #e07a38);
   font-size: 12px;
   font-weight: 650;
 }
@@ -106,7 +106,7 @@
 .offline-rag-sources input,
 .offline-rag-languages input {
   margin: 0;
-  accent-color: var(--accent, #7c72ff);
+  accent-color: var(--accent, #e07a38);
 }
 
 body:not(.ap-page) .offline-rag-readiness {
@@ -172,14 +172,14 @@ body.ap-page .offline-answer-engine .offline-rag-eyebrow { display: none; }
   margin: 0;
   font-size: 13px;
 }
-.rag-component p { margin: 4px 0 0; color: var(--muted, #a0a0b8); font-size: 11px; line-height: 1.4; }
-.rag-component-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 5px; color: var(--muted, #a0a0b8); font-size: 10px; }
+.rag-component p { margin: 4px 0 0; color: var(--muted, #a49e94); font-size: 11px; line-height: 1.4; }
+.rag-component-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 5px; color: var(--muted, #a49e94); font-size: 10px; }
 .rag-component-progress { grid-column: 1 / -1; }
 .rag-component-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 .rag-component .status-label {
   flex: 0 0 auto;
   padding: 2px 6px;
-  color: var(--muted, #a0a0b8);
+  color: var(--muted, #a49e94);
   border: 1px solid var(--border, rgba(255, 255, 255, .08));
   border-radius: 999px;
   font: 700 9px var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
@@ -199,11 +199,11 @@ body.ap-page .offline-answer-engine .offline-rag-eyebrow { display: none; }
   height: 100%;
   width: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--accent, #6c63ff), var(--good, #55c785));
+  background: linear-gradient(90deg, var(--accent, #e07a38), var(--good, #55c785));
 }
 .rag-component-progress .progress-detail {
   margin-top: 4px;
-  color: var(--muted, #a0a0b8);
+  color: var(--muted, #a49e94);
   font: 10px var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
 }
 

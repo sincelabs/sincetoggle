@@ -43,16 +43,16 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg: #0b0e17;
-      --bg-card: #111827;
-      --bg-card-hover: #1a2233;
-      --surface: #161d2e;
+      --bg: #1a1917;
+      --bg-card: #232120;
+      --bg-card-hover: #2c2a28;
+      --surface: #232120;
       --border: rgba(255,255,255,0.07);
       --text: #e4e4ec;
       --text-dim: #8b8fa4;
-      --accent: #6c63ff;
-      --accent-glow: rgba(108,99,255,0.25);
-      --accent2: #a78bfa;
+      --accent: #e07a38;
+      --accent-glow: rgba(224,122,56,0.25);
+      --accent2: #f0965c;
       --success: #34d399;
       --warning: #fbbf24;
       --danger: #f87171;
@@ -76,9 +76,9 @@
       --border: rgba(89,55,25,0.15);
       --text: #2c1810;
       --text-dim: #6b5b47;
-      --accent: #5b52e8;
-      --accent-glow: rgba(91,82,232,0.20);
-      --accent2: #7c6ce6;
+      --accent: #a34a1f;
+      --accent-glow: rgba(163,74,31,0.20);
+      --accent2: #c4602a;
       --success: #2d8866;
       --warning: #9a6500;
       --danger: #b74747;
@@ -528,7 +528,7 @@
     <p class="lede">Short answer: yes, these look like serious candidates. They pair strong reasoning with multimodal input, which is exactly where text-only models can bottleneck a browser agent. Long answer: read on for the routing-policy sketch, then check our <a href="/blog/vision-shootout-round-3">empirical follow-up</a> for what actually held up.</p>
 <h2 id="first-naming-clarity">First, naming clarity</h2>
 <p>Xiaomi's official open model cards are <strong>MiMo-V2.5-Pro</strong> and <strong>MiMo-V2.5</strong>. In API ecosystems, people often refer to a lower-cost tier as "flash", and comparisons are frequently written as <code>mimo-v2.5-pro</code> vs <code>mimo-v2.5-flash</code>. For this post, "V2.5 Flash" means the faster/cheaper V2.5-tier experience, while "Pro" is the flagship reasoning tier.</p>
-<h2 id="why-mimo-is-interesting-for-sincetoggle">Why MiMo is interesting for Since Toggle</h2>
+<h2 id="why-mimo-is-interesting-for-since-toggle">Why MiMo is interesting for Since Toggle</h2>
 <ul><li><strong>Multimodal by design.</strong> Xiaomi positions MiMo-V2.5 as native omni-modal (image / video / audio / text), which better matches Since Toggle's screenshot-heavy browsing loop than a text-only model wrapped in a separate vision sub-call.</li><li><strong>Long-context agent work.</strong> Both tiers are published with up to 1M context claims, useful for long tool traces and replay buffers.</li><li><strong>Strong benchmark posture.</strong> Xiaomi's own tables show Pro very competitive against DeepSeek-V4-Pro/Flash and Kimi-K2 on reasoning and agent-style tasks.</li></ul>
 <h2 id="public-benchmark-snapshots-as-reported-by-xiaomi">Public benchmark snapshots (as reported by Xiaomi)</h2>
 <p>Using Xiaomi's public release tables for MiMo V2.5, the Pro tier posts top-tier results across math/coding/reasoning suites and is generally in the same class as DeepSeek-V4-Pro and Kimi-K2 on many reasoning-heavy tests. The non-Pro V2.5 tier trails Pro but still lands in a strong efficiency band for routine agent work.</p>
@@ -543,7 +543,7 @@
 <div class="callout">
 <strong>Recommendation:</strong> Add MiMo V2.5 Pro and MiMo V2.5 as opt-in providers behind model routing flags. If local inference is too heavy for your hardware budget, run them through <a href="https://openrouter.ai" target="_blank" rel="noopener">OpenRouter</a> first, then decide whether to self-host. Don't make either one the default vision sub-call yet — see <a href="/blog/vision-shootout-round-3">round 3</a> for why.
 </div>
-<h2 id="suggested-sincetoggle-eval-plan">Suggested Since Toggle eval plan</h2>
+<h2 id="suggested-since-toggle-eval-plan">Suggested Since Toggle eval plan</h2>
 <ul><li>Run a 50-task mixed benchmark: visual extraction, click-path planning, form completion, and recovery from ambiguous UI states.</li><li>Track: task success, retries, hallucinated actions, tool-call efficiency, and token-normalized cost.</li><li>Route policy: "flash" tier for first pass, automatic escalate to Pro when uncertainty or retries exceed threshold.</li><li>Per the round 3 finding: when MiMo is in the loop, watch §6 ("Unknowns") behavior carefully — at low quants the calibrated-uncertainty signal collapses, which would defeat the whole point of escalating on uncertainty.</li></ul>
 <p>If these results hold across a broader workload, MiMo could become the best multimodal addition to the current Qwen-heavy stack. The follow-up post is the first data point on whether they do.</p>
 

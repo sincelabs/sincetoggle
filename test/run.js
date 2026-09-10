@@ -10144,7 +10144,7 @@ test('ATIF export: maps a Since Toggle run, LLM calls, tools, metrics, and final
   const input = {
     schema: 'sincetoggle-trace/1',
     exportedAt: 1_770_000_100_000,
-    exportedBySince ToggleVersion: '23.4.0',
+    exportedBySincetoggleVersion: '23.4.0',
     run: {
       runId: 'atif-run-1',
       conversationId: 'conversation-7',
@@ -10273,7 +10273,7 @@ test('ATIF export: folds session bundles into one ordered multi-turn trajectory'
     schema: 'sincetoggle-trace/1',
     session: { sessionId: 'bundle-session' },
     exportedAt: 1_770_000_100_000,
-    exportedBySince ToggleVersion: '25.8.5',
+    exportedBySincetoggleVersion: '25.8.5',
     runs: [
       {
         run: {
@@ -10347,7 +10347,7 @@ test('ATIF export: folds session bundles into one ordered multi-turn trajectory'
 test('ATIF export: synthesizes deterministic tool calls and preserves malformed arguments safely', () => {
   const input = {
     schema: 'sincetoggle-trace/1',
-    exportedBySince ToggleVersion: '23.4.0',
+    exportedBySincetoggleVersion: '23.4.0',
     run: {
       runId: 'standalone-tool',
       userMessage: '',
@@ -10452,7 +10452,7 @@ test('ATIF export: CLI writes a sibling .atif.json file', () => {
     const sourcePath = path.join(tempDir, 'trace.json');
     fs.writeFileSync(sourcePath, JSON.stringify({
       schema: 'sincetoggle-trace/1',
-      exportedBySince ToggleVersion: '23.4.0',
+      exportedBySincetoggleVersion: '23.4.0',
       run: { runId: 'cli-run', userMessage: 'Hello' },
       events: [],
     }));
@@ -12124,7 +12124,7 @@ test('Firefox Cloud runtime delivery uses its available fetch transport', async 
       providerName: 'sincetoggle-cloud',
       baseUrl: 'https://cloud.example/v1',
       deviceGuid: 'device-test',
-      helpImproveSince Toggle: true,
+      helpImproveSincetoggle: true,
     });
     const result = await provider.sendRuntimeEvents('conv-firefox', [{ event_id: 'event-1', event: {} }], { timeoutMs: 500 });
     assert.deepEqual(result, { ok: true, retryable: false, status: 202 });
@@ -12146,7 +12146,7 @@ test('Cloud runtime delivery stays consent-gated and mirrored across both builds
   for (const browser of ['chrome', 'firefox']) {
     const agent = fs.readFileSync(path.join(ROOT, `src/${browser}/src/agent/agent.js`), 'utf8');
     const provider = fs.readFileSync(path.join(ROOT, `src/${browser}/src/providers/openai.js`), 'utf8');
-    assert.match(agent, /helpImproveSince Toggle !== false[\s\S]*enqueueCloudRuntimeEvent/);
+    assert.match(agent, /helpImproveSincetoggle !== false[\s\S]*enqueueCloudRuntimeEvent/);
     assert.match(agent, /void flushCloudRuntimeOutbox\(provider\)/);
     assert.match(provider, /\/improvement\/runtime-events/);
     assert.match(provider, /retryable: response\.status === 408 \|\| response\.status === 429 \|\| response\.status >= 500/);
@@ -12407,14 +12407,14 @@ test('trace export: notes appear before the footer', () => {
 });
 
 test('trace export: identifies exporting and recording Since Toggle versions', () => {
-  const { markdown } = tracesToMarkdown(TRACE_RUNS, { exportedBySince ToggleVersion: '23.3.1' });
+  const { markdown } = tracesToMarkdown(TRACE_RUNS, { exportedBySincetoggleVersion: '23.3.1' });
   assert.match(markdown, /_Exported with Since Toggle v23\.3\.1_/);
   assert.match(markdown, /recorded with Since Toggle v23\.3\.1 · haiku · stopped/);
 
   const legacy = tracesToMarkdown([{
     run: { runId: 'legacy', userMessage: 'old trace', model: 'legacy-model', status: 'done' },
     events: [],
-  }], { exportedBySince ToggleVersion: '23.3.1' });
+  }], { exportedBySincetoggleVersion: '23.3.1' });
   assert.match(legacy.markdown, /recorded Since Toggle version unavailable · legacy-model · done/);
 });
 
@@ -12622,7 +12622,7 @@ test('trace export: renders Ask streaming decisions and aggregate lifecycle metr
 const OTLP_TRACE_FIXTURE = {
   schema: 'sincetoggle-trace/1',
   exportedAt: 1_784_937_600_000,
-  exportedBySince ToggleVersion: '25.9.7',
+  exportedBySincetoggleVersion: '25.9.7',
   run: {
     runId: 'run_otlp_fixture',
     conversationId: 'conversation_fixture',
@@ -12942,7 +12942,7 @@ test('OTLP collector contract: partitions sessions and keeps typed lineage links
   const payload = traceExportToOtlp({
     schema: 'sincetoggle-trace/1',
     session: { sessionId: 'bundle-session' },
-    exportedBySince ToggleVersion: '33.2.1',
+    exportedBySincetoggleVersion: '33.2.1',
     runs: [
       {
         run: { runId: 'session-a-root', conversationId: 'session-a', startedAt: 100, endedAt: 200 },
@@ -13521,7 +13521,7 @@ test('trace JSON export contract: preserves legacy runs and supports session bun
   ];
   const options = {
     exportedAt: 1_770_000_000_000,
-    exportedBySince ToggleVersion: '25.8.5',
+    exportedBySincetoggleVersion: '25.8.5',
   };
   for (const [label, build] of [['chrome', buildTraceExportPayloadCh], ['firefox', buildTraceExportPayloadFx]]) {
     const session = build(entries, { ...options, sessionId: 'session-a' });
@@ -14096,7 +14096,7 @@ test('trace UI: exports a session bundle while preserving standalone JSON shape'
     assert.match(traces, /for \(const exportRun of exportRuns\) entries\.push\(await loadTraceExportEntry\(exportRun\)\)/, `${browser}: session export does not load every run's events`);
     assert.match(traces, /buildTraceExportPayload\(entries, \{[\s\S]*?sessionId,[\s\S]*?exportedAt: Date\.now\(\)/, `${browser}: UI does not build the versioned export envelope`);
     assert.match(traces, /isSession\s*\?\s*`sincetoggle-session-\$\{safeFilenamePart\(sessionId, 'session'\)\}\.json`/, `${browser}: session export filename is not bounded`);
-    assert.match(traces, new RegExp(`exportedBySince ToggleVersion: ${runtimeName}\\.runtime\\.getManifest\\(\\)\\.version`), `${browser}: export version metadata changed unexpectedly`);
+    assert.match(traces, new RegExp(`exportedBySincetoggleVersion: ${runtimeName}\\.runtime\\.getManifest\\(\\)\\.version`), `${browser}: export version metadata changed unexpectedly`);
     assert.match(traces, /sanitizeTraceExport\(payload\)/, `${browser}: session export bypasses privacy sanitization`);
     assert.match(traces, /function traceExportConfirmation\(exportRuns\)[\s\S]*?sensitiveRunCount[\s\S]*?tr\.lossless\.warning/, `${browser}: session export does not disclose lossless sibling runs`);
     assert.match(traces, /isSession && !confirm\(traceExportConfirmation\(exportRuns\)\)/, `${browser}: session scope is not confirmed before export`);
@@ -14700,7 +14700,7 @@ test('trace record and JSON exports carry Since Toggle version metadata', () => 
       /runtimeConfig: this\._runtimeTraceConfig\(this\.providerManager\?\.getActive\?\.\(\), \{\s*tabId,\s*mode: 'act',\s*\}\)/,
       `${label}: workflow runs should snapshot effective runtime settings too`,
     );
-    assert.match(traceUi, new RegExp(`exportedBySince ToggleVersion: ${runtimeName}\\.runtime\\.getManifest\\(\\)\\.version`), `${label}: JSON export should identify the exporting build`);
+    assert.match(traceUi, new RegExp(`exportedBySincetoggleVersion: ${runtimeName}\\.runtime\\.getManifest\\(\\)\\.version`), `${label}: JSON export should identify the exporting build`);
     assert.match(traceUi, /buildTraceExportPayload\(entries/, `${label}: JSON export should use the shared export contract`);
     assert.match(exportContract, /TRACE_EXPORT_SCHEMA = 'sincetoggle-trace\/1'/, `${label}: additive version metadata should retain the v1 schema`);
   }
@@ -15645,7 +15645,7 @@ test('delivery checkpoints escalate at eight and reset only after meaningful pro
 test('delivery checkpoint enforcement is wired into both agent loops', () => {
   for (const browserName of ['chrome', 'firefox']) {
     const source = fs.readFileSync(path.join(ROOT, `src/${browserName}/src/agent/agent.js`), 'utf8');
-    assert.match(source, /const deliveryCheck = this\._checkDeliveryObservationStreak\([\s\S]{0,180}?toolResult,[\s\S]{0,800}?requiredReadProgress,[\s\S]{0,300}?enforceTerminal: runOptions\?\.cloudRun !== true[\s\S]{0,120}?!this\._isSince ToggleCloudProvider\(provider\)[\s\S]{0,120}?allowedToolNames\.has\('done'\)/, `${browserName}: every eligible interactive mode with done must preserve required-read progress and enforce the second checkpoint`);
+    assert.match(source, /const deliveryCheck = this\._checkDeliveryObservationStreak\([\s\S]{0,180}?toolResult,[\s\S]{0,800}?requiredReadProgress,[\s\S]{0,300}?enforceTerminal: runOptions\?\.cloudRun !== true[\s\S]{0,120}?!this\._isSincetoggleCloudProvider\(provider\)[\s\S]{0,120}?allowedToolNames\.has\('done'\)/, `${browserName}: every eligible interactive mode with done must preserve required-read progress and enforce the second checkpoint`);
     assert.doesNotMatch(source, /enforceTerminal:[\s\S]{0,160}?_isActionMode/, `${browserName}: Ask research must not be excluded from terminal delivery`);
     assert.match(source, /deliveryCheck\.kind === 'nudge'/, `${browserName}: warning must reach the model`);
     assert.match(source, /deliveryCheck\.kind === 'deliver'[\s\S]{0,900}?action: 'deliver'/, `${browserName}: second checkpoint must leave the browser loop`);
@@ -39935,7 +39935,7 @@ test('web hero social proof uses recognizable brand and users icons', () => {
     );
 
     const productHuntIndex = html.indexOf('href="https://www.producthunt.com/products/sincetoggle"');
-    const markTechPostIndex = html.indexOf('href="https://www.marktechpost.com/2026/07/02/meet-sincetoggle-an-open-source-local-first-ai-browser-agent-that-reads-pages-and-automates-tasks-in-chrome-and-firefox/"');
+    const markTechPostIndex = html.indexOf('href="https://www.marktechpost.com/2026/07/02/meet-webbrain-an-open-source-local-first-ai-browser-agent-that-reads-pages-and-automates-tasks-in-chrome-and-firefox/"');
     const usersIndex = html.indexOf('class="hero-proof-cell hero-proof-users"');
     assert.ok(
       productHuntIndex >= 0 && markTechPostIndex > productHuntIndex && usersIndex > markTechPostIndex,
@@ -40062,7 +40062,7 @@ test('public Apocalypse Mode guide and launch essay document the offline boundar
     assert.match(html, /<a href="\/docs\/apocalypse-mode\/"[^>]*>Apocalypse Mode<\/a>/,
       `docs/${page}: shared guide navigation should expose Apocalypse Mode`);
   }
-  assert.match(sitemap, /<loc>https:\/\/sincetoggle\.one\/docs\/apocalypse-mode\/<\/loc>/,
+  assert.match(sitemap, /<loc>https:\/\/sincetoggle.com\/docs\/apocalypse-mode\/<\/loc>/,
     'web: the Apocalypse Mode guide should be in the generated sitemap');
 
   assert.match(blogSource, /disaster[\s\S]*?war[\s\S]*?WebGPU[\s\S]*?Once those resources are downloaded, the core is self-contained/,
@@ -40989,7 +40989,7 @@ test('logo metadata and generated icon assets use the correct canonical artwork 
   };
 
   assert.ok(read('assets/logo-github.png').equals(read('web/logo-github.png')), 'web logo should copy the canonical logo byte-for-byte');
-  assert.deepEqual(dimensions('assets/logo-mark.png'), [1254, 1254]);
+  assert.deepEqual(dimensions('assets/logo-mark.png'), [1024, 1807]);
   assert.equal(read('assets/logo-mark.png')[25], 6, 'UI logo mark should be an RGBA PNG');
   for (const [size, paths] of [
     [16, ['src/chrome/icons/icon16.png', 'src/firefox/icons/icon16.png']],
@@ -41036,10 +41036,10 @@ test('logo metadata and generated icon assets use the correct canonical artwork 
   assert.match(packageJson.scripts['sync:logo'], /brand-assets-2026-2\/render\.mjs/);
 
   const logoSync = fs.readFileSync(path.join(ROOT, 'scripts/sync-logo-assets.py'), 'utf8');
-  assert.match(logoSync, /MARK = ROOT \/ "assets" \/ "logo-mark\.png"/);
-  assert.match(logoSync, /save_png\(icon_logo\(mark, size\), icon_dir/);
-  assert.match(logoSync, /save_jpeg\(full_logo\(source, 128\), ASSETS \/ "logo-github-128\.jpg"\)/);
-  assert.match(logoSync, /replace_composite_logo\(path, source, box, radius\)/);
+  assert.match(logoSync, /MARK = BRAND \/ "png" \/ "since-mark-1024\.png"/);
+  assert.match(logoSync, /save_png\(icon_logo\(size\), icon_dir/);
+  assert.match(logoSync, /save_jpeg\(full_logo\(128\), ASSETS \/ "logo-github-128\.jpg"\)/);
+  assert.match(logoSync, /replace_composite_logo\(path, box, radius\)/);
   assert.doesNotMatch(logoSync, /WEB \/ "twitter-image\.png"|WEB \/ "og-image\.png"/);
 
   const template = fs.readFileSync(path.join(ROOT, 'web/build/template.html'), 'utf8');
@@ -41141,10 +41141,10 @@ test('sidepanel onboarding makes Cloud improvement use an explicit persisted cho
     const background = fs.readFileSync(path.join(ROOT, prefix, 'src/background.js'), 'utf8');
 
     assert.match(html, /id="ob-help-improve"[\s\S]*?id="ob-help-improve-checkbox" aria-describedby="ob-help-improve-description" checked[\s\S]*?data-i18n="st\.display\.help_improve\.label"[\s\S]*?id="ob-help-improve-description"[\s\S]*?data-i18n-html="st\.display\.help_improve\.desc_html"/, `${label}: final onboarding step should expose the canonical Help Improve checkbox and disclosure`);
-    assert.match(panel, /storage\.local\.get\(\['onboardingComplete', 'helpImproveSince Toggle'\]\)/, `${label}: onboarding should hydrate completion and privacy state together`);
-    assert.match(panel, /persistedHelpImprove = stored\.helpImproveSince Toggle !== false/, `${label}: onboarding should preserve the existing default-on preference`);
+    assert.match(panel, /storage\.local\.get\(\['onboardingComplete', 'helpImproveSincetoggle'\]\)/, `${label}: onboarding should hydrate completion and privacy state together`);
+    assert.match(panel, /persistedHelpImprove = stored\.helpImproveSincetoggle !== false/, `${label}: onboarding should preserve the existing default-on preference`);
     assert.match(panel, /await sendToBackground\('set_help_improve_preference', \{ enabled: requestedValue \}\);\s*persistedHelpImprove = requestedValue;\s*if \(cloudReady\) showCloudReady\(\);/, `${label}: a successful privacy retry should restore Cloud status instead of leaving the error visible`);
-    assert.match(background, new RegExp(`case 'set_help_improve_preference':[\\s\\S]*?typeof msg\\.enabled !== 'boolean'[\\s\\S]*?await ${runtime}\\.storage\\.local\\.get\\('helpImproveSince Toggle'\\)[\\s\\S]*?await ${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveSince Toggle: msg\\.enabled \\}\\);[\\s\\S]*?await providerManager\\.load\\(\\);[\\s\\S]*?await ${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveSince Toggle: previousEnabled \\}\\)\\.catch\\(\\(\\) => \\{\\}\\)[\\s\\S]*?return \\{ ok: true, enabled: msg\\.enabled \\};`), `${label}: a failed provider reload should roll back the stored privacy preference before the write is treated as failed`);
+    assert.match(background, new RegExp(`case 'set_help_improve_preference':[\\s\\S]*?typeof msg\\.enabled !== 'boolean'[\\s\\S]*?await ${runtime}\\.storage\\.local\\.get\\('helpImproveSincetoggle'\\)[\\s\\S]*?await ${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveSincetoggle: msg\\.enabled \\}\\);[\\s\\S]*?await providerManager\\.load\\(\\);[\\s\\S]*?await ${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveSincetoggle: previousEnabled \\}\\)\\.catch\\(\\(\\) => \\{\\}\\)[\\s\\S]*?return \\{ ok: true, enabled: msg\\.enabled \\};`), `${label}: a failed provider reload should roll back the stored privacy preference before the write is treated as failed`);
     assert.match(panel, /catch \(error\) \{[\s\S]*?helpImproveCheckbox\.checked = persistedHelpImprove[\s\S]*?return false;/, `${label}: failed privacy persistence should restore the last saved choice`);
     assert.match(panel, /function showCloudReady\(\) \{[\s\S]*?setHelpImproveVisible\(true\)/, `${label}: the choice should appear when Since Toggle Compass is active`);
     assert.match(panel, /function showLocalChoices\(choices\) \{[\s\S]*?setHelpImproveVisible\(false\)/, `${label}: the Cloud-only choice should stay out of local-model setup`);
@@ -41396,12 +41396,12 @@ test('first install opens a browser-aware panel launcher without fake toolbar co
   );
   assert.match(
     chromeBackground,
-    /msg\?\.type !== 'WB_INSTALL_PANEL_OPENED'[\s\S]*?senderUrl !== installGuideUrl[\s\S]*?panelTabs\.add\(tab\.id\);[\s\S]*?savePanelTabs\(\);[\s\S]*?ensureSince ToggleGroup\(tab\)/,
+    /msg\?\.type !== 'WB_INSTALL_PANEL_OPENED'[\s\S]*?senderUrl !== installGuideUrl[\s\S]*?panelTabs\.add\(tab\.id\);[\s\S]*?savePanelTabs\(\);[\s\S]*?ensureSincetoggleGroup\(tab\)/,
     'chrome: verified install-page opens should join normal panel and tab-group state',
   );
   assert.match(
     firefoxBackground,
-    /msg\?\.type !== 'WB_INSTALL_PANEL_OPENED'[\s\S]*?senderUrl !== installGuideUrl[\s\S]*?ensureSince ToggleGroup\(tab\)/,
+    /msg\?\.type !== 'WB_INSTALL_PANEL_OPENED'[\s\S]*?senderUrl !== installGuideUrl[\s\S]*?ensureSincetoggleGroup\(tab\)/,
     'firefox: verified install-page opens should join normal tab-group state',
   );
   assert.match(chromePanelHtml, /data-i18n="install\.pin\.body"/, 'chrome: coachmark should keep its spatial side-panel pin copy');
@@ -41409,7 +41409,7 @@ test('first install opens a browser-aware panel launcher without fake toolbar co
   assert.match(chromePanelHtml, /id="pin-coachmark-done"[\s\S]*?id="pin-coachmark-skip"/, 'chrome: pin coachmark should provide confirm and explicit skip actions');
   assert.doesNotMatch(firefoxPanelHtml, /id="pin-coachmark"/, 'firefox: sidebar should not point at a Chromium-only panel pin');
   assert.match(chromePanelJs, /sidePanel\?\.getLayout\?\.\(\)/, 'chrome: coachmark should read the real left/right side-panel layout when supported');
-  assert.match(chromePanelJs, /await pinCoachmarkDismissed\.catch\(\(\)\s*=>\s*\{\}\);[\s\S]*?storage\.local\.get\(\['onboardingComplete', 'helpImproveSince Toggle'\]\)/, 'chrome: product onboarding should wait until the pin coachmark is dismissed before loading setup and privacy state');
+  assert.match(chromePanelJs, /await pinCoachmarkDismissed\.catch\(\(\)\s*=>\s*\{\}\);[\s\S]*?storage\.local\.get\(\['onboardingComplete', 'helpImproveSincetoggle'\]\)/, 'chrome: product onboarding should wait until the pin coachmark is dismissed before loading setup and privacy state');
   assert.match(chromePanelJs, /initPinCoachmark[\s\S]*?catch\s*\{[\s\S]*?\}[\s\S]*?\}\)\(\)/, 'chrome: pin coachmark setup failures must not reject into onboarding');
   assert.match(chromePanelJs, /for \(const layer of backgroundLayers\) \{[\s\S]*?layer\.inert = true/, 'chrome: modal coachmark should make the rest of the panel inert');
   assert.match(chromePanelJs, /for \(const \[layer, wasInert\] of backgroundInertState\) \{[\s\S]*?layer\.inert = wasInert/, 'chrome: modal coachmark should restore prior inert state on dismissal');
@@ -43790,8 +43790,8 @@ test('Help Improve Since Toggle is default-on in Advanced, persisted, and reload
     const advancedIndex = html.indexOf('<details class="advanced-settings">');
     const advancedEnd = html.indexOf('</details>', advancedIndex);
     assert.ok(advancedIndex > -1 && helpImproveIndex > advancedIndex && helpImproveIndex < advancedEnd, `${label}: Help Improve should live in General > Advanced`);
-    assert.match(settings, /helpImproveToggle\.checked = stored\.helpImproveSince Toggle !== false/, `${label}: missing default-on storage hydration`);
-    assert.match(settings, new RegExp(`${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveSince Toggle: helpImproveToggle\\.checked \\}\\)`), `${label}: setting should persist`);
+    assert.match(settings, /helpImproveToggle\.checked = stored\.helpImproveSincetoggle !== false/, `${label}: missing default-on storage hydration`);
+    assert.match(settings, new RegExp(`${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveSincetoggle: helpImproveToggle\\.checked \\}\\)`), `${label}: setting should persist`);
     assert.match(locale, /'st\.display\.help_improve\.label': 'Help Improve Since Toggle'/, `${label}: setting label missing`);
     assert.match(locale, /On by default[^']*<u>Local-model and bring-your-own API requests are never collected by Since Toggle\.<\/u>/, `${label}: setting disclosure should explain and emphasize its default and scope`);
     assert.match(locale, /Turn it off in General → Advanced to exclude future Compass interactions/, `${label}: provider disclosure should point to General > Advanced`);
@@ -43803,9 +43803,9 @@ test('Help Improve Since Toggle is default-on in Advanced, persisted, and reload
       assert.ok(providerDisclosure.includes(translatedMessages['st.display.advanced']), `${label}/${localeFile}: provider disclosure should name the localized Advanced section`);
       assert.match(providerDisclosure, /<u>[^<]+<\/u>/, `${label}/${localeFile}: provider local/BYO exclusion should also be underlined`);
     }
-    assert.match(manager, /const HELP_IMPROVE_SINCETOGGLE_KEY = 'helpImproveSince Toggle';/, `${label}: provider manager setting key missing`);
-    assert.match(manager, /helpImproveSince Toggle = data\[HELP_IMPROVE_SINCETOGGLE_KEY\] !== false/, `${label}: Compass provider config should default improvement use on`);
-    assert.match(background, /changes\.providers \|\| changes\.activeProvider \|\| changes\.helpImproveSince Toggle/, `${label}: Compass provider config should reload after opt-out changes`);
+    assert.match(manager, /const HELP_IMPROVE_SINCETOGGLE_KEY = 'helpImproveSincetoggle';/, `${label}: provider manager setting key missing`);
+    assert.match(manager, /helpImproveSincetoggle = data\[HELP_IMPROVE_SINCETOGGLE_KEY\] !== false/, `${label}: Compass provider config should default improvement use on`);
+    assert.match(background, /changes\.providers \|\| changes\.activeProvider \|\| changes\.helpImproveSincetoggle/, `${label}: Compass provider config should reload after opt-out changes`);
   }
 });
 
@@ -45206,7 +45206,7 @@ test('sidepanel does not miss startup tab switches before consuming tab-scoped s
     const detachListenerIdx = body.indexOf('tabs.onDetached.addListener');
     const attachListenerIdx = body.indexOf('tabs.onAttached.addListener');
     const loadProvidersIdx = body.indexOf('await loadProviders();');
-    const testConnectionIdx = body.indexOf("await testConnection({ skipSince ToggleCloud: true });");
+    const testConnectionIdx = body.indexOf("await testConnection({ skipSincetoggleCloud: true });");
     const resyncSwitchIdx = body.indexOf('await windowScope.syncActiveTab();');
     const refreshJobsIdx = body.indexOf('refreshScheduledJobs({ tabId: currentTabId });', resyncSwitchIdx);
     const refreshActionsIdx = body.indexOf('refreshRecommendedActions();', resyncSwitchIdx);
@@ -49751,7 +49751,7 @@ test('selection shortcut is shipped, enabled by default, and keeps browser-speci
     assert.match(content, /shortcut\.setAttribute\('aria-label', strings\.askHighlightedText\);[\s\S]*?popup\.setAttribute\('aria-label', strings\.askHighlightedText\);/, `${label}: webpage shortcut localization should retain the selected-text prompt`);
     assert.match(content, /class="shortcut-icon" aria-hidden="true">\?<\/span>/, `${label}: shortcut should use the compact question-mark icon`);
     assert.match(content, /<button class="shortcut" type="button" aria-label="Ask Since Toggle about this" title="Ask Since Toggle about this" hidden>/, `${label}: shortcut fallback copy should retain its original selected-text prompt`);
-    assert.match(content, /\.shortcut \{[\s\S]*?border:1px solid rgba\(108,99,255,\.34\);[\s\S]*?background:var\(--bg\); color:var\(--accent\);[\s\S]*?box-shadow:0 10px 26px rgba\(35,30,95,\.22\)/, `${label}: shortcut should retain its purple treatment`);
+    assert.match(content, /\.shortcut \{[\s\S]*?border:1px solid rgba\(224,122,56,\.34\);[\s\S]*?background:var\(--bg\); color:var\(--accent\);[\s\S]*?box-shadow:0 10px 26px rgba\(26,25,23,\.22\)/, `${label}: shortcut should retain its terracotta treatment`);
     assert.match(content, /\.popup \{[\s\S]*?max-height:calc\(100vh - 16px\); overflow-y:auto; overscroll-behavior:contain;/, `${label}: expanded popup should remain scrollable inside short viewports`);
     assert.doesNotMatch(content, /M6\.8 8\.5 9\.2 14l2\.8-3\.4 2\.8 3\.4 2\.4-5\.5/, `${label}: discarded Since Toggle W outline should be removed`);
     assert.doesNotMatch(content, /M12 2\.8c\.65 3\.78/, `${label}: Claude-like sparkle icon should be removed`);
@@ -68069,18 +68069,18 @@ test('_defaultConfigs: chrome and firefox differ only by the Chromium WebGPU pro
 test('Since Toggle Compass sends the Help Improve preference without leaking it to BYO providers', () => {
   for (const Provider of [OpenAIProviderCh, OpenAIProviderFx]) {
     const defaultOn = new Provider({ providerName: 'sincetoggle-cloud', deviceGuid: 'device-123' });
-    assert.equal(defaultOn._headers()['X-Since Toggle-Help-Improve'], '1');
-    assert.equal(defaultOn._headers()['X-Since Toggle-Device-Id'], 'device-123');
-    assert.equal(defaultOn._headers()['X-Since Toggle-Client'], 'extension');
+    assert.equal(defaultOn._headers()['X-Sincetoggle-Help-Improve'], '1');
+    assert.equal(defaultOn._headers()['X-Sincetoggle-Device-Id'], 'device-123');
+    assert.equal(defaultOn._headers()['X-Sincetoggle-Client'], 'extension');
 
-    const optedOut = new Provider({ providerName: 'sincetoggle-cloud', helpImproveSince Toggle: false });
-    assert.equal(optedOut._headers()['X-Since Toggle-Help-Improve'], '0');
-    assert.equal(optedOut._headers()['X-Since Toggle-Device-Id'], undefined);
-    assert.equal(optedOut._headers()['X-Since Toggle-Client'], 'extension');
+    const optedOut = new Provider({ providerName: 'sincetoggle-cloud', helpImproveSincetoggle: false });
+    assert.equal(optedOut._headers()['X-Sincetoggle-Help-Improve'], '0');
+    assert.equal(optedOut._headers()['X-Sincetoggle-Device-Id'], undefined);
+    assert.equal(optedOut._headers()['X-Sincetoggle-Client'], 'extension');
 
     const bringYourOwn = new Provider({ providerName: 'openai', apiKey: 'test-key' });
-    assert.equal(bringYourOwn._headers()['X-Since Toggle-Help-Improve'], undefined);
-    assert.equal(bringYourOwn._headers()['X-Since Toggle-Client'], undefined);
+    assert.equal(bringYourOwn._headers()['X-Sincetoggle-Help-Improve'], undefined);
+    assert.equal(bringYourOwn._headers()['X-Sincetoggle-Client'], undefined);
   }
 });
 
@@ -70075,7 +70075,7 @@ test('Since Toggle Compass groups every generation in a stable conversation sess
 
     const cloudProvider = new Provider({ providerName: 'sincetoggle-cloud' });
     const cloudBody = {};
-    cloudProvider._addSince ToggleCloudContext(cloudBody, {
+    cloudProvider._addSincetoggleCloudContext(cloudBody, {
       sincetoggleSessionId: firstConversationId,
       sincetoggleGenerationName: 'compaction',
       sincetoggleRuntimeConfig: {
@@ -70091,7 +70091,7 @@ test('Since Toggle Compass groups every generation in a stable conversation sess
 
     const byoProvider = new Provider({ providerName: 'openai', apiKey: 'test-key' });
     const byoBody = {};
-    byoProvider._addSince ToggleCloudContext(byoBody, {
+    byoProvider._addSincetoggleCloudContext(byoBody, {
       sincetoggleSessionId: firstConversationId,
       sincetoggleGenerationName: 'main',
     });
@@ -118882,11 +118882,11 @@ test('public EasyCLIProxy guide keeps executable, account, network, and media bo
   assert.match(docsBuild, /\/docs\/zh\/easy-cli-proxy\/[\s\S]*?订阅代理/,
     'docs build: shared Chinese navigation should expose the translated guide');
   assert.match(vercel, /mp4\|webm\|vtt/, 'web: Vercel should serve WebVTT as a static asset');
-  assert.match(sitemap, /<loc>https:\/\/sincetoggle\.one\/docs\/easy-cli-proxy\/<\/loc>/,
+  assert.match(sitemap, /<loc>https:\/\/sincetoggle.com\/docs\/easy-cli-proxy\/<\/loc>/,
     'web: the guide should appear in the generated sitemap');
-  assert.match(sitemap, /<loc>https:\/\/sincetoggle\.one\/docs\/zh\/easy-cli-proxy\/<\/loc>/,
+  assert.match(sitemap, /<loc>https:\/\/sincetoggle.com\/docs\/zh\/easy-cli-proxy\/<\/loc>/,
     'web: the Chinese guide should appear in the generated sitemap');
-  assert.match(sitemap, /<loc>https:\/\/sincetoggle\.one\/docs\/easy-cli-proxy\/<\/loc>[\s\S]*?hreflang="zh" href="https:\/\/sincetoggle\.one\/docs\/zh\/easy-cli-proxy\/"/,
+  assert.match(sitemap, /<loc>https:\/\/sincetoggle.com\/docs\/easy-cli-proxy\/<\/loc>[\s\S]*?hreflang="zh" href="https:\/\/sincetoggle.com\/docs\/zh\/easy-cli-proxy\/"/,
     'web: the guide sitemap entry should connect its Chinese alternate');
   assert.match(providerInternals, /canonical \[EasyCLIProxyAPI subscription proxy guide\]\(https:\/\/sincetoggle\.one\/docs\/easy-cli-proxy\/\)/,
     'developer docs should defer drift-prone setup details to the canonical guide');

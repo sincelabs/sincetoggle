@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sincetoggle.one/sitemap.xml
+Sitemap: https://sincetoggle.com/sitemap.xml

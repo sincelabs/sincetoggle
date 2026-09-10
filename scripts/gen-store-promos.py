@@ -24,14 +24,14 @@ ASSETS = ROOT / "assets"
 ICON_PATH = ASSETS / "store-icon-128.png"
 
 # ── Brand palette ─────────────────────────────────────────────────────
-# Matches sincetoggle marketing site + extension settings UI.
-BG_TOP = (30, 25, 61)      # sampled from prior store-promo top
-BG_BOT = (49, 39, 98)      # sampled from prior store-promo bottom
-ACCENT = (108, 99, 255)    # --accent
-ACCENT2 = (167, 139, 250) # --accent gradient end (used in nameplate)
-TEXT = (240, 240, 248)
-TEXT_DIM = (170, 165, 200)
-TEXT_DIM2 = (135, 130, 175)
+# sincelabs brand tokens: ink ground, terracotta accent (lifted for dark).
+BG_TOP = (26, 25, 23)      # --sl-ink
+BG_BOT = (46, 30, 15)      # warm ink depth (--sl-accent-light dark)
+ACCENT = (224, 122, 56)    # --sl-accent-lift
+ACCENT2 = (240, 150, 92)   # --sl-accent-hover (gradient end)
+TEXT = (245, 241, 234)     # --sl-on-ink
+TEXT_DIM = (152, 147, 140) # --sl-ink-muted dark
+TEXT_DIM2 = (120, 115, 108)
 
 # ── Font discovery ────────────────────────────────────────────────────
 # Prefer SF Pro (mac default) then Helvetica Neue; fall back to default.

@@ -86,29 +86,29 @@ const baseCss = `
     transform: rotate(-8deg); opacity: 0.8;
   }
   .dark { --bg1:#121525; --bg2:#243044; --ink:#ffffff; --muted:#d5d9e3;
-    --accent:#f56ca8; --accent2:#65d69d; --border:rgba(255,255,255,0.16);
+    --accent:#e07a38; --accent2:#639922; --border:rgba(255,255,255,0.16);
     --panel:rgba(255,255,255,0.08); --shadow:0 28px 70px rgba(0,0,0,0.32); }
-  .act { --bg1:#f7fbff; --bg2:#fff4ef; --ink:#182033; --muted:#596473;
+  .act { --bg1:#f7fbff; --bg2:#fff4ef; --ink:#2c2a28; --muted:#596473;
     --accent:#df573f; --accent2:#4d7df5; --border:rgba(31,40,64,0.14);
     --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(68,50,40,0.20); }
-  .read { --bg1:#fffaf3; --bg2:#eef5ff; --ink:#171827; --muted:#565e70;
-    --accent:#6757ff; --accent2:#ff6f9d; --border:rgba(37,42,66,0.12);
+  .read { --bg1:#fffaf3; --bg2:#eef5ff; --ink:#1a1917; --muted:#565e70;
+    --accent:#e07a38; --accent2:#e07a38; --border:rgba(37,42,66,0.12);
     --panel:rgba(255,255,255,0.88); --shadow:0 28px 70px rgba(31,35,62,0.20); }
   .plan { --bg1:#111827; --bg2:#223040; --ink:#f8fafc; --muted:#c7d2de;
     --accent:#45d483; --accent2:#ffc857; --border:rgba(255,255,255,0.18);
     --panel:rgba(255,255,255,0.08); --shadow:0 28px 80px rgba(0,0,0,0.34); }
-  .provider { --bg1:#f6f8fb; --bg2:#eef8f1; --ink:#182033; --muted:#5b6574;
+  .provider { --bg1:#f6f8fb; --bg2:#eef8f1; --ink:#2c2a28; --muted:#5b6574;
     --accent:#3e6ff4; --accent2:#28a96b; --border:rgba(25,38,68,0.13);
     --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(24,52,90,0.19); }
   .hero-light { --bg1:#f7f9ff; --bg2:#fff1f6; --ink:#141828; --muted:#586074;
-    --accent:#d6417f; --accent2:#12a06a; --border:rgba(28,34,64,0.13);
+    --accent:#e07a38; --accent2:#12a06a; --border:rgba(28,34,64,0.13);
     --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(40,44,80,0.18); }
-  .plan-light { --bg1:#f5fbf7; --bg2:#eef4ff; --ink:#141b26; --muted:#586374;
+  .plan-light { --bg1:#f5fbf7; --bg2:#eef4ff; --ink:#1a1917; --muted:#586374;
     --accent:#12a25f; --accent2:#dd9414; --border:rgba(24,38,48,0.13);
     --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(28,50,44,0.18); }
-  .proof { --bg1:#f7f6ff; --bg2:#eef4ff; --ink:#171a2b; --muted:#5a6274;
-    --accent:#6e56cf; --accent2:#f0a52b; --border:rgba(30,34,64,0.13);
-    --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(38,34,78,0.18); }
+  .proof { --bg1:#f7f6ff; --bg2:#eef4ff; --ink:#1a1917; --muted:#5a6274;
+    --accent:#e07a38; --accent2:#f0a52b; --border:rgba(30,34,64,0.13);
+    --panel:rgba(255,255,255,0.9); --shadow:0 28px 70px rgba(139, 61, 24,0.18); }
   .apocalypse { --bg1:#11100e; --bg2:#1c1a14; --ink:#f5f0e6; --muted:#a89e8a;
     --accent:#f7bd5f; --accent2:#f0a72f; --border:rgba(247,189,95,0.22);
     --panel:rgba(247,189,95,0.07); --shadow:0 28px 70px rgba(0,0,0,0.5); }
@@ -233,7 +233,7 @@ function actScene(onboarding = false) {
             </div>
           </div>
         </div>
-        <div style="background:#171827; border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:20px;
+        <div style="background:#1a1917; border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:20px;
           color:#fff; box-shadow:0 24px 60px rgba(0,0,0,0.28);">
           <div style="font-family:var(--mono); font-size:13px; font-weight:650; color:#aeb4c9;
             text-transform:uppercase; letter-spacing:0.07em; margin-bottom:16px;">Since Toggle is acting</div>
@@ -241,7 +241,7 @@ function actScene(onboarding = false) {
             ${steps.map(([state, label]) => `
               <div style="display:grid; grid-template-columns:26px 1fr; gap:10px; align-items:center; font-size:15.5px; font-weight:640; color:${state === 'live' ? '#ffffff' : '#c9d0e0'};">
                 <span style="width:26px; height:26px; border-radius:9px; display:grid; place-items:center; font-size:14px; font-weight:900;
-                  background:${state === 'live' ? 'var(--accent2)' : 'rgba(101,214,157,0.22)'}; color:${state === 'live' ? '#fff' : '#65d69d'};">${state === 'live' ? '&#9679;' : '&#10003;'}</span>
+                  background:${state === 'live' ? 'var(--accent2)' : 'rgba(101,214,157,0.22)'}; color:${state === 'live' ? '#fff' : '#639922'};">${state === 'live' ? '&#9679;' : '&#10003;'}</span>
                 <span>${label}</span>
               </div>`).join('')}
           </div>
@@ -390,7 +390,7 @@ function offerScene() {
           </span>
           <span class="num" style="font-size:122px; line-height:1;">$5<span style="font-family:var(--ui); font-size:32px; font-weight:600; color:var(--muted); letter-spacing:0; margin-left:4px;">/mo</span></span>
           <span style="padding:13px 19px; border-radius:999px; background:var(--accent); color:#fff; font-family:var(--mono); font-size:18px; font-weight:600; letter-spacing:0.06em;
-            text-transform:uppercase; transform:rotate(3deg); box-shadow:0 14px 34px rgba(245,108,168,0.35);">Save 35%</span>
+            text-transform:uppercase; transform:rotate(3deg); box-shadow:0 14px 34px rgba(224, 122, 56,0.35);">Save 35%</span>
         </div>
         <div class="sub" style="font-size:24px; margin-top:30px;">No setup, no API keys &mdash; just install and go.</div>
         <div class="sub" style="font-size:19px; margin-top:12px; opacity:0.8;">Or free forever with your own keys or local models.</div>
@@ -445,7 +445,7 @@ function proofScene() {
       </div>
 
       <div style="width:1040px; margin:44px auto 0; display:flex; align-items:center; justify-content:space-between;
-        gap:24px; background:#171827; border:1px solid rgba(255,255,255,0.12); border-radius:22px;
+        gap:24px; background:#1a1917; border:1px solid rgba(255,255,255,0.12); border-radius:22px;
         padding:22px 26px; color:#fff; box-shadow:0 24px 60px rgba(23,26,43,0.3);">
         <div style="display:flex; align-items:center; gap:14px; min-width:0;">
           <svg width="34" height="34" viewBox="0 0 16 16" fill="#ffffff" aria-hidden="true">
@@ -460,12 +460,12 @@ function proofScene() {
           <div style="display:flex; align-items:center;">
             ${avatars.map(([handle, src], i) => `
               <span title="@${handle}" style="width:44px; height:44px; border-radius:999px; overflow:hidden;
-                display:block; flex:0 0 auto; border:2px solid #171827; margin-left:${i === 0 ? 0 : -12}px;">
+                display:block; flex:0 0 auto; border:2px solid #1a1917; margin-left:${i === 0 ? 0 : -12}px;">
                 <img src="${avatarUri(src)}" alt="@${handle}" style="width:100%; height:100%; object-fit:cover; display:block;">
               </span>`).join('')}
             <span style="height:44px; padding:0 14px; border-radius:999px; background:rgba(255,255,255,0.14);
               color:#e7eaf3; display:grid; place-items:center; font-size:15px; font-weight:800;
-              border:2px solid #171827; margin-left:-12px;">+1000</span>
+              border:2px solid #1a1917; margin-left:-12px;">+1000</span>
           </div>
           <span style="display:inline-flex; align-items:center; gap:9px; height:46px; padding:0 20px; border-radius:12px;
             background:var(--accent2); color:#2b1c00; font-family:var(--mono); font-size:15px; font-weight:600;
@@ -529,7 +529,7 @@ function apocalypseScene({ nuke = false, onboarding = false } = {}) {
                       letter-spacing:0.06em; text-transform:uppercase; margin-top:3px;">${subtitle}</div>
                   </div>
                   <span style="font-family:var(--mono); font-size:11px; font-weight:700;
-                    color:${badge === 'LOCAL' ? 'var(--accent2)' : '#65d69d'};
+                    color:${badge === 'LOCAL' ? 'var(--accent2)' : '#639922'};
                     background:${badge === 'LOCAL' ? 'rgba(240,167,47,0.15)' : 'rgba(101,214,157,0.15)'};
                     padding:5px 11px; border-radius:999px; letter-spacing:0.1em;
                     white-space:nowrap;">${badge}</span>

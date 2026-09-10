@@ -6,9 +6,9 @@
   --toolbar-muted: #c5c7ca;
   --toolbar-border: rgba(255, 255, 255, .18);
   --page-shadow: 0 2px 14px rgba(0, 0, 0, .36);
-  --status-bg: rgba(24, 24, 28, .9);
+  --status-bg: rgba(30, 27, 24, .9);
   --status-color: #f5f5f5;
-  --accent: #6c63ff;
+  --accent: #e07a38;
 }
 
 * { box-sizing: border-box; }
@@ -28,7 +28,7 @@ body {
 button, input { font: inherit; }
 
 button:focus-visible, input:focus-visible {
-  outline: 3px solid rgba(154, 148, 255, .78);
+  outline: 3px solid rgba(244, 210, 195, .78);
   outline-offset: 2px;
 }
 
@@ -196,7 +196,7 @@ button:focus-visible, input:focus-visible {
   display: none;
 }
 
-.pdf-text-layer ::selection { background: rgba(92, 91, 242, .45); }
+.pdf-text-layer ::selection { background: rgba(224, 122, 56, .45); }
 
 @media print {
   body { overflow: visible; background: #fff; color: #000; }

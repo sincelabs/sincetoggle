@@ -19,13 +19,13 @@ function normalizeEntries(entries) {
 
 export function buildTraceExportPayload(
   entries,
-  { sessionId = '', exportedAt = Date.now(), exportedBySince ToggleVersion = '' } = {},
+  { sessionId = '', exportedAt = Date.now(), exportedBySincetoggleVersion = '' } = {},
 ) {
   const normalized = normalizeEntries(entries);
   const common = {
     schema: TRACE_EXPORT_SCHEMA,
     exportedAt,
-    exportedBySince ToggleVersion,
+    exportedBySincetoggleVersion,
   };
 
   if (sessionId) {

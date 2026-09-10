@@ -11,7 +11,7 @@ import {
   suiteShouldFail,
   unappliedSessionSettings,
 } from './lib/suite.mjs';
-import { GnippetsE2EClient, Since ToggleCloudClient } from './lib/sincetoggle-client.mjs';
+import { GnippetsE2EClient, SincetoggleCloudClient } from './lib/sincetoggle-client.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const scenarios = JSON.parse(await fs.readFile(path.join(root, 'catalog', 'scenarios.json'), 'utf8'));
@@ -106,7 +106,7 @@ assert.deepEqual(
 
 let cloudRunRequest;
 let scheduledPolls = 0;
-const cloudClient = new Since ToggleCloudClient({
+const cloudClient = new SincetoggleCloudClient({
   apiKey: 'test-cloud-key',
   baseUrl: 'https://sincetoggle.example',
   fetchImpl: async (url, options = {}) => {
@@ -226,7 +226,7 @@ await assert.rejects(
   },
 );
 assert.equal(diagnosticRequest.options.headers.accept, 'application/json');
-assert.match(diagnosticRequest.options.headers['user-agent'], /Since ToggleCloudE2E/);
+assert.match(diagnosticRequest.options.headers['user-agent'], /SincetoggleCloudE2E/);
 
 const sensitiveTrace = sanitizeTrace({
   format: 'sincetoggle.run-trace',
@@ -683,7 +683,7 @@ assert.equal(cleanupGrade.stuck_at, 'cleanup');
 // A run row read straight after an answer can still say needs_user_input with
 // the clarify_id we just answered. That is a stale read, not a handoff.
 let clarifyPolls = 0;
-const staleClarifyClient = new Since ToggleCloudClient({
+const staleClarifyClient = new SincetoggleCloudClient({
   apiKey: 'test-cloud-key',
   baseUrl: 'https://sincetoggle.example',
   fetchImpl: async () => ({

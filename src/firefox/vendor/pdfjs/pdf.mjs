@@ -32334,7 +32334,7 @@ class StampEditor extends AnnotationEditor {
         black = "black";
       } else if (ColorScheme.isDarkMode) {
         white = "#8f8f9d";
-        black = "#42414d";
+        black = "#47433d";
       }
       const boxDim = 15;
       const boxDimWidth = boxDim * outputScale.sx;

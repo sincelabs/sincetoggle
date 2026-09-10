@@ -1693,7 +1693,7 @@ function triggerCompletionConfetti() {
     const layer = document.createElement('div');
     layer.className = 'completion-confetti';
     layer.setAttribute('aria-hidden', 'true');
-    const colors = ['#4caf50', '#6c63ff', '#ffb703', '#ef476f', '#00b4d8', '#f77f00'];
+    const colors = ['#4caf50', '#e07a38', '#ffb703', '#ef476f', '#00b4d8', '#f77f00'];
     for (let i = 0; i < 42; i += 1) {
       const piece = document.createElement('span');
       piece.className = 'confetti-piece';
@@ -4575,7 +4575,7 @@ async function init() {
 
   await loadProviders();
   await refreshStandaloneWebgpuStatus();
-  await testConnection({ skipSince ToggleCloud: true });
+  await testConnection({ skipSincetoggleCloud: true });
   await windowScope.syncActiveTab();
   refreshScheduledJobs({ tabId: currentTabId });
   refreshRecommendedActions();
@@ -4613,7 +4613,7 @@ if (verboseBtn) {
       try {
         const response = await sendToBackground('get_debug_log');
         if (response?.log?.length) {
-          console.group('%c[Since Toggle Deep Verbose] %d entries', 'color:#7c3aed;font-weight:bold', response.log.length);
+          console.group('%c[Since Toggle Deep Verbose] %d entries', 'color:#e07a38;font-weight:bold', response.log.length);
           for (const entry of response.log) {
             const label = entry.type || 'unknown';
             const ts = entry.timestamp || '';
@@ -4636,7 +4636,7 @@ if (verboseBtn) {
           }
           console.groupEnd();
         } else {
-          console.log('%c[Since Toggle Deep Verbose] No entries yet — run a query first.', 'color:#7c3aed');
+          console.log('%c[Since Toggle Deep Verbose] No entries yet — run a query first.', 'color:#e07a38');
         }
       } catch (err) {
         console.error('[Since Toggle Deep Verbose] Failed to fetch debug log:', err);
@@ -7275,7 +7275,7 @@ async function refreshStandaloneWebgpuStatus() {
   if (standaloneWebgpuActive) await standaloneRagReadiness?.refresh().catch(() => {});
 }
 
-function isSince ToggleCloudProviderSelected() {
+function isSincetoggleCloudProviderSelected() {
   return providerSelect?.value === 'sincetoggle_cloud';
 }
 
@@ -7293,7 +7293,7 @@ function markSelectedProviderFailed(error) {
 async function testConnection(options = {}) {
   const providerId = options.providerId || providerSelect.value;
   const requestId = ++providerTestRequestId;
-  if (options.skipSince ToggleCloud && providerId === 'sincetoggle_cloud') {
+  if (options.skipSincetoggleCloud && providerId === 'sincetoggle_cloud') {
     if (requestId === providerTestRequestId && providerSelect.value === providerId) {
       markSelectedProviderUntested();
     }
@@ -12094,7 +12094,7 @@ function showInspectionBanner(toolName) {
 
   // Set extension badge
   chrome.action?.setBadgeText?.({ text: '🔍' }).catch(() => {});
-  chrome.action?.setBadgeBackgroundColor?.({ color: '#6c63ff' }).catch(() => {});
+  chrome.action?.setBadgeBackgroundColor?.({ color: '#e07a38' }).catch(() => {});
 }
 
 function hideInspectionBanner() {

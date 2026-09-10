@@ -778,7 +778,7 @@ export const AGENT_TOOLS = [
           ref_id: { type: 'string', description: 'A ref_id from get_accessibility_tree.' },
           selector: { type: 'string', description: 'CSS selector. Used when ref_id is omitted or stale.' },
           label: { type: 'string', description: 'Optional short label shown above the element.' },
-          color: { type: 'string', description: 'CSS color for the outline. Default #7c3aed.' },
+          color: { type: 'string', description: 'CSS color for the outline. Default #e07a38.' },
           durationMs: { type: 'number', description: 'How long to show the overlay. Default 2,500ms; max 15,000ms.' },
         },
         required: [],
